@@ -1,0 +1,105 @@
+Actividad: Planificación y Ejecución de Pruebas en un Juego de Mesa
+Después de una emocionante jornada de juego de mesa con tus amigos, decides que tu próximo objetivo es asegurarte de que su juego funcione correctamente en cualquier situación. Para ello, necesitas planificar y ejecutar pruebas para comprobar la estabilidad del juego.
+
+Contexto
+Imagina que estás desarrollando un nuevo juego de mesa llamado "Explorador del Campo". Este juego requiere que los jugadores recopilen recursos, construyan estructuras y luchen contra enemigos. Para asegurarte de que el juego funcione correctamente, necesitas planificar pruebas para cada una de las partes del juego.
+
+Enunciado paso a paso
+Definir Objetivos de Prueba:
+
+Asegúrate de que los jugadores puedan recopilar recursos sin problemas.
+Verifica que la construcción de estructuras funcione correctamente.
+Comprueba que el sistema de combate funcione según las reglas establecidas.
+Escribir Casos de Prueba:
+
+Caso 1: Un jugador intenta recopilar más recursos del permitido en una ronda.
+Caso 2: Un jugador intenta construir una estructura que no cumple con los requisitos.
+Caso 3: Dos jugadores luchan entre sí, asegurándote de que la regla del turno funcione correctamente.
+Ejecutar Pruebas:
+
+Realiza cada caso de prueba y registra cualquier error o comportamiento inesperado.
+Asegúrate de aislar cada parte del juego para probarla individualmente.
+Documentar los Resultados:
+
+Anota cualquier problema que encuentres durante las pruebas.
+Propón soluciones posibles y documenta cómo se implementarán estas soluciones.
+Restricciones
+No uses herramientas externas ni estructuras no vistas en clase.
+Solo puedes usar conceptos y ejercicios presentados hasta ahora.
+
+Criterios de evaluación
+Introducción y contextualización (25%): El alumnado debe mostrar una comprensión clara del contexto del juego y la importancia de las pruebas.
+Desarrollo técnico correcto y preciso (25%): El alumnado debe definir objetivos claros, escribir casos de prueba precisos y ejecutar pruebas correctamente.
+Aplicación práctica con ejemplo claro (25%): El alumnado debe aplicar los conceptos aprendidos a un ejemplo práctico del juego de mesa "Explorador del Campo".
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe concluir el ejercicio, explicando cómo las pruebas realizadas pueden mejorar la calidad del juego y cómo se aplican los conceptos aprendidos en clase.
+Recuerda que tu objetivo es asegurarte de que cada parte del juego funcione correctamente antes de compartirlo con tus amigos. ¡Buena suerte con tu planificación y ejecución de pruebas!
+
+
+
+Resultado:
+
+
+
+El juego de mesa Explorador del Campo es una experiencia donde los jugadores gestionan recursos, construyen estructuras y luchan contra enemigos. Para asegurarme de que el juego funcione bien antes de compartirlo, necesito hacer pruebas. Las pruebas me ayudan a encontrar errores y a asegurarme de que las reglas se sigan correctamente.
+
+En este caso, debo probar tres cosas principales: la recolección de recursos, la construcción de estructuras y el sistema de combate. Al hacer estas pruebas, me aseguraré de que todo funcione como debe, sin errores que puedan arruinar la diversión del juego.
+
+1. Recopilación de recursos:
+Asegurarme de que los jugadores puedan recopilar recursos sin problemas y no exceder el límite de la cantidad permitida por ronda.
+
+2. Construcción de estructuras:
+Verificar que los jugadores solo puedan construir estructuras si cumplen con los requisitos especificados, como tener los recursos necesarios y estar en la ubicación correcta.
+
+3. Sistema de combate:
+Confirmar que el combate entre jugadores funcione conforme a las reglas, donde el turno de cada jugador se respete y el sistema de resolución de combate sea el esperado.
+
+***Caso 1: Un jugador intenta recopilar más recursos de los permitidos en una ronda.***
+-Objetivo: Verificar que el sistema impida a un jugador recolectar más de lo que está permitido en una ronda.
+-Acción: Un jugador intenta recoger más recursos de los que le corresponden en esa ronda.
+-Resultado esperado: El jugador no puede recoger recursos adicionales y se muestra un mensaje de advertencia.
+
+***Caso 2: Un jugador intenta construir una estructura que no cumple con los requisitos.***
+-Objetivo: Confirmar que el sistema de construcción de estructuras valida los requisitos antes de permitir la construcción.
+-Acción: Un jugador intenta construir una estructura sin tener suficientes recursos o sin estar en la ubicación adecuada.
+-Resultado esperado: El sistema rechaza la construcción y enseña un mensaje indicando el motivo (falta de recursos o ubicación incorrecta).
+
+***Caso 3: Dos jugadores luchan entre sí, asegurándose de que la regla del turno funcione correctamente.***
+-Objetivo: Comprobar que el sistema de combate respete el turno de cada jugador y que las mecánicas de resolución de combate se ejecuten correctamente.
+-Acción: Dos jugadores inician un combate, asegurándose de que el turno de cada uno se respete y se resuelva según las reglas (por ejemplo, utilizando dados o cartas).
+-Resultado esperado: El sistema de combate resuelve el conflicto correctamente según las reglas y enseña el resultado de la pelea, indicando quién a ganado.
+
+***Pruebas:***
+
+Prueba del Caso 1 (Recopilación de recursos):
+-Acción: Jugar una ronda y, al intentar recolectar recursos, sobrepasar el límite establecido. Verificar si el juego lo impide.
+-Resultado esperado: El jugador recibe un mensaje que le informa que no puede recolectar más recursos y su cantidad no cambia.
+-Observación: Si no se impide la acción o no se muestra un mensaje, se debe modificar el código o las reglas del juego para bloquear la acción.
+
+Prueba del Caso 2 (Construcción de estructuras):
+-Acción: Intentar construir una estructura sin los recursos necesarios o sin estar en la ubicación correcta.
+-Resultado esperado: El sistema debería mostrar un mensaje informando sobre los recursos faltantes o la ubicación incorrecta, y no permitir la construcción.
+-Observación: Si el jugador puede construir la estructura pese a no cumplir los requisitos, se deben ajustar las restricciones del sistema para validar correctamente la acción.
+
+Prueba del Caso 3 (Sistema de combate):
+-Acción: Iniciar un combate entre dos jugadores, asegurándose de que se respeten los turnos y las reglas de combate.
+-Resultado esperado: El combate debe proceder de acuerdo con el turno de cada jugador, y el resultado debe basarse en las reglas establecidas.
+-Observación: Si hay un error en el orden de los turnos o el combate no se resuelve de acuerdo a las reglas, se debe revisar la mecánica del sistema de combate.
+
+***Resultados:***
+
+Caso 1:
+-Resultado: El jugador no puede recolectar más recursos de los permitidos.
+-Problema encontrado: Ninguno. La mecánica de recolección está funcionando correctamente.
+-Solución: No se necesita ninguna solución, ya que el sistema impide la recolección excesiva.
+
+Caso 2:
+-Resultado: El sistema impide la construcción si no se cumplen los requisitos.
+-Problema encontrado: Si se permite construir en una ubicación incorrecta, se debe agregar una restricción adicional para verificar la localización de las estructuras.
+-Solución: Añadir un mensaje de error para indicar que la ubicación es incorrecta.
+
+Caso 3:
+-Resultado: El sistema respeta el orden de turnos y resuelve el combate según las reglas.
+-Problema encontrado: No se encontraron problemas, el combate funciona como se esperaba.
+-Solución: Ninguna, el sistema de combate está correcto.
+
+Las pruebas son esenciales para asegurarme de que el juego funcione bien. Al probar Explorador del Campo, verifico que todo, como los recursos, las construcciones y el combate, esté en orden. Las pruebas me ayudan a encontrar y corregir problemas para que el juego sea más divertido y justo para los jugadores. Es una forma de mejorar lo que he aprendido y hacer un juego mejor.

@@ -1,0 +1,816 @@
+En este trabajo he desarrollado una página web dedicada al artista Fernando Costa. El objetivo del proyecto ha sido crear una web moderna y funcional que permita mostrar información sobre el artista y ofrecer la posibilidad de escuchar su música de forma directa. Para ello, he utilizado HTML y CSS, cuidando tanto la estructura como el diseño visual de la página.
+
+index.html:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fernando Costa</title>
+  <meta name="description" content="Música, lanzamientos, videoclips y contacto." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+
+  <header class="sitebar" id="inicio">
+    <div class="wrap bar">
+      <a class="brand" href="#inicio" aria-label="Inicio">
+        <span class="brand-mark">FC</span>
+        <span class="brand-text">Fernando Costa</span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#biografia">Biografía</a>
+        <a href="#albumes">Música</a>
+        <a href="#canciones">Temas</a>
+        <a href="#video">Vídeo</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <nav class="social" aria-label="Redes">
+        <a href="https://www.instagram.com/fernanditoactivated/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="https://open.spotify.com/intl-es/artist/5dC7EcwWdf9Qj4VvJab4rZ" target="_blank" rel="noopener" aria-label="Spotify">◎</a>
+        <a href="https://www.youtube.com/@fernandocosta2439" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO (usa hero.jpg en CSS) -->
+    <section class="hero" aria-label="Portada">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="pill">NUEVO TEMA</p>
+          <h1 class="hero-title">Fernando<br><span>Costa</span></h1>
+          <p class="hero-sub">
+            Rap directo, calle y verdad. Música sin filtro, energía en directo y lanzamientos.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn" href="#canciones">Escuchar ahora</a>
+            <a class="btn ghost" href="#video">Ver videoclip</a>
+          </div>
+
+          <div class="platforms" aria-label="Plataformas">
+            <a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://music.youtube.com" target="_blank" rel="noopener">YouTube Music</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Destacado">
+          <p class="meta">DESTACADO</p>
+          <h2 class="card-title">DOLOR</h2>
+          <p class="card-sub">Escúchalo aquí mismo:</p>
+          <audio src="DOLOR.mp3" controls preload="none"></audio>
+          <p class="tiny"></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CONTENIDO -->
+    <section class="content">
+      <div class="wrap">
+
+        <!-- BIO -->
+        <section id="biografia" class="block">
+          <header class="block-head">
+            <h3>Biografía</h3>
+            <p>
+              Fernando Costa es una figura clave del rap español: letras crudas, identidad de barrio
+              y una presencia que conecta con la calle y el escenario.
+            </p>
+          </header>
+        </section>
+
+        <!-- ÁLBUMES -->
+        <section id="albumes" class="block">
+          <header class="block-head">
+            <h3>Discos publicados</h3>
+            <p>Selecciona un disco y ve directo a los temas.</p>
+          </header>
+
+          <div class="grid albums">
+            <article class="card">
+              <img src="dolordebarrio.jpg" alt="Portada Dolor de Barrio">
+              <div class="card-body">
+                <h4>Dolor de Barrio</h4>
+                <p>2025</p>
+                <a class="btn small" href="https://open.spotify.com/intl-es/album/1lOELCyPm4JWdiuu0fHwTQ?si=hnnnLNmEQRGN6_GJyDwWVA">Escuchar</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <img src="amordebarrio.jpg" alt="Portada Amor de Barrio">
+              <div class="card-body">
+                <h4>Amor de Barrio</h4>
+                <p>2024</p>
+                <a class="btn small" href="https://open.spotify.com/intl-es/album/47cKeHSRPpq01MrnXA8pj4?si=lAZ_gztPRSqKCbLd4poe8w">Escuchar</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <img src="tirititando.jpg" alt="Portada Tirititando">
+              <div class="card-body">
+                <h4>Tirititando</h4>
+                <p>2023</p>
+                <a class="btn small" href="https://open.spotify.com/intl-es/album/6DfZ9xZKkGM2GmvSz2mIw3?si=6CHaPG9AQsiMuXPqJ2azIg">Escuchar</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <img src="malamanera.jpg" alt="Portada Malamanera">
+              <div class="card-body">
+                <h4>Malamanera</h4>
+                <p>2017</p>
+                <a class="btn small" href="https://open.spotify.com/intl-es/album/0wkVhHXjtvVSoHUZtqOvKB?si=k5u3gcILR-yA-7WaiN_dOQ">Escuchar</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- TEMAS + TIENDA -->
+        <section class="block split">
+          <section id="canciones" class="panel">
+            <header class="block-head left">
+              <h3>Últimos temas</h3>
+              <p>Reproduce directamente desde la web.</p>
+            </header>
+
+            <div class="songs">
+              <article class="song">
+                <div class="song-main">
+                  <span class="dot"></span>
+                  <div>
+                    <h5>GRECOFERNANDA</h5>
+                    <p>Single</p>
+                  </div>
+                </div>
+                <audio src="GRECOFERNANDA.mp3" controls preload="none"></audio>
+              </article>
+
+              <article class="song">
+                <div class="song-main">
+                  <span class="dot"></span>
+                  <div>
+                    <h5>MAMAHUEVO</h5>
+                    <p>Single</p>
+                  </div>
+                </div>
+                <audio src="MAMAHUEVO.mp3" controls preload="none"></audio>
+              </article>
+
+              <article class="song">
+                <div class="song-main">
+                  <span class="dot"></span>
+                  <div>
+                    <h5>TE AVISÉ</h5>
+                    <p>Single</p>
+                  </div>
+                </div>
+                <audio src="TEAVISE.mp3" controls preload="none"></audio>
+              </article>
+
+              <article class="song">
+                <div class="song-main">
+                  <span class="dot"></span>
+                  <div>
+                    <h5>MILIPILI</h5>
+                    <p>Single</p>
+                  </div>
+                </div>
+                <audio src="MILIPILI.mp3" controls preload="none"></audio>
+              </article>
+
+              <article class="song">
+                <div class="song-main">
+                  <span class="dot"></span>
+                  <div>
+                    <h5>AMOR DE BARRIO</h5>
+                    <p>Single</p>
+                  </div>
+                </div>
+                <audio src="AMORDEBARRIO.mp3" controls preload="none"></audio>
+              </article>
+            </div>
+          </section>
+
+          <aside class="shop" aria-label="Tienda">
+            <img src="merch.jpg" alt="Merch Fernando Costa">
+            <h4>Merch oficial</h4>
+            <p>Camisetas, sudaderas y discos.</p>
+            <a class="btn" href="https://fernandocostaoficial.com/collections/all">Comprar ahora</a>
+          </aside>
+        </section>
+
+        <!-- VIDEO -->
+        <section id="video" class="block">
+          <header class="block-head">
+            <h3>Videoclip</h3>
+          </header>
+
+          <div class="video">
+            <iframe
+              src="https://www.youtube.com/embed/HZ56VNTfLxw"
+              title="Videoclip"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="block">
+          <header class="block-head">
+            <h3>Newsletter</h3>
+            <p>Entérate de lanzamientos, fechas y novedades.</p>
+          </header>
+
+          <form class="form" action="#" method="post">
+            <input type="email" name="email" placeholder="Tu correo electrónico..." required>
+            <button class="btn" type="submit">Suscribirme</button>
+          </form>
+
+          <div class="social2" aria-label="Redes">
+            <a href="https://www.instagram.com/fernanditoactivated/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://open.spotify.com/intl-es/artist/5dC7EcwWdf9Qj4VvJab4rZ" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://www.youtube.com/@fernandocosta2439" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 FERNANDO COSTA · TODOS LOS DERECHOS RESERVADOS
+  </footer>
+
+</body>
+</html>
+```
+
+style.css:
+```
+@font-face{
+  font-family: magiera;
+  src: url("Magiera Script.ttf");
+}
+
+:root{
+  --bg: #07070a;
+  --txt: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.72);
+
+  --paper: rgba(255,255,255,.94);
+  --paper2: rgba(245,245,245,.88);
+  --ink: #0f1016;
+
+  --accent: #ff2e38;
+  --accent2: rgba(255,46,56,.22);
+
+  --line: rgba(255,255,255,.10);
+  --line2: rgba(0,0,0,.10);
+
+  --shadow: 0 22px 70px rgba(0,0,0,.55);
+  --shadow2: 0 16px 34px rgba(0,0,0,.18);
+
+  --r: 18px;
+  --r2: 14px;
+  --max: 1180px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--txt);
+  background:
+    radial-gradient(900px 520px at 18% 10%, rgba(255,46,56,.12), transparent 62%),
+    radial-gradient(900px 520px at 82% 18%, rgba(120,120,255,.10), transparent 66%),
+    linear-gradient(180deg, rgba(0,0,0,.72), rgba(0,0,0,.92));
+}
+
+a{color:inherit}
+.wrap{
+  width: min(var(--max), calc(100% - 44px));
+  margin: 0 auto;
+}
+
+/* TOP BAR */
+.sitebar{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(8,8,12,.55);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  text-decoration:none;
+  font-weight: 1000;
+  letter-spacing: .6px;
+}
+.brand-mark{
+  display:grid;
+  place-items:center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 26px rgba(0,0,0,.25);
+}
+.brand-text{
+  opacity: .95;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.nav{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  flex-wrap: wrap;
+}
+.nav a{
+  text-decoration:none;
+  text-transform: uppercase;
+  font-weight: 1000;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  opacity: .88;
+}
+.nav a:hover{
+  opacity: 1;
+  background: rgba(255,255,255,.06);
+}
+
+.social{
+  display:flex;
+  gap: 8px;
+}
+.social a{
+  text-decoration:none;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+}
+.social a:hover{
+  background: rgba(255,255,255,.07);
+}
+
+
+.hero{
+  min-height: 82vh;
+  position: relative;
+  overflow: hidden;
+  background: url("hero.jpg") center center / cover no-repeat;
+  isolation: isolate;
+}
+.hero::after{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(1200px 520px at 55% 25%, rgba(255,46,56,.20), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.50), rgba(0,0,0,.22) 45%, rgba(0,0,0,.88));
+  z-index: 0;
+  pointer-events:none;
+}
+
+.hero-grid{
+  position: relative;
+  z-index: 1;
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 18px;
+  padding: 56px 0;
+  align-items: start;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(8,8,12,.55);
+  backdrop-filter: blur(10px);
+  font-weight: 1000;
+  letter-spacing: 1px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.pill::before{
+  content:"";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 7px rgba(255,46,56,.12);
+}
+
+.hero-title{
+  margin: 12px 0 8px 0;
+  font-family: magiera, ui-serif, Georgia, serif;
+  font-size: clamp(56px, 7vw, 92px);
+  line-height: .86;
+  transform: rotate(-2.5deg);
+  text-shadow: 0 18px 38px rgba(0,0,0,.75);
+}
+.hero-title span{
+  font-family: ui-sans-serif, system-ui, Arial, sans-serif;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: .62em;
+  opacity: .95;
+}
+
+.hero-sub{
+  margin: 10px 0 18px 0;
+  max-width: 54ch;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 700;
+  text-shadow: 0 12px 26px rgba(0,0,0,.55);
+}
+
+.hero-cta{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 14px 0 14px 0;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  text-decoration:none;
+  text-transform: uppercase;
+  font-weight: 1000;
+  font-size: 12px;
+  letter-spacing: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(240,240,240,.82));
+  color: #0f1016;
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 18px 34px rgba(0,0,0,.25);
+  transition: transform .15s ease, filter .15s ease;
+}
+.btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+.btn.ghost{
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.16);
+}
+
+.btn.small{ padding: 10px 14px; font-size: 12px; }
+.btn::before{
+  content:"";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 7px rgba(255,46,56,.10);
+}
+
+.platforms{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+}
+.platforms a{
+  text-decoration:none;
+  font-weight: 1000;
+  font-size: 12px;
+  letter-spacing: .7px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  opacity: .95;
+}
+.platforms a:hover{ opacity:1; background: rgba(255,255,255,.09); }
+
+.hero-card{
+  border-radius: var(--r);
+  background: rgba(8,8,12,.55);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  position: sticky;
+  top: 86px;
+}
+.meta{
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  font-weight: 1000;
+  letter-spacing: 1.2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.card-title{
+  margin: 0 0 8px 0;
+  font-weight: 1100;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.card-sub{
+  margin: 0 0 10px 0;
+  color: var(--muted);
+  font-weight: 800;
+}
+.tiny{
+  margin: 10px 0 0 0;
+  color: rgba(255,255,255,.62);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Content panel */
+.content{
+  margin-top: 0;
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  overflow: hidden;
+}
+.content .wrap{
+  padding: 26px 0 34px 0;
+}
+
+.block{ padding: 10px 0; }
+.block-head{
+  text-align: center;
+  margin: 10px auto 18px auto;
+  max-width: 980px;
+}
+.block-head.left{ text-align: left; }
+.block-head h3{
+  margin: 0 0 8px 0;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 1100;
+}
+.block-head p{
+  margin: 0;
+  color: rgba(0,0,0,.72);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.grid{
+  display:grid;
+  gap: 14px;
+}
+.albums{
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card{
+  background: rgba(255,255,255,.84);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: var(--r2);
+  box-shadow: var(--shadow2);
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,46,56,.18);
+  box-shadow: 0 18px 34px rgba(0,0,0,.18);
+}
+.card img{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display:block;
+}
+.card-body{
+  padding: 14px;
+}
+.card-body h4{
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.card-body p{
+  margin: 0 0 12px 0;
+  color: rgba(0,0,0,.66);
+  font-weight: 900;
+}
+
+/* Split */
+.split{
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 16px;
+  align-items: start;
+}
+.panel{
+  background: rgba(255,255,255,.74);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: var(--r);
+  padding: 14px;
+  box-shadow: var(--shadow2);
+}
+.songs{
+  display:grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+.song{
+  display:grid;
+  grid-template-columns: 1fr 260px;
+  gap: 12px;
+  align-items:center;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.86);
+  border: 1px solid rgba(0,0,0,.08);
+}
+.song-main{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+}
+.dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 7px rgba(255,46,56,.10);
+  margin-top: 6px;
+}
+.song h5{
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.song p{
+  margin: 4px 0 0 0;
+  color: rgba(0,0,0,.62);
+  font-weight: 900;
+  letter-spacing: .3px;
+  font-size: 12px;
+}
+
+/* Audio */
+audio{
+  width: 100%;
+  height: 34px;
+}
+
+/* Shop */
+.shop{
+  background: rgba(255,255,255,.74);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: var(--r);
+  padding: 16px;
+  box-shadow: var(--shadow2);
+  position: sticky;
+  top: 86px;
+}
+.shop img{
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display:block;
+  box-shadow: 0 16px 30px rgba(0,0,0,.16);
+  margin-bottom: 12px;
+}
+.shop h4{
+  margin: 8px 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.shop p{
+  margin: 0 0 12px 0;
+  color: rgba(0,0,0,.70);
+  font-weight: 700;
+}
+
+/* Video */
+.video{
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.10);
+  box-shadow: var(--shadow2);
+  background: rgba(255,255,255,.74);
+}
+.video iframe{
+  width: 100%;
+  height: 460px;
+  border: 0;
+  display:block;
+}
+
+/* Form */
+.form{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+.form input{
+  width: min(420px, 90vw);
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,.14);
+  background: rgba(255,255,255,.88);
+}
+.form button{
+  cursor: pointer;
+}
+
+/* Bottom social */
+.social2{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 14px;
+}
+.social2 a{
+  text-decoration:none;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  font-size: 12px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.10);
+}
+.social2 a:hover{ background: rgba(255,46,56,.10); border-color: rgba(255,46,56,.20); }
+
+/* Footer */
+.footer{
+  background: #050507;
+  color: rgba(255,255,255,.78);
+  text-align: center;
+  padding: 18px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .hero-grid{ grid-template-columns: 1fr; padding: 34px 0; }
+  .hero-card{ position: static; }
+  .split{ grid-template-columns: 1fr; }
+  .shop{ position: static; }
+  .albums{ grid-template-columns: repeat(2, 1fr); }
+  .video iframe{ height: 360px; }
+  .bar{ flex-wrap: wrap; }
+}
+@media (max-width: 640px){
+  .wrap{ width: calc(100% - 32px); }
+  .albums{ grid-template-columns: 1fr; }
+  .song{ grid-template-columns: 1fr; }
+  .video iframe{ height: 260px; }
+}
+```
+
+
+He realizado una página web dedicada al artista Fernando Costa utilizando HTML y CSS. Primero he creado la estructura básica de la web con HTML, separando el contenido en distintas secciones como el menú, el hero principal, la biografía, los álbumes, las canciones, el vídeo y el contacto. Esto hace que la página esté ordenada y sea fácil de navegar.
+
+Después he diseñado el aspecto visual con CSS, definiendo colores, tipografías y estilos para que la web tenga una estética moderna y acorde al estilo urbano del artista. He utilizado una imagen grande en el hero principal y la he ajustado para que se vea correctamente sin perder calidad.
+
+También he añadido una sección de canciones donde se pueden reproducir archivos de audio directamente desde la web usando el elemento <audio>. Además, he incluido enlaces a Spotify y YouTube, una sección de merchandising y un formulario de newsletter.
+
+Por último, he adaptado la web para que se vea bien tanto en ordenador como en móvil, utilizando un diseño responsive. El resultado es una página funcional, clara y visualmente atractiva.
+	
+Por haber hecho este proyecto he podido poner en práctica los conocimientos de HTML y CSS, creando una página web completa y funcional. He aprendido a organizar correctamente el contenido, a trabajar el diseño visual y a adaptar la web a distintos dispositivos. El resultado final es una página atractiva, fácil de usar y acorde a la temática del artista.

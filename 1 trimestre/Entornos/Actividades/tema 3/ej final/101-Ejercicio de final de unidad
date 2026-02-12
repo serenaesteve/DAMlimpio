@@ -1,0 +1,70 @@
+Actividad final de unidad:
+
+Tal y como hemos visto en clase, desarrolla una función que de error (el error que vimos en entornos de desarrollo o en programación)
+
+Aumenta la función, protegela, captura casos, y prepara a la función para trabajar los casos uno a uno
+
+Utiliza extensivamente try-except para calcular todos los casos que sean posibles según el ejercicio que hemos visto en clase.
+
+
+
+Respuesta:
+
+```
+En esta actividad creo una función que inicialmente puede generar errores al hacer divisiones, como dividir entre cero o usar datos que no son números. Uso try-except para proteger la función y capturar estos errores, mostrando mensajes claros cuando ocurren. Además, preparo la función para trabajar con varios casos uno por uno, asegurando que todos los datos se procesen sin que el programa se detenga.
+
+```
+def dividir(a, b):
+    return a / b
+
+def dividir_protegido(a, b):
+    try:
+        resultado = a / b
+    except ZeroDivisionError:
+        return "Error: No se puede dividir entre cero."
+    except TypeError:
+        return "Error: Debes ingresar numeros."
+    else:
+        return resultado
+
+def procesar_divisiones(lista_de_pares):
+    resultados = []
+    for a, b in lista_de_pares:
+        try:
+            resultado = a / b
+        except ZeroDivisionError:
+            resultados.append("Error: Division entre cero")
+        except TypeError:
+            resultados.append("Error: Tipo de dato no valido")
+        else:
+            resultados.append(resultado)
+    return resultados
+
+pares = [(10, 2), (5, 0), (8, "x"), (9, 3)]
+
+print("Usando dividir_protegido:")
+for a, b in pares:
+    print(f"{a} / {b} = {dividir_protegido(a, b)}")
+
+print("\nUsando procesar_divisiones:")
+print(procesar_divisiones(pares))
+```
+
+
+Salida del código:
+
+[Running] python -u "c:\Users\Serena\Documents\Entornos\Actividades\tema 3\final.py"
+Usando dividir_protegido:
+10 / 2 = 5.0
+5 / 0 = Error: No se puede dividir entre cero.
+8 / x = Error: Debes ingresar numeros.
+9 / 3 = 3.0
+
+Usando procesar_divisiones:
+[5.0, 'Error: Division entre cero', 'Error: Tipo de dato no valido', 3.0]
+
+[Done] exited with code=0 in 0.075 seconds
+
+Con esta actividad compruebo que la función maneja correctamente los errores y devuelve resultados o mensajes adecuados según cada caso. También veo cómo procesar listas de datos de manera segura, evaluando cada elemento sin interrumpir la ejecución. Esto me ayuda a entender la importancia de controlar los errores en programación y a crear funciones más confiables.
+```
+

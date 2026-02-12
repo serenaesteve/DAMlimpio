@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Serena Sania Esteve — Portafolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <h1 class="logo">Serena Sania Esteve</h1>
+
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#habilidades">Habilidades</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+        <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    </nav>
+</header>
+
+<section id="inicio" class="inicio">
+    <div class="contenido-inicio">
+        <p class="saludo">Hola, soy</p>
+        <h2 class="nombre">Serena Sania Esteve</h2>
+        <p class="titulo">Técnico Superior en Desarrollo Multiplataforma</p>
+        <p class="descripcion">Diseño y desarrollo aplicaciones y sitios web modernos, con atención al detalle y experiencia de usuario.</p>
+        <a href="#proyectos" class="boton">Ver mis proyectos</a>
+    </div>
+</section>
+
+<section id="sobre-mi">
+    <div class="contenedor-sobre-mi">
+        <img src="{{ url_for('static', filename='images/serena.jpg') }}" alt="Foto de Serena Sania Esteve" class="foto-perfil">
+        <div class="texto-sobre-mi">
+            <h2>Sobre mí</h2>
+            <h3>Serena Sania Esteve</h3>
+            <h4>Técnico Superior en Desarrollo Multiplataforma</h4>
+            <p>
+                Soy una desarrolladora apasionada por la tecnología, el diseño y la creación de soluciones prácticas.
+                Me encanta aprender nuevas herramientas, optimizar procesos y cuidar cada detalle del desarrollo.
+            </p>
+            <p>
+                Mi objetivo es seguir creciendo profesionalmente, participar en proyectos innovadores y combinar creatividad con lógica en cada aplicación que desarrollo.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="proyectos">
+    <h2 class="titulo-seccion">Mis Proyectos</h2>
+    <div class="contenedor-proyectos">
+        {% for pieza in piezas %}
+        <div class="proyecto">
+            {% if pieza.imagen %}
+            <img src="{{ url_for('static', filename=pieza.imagen) }}" alt="{{ pieza.titulo }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x200" alt="{{ pieza.titulo }}">
+            {% endif %}
+            <h3>{{ pieza.titulo }}</h3>
+            <p>{{ pieza.descripcion }}</p>
+
+            {% if pieza.Identificador == 0 %}
+            <!-- Proyecto especial: currículum -->
+            <a href="{{ url_for('curriculum') }}" class="boton">Ver Currículum</a>
+            {% else %}
+            <div class="botones-proyecto">
+                <a href="{{ url_for('update', id=pieza.Identificador) }}" class="boton">Editar</a>
+                <a href="{{ url_for('delete', id=pieza.Identificador) }}" class="boton boton-eliminar">Eliminar</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="habilidades">
+    <h2 class="titulo-seccion">Mis Habilidades</h2>
+    <div class="contenedor-habilidades">
+        <div class="habilidad">
+            <h3>HTML & CSS</h3>
+            <div class="barra">
+                <div class="progreso" style="width: 90%;"></div>
+            </div>
+        </div>
+        <div class="habilidad">
+            <h3>JavaScript</h3>
+            <div class="barra">
+                <div class="progreso" style="width: 80%;"></div>
+            </div>
+        </div>
+        <div class="habilidad">
+            <h3>Python</h3>
+            <div class="barra">
+                <div class="progreso" style="width: 70%;"></div>
+            </div>
+        </div>
+        <div class="habilidad">
+            <h3>SQL</h3>
+            <div class="barra">
+                <div class="progreso" style="width: 75%;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacto">
+    <h2 class="titulo-seccion">Contacto</h2>
+    <div class="contenedor-contacto">
+        <div class="info-contacto">
+            <p><strong>Email:</strong> serenaestevee@gmail.com</p>
+            <p><strong>Teléfono:</strong> 637383762</p>
+            <p><strong>Ubicación:</strong> Mislata, Valencia</p>
+        </div>
+        <form class="form-contacto">
+            <input type="text" name="nombre" placeholder="Tu nombre" required>
+            <input type="email" name="email" placeholder="Tu email" required>
+            <textarea name="mensaje" rows="5" placeholder="Tu mensaje" required></textarea>
+            <button type="submit" class="boton">Enviar</button>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>
+

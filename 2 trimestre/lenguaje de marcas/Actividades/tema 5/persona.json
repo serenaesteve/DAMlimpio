@@ -1,0 +1,13 @@
+{
+    "persona": {
+        "nombre": "Serena",
+        "edad": 22,
+        "email": "serena@example.com",
+        "direccion": {
+            "calle": "Calle Falsa 123",
+            "ciudad": "valencia"
+        },
+        "telefonos": ["654789023", "965734267"]
+    }
+}
+

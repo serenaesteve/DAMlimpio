@@ -1,0 +1,99 @@
+Crear una tabla en SQLite
+Contexto: A continuación te presentamos un ejemplo de cómo crear una tabla en SQLite utilizando Python. Este ejercicio te ayudará a entender cómo interactuar con una base de datos y cómo estructurar tus datos. Imagina que estás gestionando una pequeña librería y necesitas almacenar información sobre los libros, como su título, autor y precio.
+
+Enunciado paso a paso:
+
+Importar la biblioteca SQLite: Primero, debes importar la biblioteca sqlite3 que te permite trabajar con bases de datos SQLite en Python.
+
+Crear una conexión a la base de datos: Utiliza la función connect() para establecer una conexión con la base de datos. Si la base de datos no existe, se creará automáticamente.
+
+Definir una función para crear la tabla: Crea una función llamada crear_tabla() que se encargue de definir y crear la tabla en la base de datos si no existe. La tabla debe tener columnas para el ID del libro (como clave primaria), el título, el autor y el precio.
+
+Ejecutar la consulta SQL: Dentro de la función crear_tabla(), utiliza el método execute() del cursor para ejecutar una consulta SQL que cree la tabla con las columnas correspondientes.
+
+Comitar los cambios: Después de crear la tabla, es importante comitar los cambios utilizando el método commit() para asegurar que se guarden en la base de datos.
+
+Prueba la función: Llama a la función crear_tabla() desde tu programa principal para verificar que la tabla se ha creado correctamente.
+
+Restricciones:
+
+No puedes usar librerías externas.
+Solo puedes utilizar los conceptos y métodos vistos en clase.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El estudiante debe entender el contexto del ejercicio y cómo se relaciona con la gestión de una base de datos.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe implementar correctamente los pasos descritos en el enunciado, utilizando la biblioteca sqlite3 de manera apropiada.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe probar su código y verificar que la tabla se crea correctamente en la base de datos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe explicar cómo este ejercicio puede aplicarse en una situación real, como la gestión de una librería o cualquier otro sistema que requiera almacenamiento de datos.
+
+
+
+Respuesta:
+
+En este ejercicio aprendí a crear y manejar una base de datos usando SQLite en Python. Para hacerlo más práctico, trabajé con el ejemplo de una pequeña librería, donde necesitaba guardar información sobre los libros, como su título, autor y precio. La idea era entender cómo se crean tablas, cómo se insertan datos y cómo se consultan desde Python. Este ejercicio me ayudó a ver cómo organizar la información de manera ordenada y cómo una base de datos puede facilitar el trabajo de gestionar datos.
+​
+```
+import sqlite3
+​
+​
+conexion = sqlite3.connect("libreria.db")
+​
+​
+def crear_tabla():
+    cursor = conexion.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS libros (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo TEXT NOT NULL,
+            autor TEXT NOT NULL,
+            precio REAL NOT NULL
+        )
+    """)
+    conexion.commit()
+    print("Tabla 'libros' creada correctamente.")
+​
+​
+def insertar_libros():
+    cursor = conexion.cursor()
+    libros = [
+        ("Cien años de soledad", "Gabriel García Márquez", 20.5),
+        ("El principito", "Antoine de Saint-Exupéry", 15.0),
+        ("1984", "George Orwell", 18.75)
+    ]
+    cursor.executemany("INSERT INTO libros (titulo, autor, precio) VALUES (?, ?, ?)", libros)
+    conexion.commit()
+    print("Libros insertados correctamente.")
+​
+​
+def mostrar_libros():
+    cursor = conexion.cursor()
+    cursor.execute("SELECT * FROM libros")
+    resultados = cursor.fetchall()
+    
+    print("\nLibros en la base de datos:")
+    for libro in resultados:
+        print(f"ID: {libro[0]}, Título: {libro[1]}, Autor: {libro[2]}, Precio: ${libro[3]}")
+​
+​
+crear_tabla()
+insertar_libros()
+mostrar_libros()
+​
+# Cerrar la conexión
+conexion.close()
+```
+​
+​
+Salida del código:
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Entornos\Actividades\tema 5"
+PS C:\Users\Serena\Documents\Entornos\Actividades\tema 5> python codigo.py
+Tabla 'libros' creada correctamente.
+Libros insertados correctamente.
+​
+Libros en la base de datos:
+ID: 1, Título: Cien años de soledad, Autor: Gabriel García Márquez, Precio: $20.5
+ID: 2, Título: El principito, Autor: Antoine de Saint-Exupéry, Precio: $15.0
+ID: 3, Título: 1984, Autor: George Orwell, Precio: $18.75
+PS C:\Users\Serena\Documents\Entornos\Actividades\tema 5>
+​
+Al finalizar el ejercicio, logré crear la tabla libros, agregar algunos libros de ejemplo y consultarlos correctamente. Me di cuenta de lo útil que es usar una base de datos para mantener la información organizada y poder acceder a ella fácilmente. Además, entendí cómo este conocimiento se puede aplicar en la vida real, por ejemplo, para manejar inventarios en una librería o cualquier sistema que necesite almacenar datos de manera ordenada. Este ejercicio me ayudó a conectar la teoría con la práctica y a ver la importancia de las bases de datos en la programación.

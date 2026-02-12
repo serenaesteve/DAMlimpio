@@ -1,0 +1,260 @@
+Actividad de final de unidad
+
+-Utiliza la libreria MySQL para crear un nuevo objeto y conectarte a bases de datos -Haz un select sobre una base de datos existente -Saca los resultados por pantalla -Haz este ejercicio como continuación del ejercicio de final de unidad de la unidad 1
+
+
+
+
+Respuesta:
+
+En esta actividad continuo el programa CRUD que hice en el tema anterior, pero ahora conecto el programa con una base de datos MySQL. El objetivo es poder crear, leer, actualizar y eliminar registros de manera persistente, en lugar de almacenarlos solo en memoria. Con este ejercicio practico la conexion entre Python y MySQL, aprendo a ejecutar consultas SQL y a mostrar los resultados en pantalla, manteniendo la logica del menu que ya habia implementado en la Unidad 1.
+
+
+```
+import mysql.connector
+
+
+conexion = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",          
+    database="crud_python" 
+)
+
+cursor = conexion.cursor()
+
+print("Bienvenido al programa de gestion CRUD con MySQL")
+
+while True:
+    print("\nMenu CRUD")
+    print("1. Crear un registro")
+    print("2. Leer registros")
+    print("3. Actualizar un registro")
+    print("4. Eliminar un registro")
+    print("5. Salir")
+
+    opcion = input("\nElige una opcion: ")
+
+    if opcion == "1":
+        nuevo = input("Introduce el nuevo registro: ")
+        cursor.execute("INSERT INTO registros (contenido) VALUES (%s)", (nuevo,))
+        conexion.commit()
+        print("Registro agregado correctamente.")
+
+    elif opcion == "2":
+        cursor.execute("SELECT * FROM registros")
+        resultados = cursor.fetchall()
+        if len(resultados) == 0:
+            print("No hay registros para mostrar.")
+        else:
+            print("\nRegistros actuales:")
+            for fila in resultados:
+                print(f"{fila[0]}. {fila[1]}")
+
+    elif opcion == "3":
+        cursor.execute("SELECT * FROM registros")
+        resultados = cursor.fetchall()
+        if len(resultados) == 0:
+            print("No hay registros para actualizar.")
+        else:
+            print("\nRegistros disponibles:")
+            for fila in resultados:
+                print(f"{fila[0]}. {fila[1]}")
+            id_registro = input("Introduce el numero del registro que deseas actualizar: ")
+            nuevo_valor = input("Introduce el nuevo valor: ")
+            cursor.execute("UPDATE registros SET contenido = %s WHERE id = %s", (nuevo_valor, id_registro))
+            conexion.commit()
+            print("Registro actualizado correctamente.")
+
+    elif opcion == "4":
+        cursor.execute("SELECT * FROM registros")
+        resultados = cursor.fetchall()
+        if len(resultados) == 0:
+            print("No hay registros para eliminar.")
+        else:
+            print("\nRegistros disponibles:")
+            for fila in resultados:
+                print(f"{fila[0]}. {fila[1]}")
+            id_registro = input("Introduce el numero del registro que deseas eliminar: ")
+            cursor.execute("DELETE FROM registros WHERE id = %s", (id_registro,))
+            conexion.commit()
+            print("Registro eliminado correctamente.")
+
+    elif opcion == "5":
+        print("Saliendo del programa...")
+        break
+
+    else:
+        print("Opcion no valida. Intenta de nuevo.")
+
+
+cursor.close()
+conexion.close()
+print("Conexion cerrada correctamente.")
+```
+
+
+
+
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 2> python crud.py
+Bienvenido al programa de gestion CRUD con MySQL
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 1
+Introduce el nuevo registro: holaaa
+Registro agregado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 2
+
+Registros actuales:
+1. holaaa
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 1
+Introduce el nuevo registro: Adioooossss
+Registro agregado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 5
+Saliendo del programa...
+Conexion cerrada correctamente.
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 2> python crud.py
+Bienvenido al programa de gestion CRUD con MySQL
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 1
+Introduce el nuevo registro: Serena
+Registro agregado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 1
+Introduce el nuevo registro: Hector
+Registro agregado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 2
+
+Registros actuales:
+3. Serena
+4. Hector
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 3
+
+Registros disponibles:
+3. Serena
+4. Hector
+Introduce el numero del registro que deseas actualizar: 4
+Introduce el nuevo valor: hectooorrr
+Registro actualizado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 4
+
+Registros disponibles:
+3. Serena
+4. hectooorrr
+Introduce el numero del registro que deseas eliminar: 2
+Registro eliminado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 2
+
+Registros actuales:
+3. Serena
+4. hectooorrr
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 4
+
+Registros disponibles:
+3. Serena
+4. hectooorrr
+Introduce el numero del registro que deseas eliminar: 4
+Registro eliminado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 5
+Saliendo del programa...
+Conexion cerrada correctamente.
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 2>
+
+
+
+Foto de phpmyadmin:
+https://files.fm/u/m25dp76nv7
+
+Con esta actividad comprendo la importancia de integrar bases de datos en mis programas de Python. Aprendo a conectar con MySQL, realizar consultas y guardar datos de forma permanente, lo que hace que el programa sea mas completo y funcional. Esta experiencia me permite aplicar los conocimientos previos de variables, bucles, condicionales y entradas por teclado, combinandolos con el manejo de datos reales en una base de datos.

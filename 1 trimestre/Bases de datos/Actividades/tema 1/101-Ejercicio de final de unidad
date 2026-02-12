@@ -1,0 +1,149 @@
+En el ámbito de las bases de datos y la gestión de la información, existen diferentes tipos de ficheros que permiten almacenar, estructurar y acceder a los datos de distintas formas: ficheros planos, indexados, de acceso directo, estructurados en formatos como JSON o XML, e incluso formatos de oficina como ODS u ODT.
+
+Tu tarea consiste en explicar, analizar y ejemplificar el uso de estos tipos de ficheros, demostrando que comprendes cómo se emplean para representar información antes de utilizar un sistema gestor de bases de datos (SGBD).
+
+Desarrolla tu respuesta siguiendo los cuatro apartados de la rúbrica:
+
+Introducción breve y contextualización (25%) Explica qué es un fichero en informática, por qué es importante en el almacenamiento de la información y en qué contextos se utilizan los distintos tipos de ficheros.
+
+Desarrollo detallado y preciso (25%) Define correctamente los tipos de ficheros (planos, indexados, acceso directo, estructurados…). Describe sus características, ventajas y limitaciones. Usa terminología técnica adecuada y, si procede, incluye ejemplos o fragmentos de código.
+
+Aplicación práctica (25%) Crea un ejemplo real utilizando uno o varios tipos de ficheros: por ejemplo, un archivo .csv con datos de clientes, un .json con estructura anidada o un .xml con etiquetas personalizadas. Explica paso a paso cómo representarías los datos y cómo accederías a ellos. Menciona posibles errores comunes (como el uso incorrecto de comas, comillas o etiquetas) y cómo evitarlos.
+
+Conclusión breve (25%) Resume las ideas principales de tu trabajo y relaciona los conceptos aprendidos con los contenidos de la unidad, especialmente con el paso del almacenamiento mediante ficheros al uso de sistemas gestores de bases de datos.
+
+
+
+
+Respuesta:
+
+
+
+Un fichero (o archivo) es un conjunto de datos que se guarda en el ordenador.
+Por ej, un documento de texto, una hoja de cálculo o una lista de nombres.
+
+Antes de usar los SGBD, la información se guardaba directamente en ficheros. Los programas leían y escribían los datos desde esos ficheros, sin un sistema que los organizara automáticamente.
+
+Existen varios tipos de ficheros, según cómo guardan los datos:
+-Planos
+-Indexados
+-De acceso directo
+-Estructurados (como JSON o XML)
+-También algunos de oficina, como ODS (hoja de cálculo) y ODT (documento de texto).
+
+1. Ficheros planos:
+Son los más simples. Guardan los datos como texto, línea a línea.
+Por ejemplo, un fichero .csv (valores separados por comas):
+```
+id,nombre,correo
+1,Serena Sania,serena@example.com
+2,Hector López,hector@example.com
+```
+-Ventajas: fáciles de crear y abrir.
+-Desventajas: cuesta buscar o cambiar datos si el archivo es muy grande.
+
+2. Ficheros indexados:
+Estos ficheros tienen un índice que ayuda a encontrar los datos más rápido, como un libro con un índice de páginas.
+-Ventajas: se accede más rápido a los datos.
+-Desventajas: hay que actualizar el índice si se cambian los datos.
+
+3.Ficheros de acceso directo:
+Permiten acceder a un dato directamente si se sabe dónde está guardado.
+Por ej, ir al registro número 5 sin leer los anteriores.
+-Ventajas: muy rápidos para buscar.
+-Desventajas: si cambia el tamaño de los datos, se pueden desordenar.
+
+4. Ficheros estructurados (JSON, XML, etc.)
+Guardan los datos con una estructura (como una lista).
+Se usan mucho hoy en día, sobre todo para intercambiar información entre programas.
+JSON:
+```
+{
+  "datos personales":{
+    "nombre":"Jose Vicente",
+    "apellidos":"Carratalá Sanchis",
+    "correo":"info@jocarsa.com"
+  },
+  "formacion":{
+    "formacion1":"Descripcion",
+    "formacion2":"Descripcion"
+  }
+}
+```
+XML:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <datospersonales>
+    <nombre>Jose Vicente</nombre>
+    <apellidos>Carratalá Sanchis</apellidos>
+  </datospersonales>
+  <formacion>
+  </formacion>
+</persona>
+```
+
+-Ventajas: los datos están bien organizados.
+-Desventajas: son más difíciles de escribir a mano.
+
+
+***Archivo llamado personas.csv:***
+```
+nombre,edad,ciudad
+Serena Sania,22,Valencia
+Héctor López,35,Valencia
+```
+Explicación:
+-Cada línea representa una persona.
+-Los datos están separados por comas.
+-La primera línea indica los nombres de las columnas (nombre, edad, ciudad).
+
+Errores comunes:
+-Olvidar una coma entre los datos.
+-Escribir mal los nombres de las columnas.
+
+Cómo evitarlos:
+-Revisar que todas las líneas tengan el mismo número de datos.
+-Evitar comas dentro del texto.
+
+
+**Archivo llamado personas.json:**
+```
+{
+  "personas": [
+    {
+      "nombre": "Serena Sania",
+      "edad": 22,
+      "ciudad": "Valencia"
+    },
+    {
+      "nombre": "Héctor López",
+      "edad": 35,
+      "ciudad": "Valencia"
+    }
+  ]
+}
+```
+Explicación:
+-{ } indica un conjunto de datos.
+-"personas" es la lista principal.
+-Cada persona tiene su propio bloque con nombre, edad y ciudad.
+
+Errores comunes:
+-No cerrar las llaves {} o los corchetes [].
+-Usar comillas simples (‘) en lugar de dobles (“).
+-Poner una coma después del último bloque de datos.
+
+Cómo evitarlo:
+-Revisar bien la estructura antes de guardar.
+-Usar un validador JSON online para comprobar que está correcto.
+
+Guardar datos en CSV es útil para listas simples, mientras que JSON permite tener información más organizada y con detalles.
+Estos ficheros son una buena forma de practicar el manejo de datos antes de usar una base de datos real.
+
+Basicamente, los ficheros son la base del almacenamiento de información en informática.
+Los ficheros planos son fáciles pero limitados, los indexados y de acceso directo mejoran la velocidad, y los estructurados como JSON o XML son más modernos y organizados.
+
+Sin embargo, cuando los datos crecen o hay muchos usuarios, lo mejor es usar un SGBD (Sistema Gestor de Bases de Datos), como MySQL o SQLite, porque estos sistemas permiten consultar, actualizar y proteger los datos de forma más eficiente.
+
+Gracias a entender cómo funcionan los ficheros, puedo comprender mejor por qué las bases de datos son tan importantes en el desarrollo de aplicaciones.

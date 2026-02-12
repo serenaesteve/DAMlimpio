@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Tablero Interactivo</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .tablero {
+            display: grid;
+            grid-template-columns: repeat({{ columnas }}, 50px);
+            grid-template-rows: repeat({{ filas }}, 50px);
+            justify-content: center;
+            gap: 4px;
+            margin-top: 20px;
+        }
+
+        .celda {
+            width: 50px;
+            height: 50px;
+            background-color: #8BC34A;
+            border: 2px solid #4CAF50;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .celda:hover {
+            background-color: #AED581;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mi Campo Interactivo</h1>
+
+    <div class="tablero">
+        {% for i in range(filas) %}
+            {% for j in range(columnas) %}
+                <div class="celda" onclick="cambiarColor(this)"></div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <script>
+        function cambiarColor(celda) {
+            if (celda.style.backgroundColor === 'yellow') {
+                celda.style.backgroundColor = '#8BC34A';
+            } else {
+                celda.style.backgroundColor = 'yellow';
+            }
+        }
+    </script>
+</body>
+</html>

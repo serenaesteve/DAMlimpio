@@ -1,0 +1,81 @@
+Ejercicio: Creación y ejecución de un programa en Python
+Contexto: Imagina que eres un entusiasta del campo y te gustaría crear un juego de mesa digital inspirado en tus exploraciones naturales. Para ello, necesitas aprender a usar un entorno de desarrollo como Visual Studio Code.
+
+Enunciado paso a paso:
+
+Instalación del interprete de Python para Visual Studio Code:
+
+Abre Visual Studio Code.
+Ve a la pestaña "Extensions" y busca "Python".
+Instala el plugin "Python" proporcionado por Microsoft.
+Creación de un nuevo archivo Python:
+
+Haz clic en "File" > "New File" para crear un nuevo archivo.
+Guarda el archivo como explorador_natural.py.
+Escribir código básico en el archivo:
+
+En el archivo explorador_natural.py, escribe el siguiente código:
+# Explorador Natural
+
+# Definir una función para contar árboles en un sendero
+def contar_arboles(sendero):
+    return len(sendero)
+
+# Ejemplo de uso de la función
+sendero = ['árbol1', 'árbol2', 'árbol3']
+arboles_contados = contar_arboles(sendero)
+print(f'Número de árboles en el sendero: {arboles_contados}')
+Ejecutar el código:
+
+Haz clic en el icono del play que aparece a la izquierda del editor para ejecutar el archivo.
+Verifica los resultados en la consola.
+Restricciones:
+
+No usar librerías externas adicionales.
+Solo utilizar las herramientas y funciones disponibles dentro de Visual Studio Code y Python estándar.
+Criterios de evaluación:
+
+Introducción y contextualización (25%):
+
+El alumno debe entender la importancia del uso de entornos de desarrollo en el desarrollo de software, especialmente para proyectos como este que combinan juegos de mesa y exploraciones naturales.
+Desarrollo técnico correcto y preciso (25%):
+
+El código escrito debe ser correcto y funcional. Debe contar con la definición de una función para contar árboles en un sendero y su uso adecuado.
+Aplicación práctica con ejemplo claro (25%):
+
+El alumno debe crear el archivo correctamente, escribir el código según las indicaciones y ejecutarlo sin errores.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe mostrar cómo se puede aplicar el conocimiento adquirido sobre entornos de desarrollo para crear un proyecto práctico que combina aspectos del campo y juegos de mesa.
+
+
+Respuesta:
+
+Programar en un entorno de desarrollo ayuda a crear proyectos de forma más clara y ordenada. En este ejercicio usaremos Visual Studio Code y Python para hacer un pequeño juego de mesa digital inspirado en la naturaleza.
+
+Esto permite:
+-Conocer herramientas usadas por programadores.
+-Aprender a organizar y ejecutar archivos.
+-Crear proyectos sencillos y creativos.
+
+```
+# Explorador Natural
+
+# Definir una función para contar árboles en un sendero
+def contar_arboles(sendero):
+    return len(sendero)
+
+# Ejemplo de uso de la función
+sendero = ['árbol1', 'árbol2', 'árbol3']
+arboles_contados = contar_arboles(sendero)
+print(f'Número de árboles en el sendero: {arboles_contados}')
+```
+
+Resultado del codigo:
+
+Número de árboles en el sendero: 3
+PS C:\Users\Serena> 
+
+https://files.fm/u/khfprqendh
+
+Este ejercicio me enseña cómo usar un entorno de desarrollo para aplicar lo aprendido en un proyecto práctico. Al combinar la programación con ideas del campo y juegos de mesa, se pueden crear actividades divertidas y creativas que ayudan a mejorar nuestras habilidades en programación.

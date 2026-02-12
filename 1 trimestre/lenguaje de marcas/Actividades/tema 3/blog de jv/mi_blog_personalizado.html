@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="El blog de Jose Vicente">
+    <meta name="keywords" content="blog, juegos de mesa, estrategia, ocio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog Personalizado</title>
+    <style>
+      body {background: lightgray; font-family: sans-serif;}
+      header, footer, main {background: white; padding: 20px; margin: auto; width: 600px;}
+      header, footer {text-align: center;}
+      main {display: grid; grid-template-columns: auto auto auto; gap: 20px;}
+      article img {width: 100%; border-radius: 5px;}
+    </style>
+  </head>
+
+  <body> 
+    <header>
+      <h1>El blog de Jose Vicente</h1>
+      <h2>Mis artículos sobre juegos de mesa</h2>
+    </header>
+
+    <main></main>
+
+    <footer>
+      (c) 2025 Jose Vicente Carratalá
+    </footer>
+
+    
+    <template id="articulo">
+      <article>
+        <h1>Juego de mesa: Settlers of Catan</h1>
+        <time>Fecha de publicación: 2025-10-13</time>
+        <p>Settlers of Catan es un juego de mesa de estrategia que combina elementos de construcción, comercio y exploración.</p>
+        <img src="josevicente.jpg" alt="Settlers of Catan">
+      </article>
+    </template>
+
+    
+    <script>
+      fetch("blog.json")
+        .then(function(resultado) {
+          return resultado.json();
+        })
+        .then(function(datos) {
+          console.log(datos);
+          var contenedor = document.querySelector("main");
+          var plantilla = document.querySelector("#articulo");
+          
+          datos.forEach(function(articulo) {
+           
+            let clon = plantilla.content.cloneNode(true);
+            
+            clon.querySelector("h1").textContent = articulo.titulo;
+            clon.querySelector("time").textContent = articulo.fecha;
+            clon.querySelector("p").textContent = articulo.texto;
+            clon.querySelector("img").src = articulo.imagen;
+            clon.querySelector("img").alt = articulo.titulo;
+            
+            contenedor.appendChild(clon);
+          });
+        })
+        .catch(error => console.error("Error al cargar el JSON:", error));
+    </script>
+  </body>
+</html>
+

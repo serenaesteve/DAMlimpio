@@ -1,0 +1,139 @@
+Contexto En este ejercicio, aprenderás a crear tableros interactivos usando Flask y HTML. Imagina que estás en un juego de mesa donde debes gestionar tu campo. Para ello, necesitas crear una interfaz visual donde puedas ver tus diferentes áreas del campo.
+
+Enunciado paso a paso
+
+Configura tu entorno: Asegúrate de tener Flask instalado en tu sistema.
+Crea un tablero básico: Siguiendo el ejemplo del archivo grid.py, crea una aplicación que genere un tablero de 8x8 usando HTML y CSS.
+Personaliza el tablero: Añade estilos personalizados para que el tablero sea más atractivo, como cambiar el color de fondo o agregar bordes.
+Agrega funcionalidad interactiva: Modifica tu código para que cada celda del tablero pueda interactuar con el usuario, por ejemplo, cambiando su color al hacer clic.
+Restricciones
+
+No puedes usar librerías externas adicionales.
+Solo puedes utilizar los conceptos y estructuras vistas en la clase.
+Criterios de evaluación
+
+Introducción y contextualización (25%): El estudiante debe entender el contexto del ejercicio y cómo se relaciona con su hobby de juegos de mesa.
+Desarrollo técnico correcto y preciso (25%): El código debe ser limpio, bien estructurado y funcional.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe crear un tablero interactivo que cumpla con los requisitos establecidos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe reflexionar sobre cómo este ejercicio puede aplicarse en su hobby de juegos de mesa y campo.
+
+
+
+
+
+Respuesta:
+
+
+
+Desde pequeña me han gustado mucho los juegos de mesa, sobre todo los de estrategia como el ajedrez o el Catán. En este ejercicio, la idea de crear un tablero interactivo me pareció muy divertida, porque me hace pensar que podría crear mi propio juego digital algún día.
+Voy a usar Flask para generar el tablero desde Python, y con HTML + CSS + un poco de JavaScript, haré que cada casilla cambie de color al hacer clic, como si estuviera “cultivando” mi campo.
+
+
+1. Hago mi archivo app.py:
+```
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def tablero():
+    
+    filas = 8
+    columnas = 8
+    return render_template('tablero.html', filas=filas, columnas=columnas)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+2. Hago mi archivo tablero.py:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Tablero Interactivo</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .tablero {
+            display: grid;
+            grid-template-columns: repeat({{ columnas }}, 50px);
+            grid-template-rows: repeat({{ filas }}, 50px);
+            justify-content: center;
+            gap: 4px;
+            margin-top: 20px;
+        }
+
+        .celda {
+            width: 50px;
+            height: 50px;
+            background-color: #8BC34A;
+            border: 2px solid #4CAF50;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .celda:hover {
+            background-color: #AED581;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mi Campo Interactivo</h1>
+
+    <div class="tablero">
+        {% for i in range(filas) %}
+            {% for j in range(columnas) %}
+                <div class="celda" onclick="cambiarColor(this)"></div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <script>
+        function cambiarColor(celda) {
+            if (celda.style.backgroundColor === 'yellow') {
+                celda.style.backgroundColor = '#8BC34A';
+            } else {
+                celda.style.backgroundColor = 'yellow';
+            }
+        }
+    </script>
+</body>
+</html>
+```
+
+3. Una vez creados los archivos y guardados en sus correspondientes carpetas, me voy a la terminal:
+
+PS C:\WINDOWS\System32> cd "C:\Users\Serena\Documents\Proyecto\Actividades\tema 1"
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 1> cd mi_tablero_flask
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 1\mi_tablero_flask> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [02/Nov/2025 16:50:39] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [02/Nov/2025 16:50:39] "GET /favicon.ico HTTP/1.1" 404 -
+
+
+
+Dejo por aqui el link para ir a mi campo interactivo:
+
+http://127.0.0.1:5000/
+
+
+Este ejercicio me ayudó a comprender mejor cómo Flask puede generar páginas dinámicas y cómo el HTML, CSS y JavaScript trabajan juntos.
+Relacionándolo con los juegos de mesa, ahora entiendo que un tablero no es solo una imagen estática, sino una estructura interactiva que puedo programar y personalizar. Me motiva mucho pensar que podría crear mi propio juego online desde cero.

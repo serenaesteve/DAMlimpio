@@ -1,0 +1,151 @@
+Contexto
+En un proyecto de desarrollo de software ágil, los equipos se dividen en sprints cortos para trabajar en pequeños incrementos iterativos. Este enfoque facilita la colaboración y permite adaptarse rápidamente a cambios. Imagina que estás encargado de gestionar un equipo de programadores que trabajan en un videojuego de campo.
+
+Enunciado paso a paso
+Definición del sprint: Determina cuántas horas semanales tu equipo dedicará al proyecto.
+Planificación del sprint: Crea una lista de tareas que deben completarse durante el sprint, considerando las habilidades y preferencias de los miembros del equipo.
+Desarrollo iterativo: Durante cada día del sprint, asigna a cada programador una tarea específica.
+Revisión diaria: Realiza una reunión rápida (stand-up) para discutir el progreso, resolver problemas y planificar lo que se hará al día siguiente.
+Demostración de valor: Al final del sprint, realiza una demostración pública de las funcionalidades completadas.
+Restricciones
+No utilices herramientas externas ni input()/lectura de teclado.
+Mantén el enfoque en la gestión del tiempo y la colaboración dentro del equipo.
+Criterios de evaluación
+Introducción y contextualización (25%): Comprueba que comprendes el concepto de sprint y cómo se aplica a tu proyecto.
+Desarrollo técnico correcto y preciso (25%): Evalúa si has planteado una planificación del sprint realista y asignado tareas adecuadas.
+Aplicación práctica con ejemplo claro (25%): Verifica que has realizado una demostración pública de las funcionalidades completadas durante el sprint.
+Cierre/Conclusión enlazando con la unidad (25%): Comprueba si has reflexionado sobre cómo esta metodología ágil ha facilitado la gestión del proyecto y la colaboración entre los miembros del equipo.
+
+
+Respuesta:
+
+La metodología ágil se utiliza para dividir proyectos grandes en partes más pequeñas llamadas sprints. Cada sprint tiene una duración limitada, en este caso, 1 semana. Esto permite trabajar en pequeñas mejoras y obtener retroalimentación rápida.
+
+***Contexto del proyecto:***
+Imaginamos que estamos trabajando con un equipo de programadores en un videojuego de campo, donde los jugadores pueden plantar, cosechar y moverse por el mapa. Mi tarea es planificar un sprint de una semana para hacer algunas mejoras en el juego.
+
+***Objetivo del sprint:***
+-Mejorar el movimiento de los personajes.
+-Añadir la recolección de recursos.
+-Corregir algunos errores.
+
+El sprint durará 1 semana, lo que equivale a 40 horas de trabajo . Durante esta semana, cada miembro del equipo trabajará en tareas específicas para lograr los objetivos del sprint.
+
+***Tareas principales:***
+
+Mejorar el sistema de movimiento de los personajes:
+Subtareas:
+-Optimizar el código de desplazamiento de los personajes.
+-Añadir animaciones de caminar y correr.
+
+Añadir mecánica de recolección de recursos:
+Subtareas:
+-Programar la funcionalidad de recolección al acercarse a un objeto.
+-Crear interfaz visual para los recursos recolectados.
+
+Corregir algunos errores
+Subtareas:
+-Arreglar problemas de visibilidad en menús.
+
+***Asignación de tareas para los programadores:***
+Programador 1: Encargado del sistema de movimiento.
+Programador 2: Encargado de la recolección de recursos.
+Programador 3: Revisión y corrección de errores.
+Programador 4 y 5: Apoyo general, pruebas y tareas menores.
+
+***Asiganación diaria para los programadores:***
+Día 1:
+Programador 1: Comienza optimización del código de movimiento.
+Programador 2: Empieza la programación de la recolección de recursos.
+Programador 3: Revisa los bugs en el inventario.
+
+Día 2:
+Programador 1: Trabaja en la implementación de animaciones de caminar.
+Programador 2: Continúa con la programación de la recolección.
+Programador 3: Arregla el bug de visibilidad en el menú.
+
+Día 3-4:
+Se continúan las tareas de desarrollo y ajuste. Los programadores deben realizar pruebas y ajustar el código según sea necesario.
+
+Día 5:
+Revisión final de todas las tareas. Se realizan pruebas integrales y correcciones de última hora.
+
+***Reunion:***
+Duración: 10-15 minutos
+Objetivo: Compartir lo que hizo cada uno ayer, lo que hará hoy, y si hay algún problema.
+
+Programador 1 – Movimiento del personaje
+Ayer: Optimicé el código para que el personaje se mueva más suave.
+Hoy: Voy a empezar a añadir las animaciones de caminar y correr.
+Bloqueos: Ninguno por ahora.
+
+Programador 2 – Recolección de recursos
+Ayer: Programé la lógica para que el personaje recoja objetos al acercarse.
+Hoy: Voy a conectar esa lógica con la interfaz del juego para mostrar cuántos objetos lleva el jugador.
+Bloqueos: Tengo dudas sobre cómo hacer que la interfaz se actualice automáticamente.
+
+Programadora 3 – Corrección de errores (UI)
+Ayer: Encontré y arreglé un bug donde el inventario no mostraba los objetos correctamente.
+Hoy: Haré más pruebas en la pantalla de opciones del juego.
+Bloqueos: La interfaz a veces no guarda los cambios, lo revisaré.
+
+Programador 4 – Pruebas
+Ayer: Probé el sistema de movimiento y encontré que a veces el personaje se queda atascado.
+Hoy: Le pasaré ese error a Programador 1 y seguiré probando la recolección de recursos.
+Bloqueos: No por ahora.
+
+Programadora 5 – Apoyo general
+Ayer: Ayudé a revisar el código de la interfaz.
+Hoy: Apoyaré a Programador 2 con la conexión de la interfaz y la lógica de recolección.
+Bloqueos: Todo bien.
+
+-Se está avanzando bien en las tres tareas del sprint.
+-Programador 2 y Programadora 5 trabajarán juntas para resolver el problema de la interfaz.
+-El error encontrado por Programador 4 será revisado por Programador 1.
+
+***Demostración Final del Sprint***
+Después de una semana de trabajo, el equipo ha completado varias mejoras en el videojuego. Aquí mostramos lo que se ha conseguido:
+
+1. Movimiento del personaje (Programador 1)
+Ahora el personaje se mueve de forma más fluida por el mapa.
+Se han añadido animaciones para caminar y correr.
+El movimiento responde mejor a las teclas del jugador.
+Demostración: Se muestra al personaje moviéndose por el campo con las nuevas animaciones.
+
+2. Recolección de recursos (Programador 2 y Programadora 5)
+Cuando el personaje se acerca a un objeto (como una fruta o herramienta), puede recogerlo.
+Se ha creado una pequeña interfaz en pantalla que muestra cuántos objetos ha recogido el jugador.
+Demostración: El jugador camina hasta una planta, la recoge y aparece un icono con el número de objetos en la esquina de la pantalla.
+
+3. Corrección de errores en la interfaz (Programadora 3)
+El inventario ahora muestra correctamente los objetos que el jugador recoge.
+La pantalla de opciones se ha probado y ya guarda los cambios.
+Demostración: Se abre el menú de inventario y se muestra que los objetos aparecen y desaparecen correctamente. También se cambia un ajuste en las opciones, se guarda, y se ve que se mantiene.
+
+-Se han cumplido los tres objetivos principales.
+-Se ha mejorado la experiencia del jugador.
+-Todos los miembros del equipo trabajaron en colaboración.
+
+Gracias a la metodología ágil, ha sido mucho más fácil organizar el trabajo del equipo. Dividir el proyecto en tareas pequeñas dentro de un sprint de una semana nos ayudó a centrarnos en objetivos claros y no agobiarnos con todo a la vez.
+Las reuniones diarias (stand-ups) fueron muy útiles para saber cómo iba cada persona, resolver dudas rápido y evitar bloqueos. Además, como cada uno tenía tareas asignadas según sus habilidades, todos pudieron trabajar mejor y más cómodos.
+La parte de la demostración final también fue importante, porque nos permitió ver el progreso real del juego y saber que todo lo que hicimos sirvió para mejorar el proyecto.
+
+Basicamente, Gracias a la metodología ágil, ha sido mucho más fácil organizar el trabajo del equipo. Dividir el proyecto en tareas pequeñas dentro de un sprint de una semana nos ayudó a centrarnos en objetivos claros y no agobiarnos con todo a la vez.
+
+Las reuniones diarias (stand-ups) fueron muy útiles para saber cómo iba cada persona, resolver dudas rápido y evitar bloqueos. Además, como cada uno tenía tareas asignadas según sus habilidades, todos pudieron trabajar mejor y más cómodos.
+
+La parte de la demostración final también fue importante, porque nos permitió ver el progreso real del juego y saber que todo lo que hicimos sirvió para mejorar el proyecto.
+
+Basicamnte, Gracias a la metodología ágil, ha sido mucho más fácil organizar el trabajo del equipo. Dividir el proyecto en tareas pequeñas dentro de un sprint de una semana nos ayudó a centrarnos en objetivos claros y no agobiarnos con todo a la vez.
+
+Las reuniones diarias (stand-ups) fueron muy útiles para saber cómo iba cada persona, resolver dudas rápido y evitar bloqueos. Además, como cada uno tenía tareas asignadas según sus habilidades, todos pudieron trabajar mejor y más cómodos.
+
+La parte de la demostración final también fue importante, porque nos permitió ver el progreso real del juego y saber que todo lo que hicimos sirvió para mejorar el proyecto.
+
+Gracias a la metodología ágil, ha sido mucho más fácil organizar el trabajo del equipo. Dividir el proyecto en tareas pequeñas dentro de un sprint de una semana nos ayudó a centrarnos en objetivos claros y no agobiarnos con todo a la vez.
+
+Las reuniones diarias fueron muy útiles para saber cómo iba cada persona, resolver dudas rápido y evitar bloqueos. Además, como cada uno tenía tareas asignadas según sus habilidades, todos pudieron trabajar mejor y más cómodos.
+
+La parte de la demostración final también fue importante, porque nos permitió ver el progreso real del juego y saber que todo lo que hicimos sirvió para mejorar el proyecto.
+
+Basicamente, sta forma de trabajar facilitó mucho la organización, la comunicación y el trabajo en equipo, y creo que es muy útil para cualquier proyecto de programación, sobre todo cuando se trabaja con más personas.

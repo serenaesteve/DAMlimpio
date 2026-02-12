@@ -1,0 +1,73 @@
+Para practicar el concepto impartido sobre sistemas operativos y su evolución histórica, sigue estos pasos:
+
+Explora los sistemas operativos mencionados en el texto:
+
+Visita sitios web como Geekbench para comparar la velocidad de tu ordenador con diferentes sistemas operativos.
+Descarga e instala una versión de Linux, como Ubuntu o Debian, y realiza algunas tareas básicas para familiarizarte con su interfaz y funcionalidades.
+Practica el uso de comandos en línea:
+
+Utiliza servicios como Repl.it para ejecutar código en diferentes entornos de sistema operativos.
+Intenta escribir y ejecutar scripts sencillos en Bash o PowerShell.
+Analiza la evolución tecnológica:
+
+Lee artículos sobre avances recientes en sistemas operativos, como el lanzamiento de nuevas versiones de Windows o macOS.
+Participa en foros técnicos para discutir experiencias y opiniones sobre diferentes sistemas operativos.
+Al completar estos ejercicios, tendrás una comprensión más profunda del desarrollo y la importancia de los sistemas operativos en el mundo digital.
+
+
+
+
+Respuesta:
+
+
+He entrado en Geekbench Browser para comparar el rendimiento de Windows 11, macOS Sequoia y Ubuntu 24.04.
+He observado que los procesadores Apple M2 en macOS tienen puntuaciones más altas en rendimiento por núcleo, mientras que Windows 11 y Ubuntu tienen resultados parecidos en CPUs de escritorio.
+Sin embargo, Ubuntu se destaca por su eficiencia y menor consumo de recursos, lo que la hace ideal para servidores y equipos antiguos.
+
+Linux es muy estable y ligero, mientras que Windows y macOS priorizan la experiencia de usuario y compatibilidad de software.
+
+Descargar linux:
+1. Me he descargado Ubuntu 24.04 LTS.
+2. Hice una máquina virtual usando VirtualBox.
+3. Poniendo de iso el Ubunto descargado anteriormente y ajustando la memoria baje a 4194 MB , la CPU a 4  y el disco duro a 125 GB.
+4. Una vez iniciado el sistema me he metido en GNME he cambiado el fondo de pantalla y he instalado el programa GIMP desde la terminal con el comando:
+- sudo apt install gimp
+5. También he probado a navegar por Internet y crear carpetas desde la terminal.
+6. El sistema es fluido y estable, incluso dentro de la máquina virtual.
+
+
+En Repl.it, he creado un proyecto con el entorno Bash y he ejecutado el siguiente código:
+```
+pwd
+ls
+mkdir practica_so
+cd practica_so
+echo "Hola desde Ubuntu" > saludo.txt
+cat saludo.txt
+```
+
+He creado un archivo llamado hola.sh con este contenido:
+```
+#!/bin/bash
+echo "¡Hola, mundo Linux!"
+date
+```
+Y lo he ejecutado con esto:
+- bash hola.sh
+
+
+He leido artículos sobre los sistemas operativos más recientes:
+-Windows 11 (2025 Update) mejora el rendimiento, la integración con inteligencia artificial y la seguridad basada en hardware.
+-macOS Sequoia enfatiza la sincronización entre Mac y iPhone, además de mejoras visuales y en eficiencia energética.
+-Ubuntu 24.04 continúa impulsando el código abierto con un sistema más estable, rápido y fácil de usar.
+
+También he visto  foros en Reddit r/linux y he notado que muchos usuarios destacan la libertad y personalización de Linux frente a los sistemas cerrados de Microsoft y Apple.
+
+
+Esta actividad me a ayudado a:
+-Conocer las diferencias de rendimiento entre varios sistemas operativos.
+-Instalar y utilizar Ubuntu de forma práctica.
+-Aprender comandos básicos y crear un script en Bash.
+-Analizar la evolución tecnológica y las tendencias actuales.
+
+Los sistemas operativos son el corazón del funcionamiento informático. Su evolución refleja el avance de la tecnología y cómo esta busca siempre mayor eficiencia, seguridad y facilidad para el usuario.

@@ -1,0 +1,45 @@
+Ejercicio: Estructura Básica de un Documento HTML
+Contexto
+José Vicente es un amante de los juegos de mesa y el campo. Recientemente, ha decidido crear su propia web para compartir sus experiencias en estos pasatiempos. La estructura básica de una página web le resulta fascinante y desea aprender a organizar su contenido utilizando HTML.
+
+Enunciado paso a paso
+Introducción al documento:
+
+Crea un nuevo archivo llamado mi_web.html.
+Añade la declaración de tipo de documento (<!doctype html>) en la primera línea del archivo.
+Etiquetas HTML:
+
+Abre y cierra las etiquetas <html> alrededor del contenido de tu página.
+Atributo lang:
+
+Añade el atributo lang="es" a la etiqueta <html> para indicar que el contenido está en español.
+Etiqueta <head> y <body>:
+
+Dentro de las etiquetas <html>, abre la etiqueta <head> y ciérrala inmediatamente.
+Abre la etiqueta <body> y ciérrala al final del archivo.
+Restricciones
+No uses librerías externas ni input()/lectura de teclado.
+Solo puedes usar las etiquetas y atributos mencionados en el contexto.
+Criterios de evaluación
+Introducción y contextualización (25%): El archivo debe seguir la estructura básica de un documento HTML como explicado en clase.
+Desarrollo técnico correcto y preciso (25%): Todas las etiquetas deben estar correctamente anidadas y cerradas.
+Aplicación práctica con ejemplo claro (25%): El archivo debe contener el atributo lang="es" dentro de la etiqueta <html>.
+Cierre/Conclusión enlazando con la unidad (25%): El ejercicio debe mostrar cómo estructurar una página web básica utilizando HTML, alineado con los conocimientos adquiridos en clase.
+
+
+
+Respuesta:
+
+
+Aqui te muestro el codigo de todo lo requerido:
+​
+```
+<!doctype html>
+ <html>
+ lang="es"
+ <head>
+ </head>
+ <body>
+ </body>
+ </html>
+ ```

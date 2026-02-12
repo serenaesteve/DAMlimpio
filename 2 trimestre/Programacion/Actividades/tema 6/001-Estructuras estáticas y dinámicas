@@ -1,0 +1,73 @@
+Enunciado paso a paso
+Introducción y contextualización Imagina que estás en un parque con tu familia y deciden jugar un juego de mesa llamado "Coordenadas". El objetivo del juego es moverse por un tablero tridimensional marcado con coordenadas (x, y, z). Para representar estas coordenadas, necesitas crear una estructura de datos adecuada.
+
+Desarrollo técnico correcto y preciso
+
+Crea una variable llamada coordenadas que almacene tres valores: 1, 2 y 3.
+Imprime el valor de la variable coordenadas.
+Intenta añadir un nuevo elemento (por ejemplo, 5) a la estructura de datos. ¿Qué sucede? Por qué no puedes hacerlo?
+Aplicación práctica con ejemplo claro
+
+Ahora, crea una lista llamada agenda que almacene los nombres de tres amigos: "Jaime", "Jorge" y "Juan".
+Imprime el valor de la variable agenda.
+Añade un nuevo amigo a la lista (por ejemplo, "Julia").
+Elimina un elemento del final de la lista.
+¿Cómo puedes eliminar un elemento específico de cualquier posición en la lista?
+Cierre/Conclusión enlazando con la unidad Reflexiona sobre cómo estas estructuras de datos te ayudan a organizar y manipular información de manera eficiente, similar a como los aldeanos de un pueblo manejan sus tareas diarias en una agenda o en un tablero del campo. ¿Qué aprendiste sobre las limitaciones de ciertas estructuras de datos?
+
+
+Respuesta:
+
+
+Hoy voy a aprender a usar estructuras de datos en Python. Primero voy a trabajar con coordenadas usando una tupla, que me sirve para guardar datos que no quiero que cambien. Después voy a crear una lista llamada agenda para guardar los nombres de mis amigos, que sí puedo modificar, añadir o quitar. Así puedo organizar mejor la información.
+
+```
+coordenadas = (1, 2, 3)
+print(coordenadas)
+
+coordenadas.append(5)
+```
+
+Salida del código:
+```
+] python -u "c:\Users\Serena\Desktop\coordenadas.py"
+(1, 2, 3)
+Traceback (most recent call last):
+  File "c:\Users\Serena\Desktop\coordenadas.py", line 4, in <module>
+    coordenadas.append(5)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'append'
+
+[Done] exited with code=1 in 0.098 seconds
+```
+
+Da error porque una tupla es como una caja cerrada: una vez creada, no se puede cambiar. No permite anadir nada.
+
+```
+agenda = ["Jaime", "Jorge", "Juan"]
+print("Agenda inicial:", agenda)
+
+agenda.append("Julia")
+print("Agenda despues de anadir:", agenda)
+
+agenda.pop()
+print("Agenda despues de eliminar el ultimo:", agenda)
+
+agenda.remove("Jorge")
+print("Agenda despues de eliminar Jorge:", agenda)
+```
+
+Salida del código:
+```
+nning] python -u "c:\Users\Serena\Desktop\agenda.py"
+Agenda inicial: ['Jaime', 'Jorge', 'Juan']
+Agenda despues de anadir: ['Jaime', 'Jorge', 'Juan', 'Julia']
+Agenda despues de eliminar el ultimo: ['Jaime', 'Jorge', 'Juan']
+Agenda despues de eliminar Jorge: ['Jaime', 'Juan']
+```
+
+Para eliminar un elemento especifico puedo usar:
+1. agenda.remove("Nombre") → elimina por valor.
+2. agenda.pop(indice) → elimina por posicion en la lista.
+
+He aprendido que las tuplas no se pueden cambiar, por eso no pude añadir un valor nuevo. En cambio, las listas sí se pueden modificar, y eso me sirve mucho para cosas como una agenda. Usar estas estructuras me ayuda a organizar la información y hacer que mis programas sean más fáciles de manejar.

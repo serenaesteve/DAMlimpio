@@ -1,0 +1,64 @@
+Título
+Configuración de componentes en una placa base
+
+Contexto
+Imagina que eres un arquitecto del campo, y necesitas construir un nuevo centro de recreación para los amantes de las actividades al aire libre. Este centro incluirá una sala de juegos de mesa y una zona para explorar la naturaleza. Para lograrlo, debes entender cómo funciona una placa base en un ordenador, ya que es el cerebro de cualquier computadora.
+
+Enunciado paso a paso
+Identifica los componentes conectados a la placa base:
+
+¿Cuáles son los componentes principales que se conectan a la placa base para funcionar correctamente?
+Describe la importancia del bus de datos autopista en la placa base:
+
+¿Qué función tiene el bus de datos autopista en la placa base y cómo afecta a la velocidad del sistema?
+Explora los puertos de entrada/salida disponibles en una placa base:
+
+¿Cuáles son los principales puertos de E/S disponibles en una placa base? Menciona al menos tres y explica su función.
+Restricciones
+No uses términos técnicos complejos.
+Evita usar nombres de variables o funciones específicas.
+Mantén el tono sencillo y accesible para un nivel de FP.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe mostrar una comprensión básica del contexto del problema, relacionando la construcción del centro de recreación con la función de una placa base.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe identificar correctamente los componentes conectados a la placa base, describir el funcionamiento del bus de datos autopista y mencionar al menos tres puertos de E/S con sus funciones correspondientes.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe usar un ejemplo práctico para ilustrar su conocimiento, tal como la construcción del centro de recreación para los amantes de las actividades al aire libre.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio relacionando su respuesta con el tema actual y cómo este concepto se aplica a proyectos prácticos futuros.
+Nota para el profesor: Esta actividad permite al estudiante aplicar los conocimientos teóricos sobre las placas base en un contexto práctico, relacionándolos con la construcción de un centro de recreación. La evaluación se centra en la comprensión básica del tema y la capacidad de aplicarlo a situaciones reales.
+
+
+Respuesta:
+
+La placa base = la estructura del centro.
+
+Los componentes del ordenador = los distintos espacios y funciones del centro.
+
+Basicamente se refiere a que lo mismo de importante los componentes que se le agregan a la placa base para que el ordenador pueda funcionar ,como que la estructura del centro y los distintos espacios lo esten .
+
+A continuacion te voy a explicar los componentes y caracteristicas de la placa base:
+
+Componentes :
+- El procesador  
+- La RAM,
+- Memoria de almacenamiento, 
+- Tarjetas de expansion, 
+- Disco duro, 
+- Sistema de enfriamiento.
+
+-El bus de datos es la autopista que conecta todo dentro del ordenador.
+-Si es rápida y con muchos carriles, el PC va fluido y rápido.
+-Si es lenta y estrecha, el PC va lento.
+
+Puertos de E/S de la placa base:
+- Puerto USB: Sirve para conectar teclado, ratón, pendrives, impresoras, discos duros externos, auriculares, microfonos.
+- HDMI: Permiten enviar la señal de video desde la tarjeta gráfica hacia la pantalla.
+- VGA: Es un onector de video de monitores mas viejos.
+- Puertos de audio: Para conectar altavoces, auriculares, micrófonos.
+
+Para ponerte un ejemplo claro de como se puede relacionar el centro de recreación con un ordenador te pongo un ejemplo simple:
+-Procesador= arquitecto, 
+-RAM = sala de juegos
+-Disco = zona natural, 
+-Bus de datos = caminos 
+-Puertos de E/S = puertas o ventanas
+
+Basicamnte este ejercicio me ha servido para darme cuenta que tanto en un PC como en un centro, si todo está bien conectado y organizado, todo funciona mejor. Además, este conocimiento sirve para futuros proyectos por darme cuenta de que cualquier lugar o sistema necesita planificación y coordinación para que las cosas se muevan rápido y sin problemas.

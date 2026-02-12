@@ -1,0 +1,67 @@
+Creando una Máquina Virtual para Linux
+Contexto
+En nuestro campo de trabajo como profesionales de TI, conocer cómo instalar sistemas operativos en máquinas virtuales es crucial. Esto nos permite probar diferentes entornos sin afectar nuestra máquina física y facilita la colaboración y el aprendizaje continuo.
+
+Para este ejercicio, vamos a crear una máquina virtual utilizando Oracle VirtualBox, un software recomendado para esta tarea. A lo largo del proceso, te guiaré paso a paso cómo configurar tu máquina virtual con Ubuntu Linux.
+
+Enunciado Paso a Paso
+Descarga e Instala Oracle VirtualBox:
+
+Visita el sitio web oficial de Oracle VirtualBox y descarga la versión más reciente.
+Sigue las instrucciones para instalar VirtualBox en tu sistema operativo.
+Crea una Nueva Máquina Virtual:
+
+Abre Oracle VirtualBox.
+Haz clic en "Nueva" en el menú principal.
+En la ventana que aparece, introduce los siguientes datos:
+Nombre: Ubuntu Linux
+Tipo de Sistema Operativo: Linux
+Versión del Sistema Operativo: Ubuntu (elige la versión más reciente)
+Configura el tamaño de memoria RAM según tu equipo. Si tienes 16 GB, asigna 4GB; si tienes 20 GB, también asigna 4GB.
+Ajusta el tamaño del disco duro a 125GB.
+Instala Ubuntu Linux:
+
+Una vez creada la máquina virtual, arránca la misma y selecciona "Install Ubuntu" para iniciar la instalación.
+Sigue las instrucciones de instalación paso a paso, eligiendo opciones como idioma, zona horaria y creando un usuario.
+Configura tu Máquina Virtual:
+
+Una vez instalado Ubuntu, configura tus preferencias según tus necesidades. Puedes instalar software adicional o realizar ajustes en la configuración del sistema.
+Restricciones
+No utilices herramientas de virtualización alternativas como VMware.
+Asegúrate de seguir los pasos precisamente como se indican para evitar errores.
+Criterios de Evaluación
+Introducción y contextualización (25%): Explica el concepto de virtualización y cómo es útil en el campo del trabajo.
+Desarrollo técnico correcto y preciso (25%): Describe los pasos realizados para crear la máquina virtual y instalar Ubuntu Linux.
+Aplicación práctica con ejemplo claro (25%): Muestra cómo configuraste tu máquina virtual y qué software instalaste.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre los beneficios de utilizar máquinas virtuales y cómo podrías aplicar esta técnica en el futuro.
+¡Buena suerte! Recuerda que es importante seguir cada paso cuidadosamente para evitar problemas durante la instalación.
+
+
+Respuesta:
+
+
+La virtualización permite usar varios sistemas en un solo PC sin dañarlo.
+En informática es muy útil porque:
+-Podemos probar programas sin riesgo.
+-Creamos entornos seguros para practicar.
+-Es fácil compartir máquinas virtuales con otros.
+En este ejercicio usaremos Oracle VM VirtualBox y Ubuntu para crear una máquina virtual paso a paso.
+​
+1. Lo primero me descargé Virtual box y seguí las instrucciones de instalacion segun mi sistema operativo.
+2. Lo abrí (el virtual box)
+3. Le di a la pestaña de "Nueva" y comencé a configurarlo.
+4. En la primera pestaña que aparece tuve que poner los datos que pedian que era:
+-Nombre: Ubuntu Linux
+-Tipo de Sistema Operativo: Linux
+-Versión del Sistema Operativo: Ubuntu (la versión más reciente)
+5. En la siguente pestaña tuve que configurar el tamaño de RAM y del disco duro, que en este caso fueron 4GB de RAM y 125 GB de disco duro.
+6. Despues le das todo continuar y ya lo tienes.
+7. Ahora al intentar arrancar la maquina no me dejaba entonces tube que irme a descargarme Ubuntu Linux.
+8. En esata instalación me pedia que me creara un usuario y contraseña y tardo en instalarse y en arrancar despues.
+9. Ya una vez instalado todo me fui a Virtual Box y esta vez si me dejaba arrancarlo y ya tenia el Linux establecído.
+10. Dentro de la maquina quise descargarme apache como software.
+11. Abri la consola y puse el codigo de instalación que saque de la pagina de instalación de apache para Linux. 
+12. Lo descargue y ya esta.
+​
+Las máquinas virtuales son muy útiles porque permiten probar cosas sin dañar el PC. También ayudan a aprender y practicar de forma segura.
+En el futuro, puedo usarlas para probar programas, aprender nuevos sistemas y compartir mi trabajo con otros de manera fácil.

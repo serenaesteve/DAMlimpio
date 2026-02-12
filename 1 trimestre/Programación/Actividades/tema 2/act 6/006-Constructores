@@ -1,0 +1,74 @@
+Contexto
+En el mundo de los juegos de mesa, cada jugador necesita estar preparado para enfrentar nuevas situaciones y desafíos. Al igual que en la programación, donde los constructores son fundamentales para dar forma a nuestros objetos, también es crucial entender cómo inicializar correctamente un objeto en un juego de mesa. Imagina que estás jugando a "La Naturaleza", un juego popular en el campo, donde cada jugador tiene una ficha que representa su territorio. Cada ficha necesita ser inicializada con ciertos atributos para comenzar el juego.
+
+Enunciado paso a paso
+Definir la clase: Crea una clase llamada FichaTerritorio que representará las fichas de los jugadores en "La Naturaleza".
+
+Atributos de la clase: La clase FichaTerritorio debe tener los siguientes atributos:
+
+nombre_jugador: Un nombre para identificar al jugador.
+posicion_actual: La posición actual del territorio dentro del campo.
+Constructor de la clase: Implementa un constructor que inicialice estos atributos cuando se crea una nueva instancia de la clase FichaTerritorio. El constructor debe recibir dos parámetros: el nombre del jugador y la posición inicial del territorio.
+
+Métodos de la clase: Añade un método llamado moverTerritorio que permita mover la ficha a una nueva posición dentro del campo. Este método debe actualizar el atributo posicion_actual.
+
+Instanciar objetos: Crea dos instancias de la clase FichaTerritorio, por ejemplo, para los jugadores "Juan" y "María". Inicializa sus posiciones iniciales.
+
+Usar los métodos: Utiliza el método moverTerritorio para mover las fichas a nuevas posiciones dentro del campo.
+
+Restricciones
+No se permite crear clases personalizadas.
+Solo puedes utilizar objetos predeterminados existentes en el propio lenguaje de programación.
+El código debe seguir estrictamente los pasos y requisitos establecidos.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del problema y cómo aplicar los conceptos de constructores a un juego de mesa.
+
+Desarrollo técnico correcto y preciso (25%): El código debe estar bien estructurado, con atributos y métodos correctamente definidos y utilizados.
+
+Aplicación práctica con ejemplo claro (25%): El estudiante debe crear instancias de la clase y usar sus métodos para simular el movimiento de las fichas en el juego.
+
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe explicar cómo este ejercicio se relaciona con los constructores en programación y cómo puede aplicarse en situaciones reales, como inicializar objetos en juegos de mesa o aplicaciones similares.
+
+
+
+Respuesta:
+
+
+En los juegos de mesa, cada jugador tiene una ficha que lo representa y que se mueve por el tablero. Para que esto sea posible, cada ficha debe tener información básica, como el nombre del jugador y la posición donde empieza.
+En el juego “La Naturaleza”, el constructor me permite crear fichas para cada jugador (por ejemplo, “Juan” o “María”), indicar su posición inicial y luego moverlas por el tablero.
+Los constructores en programación funcionan como una forma de preparar cada ficha para que pueda participar en el juego.
+
+```
+class FichaTerritorio:
+    def __init__(self, nombre_jugador, posicion_inicial):
+        self.nombre_jugador = nombre_jugador
+        self.posicion_actual = posicion_inicial
+
+def moverTerritorio(self, nueva_posicion):
+        self.posicion_actual = nueva_posicion
+        
+print(f"La ficha de {self.nombre_jugador} se movió a la posición {self.posicion_actual}")
+
+
+if __name__ == "__main__":
+    ficha_juan = FichaTerritorio("Juan", 1)
+    ficha_maria = FichaTerritorio("Maria", 3)
+
+print(f"{ficha_juan.nombre_jugador} inicia en la posición {ficha_juan.posicion_actual}")
+print(f"{ficha_maria.nombre_jugador} inicia en la posición {ficha_maria.posicion_actual}")
+
+ficha_juan.moverTerritorio(5)
+ficha_maria.moverTerritorio(7)
+```
+
+Salida del código:
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\fichas.py"
+Juan inicia en la posici�n 1
+Maria inicia en la posici�n 3
+La ficha de Juan se movi� a la posici�n 5
+La ficha de Maria se movi� a la posici�n 7
+
+Este ejercicio se relaciona con los constructores en programación porque muestra cómo se usa un constructor para dar valores iniciales a un objeto. En este caso, cada ficha del juego tiene un nombre y una posición desde el inicio.
+Esto también se aplica en situaciones reales: por ejemplo, cuando un videojuego crea personajes con habilidades y posiciones iniciales, o cuando una aplicación necesita crear cuentas con información básica.
+
+El constructor permite que cada objeto empiece listo para usarse, igual que una ficha lista para jugar.

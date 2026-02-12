@@ -1,0 +1,101 @@
+Ejercicio práctico: Interpretación de diagramas ER
+En este ejercicio, aprenderás a interpretar y definir entidades en un modelo ER (Entidad-Relación). Estos conceptos son fundamentales para diseñar y gestionar bases de datos. Para comenzar, vamos a trabajar con un ejemplo sencillo de una tienda online.
+
+Contexto: Imagina que estás trabajando como desarrollador/a en una pequeña tienda en línea. El objetivo es crear un modelo ER para organizar la información de los clientes, productos y pedidos. Además, quieres incorporar categorías para los productos, lo cual añade una nueva complejidad a tu diseño.
+
+Enunciado paso a paso:
+
+Definir las entidades:
+
+Cliente
+Producto
+Pedido
+LineasPedido
+Categoria
+**Añadir atributos a cada entidad según el siguiente formato:
+
+Entidad
++id int
+-nombre varchar
+-apellidos varchar
+-email varchar (constraint email)
+-direccion varchar
+Completa los atributos para las entidades Producto y Categoria.
+
+Definir relaciones entre las entidades:
+
+Un cliente realiza muchos pedidos.
+Un pedido contiene muchas líneas de pedido.
+Una línea de pedido pertenece a un producto.
+Un producto puede tener varias categorías.
+**Representar el modelo ER en un diagrama textual o utilizando una herramienta como Dia Diagram o Jocarsa para crear un diagrama visual.
+
+**Explicar cómo estas relaciones y atributos reflejan la estructura de tu tienda en línea.
+
+Aplicación práctica con ejemplo claro: Considera el siguiente ejemplo específico:
+
+Cliente: id, nombre, apellidos, email, direccion
+Producto: id, nombre, precio, categoria_id
+Pedido: id, fecha, cliente_id
+LineasPedido: id, pedido_id, producto_id, cantidad
+Crea las relaciones y representa este diagrama en un texto o con una herramienta gráfica.
+
+Cierre/Conclusión enlazando con la unidad: Este ejercicio te ha permitido aplicar los conceptos de modelos ER a un escenario real. Aprenderás cómo definir entidades, atributos y relaciones para representar datos complejos. Este conocimiento es crucial para diseñar bases de datos eficientes y organizar información de manera coherente en cualquier proyecto de desarrollo de software.
+
+¿Qué has aprendido en este ejercicio? ¿Cómo puedes aplicar estos conceptos a otros proyectos futuros?
+
+
+Respuesta:
+
+En este ejercicio trabajo con una tienda online para aprender a organizar la información en una base de datos. Identifico los clientes, los productos, los pedidos y las categorías, y veo cómo se relacionan entre ellos. El objetivo es entender cómo se hace un modelo Entidad-Relación de forma sencilla antes de crear una base de datos.
+
+1. Cliente:
++id int
+-nombre varchar
+-apellidos varchar
+-email varchar (constraint email)
+-direccion varchar
+
+2. Producto:
+Producto
++ id int
+- nombre varchar
+- precio decimal
+
+3. Categoria:
+Categoria
++ id int
+- nombre varchar
+- descripcion varchar
+
+4. Pedido:
+Pedido
++ id int
+- fecha date
+- cliente_id int
+
+5. Lineas pedido:
+LineasPedido
++ id int
+- pedido_id int
+- producto_id int
+- cantidad int
+
+-Un cliente hace muchos pedidos
+Relación: Cliente—Pedido
+
+-Un pedido tiene muchas líneas de pedido
+Relación: Pedido—LineasPedido
+
+-Una línea de pedido pertenece a un producto
+Relación: Producto—LineasPedido
+
+-Un producto puede tener varias categorías
+Relación: Producto—Categoria
+
+Cliente 1 ─── N Pedido
+Pedido 1 ─── N LineaPedido
+Producto 1 ─── N LineaPedido
+Producto N ─── M Categoria
+
+Con este ejercicio he apprendido a ordenar los datos de una tienda online usando entidades y relaciones. Entiendo mejor cómo se conectan los clientes con los pedidos y los productos con las categorías. Este ejercicio me servirá para hacer bases de datos más claras y mejor organizadas en otros trabajos o proyectos.

@@ -1,0 +1,15 @@
+{
+  "smtp": {
+    "host": "smtp.ionos.es",
+    "port": 587,
+    "user": "serena@jocarsa.com",
+    "password": "TAME123$"
+  },
+  "email": {
+    "from": "serena@jocarsa.com",
+    "to": ["serena@jocarsa.com"],
+    "subject": "Información de nuestro centro educativo",
+    "html_template": "template.html"
+  }
+}
+

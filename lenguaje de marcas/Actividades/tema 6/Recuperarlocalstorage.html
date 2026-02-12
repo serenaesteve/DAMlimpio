@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Calendario</title>
+    <style>
+      #jvcalendario .mes{display:grid;width:1400px;grid-template-columns:repeat(7,100fr);}
+      #jvcalendario .mes .dia{border:1px solid lightgray;height:250px;padding:10px;font-size:10px;display:flex;flex-direction:column;justify-content:space-between;}
+      #jvcalendario .mes .dia .hora{border-bottom:1px solid lightgray;display:flex;gap:20px;}
+      #jvcalendario .mes .desactivado{background:lightgrey;}
+      #jvcalendario .mes .dia .hora:nth-child(even){background:rgb(240,240,240);}
+      #jvcalendario .mes .dia .hora .evento{color:white;padding:5px;border-radius:5px;width:80%;}
+      .boton{border:0px;border-radius:5px;background:lightgray;padding:10px 20px;}
+      .personal{background:red;color:white;}
+      .laboral{background:green;color:white;}
+      .vacaciones{background:blue;color:white;}
+    </style>
+  </head>
+  <body>
+    <button id="guardar">Guardar</button>
+    <button class="boton personal">personal</button>
+    <button class="boton laboral">laboral</button>
+    <button class="boton vacaciones">vacaciones</button>
+
+    <div id="jvcalendario"></div>
+
+    <script>
+      function bindEvento(el){
+        el.addEventListener("click", function(e){
+          e.stopPropagation();
+        });
+      }
+
+      function diasEnMes(year, month) {
+        return new Date(year, month, 0).getDate();
+      }
+      function primerDiaDelMes(year, month) {
+        return new Date(year, month - 1, 1).getDay();
+      }
+
+      
+      function leerEventosSeguro(clave) {
+        const raw = localStorage.getItem(clave);
+        if (!raw) return [];
+        try {
+          const data = JSON.parse(raw);
+          return Array.isArray(data) ? data : [];
+        } catch (e) {
+          console.error("Error parseando JSON de localStorage:", e);
+          return [];
+        }
+      }
+
+     
+      function pintarEvento(ev) {
+        const selector = `.hora[anio="${ev.anio}"][mes="${ev.mes}"][dia="${ev.dia}"][hora="${ev.hora}"]`;
+        const slotHora = document.querySelector(selector);
+        if (!slotHora) return;
+
+        // Evitar duplicados
+        if (slotHora.querySelector(".evento")) return;
+
+        const evento = document.createElement("div");
+        evento.classList.add("evento");
+        if (ev.tipo) evento.classList.add(ev.tipo);
+
+        evento.setAttribute("anio", ev.anio);
+        evento.setAttribute("mes", ev.mes);
+        evento.setAttribute("dia", ev.dia);
+        evento.setAttribute("hora", ev.hora);
+
+        evento.setAttribute("contenteditable", true);
+        evento.textContent = ev.texto || "";
+
+        slotHora.appendChild(evento);
+        bindEvento(evento);
+      }
+
+      
+      let boton = document.querySelector("#guardar");
+      boton.onclick = function(){
+        let eventos = document.querySelectorAll(".evento");
+        let json = [];
+
+        eventos.forEach(function(evento){
+          const texto = evento.textContent.trim();
+          if (texto === "") return;
+
+          json.push({
+            anio: Number(evento.getAttribute("anio")),
+            mes:  Number(evento.getAttribute("mes")),
+            dia:  Number(evento.getAttribute("dia")),
+            hora: Number(evento.getAttribute("hora")),
+            tipo: evento.classList.contains("personal") ? "personal"
+                 : evento.classList.contains("laboral") ? "laboral"
+                 : evento.classList.contains("vacaciones") ? "vacaciones"
+                 : "",
+            texto: texto
+          });
+        });
+
+        localStorage.setItem("jvcalendario", JSON.stringify(json));
+        console.log("Guardado OK:", json);
+      };
+
+      
+      let calendario_activo = "personal";
+      let botones_calendario = document.querySelectorAll(".boton");
+      botones_calendario.forEach(function(boton){
+        boton.onclick = function(){
+          calendario_activo = this.textContent.trim();
+        };
+      });
+
+      
+      let contenedor = document.querySelector("#jvcalendario");
+      let anio = 2026;
+      let meses = 12;
+      let nombres_meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
+      'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+      for(let i = 1; i <= meses; i++){
+        let dias_en_mes = diasEnMes(anio, i);
+
+        let titulo = document.createElement("h3");
+        titulo.textContent = nombres_meses[i-1];
+        contenedor.appendChild(titulo);
+
+        let mes = document.createElement("div");
+        mes.classList.add("mes");
+        mes.setAttribute("mes", nombres_meses[i-1]);
+
+        let inicio_mes = primerDiaDelMes(anio, i) + 6;
+
+        for(let j = 1; j <= inicio_mes; j++){
+          let dia = document.createElement("div");
+          dia.classList.add("dia", "desactivado");
+          mes.appendChild(dia);
+        }
+
+        for(let j = 1; j <= dias_en_mes; j++){
+          let dia = document.createElement("div");
+          dia.classList.add("dia");
+          dia.textContent = j;
+
+          for(let k = 8; k <= 21; k++){
+            let hora = document.createElement("div");
+            hora.classList.add("hora");
+
+            
+            hora.setAttribute("anio", anio);
+            hora.setAttribute("mes", i);
+            hora.setAttribute("dia", j);
+            hora.setAttribute("hora", k);
+
+            hora.textContent = k;
+
+            hora.onclick = function(){
+              // Evitar duplicados en el slot
+              const existente = hora.querySelector(".evento");
+              if (existente) {
+                existente.focus();
+                return;
+              }
+
+              let evento = document.createElement("div");
+              evento.setAttribute("anio", anio);
+              evento.setAttribute("mes", i);
+              evento.setAttribute("dia", j);
+              evento.setAttribute("hora", k);
+
+              evento.classList.add("evento", calendario_activo);
+              evento.setAttribute("contenteditable", true);
+
+              hora.appendChild(evento);
+              bindEvento(evento);
+              evento.focus();
+            };
+
+            dia.appendChild(hora);
+          }
+
+          mes.appendChild(dia);
+        }
+
+        contenedor.appendChild(mes);
+      }
+
+      
+      const eventosRecuperados = leerEventosSeguro("jvcalendario");
+      eventosRecuperados.forEach(pintarEvento);
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,100 @@
+Actividad: Codificación y Decodificación de Textos
+Contexto
+En este ejercicio, vamos a explorar cómo manipular cadenas de caracteres utilizando Python. Aprenderás cómo recorrer una cadena, convertir letras en valores ASCII y viceversa, así como codificar y decodificar mensajes. Este tipo de operaciones son fundamentales para muchas aplicaciones, desde el cifrado básico hasta la manipulación de datos en sistemas informáticos.
+
+Enunciado paso a paso
+Recorrer una cadena:
+
+Crea una variable texto con tu nombre completo o cualquier otro texto que te guste.
+Escribe un bucle for para recorrer cada letra del texto y imprimirla en pantalla.
+Convertir letras a ASCII:
+
+Utiliza la función ord() para convertir la primera letra de tu cadena (texto[0]) a su valor ASCII.
+Imprime el valor ASCII correspondiente.
+Codificar un mensaje:
+
+Crea una clase llamada Codificador con un método codifica(self, cadena) que codifique una cadena sumando 5 al valor ASCII de cada letra.
+Utiliza este método para codificar tu nombre completo o cualquier otro texto que desees.
+Descodificar un mensaje:
+
+Modifica el método codifica en la clase Codificador para que también permita decodificar mensajes restando 5 al valor ASCII de cada letra.
+Utiliza este método para descodificar un mensaje codificado previamente.
+Restricciones
+Solo puedes utilizar los conceptos y funciones vistos en la lección, como ord(), chr(), bucles for, y clases y métodos propios.
+No se permite el uso de librerías adicionales o estructuras que no hayan sido explicadas en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): El ejercicio debe comenzar con una breve explicación del contexto y los objetivos.
+Desarrollo técnico correcto y preciso (25%): El código debe ser escrito correctamente, utilizando los conceptos aprendidos en clase.
+Aplicación práctica con ejemplo claro (25%): Debe haber ejemplos claros de cómo se aplican los conceptos a problemas reales.
+Cierre/Conclusión enlazando con la unidad (25%): El ejercicio debe finalizar con una conclusión que muestre cómo estos conceptos se relacionan con el tema actual y futuros.
+Recuerda, la práctica es clave para entender y dominar los conceptos de programación. ¡Buena suerte!
+
+
+Respuesta:
+
+En este ejercicio estoy aprendiendo a trabajar con cadenas de texto en Python. Mi objetivo es practicar cómo recorrer un texto letra por letra, convertir caracteres a sus valores ASCII y crear una clase que pueda codificar y decodificar mensajes. Todavía estoy empezando a programar, así que este trabajo me ayuda a entender mejor cómo funcionan los caracteres dentro del ordenador y cómo puedo modificarlos usando instrucciones básicas.
+
+1. Recorrer una cadena:
+```
+texto = "Serena Sania"
+
+for letra in texto:
+    print(letra)
+```
+
+Salida del código:
+
+[Running] python -u "c:\Users\Serena\Desktop\recorerunacadena.py"
+S
+e
+r
+e
+n
+a
+ 
+S
+a
+n
+i
+a
+
+2. Covertir la primera letr a ASCII:
+```
+texto = "Serena Sania"
+ascii_primera = ord(texto[0])
+print(ascii_primera)
+```
+
+Salida del código:
+[Running] python -u "c:\Users\Serena\Desktop\convertirprimeraletraaASCII.py"
+83
+
+3. Coodificar , descoodificar:
+```
+class Codificador:
+    def codifica(self, cadena, modo="codificar"):
+        resultado = ""
+        for letra in cadena:
+            if modo == "codificar":
+                nuevo_ascii = ord(letra) + 5
+            else:
+                nuevo_ascii = ord(letra) - 5
+            resultado += chr(nuevo_ascii)
+        return resultado
+
+cod = Codificador()
+
+
+codificado = cod.codifica("Serena Sania", "codificar")
+print(codificado)
+
+decodificado = cod.codifica(codificado, "decodificar")
+print(decodificado)
+```
+
+Salida del código:
+[Running] python -u "c:\Users\Serena\Desktop\clasecodificador.py"
+Xjwjsf%Xfsnf
+Serena Sania
+
+Después de hacer este ejercicio entiendo mejor cómo se pueden transformar los textos usando Python. Ahora sé recorrer una cadena, obtener el código ASCII de un carácter y también crear un pequeño sistema para codificar y decodificar mensajes. Aunque es un ejercicio sencillo, me sirve para practicar lo que estoy aprendiendo y me prepara para trabajar con ideas más avanzadas en el futuro.

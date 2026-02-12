@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<persona>
+  <nombre>Serena Sania </nombre>
+  <apellidos>Sania Esteve</apellidos>
+  <email>serenaestvee@gmail.com</email>
+  <fechaNacimiento>2003-06-05</fechaNacimiento>
+  <direccion>Calle Palleter 10</direccion>
+  <codigopostal>46920</codigopostal>
+</persona>

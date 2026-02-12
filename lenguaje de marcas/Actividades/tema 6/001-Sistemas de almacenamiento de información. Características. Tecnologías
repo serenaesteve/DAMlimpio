@@ -1,0 +1,407 @@
+Ejercicio práctico: Gestión de discos
+En este ejercicio, vamos a crear una aplicación web sencilla para gestionar una colección de discos musicales utilizando PHP y MySQL. Esta aplicación permitirá insertar nuevos discos, listar todos los discos y eliminar discos existentes.
+
+1. Crear la base de datos
+Primero, debes crear la base de datos discos con las tablas necesarias. Utiliza el siguiente script SQL:
+
+CREATE DATABASE discos
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE discos;
+
+CREATE TABLE discos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    artista VARCHAR(255) NOT NULL,
+    anio INT,
+    genero VARCHAR(100),
+    duracion_minutos INT,
+    fecha_compra DATE,
+    precio DECIMAL(6,2)
+);
+
+INSERT INTO discos (titulo, artista, anio, genero, duracion_minutos, fecha_compra, precio)
+VALUES 
+('The Dark Side of the Moon', 'Pink Floyd', 1973, 'Rock Progresivo', 43, '2024-01-15', 12.95),
+('Thriller', 'Michael Jackson', 1982, 'Pop', 42, '2023-11-01', 9.99),
+('Back in Black', 'AC/DC', 1980, 'Rock', 41, '2024-02-10', 11.50),
+('Nevermind', 'Nirvana', 1991, 'Grunge', 49, '2024-03-05', 10.00),
+('Rumours', 'Fleetwood Mac', 1977, 'Soft Rock', 39, '2024-01-20', 8.75);
+2. Crear la interfaz de usuario
+Crea un archivo HTML llamado discos.html con el siguiente contenido:
+
+<!doctype html>
+<html>
+  <head>
+    <title>💿 Aplicación de gestión de discos</title>
+  </head>
+  <body>
+    <h1>💿 Aplicación de gestión de discos</h1>
+    <form action="insertadisco.php" method="POST">
+      <input type="text" name="titulo" placeholder="Título del disco">
+      <input type="text" name="artista" placeholder="Artista">
+      <input type="number" name="anio" placeholder="Año de lanzamiento">
+      <input type="text" name="genero" placeholder="Género musical">
+      <input type="number" name="duracion_minutos" placeholder="Duración (min)">
+      <input type="date" name="fecha_compra" placeholder="Fecha de compra">
+      <input type="number" name="precio" step="0.01" placeholder="Precio">
+      <input type="submit">
+    </form>
+  </body>
+</html>
+3. Procesar la inserción de discos
+Crea un archivo PHP llamado insertadisco.php con el siguiente contenido:
+
+<?php
+$mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+$sql = "
+  INSERT INTO discos (titulo, artista, anio, genero, duracion_minutos, fecha_compra, precio)
+  VALUES (
+    '" . $_POST['titulo'] . "',
+    '" . $_POST['artista'] . "',
+    " . intval($_POST['anio']) . ",
+    '" . $_POST['genero'] . "',
+    " . intval($_POST['duracion_minutos']) . ",
+    '" . $_POST['fecha_compra'] . "',
+    " . floatval($_POST['precio']) . "
+  );
+";
+
+if ($mysqli->query($sql) === TRUE) {
+    echo "Disco insertado con éxito";
+} else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+}
+
+$mysqli->close();
+?>
+4. Listar los discos
+Crea un archivo PHP llamado listardiscos.php con el siguiente contenido:
+
+<?php
+$mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+$sql = "SELECT * FROM discos";
+$result = $mysqli->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table border='1'>";
+    echo "<tr><th>ID</th><th>Título</th><th>Artista</th><th>Año</th><th>Género</th><th>Duración (min)</th><th>Fecha de compra</th><th>Precio</th></tr>";
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["titulo"] . "</td>";
+        echo "<td>" . $row["artista"] . "</td>";
+        echo "<td>" . $row["anio"] . "</td>";
+        echo "<td>" . $row["genero"] . "</td>";
+        echo "<td>" . $row["duracion_minutos"] . "</td>";
+        echo "<td>" . $row["fecha_compra"] . "</td>";
+        echo "<td>" . $row["precio"] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+
+$mysqli->close();
+?>
+5. Eliminar discos
+Crea un archivo PHP llamado eliminardisco.php con el siguiente contenido:
+
+<?php
+if(isset($_GET['id'])){
+    $mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    $sql = "DELETE FROM discos WHERE id = " . intval($_GET['id']);
+
+    if ($mysqli->query($sql) === TRUE) {
+        echo "Disco eliminado con éxito";
+    } else {
+        echo "Error: " . $sql . "<br>" . $mysqli->error;
+    }
+
+    $mysqli->close();
+}
+?>
+6. Integrar los archivos
+Finalmente, integra todos estos archivos en un solo archivo HTML llamado index.php:
+
+<!doctype html>
+<html>
+  <head>
+    <title>💿 Aplicación de gestión de discos</title>
+  </head>
+  <body>
+    <h1>💿 Aplicación de gestión de discos</h1>
+    <form action="insertadisco.php" method="POST">
+      <input type="text" name="titulo" placeholder="Título del disco">
+      <input type="text" name="artista" placeholder="Artista">
+      <input type="number" name="anio" placeholder="Año de lanzamiento">
+      <input type="text" name="genero" placeholder="Género musical">
+      <input type="number" name="duracion_minutos" placeholder="Duración (min)">
+      <input type="date" name="fecha_compra" placeholder="Fecha de compra">
+      <input type="number" name="precio" step="0.01" placeholder="Precio">
+      <input type="submit">
+    </form>
+    <?php include 'listardiscos.php'; ?>
+  </body>
+</html>
+Cierre
+En esta actividad, hemos creado una aplicación sencilla para gestionar discos musicales utilizando PHP y MySQL. El alumno ha aprendido a crear la base de datos, procesar inserciones, listar registros y eliminar registros. Este ejercicio práctico integra los conceptos teóricos impartidos en clase con un ejemplo claro y aplicable.
+
+
+
+Respuesta:
+
+
+En esta práctica he hecho una aplicación web sencilla para gestionar discos musicales usando PHP y MySQL. El objetivo era aprender a trabajar con una base de datos desde una página web, y poder hacer cosas básicas como insertar discos, ver los discos guardados y eliminar discos.
+
+Para ello he creado una base de datos llamada discos y una tabla también llamada discos, con campos como el título, artista, año, género, duración, fecha de compra y precio. Después he creado los archivos que pide el ejercicio, como index.php, insertadisco.php, listardiscos.php y eliminardisco.php, para que el programa funcionara.
+
+Cuando ya tenía los archivos creados, tuve que ejecutar el proyecto en Linux y ahí me surgieron varios errores que he ido solucionando poco a poco.
+
+
+
+Terminal:
+
+serena@serena-portatil:~$ sudo mysql -u root
+[sudo] contraseña para serena: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.44-0ubuntu0.24.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE discos
+    ->     CHARACTER SET utf8mb4
+    ->     COLLATE utf8mb4_unicode_ci;
+Query OK, 1 row affected (0,01 sec)
+
+mysql> USE discos;
+Database changed
+mysql> CREATE TABLE discos (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     titulo VARCHAR(255) NOT NULL,
+    ->     artista VARCHAR(255) NOT NULL,
+    ->     anio INT,
+    ->     genero VARCHAR(100),
+    ->     duracion_minutos INT,
+    ->     fecha_compra DATE,
+    ->     precio DECIMAL(6,2)
+    -> );
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> INSERT INTO discos (titulo, artista, anio, genero, duracion_minutos, fecha_compra, precio)
+    -> VALUES 
+    -> ('The Dark Side of the Moon', 'Pink Floyd', 1973, 'Rock Progresivo', 43, '2024-01-15', 12.95),
+    -> ('Thriller', 'Michael Jackson', 1982, 'Pop', 42, '2023-11-01', 9.99),
+    -> ('Back in Black', 'AC/DC', 1980, 'Rock', 41, '2024-02-10', 11.50),
+    -> ('Nevermind', 'Nirvana', 1991, 'Grunge', 49, '2024-03-05', 10.00),
+    -> ('Rumours', 'Fleetwood Mac', 1977, 'Soft Rock', 39, '2024-01-20', 8.75);
+Query OK, 5 rows affected (0,04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> 
+
+
+discos.html
+```
+<!doctype html>
+<html>
+  <head>
+    <title>💿 Aplicación de gestión de discos</title>
+  </head>
+  <body>
+    <h1>💿 Aplicación de gestión de discos</h1>
+    <form action="insertadisco.php" method="POST">
+      <input type="text" name="titulo" placeholder="Título del disco">
+      <input type="text" name="artista" placeholder="Artista">
+      <input type="number" name="anio" placeholder="Año de lanzamiento">
+      <input type="text" name="genero" placeholder="Género musical">
+      <input type="number" name="duracion_minutos" placeholder="Duración (min)">
+      <input type="date" name="fecha_compra" placeholder="Fecha de compra">
+      <input type="number" name="precio" step="0.01" placeholder="Precio">
+      <input type="submit">
+    </form>
+  </body>
+</html>
+```
+
+
+elimiardisco.php:
+```
+<?php
+if(isset($_GET['id'])){
+    $mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    $sql = "DELETE FROM discos WHERE id = " . intval($_GET['id']);
+
+    if ($mysqli->query($sql) === TRUE) {
+        echo "Disco eliminado con éxito";
+    } else {
+        echo "Error: " . $sql . "<br>" . $mysqli->error;
+    }
+
+    $mysqli->close();
+}
+?>
+```
+
+index.php:
+```
+<!doctype html>
+<html>
+  <head>
+    <title>💿 Aplicación de gestión de discos</title>
+  </head>
+  <body>
+    <h1>💿 Aplicación de gestión de discos</h1>
+    <form action="insertadisco.php" method="POST">
+      <input type="text" name="titulo" placeholder="Título del disco">
+      <input type="text" name="artista" placeholder="Artista">
+      <input type="number" name="anio" placeholder="Año de lanzamiento">
+      <input type="text" name="genero" placeholder="Género musical">
+      <input type="number" name="duracion_minutos" placeholder="Duración (min)">
+      <input type="date" name="fecha_compra" placeholder="Fecha de compra">
+      <input type="number" name="precio" step="0.01" placeholder="Precio">
+      <input type="submit">
+    </form>
+    <?php include 'listardiscos.php'; ?>
+  </body>
+</html>
+```
+
+
+insertadisco.php
+```
+<?php
+$mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+$sql = "
+  INSERT INTO discos (titulo, artista, anio, genero, duracion_minutos, fecha_compra, precio)
+  VALUES (
+    '" . $_POST['titulo'] . "',
+    '" . $_POST['artista'] . "',
+    " . intval($_POST['anio']) . ",
+    '" . $_POST['genero'] . "',
+    " . intval($_POST['duracion_minutos']) . ",
+    '" . $_POST['fecha_compra'] . "',
+    " . floatval($_POST['precio']) . "
+  );
+";
+
+if ($mysqli->query($sql) === TRUE) {
+    echo "Disco insertado con éxito";
+} else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+}
+
+$mysqli->close();
+?>
+```
+
+
+listardiscos.php
+```
+<?php
+$mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+$sql = "SELECT * FROM discos";
+$result = $mysqli->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table border='1'>";
+    echo "<tr><th>ID</th><th>Título</th><th>Artista</th><th>Año</th><th>Género</th><th>Duración (min)</th><th>Fecha de compra</th><th>Precio</th></tr>";
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["titulo"] . "</td>";
+        echo "<td>" . $row["artista"] . "</td>";
+        echo "<td>" . $row["anio"] . "</td>";
+        echo "<td>" . $row["genero"] . "</td>";
+        echo "<td>" . $row["duracion_minutos"] . "</td>";
+        echo "<td>" . $row["fecha_compra"] . "</td>";
+        echo "<td>" . $row["precio"] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+
+$mysqli->close();
+?>
+```
+
+Terminal:
+<?php
+$mysqli = new mysqli("localhost", "discos", "discos", "discos");
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+$sql = "SELECT * FROM discos";
+$result = $mysqli->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table border='1'>";
+    echo "<tr><th>ID</th><th>Título</th><th>Artista</th><th>Año</th><th>Género</th><th>Duración (min)</th><th>Fecha de compra</th><th>Precio</th></tr>";
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["titulo"] . "</td>";
+        echo "<td>" . $row["artista"] . "</td>";
+        echo "<td>" . $row["anio"] . "</td>";
+        echo "<td>" . $row["genero"] . "</td>";
+        echo "<td>" . $row["duracion_minutos"] . "</td>";
+        echo "<td>" . $row["fecha_compra"] . "</td>";
+        echo "<td>" . $row["precio"] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+
+$mysqli->close();
+?>
+
+Al principio no sabía cómo ejecutar el programa, pero al final he conseguido hacerlo usando el comando php -S localhost:8000. El primer problema fue que no encontraba la página porque había cerrado el servidor. Luego me salía un error porque no tenía instalado mysqli en PHP, así que tuve que instalarlo con php-mysql. Después me daba un error de permisos porque el usuario discos no podía acceder a la base de datos, y lo solucioné creando el usuario y dándole permisos.
+
+Finalmente, cuando todo estaba correcto, ya pude abrir index.php desde el navegador y vi que el formulario funcionaba bien. Probé a insertar discos y se guardaban correctamente en la base de datos, y también se mostraban en la tabla en la misma página. Para borrar discos, usé el archivo eliminardisco.php y luego lo cambié para que al eliminar volviera automáticamente al index.php.
+
+Con esta práctica he aprendido a conectar PHP con MySQL, a insertar y mostrar datos desde una base de datos y a solucionar errores comunes como problemas de conexión, permisos o extensiones de PHP.

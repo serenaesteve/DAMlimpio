@@ -1,0 +1,88 @@
+Título
+Elaboración y Uso de Clases en Python
+
+Contexto
+En este ejercicio práctico, vamos a trabajar con una clase Cliente que representa un cliente en un sistema de gestión. Este ejemplo te ayudará a entender cómo crear clases, definir atributos y métodos, y usarlas en tu código.
+
+Algunos de tus hobbies como jugar videojuegos o explorar la naturaleza pueden requerir manejo de datos similares. Imagina que estás desarrollando un juego de mesa donde cada jugador es un cliente con sus propiedades (nombre, apellidos, etc.). Es útil tener una clase para representar a estos jugadores.
+
+Enunciado paso a paso
+Definición de la Clase Cliente:
+
+Crea una clase llamada Cliente que tenga los siguientes atributos:
+id
+nombre
+apellidos
+email
+direccion
+Asegúrate de definir un constructor (__init__) para inicializar estos atributos.
+Método __repr__:
+
+Implementa el método __repr__ para que devuelva una representación en cadena de tu objeto Cliente. Esto es útil para depuración y visualización.
+Uso de la Clase:
+
+Crea un ejemplo de cómo crear un objeto Cliente y mostrarlo utilizando el método __repr__.
+Restricciones
+Solo puedes usar los conceptos y tecnologías que se han enseñado en clase.
+No utilices librerías externas o estructuras no vistas.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El ejercicio debe comenzar con una breve introducción a la clase Cliente y cómo se relaciona con tus hobbies.
+Desarrollo técnico correcto y preciso (25%)
+
+La definición de la clase Cliente debe ser precisa y seguir los requisitos especificados.
+El método __repr__ debe funcionar correctamente.
+Aplicación práctica con ejemplo claro (25%)
+
+Debe haber un ejemplo práctico de cómo crear y usar el objeto Cliente.
+La representación en cadena del objeto debe ser clara y útil.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe terminar con una conclusión que relate lo aprendido con tus hobbies o experiencias personales.
+
+
+Respuesta:
+
+En esta actividad estoy aprendiendo a crear y usar clases en Python. Para ello trabajo con una clase llamada Cliente, que representa a una persona dentro de un sistema de gestión. Este ejercicio me ayuda a entender mejor cómo organizar datos usando programación orientada a objetos.
+​
+Esto se relaciona con mis hobbies, como jugar a videojuegos o explorar la naturaleza, ya que en muchos juegos o actividades es necesario guardar información de los jugadores o participantes, como su nombre o su dirección. Usar una clase facilita mucho este trabajo.
+​
+```
+class Cliente:
+    def __init__(self, id, nombre, apellidos, email, direccion):
+        self.id = id
+        self.nombre = nombre
+        self.apellidos = apellidos
+        self.email = email
+        self.direccion = direccion
+​
+    def __repr__(self):
+        return (
+            "Cliente(id=" + str(self.id) +
+            ", nombre=" + self.nombre +
+            ", apellidos=" + self.apellidos +
+            ", email=" + self.email +
+            ", direccion=" + self.direccion + ")"
+        )
+​
+cliente1 = Cliente(
+    1,
+    "Serena",
+    "Sania Esteve",
+    "serena@gmail.com",
+    "Calle Castellon 25"
+)
+​
+print(cliente1)
+```
+​
+Consola:
+```
+serena@serena-portatil:/var/www/html/DAM/DAM1/Entornos/Actividades$ python3 clientes.py
+Cliente(id=1, nombre=Serena, apellidos=Sania Esteve, email=serena@gmail.com, direccion=Calle Castellon 25)
+```
+​
+Con este ejercicio aprendo a crear una clase en Python y a usar un constructor para inicializar sus atributos. También entiendo para qué sirve el método __repr__, ya que permite mostrar la información del objeto de forma clara.
+​
+Este tema se relaciona con la unidad porque me ayuda a organizar mejor los datos en un programa. Además, puedo aplicar lo aprendido en situaciones reales, como crear jugadores para un juego, gestionar clientes o registrar personas en una actividad al aire libre o una expedición.

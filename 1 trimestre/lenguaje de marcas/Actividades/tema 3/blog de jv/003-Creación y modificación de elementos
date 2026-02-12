@@ -1,0 +1,310 @@
+Para practicar la manipulación de elementos en documentos web, sigue estos pasos:
+
+Clona la plantilla: Abre el archivo 011-ahora clono la plantilla.html y realiza una copia del contenido dentro de un nuevo archivo llamado mi_blog.html. Asegúrate de mantener la estructura general del documento.
+
+Personaliza las propiedades: En el archivo mi_blog.html, abre la sección <head> y añade los siguientes metadatos para mejorar la accesibilidad:
+
+<meta name="description" content="El blog de Jose Vicente">
+<meta name="keywords" content="blog, noticias, tecnología">
+Añade estilos CSS: Para darle un aspecto más atractivo, abre el archivo mi_blog.html y añade los siguientes estilos en la sección <head>:
+
+<style>
+  body {background: lightgray; font-family: sans-serif;}
+  header, footer, main {background: white; padding: 20px; margin: auto; width: 600px;}
+  header, footer {text-align: center;}
+  main {display: grid; grid-template-columns: auto auto auto; gap: 20px;}
+  article img {width: 100%; border-radius: 5px;}
+</style>
+Crea artículos dinámicos: Utiliza la plantilla definida en el archivo mi_blog.html para crear artículos dinámicamente desde un archivo JSON llamado blog.json. Asegúrate de que los datos se carguen correctamente y que se muestren en la página.
+
+Mueve elementos: En el archivo mi_blog.html, añade JavaScript para mover elementos del div con id origen al div con id destino. Utiliza la función appendChild() para lograr esto.
+
+Personaliza el contenido del clon: Abre el archivo 012-personalizo el contenido del clon.html y realiza una copia del contenido dentro de un nuevo archivo llamado mi_blog_personalizado.html. En este archivo, modifica los elementos para que reflejen tus intereses personales, como los juegos de mesa o la naturaleza. Por ejemplo:
+
+<article>
+  <h1>Juego de mesa: Settlers of Catan</h1>
+  <time>Fecha de publicación: 2025-10-13</time>
+  <p>Settlers of Catan es un juego de mesa de estrategia que combina elementos de construcción, comercio y exploración.</p>
+  <img src="josevicente.jpg" alt="Settlers of Catan">
+</article>
+Añade otro elemento: Abre el archivo 012-personalizo el contenido del clon.html y realiza una copia del contenido dentro de un nuevo archivo llamado mi_blog_con_otro_elemento.html. En este archivo, añade otro tipo de contenido que te interese, como información sobre animales o libros.
+
+Asegúrate de guardar todos los cambios y probar tu página en un navegador para ver cómo se renderizan los elementos.
+
+
+
+
+Respuesta:
+
+
+n esta actividad aprendí a trabajar con archivos HTML, CSS y JavaScript para crear mi propio blog.
+Empecé clonando una plantilla y después le añadí metadatos, estilos y contenido nuevo.
+También practiqué cómo usar un archivo JSON para mostrar artículos dentro de la página y cómo mover elementos con JavaScript usando la función appendChild().
+Fue interesante ver cómo los datos del JSON se pueden mostrar automáticamente en la web.
+
+
+
+mi_blog.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="El blog de Jose Vicente">
+    <meta name="keywords" content="blog, noticias, tecnología">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog</title>
+    <style>
+      body {background: lightgray; font-family: sans-serif;}
+      header, footer, main {background: white; padding: 20px; margin: auto; width: 600px;}
+      header, footer {text-align: center;}
+      main {display: grid; grid-template-columns: auto auto auto; gap: 20px;}
+      article img {width: 100%; border-radius: 5px;}
+    </style>
+  </head>
+  <body> 
+    <header>
+      <h1>El blog de Jose Vicente</h1>
+      <h2>Mis últimas noticias</h2>
+    </header>
+
+    <main></main>
+
+    <footer>
+      (c) 2025 Jose Vicente Carratalá
+    </footer>
+
+    <!-- Plantilla para los artículos -->
+    <template id="articulo">
+      <article>
+        <h1>Título de prueba</h1>
+        <time>Fecha de prueba</time>
+        <p>Texto de prueba</p>
+        <img src="" alt="">
+      </article>
+    </template>
+
+    <!-- Divs para mover elementos -->
+    <div id="origen">
+      <p>Este contenido será movido.</p>
+    </div>
+    <div id="destino"></div>
+
+    <!-- Script para cargar JSON -->
+    <script>
+      fetch("blog.json")
+        .then(function(resultado) {
+          return resultado.json();
+        })
+        .then(function(datos) {
+          console.log(datos);
+          var contenedor = document.querySelector("main");
+          var plantilla = document.querySelector("#articulo");
+          
+          datos.forEach(function(articulo) {
+            let clon = plantilla.content.cloneNode(true);
+            clon.querySelector("h1").textContent = articulo.titulo;
+            clon.querySelector("time").textContent = articulo.fecha;
+            clon.querySelector("p").textContent = articulo.texto;
+            clon.querySelector("img").src = articulo.imagen;
+            clon.querySelector("img").alt = articulo.titulo;
+            contenedor.appendChild(clon);
+          });
+        })
+        .catch(error => console.error("Error al cargar el JSON:", error));
+    </script>
+
+   
+    <script>
+      const origen = document.getElementById("origen");
+      const destino = document.getElementById("destino");
+
+      // Mueve todos los hijos de "origen" a "destino"
+      while (origen.firstChild) {
+        destino.appendChild(origen.firstChild);
+      }
+    </script>
+  </body>
+</html>
+```
+
+mi_blog_personalizado.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="El blog de Jose Vicente">
+    <meta name="keywords" content="blog, noticias, animales, libros">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog con Otro Elemento</title>
+
+    <style>
+      body {
+        background: lightgray;
+        font-family: sans-serif;
+      }
+      header, footer, main {
+        background: white;
+        padding: 20px;
+        margin: auto;
+        width: 600px;
+      }
+      header, footer {
+        text-align: center;
+      }
+      main {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 20px;
+      }
+      article img {
+        width: 100%;
+        border-radius: 5px;
+      }
+      section {
+        background: white;
+        padding: 20px;
+        margin: 20px auto;
+        width: 600px;
+        border-radius: 10px;
+      }
+      section img {
+        width: 100%;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>El blog de Jose Vicente</h1>
+      <h2>Mis últimas noticias</h2>
+    </header>
+
+    <main></main>
+
+    <footer>
+      (c) 2025 Jose Vicente Carratalá
+    </footer>
+
+    
+    <template id="articulo">
+      <article>
+        <h1>Título de prueba</h1>
+        <time>Fecha de prueba</time>
+        <p>Texto de prueba</p>
+        <img src="josevicente.jpg" alt="Imagen de prueba">
+      </article>
+    </template>
+
+   
+    <section id="extra">
+      <h2>Recomendación: Libro sobre naturaleza</h2>
+      <p>Explora el fascinante mundo de los ecosistemas con este libro lleno de imágenes y curiosidades.</p>
+      <img src="libro-naturaleza.jpg" alt="Libro sobre naturaleza">
+    </section>
+
+    
+    <script>
+      fetch("blog.json")
+        .then(function(resultado) {
+          return resultado.json();
+        })
+        .then(function(datos) {
+          console.log(datos);
+          var contenedor = document.querySelector("main");
+          var plantilla = document.querySelector("#articulo");
+
+          datos.forEach(function(articulo) {
+            let clon = plantilla.content.cloneNode(true);
+            clon.querySelector("h1").textContent = articulo.titulo;
+            clon.querySelector("time").textContent = articulo.fecha;
+            clon.querySelector("p").textContent = articulo.texto;
+            clon.querySelector("img").src = articulo.imagen;
+            clon.querySelector("img").alt = articulo.titulo;
+            contenedor.appendChild(clon);
+          });
+        })
+        .catch(error => console.error("Error al cargar el JSON:", error));
+    </script>
+  </body>
+</html>
+```
+
+
+mi_blog_personalizado.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="El blog de Jose Vicente">
+    <meta name="keywords" content="blog, juegos de mesa, estrategia, ocio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog Personalizado</title>
+    <style>
+      body {background: lightgray; font-family: sans-serif;}
+      header, footer, main {background: white; padding: 20px; margin: auto; width: 600px;}
+      header, footer {text-align: center;}
+      main {display: grid; grid-template-columns: auto auto auto; gap: 20px;}
+      article img {width: 100%; border-radius: 5px;}
+    </style>
+  </head>
+
+  <body> 
+    <header>
+      <h1>El blog de Jose Vicente</h1>
+      <h2>Mis artículos sobre juegos de mesa</h2>
+    </header>
+
+    <main></main>
+
+    <footer>
+      (c) 2025 Jose Vicente Carratalá
+    </footer>
+
+    
+    <template id="articulo">
+      <article>
+        <h1>Juego de mesa: Settlers of Catan</h1>
+        <time>Fecha de publicación: 2025-10-13</time>
+        <p>Settlers of Catan es un juego de mesa de estrategia que combina elementos de construcción, comercio y exploración.</p>
+        <img src="josevicente.jpg" alt="Settlers of Catan">
+      </article>
+    </template>
+
+    
+    <script>
+      fetch("blog.json")
+        .then(function(resultado) {
+          return resultado.json();
+        })
+        .then(function(datos) {
+          console.log(datos);
+          var contenedor = document.querySelector("main");
+          var plantilla = document.querySelector("#articulo");
+          
+          datos.forEach(function(articulo) {
+           
+            let clon = plantilla.content.cloneNode(true);
+            
+            clon.querySelector("h1").textContent = articulo.titulo;
+            clon.querySelector("time").textContent = articulo.fecha;
+            clon.querySelector("p").textContent = articulo.texto;
+            clon.querySelector("img").src = articulo.imagen;
+            clon.querySelector("img").alt = articulo.titulo;
+            
+            contenedor.appendChild(clon);
+          });
+        })
+        .catch(error => console.error("Error al cargar el JSON:", error));
+    </script>
+  </body>
+</html>
+```
+
+Con esta práctica entendí mejor cómo se conectan HTML, CSS y JavaScript para crear una página web.
+Aprendí a usar plantillas, a cambiar el contenido y a cargar información desde un archivo externo.
+Además, vi que para poder leer un JSON desde el navegador hay que usar un servidor local.
+Basicamente, a sido una actividad útil para entender mejor cómo funcionan las páginas web y cómo puedo personalizarlas a mi gusto.

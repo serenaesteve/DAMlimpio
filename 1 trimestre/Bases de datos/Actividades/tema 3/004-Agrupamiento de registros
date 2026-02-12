@@ -1,0 +1,78 @@
+Contexto
+En un campo donde la naturaleza y los juegos de mesa son pasatiempos populares, hay una empresa que vende productos relacionados con estos hobbies. La empresa ha decidido almacenar toda esta información en una base de datos para facilitar su gestión.
+
+Enunciado paso a paso
+Crear la tabla productos:
+
+Crear una tabla llamada productos que contenga las siguientes columnas: id, nombre, precio, categoria.
+La columna id será la clave primaria y será de tipo entero.
+La columna nombre almacenará el nombre del producto, será de tipo texto y no nula.
+La columna precio almacenará el precio del producto, será de tipo decimal y no nula.
+La columna categoria almacenará la categoría del producto (por ejemplo, "juegos de mesa" o "naturaleza"), será de tipo texto.
+Ingresar productos:
+
+Insertar al menos 5 productos en la tabla productos. Algunos ejemplos podrían ser: un tablero de ajedrez, una mochila para senderismo, un libro sobre animales, una película sobre el campo y una función de videojuegos.
+Consultas agrupadas:
+
+Realizar una consulta que muestre cuántos productos hay en cada categoría.
+La consulta debe agrupar los resultados por la columna categoria.
+Restricciones
+No usar librerías externas ni estructuras no vistas hasta el momento del curso.
+Solo utilizar los conceptos y funciones vistos en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe mostrar una comprensión clara del contexto y cómo se aplican los conocimientos adquiridos a la situación real.
+Desarrollo técnico correcto y preciso (25%): La tabla productos debe ser creada correctamente con las columnas especificadas, y las consultas deben estar bien formuladas y ejecutarse sin errores.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe insertar los productos correctamente en la base de datos y realizar la consulta agrupada para demostrar su comprensión del concepto.
+Cierre/Conclusión enlazando con la unidad (25%): La actividad debe terminar con una conclusión que haga referencia a cómo estos conocimientos pueden ser aplicados en el mundo real, especialmente en empresas que manejan diversos productos relacionados con pasatiempos populares como juegos de mesa y la naturaleza.
+
+
+
+Respuesta:
+
+
+Una empresa vende productos de naturaleza y juegos de mesa. Para organizar mejor estos productos, usan una base de datos donde guardan el nombre, precio y categoría de cada producto.
+
+Con esta base de datos pueden saber, por ejemplo, cuántos productos hay de cada tipo. Esto ayuda a la empresa a trabajar mejor y tomar decisiones más rápidas.
+
+Aprender a crear tablas, insertar datos y hacer consultas es importante porque muchas empresas usan bases de datos para organizar su información.
+
+1. Creo la base de datos "naturaleza y juegos de mesa":
+```
+CREATE DATABASE naturaleza_y_juegos_de_mesa;
+```
+
+2. Creo la tabla "productos":
+```
+CREATE TABLE productos (
+    id INT PRIMARY KEY,
+    nombre TEXT NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    categoria TEXT
+);
+```
+
+3. Añado productos:
+```
+INSERT INTO productos (id, nombre, precio, categoria)
+VALUES
+(1, 'Tablero de ajedrez', 25.50, 'juegos de mesa'),
+(2, 'Mochila para senderismo', 45.00, 'naturaleza'),
+(3, 'Libro sobre animales', 18.75, 'naturaleza'),
+(4, 'Película sobre el campo', 12.00, 'naturaleza'),
+(5, 'Juego de cartas estratégicas', 30.00, 'juegos de mesa');
+```
+
+4. Hago la consulta para contar productos por categoría:
+```
+SELECT categoria, COUNT(*) AS cantidad_productos
+FROM productos
+GROUP BY categoria;
+```
+
+Juegos de mesa: 2
+Naturaleza: 3
+
+
+Aprender a crear y manejar bases de datos es muy útil en el mundo real. Empresas que venden productos relacionados con juegos de mesa, naturaleza u otros pasatiempos pueden usar estos conocimientos para organizar su información de forma ordenada.
+
+Así, pueden encontrar rápidamente qué productos tienen, saber cuántos hay de cada tipo y tomar mejores decisiones para mejorar su negocio. Por eso, saber crear tablas, insertar datos y hacer consultas es una herramienta clave para muchas empresas hoy en día.

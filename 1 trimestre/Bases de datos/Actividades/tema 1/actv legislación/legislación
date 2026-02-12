@@ -1,0 +1,70 @@
+
+
+Contexto
+En un mundo cada vez más digitalizado, la protección de datos personales se ha convertido en una prioridad crucial. Imagina que eres un jefe de proyecto encargado de gestionar la información personal de los participantes de una gran expedición de naturaleza. Es esencial garantizar que esta información se maneje con el mayor cuidado y respeto, siguiendo las leyes de protección de datos aplicables.
+
+Enunciado paso a paso
+Identificación de variables: Define las siguientes variables en tu proyecto:
+
+nombre_participante (El nombre del participante)
+edad_participante (La edad del participante)
+datos_contacto (Los datos de contacto del participante, como correo electrónico o número de teléfono)
+Contextualización: Crea una función que verifique si la edad del participante es mayor de 18 años para garantizar que pueda acceder a ciertos recursos naturales.
+
+Aplicación práctica: Implementa una subconsulta que busque el nombre y los datos de contacto de todos los participantes mayores de 18 años y muestra un mensaje indicando si pueden acceder o no.
+
+Cierre/Conclusión: Enlaza este ejercicio con la legislación sobre protección de datos, explicando cómo es crucial aplicar las leyes en proyectos reales para proteger la privacidad de los usuarios.
+
+Restricciones
+No utilizar funciones externas ni bibliotecas adicionales.
+Solo usar estructuras vistas en clase (variables, funciones básicas, etc.).
+Evitar el uso de input() o lectura de teclado.
+Criterios de evaluación
+Introducción y contextualización: El contexto debe ser claro y relevante a la legislación sobre protección de datos.
+Desarrollo técnico correcto y preciso: La implementación de las funciones y subconsultas debe ser precisa y segura.
+Aplicación práctica con ejemplo claro: La aplicación del concepto en un escenario real es crucial para entender su importancia.
+Cierre/Conclusión enlazando con la unidad: El cierre debe enlazar el ejercicio con las leyes de protección de datos y su aplicación práctica.
+
+
+
+respuesta:
+
+
+
+La ley de protección de datos es crucial para cualquier aplicación/web donde vaya a participar gente, ya que los datos personales son un tema bastante delicado ya que a día de hoy con los datos de una persona puedes hacer muchas barabaridades, ya sea con la ia o con cualquier hackeo. Entonces es importante que si tú estás al mando como el jefe del proyecto conozcas bien la ley de proteccion de datos y conocer tus derechos y deberes.
+​
+```
+nombre_participante = "serena"
+edad_participante = 22
+datos_contacto = "serenaestevee@gmail.com"
+​
+def es_mayor_de_edad(edad):
+    if edad >= 18:
+        return True
+    else:
+        return False
+    
+print("Datos del participante:")
+print("Nombre:", nombre_participante)
+print("Edad:", edad_participante)
+print("Contacto:", datos_contacto)
+​
+if es_mayor_de_edad(edad_participante):
+    print("Puede acceder a los recursos naturales.")
+else:
+    print("No puede acceder a los recursos naturales (menor de edad).")
+```
+​
+Resultado codigo:
+​
+Datos del participante:
+Nombre: serena
+Edad: 22
+Contacto: serenaestevee@gmail.com
+Puede acceder a los recursos naturales.
+PS C:\Users\Serena>
+​
+Este ejercicio muestra cómo usar variables y funciones simples para manejar datos personales con cuidado.
+En la vida real, siempre debemos proteger la información de las personas y usarla solo cuando sea necesario.
+​
+El ejercicio está relacionado con las leyes de protección de datos porque cuando se hace una aplicación/web, hay que ser conscientes de que vamos a manejar datos de otras personas y hay que tener mucha conciencia de dicha ley, ya que nos podemos meter en un buen lío si no manejamos bien alguno de esos datos, ya que esos datos son intranferibles.

@@ -1,0 +1,70 @@
+Contexto
+En un proyecto de gestión de tiendas en línea, necesitamos crear consultas SQL para analizar y presentar los datos de nuestros productos. Como parte de esta tarea, vamos a aprender cómo usar alias de columna para mejorar la legibilidad de nuestras consultas. Además, recordemos que es importante mantenernos actualizados con el mundo natural, ya que la programación también puede inspirarse en las cosas que nos rodean.
+
+Enunciado paso a paso
+Introducción al alias de columna:
+
+El alias de columna nos permite asignar un nombre alternativo a una columna en el resultado de una consulta. Esto es útil para mejorar la legibilidad y facilitar el análisis de los datos.
+Ejemplo práctico:
+
+Considere la siguiente tabla productos con los siguientes campos: nombre, precio, peso.
+Necesitamos crear una consulta que muestre el nombre del producto, su precio base imponible y el IVA (21%) aplicado.
+Desarrollo de la consulta:
+
+Utilizaremos alias para nombrar las columnas resultantes de manera más descriptiva.
+La consulta debería incluir los siguientes campos:
+nombre del producto
+precio base imponible
+IVA 21% (precio * 0.21)
+Total Precio (precio + IVA)
+Restricciones
+No utilices funciones de agregación como SUM, COUNT, etc.
+Asegúrate de usar solo los conceptos y operadores que hemos estudiado en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente el propósito del alias de columna y cómo puede ayudar a mejorar la legibilidad de las consultas.
+Desarrollo técnico correcto y preciso (25%): Escribe la consulta SQL correctamente utilizando alias para las columnas resultantes.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo práctico que demuestre cómo usar alias de columna en una consulta real.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye el ejercicio explicando cómo este concepto puede ser aplicado en proyectos futuros y cómo la programación también puede inspirarse en aspectos naturales.
+Alumnado debe completar este apartado
+
+
+Resultado:
+
+
+
+Un alias es simplemente ponerle un nombre más claro o más bonito a una columna cuando haces una consulta en SQL.
+No cambia el nombre real en la base de datos, solo cambia cómo se ve el resultado.
+Sirve para que los resultados al tu hacer la consulta sean más fáciles de entender.
+A veces los nombres de las columnas son confusos, o haces un cálculo y no sabes qué significa ese número.
+Con un alias, puedes mostrarlo con un nombre que tenga sentido.
+
+Un alias te ayuda a:
+-Entender mejor lo que estás viendo
+-Explicar mejor los resultados a otras personas
+-Hacer tus consultas más limpias y ordenadas
+
+```
+SELECT 
+  nombre AS "Nombre del Producto",
+  precio AS "Precio Base",
+  precio * 0.21 AS "IVA 21%",
+  precio + (precio * 0.21) AS "Total Precio"
+FROM 
+  productos;
+```
+
+Imagina que tienes una tienda online y tienes una tabla llamada productos donde guardas cosas como el nombre del producto y su precio. Por ej, tienes una camiseta que cuesta 20€, un pantalón de 35€ y una chaqueta de 60€.
+
+Ahora quieres hacer una consulta SQL para mostrar esa información, pero no solo el precio base, sino también:
+-Cuánto sería el IVA (que es el 21% del precio),
+-Y cuál sería el precio total con el IVA incluido.
+
+Entonces, en lugar de enseñar solo “precio” o un cálculo sin nombre, quieres que las columnas se vean bien, como en un informe profesional.
+Ahí es donde usas los alias de columna.
+
+Usar alias en SQL sirve para darle nombres más claros a las columnas que salen en los resultados. Así, es más fácil entender qué muestra cada dato.
+Esto es muy útil en proyectos reales, como tiendas online, donde otras personas también deben leer y entender los datos, no solo los programadores.
+
+En el futuro, me va a ayudar a hacer informes claros, tablas ordenadas y trabajos más profesionales.
+
+Además, en la naturaleza todo tiene un nombre y un orden. En la programación pasa lo mismo, si todo está bien nombrado, todo funciona mejor.

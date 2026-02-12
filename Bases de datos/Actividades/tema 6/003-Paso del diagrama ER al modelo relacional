@@ -1,0 +1,165 @@
+Para practicar el concepto de convertir diagramas de entidad-relación (ER) en modelos relacional, sigue estos pasos:
+
+Analiza los ejemplos proporcionados:
+
+Abre los archivos 02-Ejemplo-tienda-online.html, 04-Ejemplo-centro-formacion-n-a-n.html y 02-Ejemplo-tienda-online.json.
+Observa cómo están representadas las entidades, sus atributos y las relaciones entre ellas.
+Convierte los diagramas a modelos relacional:
+
+Para cada entidad en el diagrama, crea una tabla con su nombre como nombre de la tabla.
+Añade columnas para cada atributo de la entidad, incluyendo un identificador primario (generalmente llamado id).
+Define las relaciones entre tablas:
+
+Analiza las flechas en el diagrama que indican relaciones entre entidades.
+Para cada relación, añade una columna en la tabla correspondiente a la entidad relacionada para establecer la conexión.
+Escribe los modelos relacional:
+
+Utiliza un editor de texto o una herramienta como MySQL Workbench para escribir los scripts SQL que crean las tablas y las relaciones.
+Ejemplo para el modelo de tienda online:
+CREATE TABLE Cliente (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellidos VARCHAR(100)
+);
+
+CREATE TABLE Producto (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio DECIMAL(10, 2)
+);
+
+CREATE TABLE Pedido (
+    id INT PRIMARY KEY,
+    fecha DATE,
+    cliente_id INT,
+    FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
+);
+
+CREATE TABLE LineasPedido (
+    id INT PRIMARY KEY,
+    fecha DATE,
+    pedido_id INT,
+    producto_id INT,
+    cantidad INT,
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(id),
+    FOREIGN KEY (producto_id) REFERENCES Producto(id)
+);
+Prueba la creación de las tablas:
+
+Ejecuta los scripts SQL en tu entorno de base de datos.
+Verifica que se hayan creado las tablas y las relaciones correctamente.
+Realiza consultas simples:
+
+Escribe algunas consultas SQL básicas para probar la integridad del modelo relacional.
+Ejemplo: Consulta todos los pedidos realizados por un cliente específico.
+Siguiendo estos pasos, podrás convertir diagramas de ER en modelos relacional y practicar el concepto que se ha impartido en clase.
+
+
+
+Respuesta:
+
+
+En este ejercicio trabajo con un diagrama de entidad-relación de una tienda online. Mi objetivo es convertir el diagrama en un modelo relacional y luego crear las tablas en SQL. Analizo cada entidad, sus atributos y las relaciones entre ellas para poder representarlas correctamente en la base de datos. Así practico cómo pasar de un diagrama ER a un modelo que funciona en SQL.
+​
+**Cliente**
+-id (clave primaria)
+-nombre
+-apellidos
+​
+**Producto**
+-id (clave primaria)
+-nombre
+-precio
+​
+**Pedido**
+-id (clave primaria)
+-fecha
+-cliente_id (clave foránea)
+​
+**LineasPedido**
+-id (clave primaria)
+-fecha
+-pedido_id (clave foránea)
+-producto_id (clave foránea)
+-cantidad
+​
+Cliente 1 ─── N Pedido
+​
+Pedido 1 ─── N LineasPedido
+​
+Producto 1 ─── N LineasPedido
+​
+​
+1. Creo la base de datos:
+```
+CREATE DATABASE tienda_online;
+```
+​
+2. Creo las tablas:
+```
+CREATE TABLE Cliente (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellidos VARCHAR(100)
+);
+​
+CREATE TABLE Producto (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    precio DECIMAL(10,2)
+);
+​
+CREATE TABLE Pedido (
+    id INT PRIMARY KEY,
+    fecha DATE,
+    cliente_id INT,
+    FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
+);
+​
+CREATE TABLE LineasPedido (
+    id INT PRIMARY KEY,
+    fecha DATE,
+    pedido_id INT,
+    producto_id INT,
+    cantidad INT,
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(id),
+    FOREIGN KEY (producto_id) REFERENCES Producto(id)
+);
+```
+​
+3. Inserto datos:
+```
+INSERT INTO Cliente VALUES (1, 'Serena', 'Sania');
+INSERT INTO Producto VALUES (1, 'Teclado', 25.50);
+INSERT INTO Producto VALUES (2, 'Ratón', 15.00);
+​
+INSERT INTO Pedido VALUES (1, '2025-01-10', 1);
+​
+INSERT INTO LineasPedido VALUES (1, '2025-01-10', 1, 1, 2);
+INSERT INTO LineasPedido VALUES (2, '2025-01-10', 1, 2, 1);
+```
+​
+4. Pedidos hechos por un cliente:
+```
+SELECT id, fecha
+FROM Pedido
+WHERE cliente_id = 1;
+```
+​
+5. Productos de un pedido:
+```
+SELECT pr.nombre, lp.cantidad
+FROM LineasPedido lp
+JOIN Producto pr ON lp.producto_id = pr.id
+WHERE lp.pedido_id = 1;
+```
+​
+5. Total del pedido:
+```
+SELECT SUM(lp.cantidad * pr.precio) AS total_pedido
+FROM LineasPedido lp
+JOIN Producto pr ON lp.producto_id = pr.id
+WHERE lp.pedido_id = 1;
+```
+​
+Después de crear las tablas y sus relaciones, compruebo que todo funciona bien. Las entidades están bien representadas, las claves primarias y foráneas están correctas y la relación entre pedidos y productos se guarda en la tabla LineasPedido. Con este ejercicio entiendo mejor cómo organizar los datos en una base de datos y cómo hacer consultas para obtener información de la tienda online.

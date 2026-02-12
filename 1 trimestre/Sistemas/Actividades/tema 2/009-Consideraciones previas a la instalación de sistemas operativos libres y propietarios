@@ -1,0 +1,40 @@
+Contexto
+En nuestro campo de estudio sobre sistemas informáticos, nos encontramos con la instalación de sistemas operativos libres y propietarios en entornos variados. Es crucial considerar las capacidades del hardware al elegir el sistema operativo adecuado. Algunas personas disfrutan jugando videojuegos como Minecraft o Fortnite, mientras que otros disfrutan de actividades al aire libre como paseos por el campo.
+
+Enunciado paso a paso
+Evaluación de las capacidades del hardware:
+
+Identifica si tu sistema informático es antiguo o poco potente.
+Considera los requerimientos de hardware de diferentes sistemas operativos libres y propietarios.
+Elección del sistema operativo:
+
+Si tu sistema es antiguo, considera sistemas operativos como Linux Mint o Ubuntu que tienen menores requerimientos de hardware pero ofrecen una buena funcionalidad.
+Si tu sistema es más potente, puedes optar por sistemas operativos como Windows 10 o macOS que ofrecen mayor eficiencia y acceso a las últimas funciones.
+Prueba del sistema operativo:
+
+Descarga el sistema operativo elegido de la fuente oficial.
+Realiza una prueba en un dispositivo virtual (como VirtualBox) para asegurarte de que funciona correctamente antes de realizar la instalación en tu hardware real.
+Restricciones
+No utilizar sistemas operativos basados en Windows Server ni sistemas operativos específicamente diseñados para servidores.
+Solo considerar sistemas operativos libres y propietarios disponibles gratuitamente o bajo licencias abiertas.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe mostrar una comprensión adecuada del contexto y la importancia de la elección del sistema operativo según las capacidades del hardware.
+
+Desarrollo técnico correcto y preciso (25%): El estudiante debe identificar correctamente los sistemas operativos y sus requerimientos de hardware, explicando por qué es recomendable elegir uno u otro en tu caso específico.
+
+Aplicación práctica con ejemplo claro (25%): El estudiante debe probar un sistema operativo en un dispositivo virtual antes de decidir instalarlo en su hardware real, demostrando así su capacidad para aplicar los conceptos teóricos en una situación práctica.
+
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe concluir el ejercicio relacionando su elección del sistema operativo con los conocimientos adquiridos sobre sistemas informáticos y cómo esta elección afectará la funcionalidad, seguridad y eficiencia del sistema.
+
+
+Respuesta:
+Basicamnte es que antes de poner un sistema operativo en el ordenador hay que ser si el ordenador lo va a soportar.
+
+Voy a comprobar si el sistema operativo windows 11 es compatible con mi ordenador basandome en mis caracteristicas de hardware y los requisitos de caracteristicas del windows 11:
+
+https://files.fm/u/jrqgc2k3z2
+
+Conclusion, el sistema operativo windows 11 si es compatible con mi ordenador.
+
+He elegído windows 11 porque funciona bien en mi PC y se adapta a lo que necesito. Con este sistema puedo usar mis programas sin problema y mi PC va rapido. Además, es seguro porque tiene protección contra virus y actualizaciones fáciles.
+Esta elección demuestra lo que he apendido sobre cómo los sistemas operativos usan el hardware, cómo protegen la información y cómo hacen que todo funcione de manera eficiente. Elegir el sistema correcto hace que mi PC sea más rápido, seguro y fácil de usar.

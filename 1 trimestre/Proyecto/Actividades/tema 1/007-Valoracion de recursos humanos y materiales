@@ -1,0 +1,107 @@
+Ejercicio de planificación de recursos y costes para un portafolio de servicios de IA educativa
+Para este ejercicio, vamos a realizar una planificación detallada de los recursos necesarios y su costo asociado para construir un portafolio de servicios de IA educativa. Este proyecto tiene como objetivo principal la automatización docente, tutoría personalizada con IA, analítica predictiva educativa, automatización administrativa y cumplimiento y seguridad.
+
+Contexto
+Como entusiasta del campo natural, imagina que estás desarrollando un portafolio de servicios de IA educativa para ayudar a los centros educativos. Además, como apasionado por los videojuegos, has decidido integrar una funcionalidad que genere resúmenes de clases/apuntes utilizando tecnologías de IA en tu plataforma.
+
+Enunciado paso a paso
+Identifica 3 productos concretos para desarrollar:
+
+Automatización docente
+Tutoría personalizada con IA (chatbot educativo)
+Analítica predictiva educativa (sistema de alerta temprana)
+Establece los recursos humanos necesarios para cada producto:
+
+Para la automatización docente: Project Manager, Data Scientist, Backend Developer
+Para la tutoría personalizada con IA: Project Manager, Data Scientist, Frontend Developer
+Para la analítica predictiva educativa: Project Manager, Data Scientist, DevOps
+Estima el coste anual aproximado para cada rol:
+
+Project Manager / Consultor educativo: 40–50k €
+Data Scientist / ML Engineer: 45–55k € c/u
+Backend Developer (Python/Node, APIs): 35–45k €
+Frontend Developer (React/Angular): 30–40k €
+Calcula el costo total anual para el equipo base:
+
+Personal bruto anual: 250–300k €
+Estima los costes de infraestructura y software necesarios:
+
+Servidor GPU o cloud flexible: ~1.000–2.000 €/mes
+Almacenamiento y backups: 100–300 €/mes
+APIs de IA (OpenAI, Mistral, Anthropic): 500–1.500 €/mes en fase inicial
+Calcula el costo total anual para la infraestructura:
+
+Infraestructura y software: ~30–60k €
+Establece un presupuesto mínimo viable (MVP) para lanzar los productos seleccionados:
+
+Coste inicial año 1: ~4.000 €
+Marketing y comercialización (eventos, web, demos): ~20–30k €/año
+Crea un plan de reinversión para el segundo año:
+
+Escalar equipo (añadir desarrolladores)
+Mejorar UX/UI
+Añadir analítica predictiva
+Contratar 1 comercial junior
+Restricciones
+No se pueden usar recursos externos o estructuras no vistas en la clase.
+El ejercicio debe basarse únicamente en los conceptos y contenidos presentados.
+Criterios de evaluación
+Introducción clara y contextualización (25%)
+Desarrollo técnico correcto y preciso (25%)
+Aplicación práctica con ejemplo claro (25%)
+Cierre/Conclusión enlazando con la unidad (25%)
+
+
+
+
+
+Respuesta:
+
+
+
+En este ejercicio voy a hacer una planificación de los recursos y los costes necesarios para crear un portafolio de servicios de inteligencia artificial aplicada a la educación.
+El objetivo del proyecto es ayudar a los centros educativos a mejorar su gestión y enseñanza mediante herramientas de IA. Además, como me gustan los videojuegos, he pensado integrar una función extra que permita generar resúmenes automáticos de clases o apuntes usando IA, para que los estudiantes puedan estudiar de forma más fácil y rápida.
+
+***Productos a desarrollar***
+He identificado tres productos principales que forman parte del portafolio:
+-Automatización docente: un sistema que se encargue de corregir ejercicios y gestionar tareas repetitivas de los profesores.
+-Tutoría personalizada con IA: un chatbot educativo que sirva como asistente para resolver dudas de los alumnos.
+-Analítica predictiva educativa: una herramienta que detecte de forma temprana el bajo rendimiento o el riesgo de abandono escolar.
+***Recursos humanos necesarios***
+Para poder desarrollar estos productos, se necesitan diferentes perfiles profesionales.
+
+En el producto de automatización docente se necesitaría un Project Manager, un Data Scientist y un Backend Developer.
+Para la tutoría personalizada con IA harían falta un Project Manager, un Data Scientist y un Frontend Developer.
+Y para la analítica predictiva educativa, serían necesarios un Project Manager, un Data Scientist y un DevOps.
+***Coste anual aproximado de cada rol***
+-El Project Manager o consultor educativo tendría un salario anual entre 40.000 y 50.000 euros.
+-El Data Scientist o ingeniero de machine learning cobraría entre 45.000 y 55.000 euros.
+-El Backend Developer, especializado en Python o Node, ganaría entre 35.000 y 45.000 euros.
+-El Frontend Developer, que trabaja con React o Angular, tendría un sueldo de entre 30.000 y 40.000 euros.
+-Por último, el DevOps ganaría entre 40.000 y 50.000 euros al año.
+***Cálculo del coste total anual del equipo***
+Haciendo una media de los sueldos, el Project Manager podría costar unos 45.000 euros anuales.
+Como se necesita un Data Scientist para cada producto, serían tres en total, lo que equivale aproximadamente a 150.000 euros.
+El Backend Developer costaría unos 40.000 euros, el Frontend unos 35.000 y el DevOps unos 45.000 euros.
+
+En total, el coste anual del personal sería de unos 315.000 euros, lo que entra dentro del rango estimado de entre 250.000 y 300.000 euros.
+***Costes de infraestructura y software***
+Además de los salarios, hay que tener en cuenta los costes de la infraestructura técnica y del software.
+Un servidor con GPU o un servicio cloud flexible costaría unos 1.500 euros al mes, es decir, unos 18.000 euros al año.
+El almacenamiento y las copias de seguridad costarían unos 200 euros al mes, unos 2.400 euros al año.
+Las APIs de inteligencia artificial, como las de OpenAI o Mistral, podrían costar alrededor de 1.000 euros al mes, unos 12.000 euros al año.
+
+En total, el coste anual de la infraestructura sería de aproximadamente 32.000 euros, dentro del rango de 30.000 a 60.000 euros.
+***Presupuesto mínimo viable (MVP)***
+Para lanzar una primera versión del proyecto, sería suficiente un presupuesto inicial de unos 4.000 euros, destinado al desarrollo básico.
+A esto se le sumaría el coste de marketing y comercialización, como crear la página web, asistir a eventos y hacer demostraciones, que estaría entre 20.000 y 30.000 euros.
+El presupuesto total del MVP sería entonces de unos 29.000 euros aproximadamente.
+***Plan de reinversión para el segundo año***
+Durante el segundo año, la idea sería mejorar y ampliar el proyecto.
+Se podría contratar un desarrollador junior adicional para acelerar las mejoras, mejorar la interfaz de usuario y la experiencia (UX/UI), añadir más funciones de analítica predictiva y contratar un comercial junior que se encargue de contactar con centros educativos e instituciones.
+Con estas mejoras, el producto sería más completo y podría llegar a más usuarios.
+
+
+Con este ejercicio he aprendido que planificar un proyecto de inteligencia artificial no solo trata de programar, sino también de organizar recursos, estimar costes y pensar en la evolución del producto a futuro.
+El portafolio de servicios de IA educativa es una buena forma de aplicar los conocimientos técnicos aprendidos en clase a una situación real.
+Además, este trabajo se relaciona directamente con la unidad sobre planificación de recursos y gestión de costes en proyectos de desarrollo de software, lo que me ha ayudado a entender mejor cómo se estructuran los proyectos profesionales.

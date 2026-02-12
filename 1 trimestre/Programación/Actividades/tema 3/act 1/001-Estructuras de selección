@@ -1,0 +1,75 @@
+Clasificador de Edades
+¡Hola amantes del campo y del ocio! Hoy vamos a crear un programa que clasifique tu edad en diferentes categorías, como niño, adolescente, joven o adulto. Este ejercicio te ayudará a entender cómo usar estructuras de selección (if, elif, else) en Python.
+
+Contexto
+Imagina que estás jugando a un juego de mesa donde los personajes tienen diferentes edades y necesitas clasificarlos según su edad para determinar sus roles. Además, cada vez que juegas un videojuego, te gustaría registrar tu edad para comparar tus progresos con otros jugadores.
+
+Enunciado paso a paso
+Introducción de datos: Primero, el programa pedirá al usuario que introduzca su edad.
+Clasificación de edades: Dependiendo de la edad ingresada, el programa clasificará al usuario en una de las siguientes categorías:
+Menor de 10 años: "Eres un niño!"
+De 10 a 19 años: "Eres un adolescente"
+De 20 a 29 años: "Eres un joven"
+Mayor o igual a 30 años: "Ya no eres un joven"
+Restricciones
+No se permiten usar estructuras de control más avanzadas como bucles (for, while).
+Debes utilizar solo las variables y funciones que se mencionan en el contexto.
+El programa debe ser claro y fácil de entender.
+Criterios de evaluación
+Introducción y contextualización (25%): El texto explica claramente el propósito del programa y cómo se relaciona con la vida diaria, como jugar juegos de mesa o videojuegos.
+Desarrollo técnico correcto y preciso (25%): El programa debe usar correctamente las estructuras de selección if, elif y else.
+Aplicación práctica con ejemplo claro (25%): El texto incluye ejemplos claros de cómo se clasificaría la edad de diferentes personas.
+Cierre/Conclusión enlazando con la unidad (25%): El texto concluye hablando sobre cómo este tipo de programas pueden ser útiles en situaciones cotidianas, como registrar progresos en juegos o clasificar participantes en eventos.
+Para practicar este concepto, sigue estos pasos:
+
+Abre tu editor favorito y crea un nuevo archivo llamado clasificador_edades.py.
+Escribe el código del programa siguiendo los pasos descritos en el enunciado.
+Ejecuta el programa y prueba diferentes edades para ver cómo se clasifican.
+¡Buena suerte! ¡Juega mucho y aprende mucho!
+
+
+Respuesta:
+
+El propósito del programa: Clasificar la edad de una persona en categorías (niño, adolescente, joven, adulto).
+
+Relación con la vida diaria:
+
+Juegos de mesa: Puedes asignar roles o niveles según la edad de los jugadores.
+
+Videojuegos: Permite registrar la edad para comparar progresos, niveles o estadísticas con otros jugadores de manera más organizada.
+
+Por ejemplo, cuando un jugador de 12 años se registra, el programa lo clasificará como “adolescente”, y un jugador de 25 años como “joven”, lo que podría influir en la elección de misiones, desafíos o recompensas en un juego.
+
+
+```
+edad = int(input("Introduce tu edad: "))
+
+if edad < 10:
+    print("¡Eres un niño!")
+elif 10 <= edad <= 19:
+    print("Eres un adolescente")
+elif 20 <= edad <= 29:
+    print("Eres un joven")
+else:
+    print("Ya no eres un joven")
+```
+
+Salida del codigo:
+
+PS C:\Users\Serena> python "C:\Users\Serena\Documents\Programacion\Actividades\clasificador_edades.py"
+Introduce tu edad: 22
+Eres un joven
+PS C:\Users\Serena> python "C:\Users\Serena\Documents\Programacion\Actividades\clasificador_edades.py"
+Introduce tu edad: 38
+Ya no eres un joven
+PS C:\Users\Serena> python "C:\Users\Serena\Documents\Programacion\Actividades\clasificador_edades.py"
+Introduce tu edad: 15
+Eres un adolescente
+PS C:\Users\Serena> python "C:\Users\Serena\Documents\Programacion\Actividades\clasificador_edades.py"
+Introduce tu edad: 9
+¡Eres un niño!
+PS C:\Users\Serena> 
+
+Para ejecutar el codigo he tenido que ir a la tarminal y poner todo el comando hasta llegar al archivo. (por que la la forma normal no me dejaba escribir)
+
+Basicamente, aprender a usar estructuras de selección (if, elif, else) no solo nos ayuda a programar este clasificador, sino que también nos enseña a tomar decisiones automáticas en programas más complejos que puedan aplicarse a situaciones reales.

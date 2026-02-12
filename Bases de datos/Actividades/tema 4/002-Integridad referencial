@@ -1,0 +1,229 @@
+Contexto
+El alumnado ha estado estudiando sobre La naturaleza y cómo este contexto puede aplicarse en el mundo digital. Durante sus juegos de mesa, han descubierto que muchas estrategias utilizan mapas y sistemas de puntos similares a los que se manejan en bases de datos relacionales. Además, durante sus excursiones al campo, han aprendido sobre la importancia de organizar información y acceder a ella rápidamente, lo cual es fundamental para el funcionamiento eficiente de las bases de datos.
+
+Enunciado paso a paso
+Copia de seguridad de la base de datos:
+
+El alumnado debe realizar una copia de seguridad de su base de datos empresarial utilizando mysqldump. La variable nombre_base_datos representa el nombre de la base de datos que se desea respaldar.
+mysqldump -u usuarioempresarial -p ${nombre_base_datos} > backup_${nombre_base_datos}.sql
+Conexión a MySQL:
+
+El alumnado debe crear un programa en Python para conectarse a su base de datos empresarial. Las variables nombre, apellidos, telefono y email representan los datos del cliente que se quieren insertar.
+import mysql.connector
+
+nombre_base_datos = "empresarial"
+nombre = input("Introduce el nombre del cliente")
+apellidos = input("Introduce los apellidos del cliente")
+telefono = input("Introduce el teléfono del cliente")
+email = input("Introduce el email del cliente")
+
+conexion = mysql.connector.connect(
+    host="localhost",      
+    user="usuarioempresarial",    
+    password="usuarioempresarial",  
+    database=nombre_base_datos     
+)
+
+cursor = conexion.cursor()
+Desarrollo de la parte de eliminación:
+
+El alumnado debe desarrollar una opción en un menú para eliminar un cliente de la base de datos. La variable Identificador representa el ID del cliente que se desea eliminar.
+while True:
+  print("Escoge una opción:")
+  print("1.-Insertar un cliente")
+  print("2.-Listar los clientes")
+  print("3.-Actualizar un cliente")
+  print("4.-Borrar un cliente")
+  opcion = int(input("Escoge tu opción"))
+
+  if opcion == 4:
+    Identificador = input("Introduce el ID del cliente a borrar:")
+    cursor.execute(f"DELETE FROM clientes WHERE `Identificador` = {Identificador}")
+    conexion.commit()
+Restricciones
+El alumnado no debe usar librerías externas o estructuras no vistas en la asignatura.
+Debe utilizar las herramientas y conceptos aprendidos hasta ahora sobre bases de datos relacionales.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumnado debe mostrar comprensión del contexto y cómo los hobbies personales pueden aplicarse a la asignatura.
+Desarrollo técnico correcto y preciso (25%): El alumnado debe completar correctamente las tareas de copia de seguridad, conexión a MySQL y eliminación de clientes.
+Aplicación práctica con ejemplo claro (25%): El alumnado debe proporcionar ejemplos claros de cómo aplicar los conceptos aprendidos en prácticas reales.
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe enlazar su trabajo con el tema actual y reflexionar sobre cómo estos conceptos pueden ser útiles en situaciones futuras.
+
+
+
+Respuesta:
+
+En esta práctica aprendo a usar bases de datos. Cuando voy de excursión, es importante organizar la información, como apuntar especies o rutas. Esto es parecido a las bases de datos, donde guardo información de forma ordenada y puedo encontrarla rápido.
+
+También veo que en los juegos de mesa se usan mapas y puntos para decidir movimientos. Esto me ayuda a entender cómo funcionan las tablas y relaciones en una base de datos.
+
+En este ejercicio creo una base de datos para gestionar clientes y hago un programa en Python. El programa puede añadir, ver, actualizar y borrar clientes. Así practico cómo organizar datos y trabajar con información de forma eficiente.
+
+1. Creo la base y las tablas:
+```
+CREATE DATABASE empresarial;
+
+CREATE TABLE clientes (
+    Identificador INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellidos VARCHAR(100),
+    telefono VARCHAR(15),
+    email VARCHAR(100)
+);
+```
+
+
+
+gestionclientes.py:
+```
+import mysql.connector
+
+
+conexion = mysql.connector.connect(
+    host="localhost",
+    user="root",                
+    password="",  
+    database="empresarial"
+)
+
+cursor = conexion.cursor()
+
+
+while True:
+    print("\n--- MENÚ DE CLIENTES ---")
+    print("1.- Insertar un cliente")
+    print("2.- Listar los clientes")
+    print("3.- Actualizar un cliente")
+    print("4.- Borrar un cliente")
+    print("5.- Salir")
+
+    try:
+        opcion = int(input("Escoge tu opción: "))
+    except ValueError:
+        print("Debes ingresar un número del 1 al 5")
+        continue
+
+
+    if opcion == 1:
+        nombre = input("Introduce el nombre del cliente: ")
+        apellidos = input("Introduce los apellidos del cliente: ")
+        telefono = input("Introduce el teléfono del cliente: ")
+        email = input("Introduce el email del cliente: ")
+
+        sql_insert = "INSERT INTO clientes (nombre, apellidos, telefono, email) VALUES (%s, %s, %s, %s)"
+        cursor.execute(sql_insert, (nombre, apellidos, telefono, email))
+        conexion.commit()
+        print("Cliente insertado correctamente.")
+
+
+    elif opcion == 2:
+        cursor.execute("SELECT * FROM clientes")
+        clientes = cursor.fetchall()
+        if clientes:
+            print("\nLista de clientes:")
+            for cliente in clientes:
+                print(f"ID: {cliente[0]}, Nombre: {cliente[1]}, Apellidos: {cliente[2]}, Teléfono: {cliente[3]}, Email: {cliente[4]}")
+        else:
+            print("No hay clientes registrados.")
+
+
+    elif opcion == 3:
+        Identificador = input("Introduce el ID del cliente a actualizar: ")
+        nombre = input("Nuevo nombre: ")
+        apellidos = input("Nuevos apellidos: ")
+        telefono = input("Nuevo teléfono: ")
+        email = input("Nuevo email: ")
+
+        sql_update = "UPDATE clientes SET nombre=%s, apellidos=%s, telefono=%s, email=%s WHERE Identificador=%s"
+        cursor.execute(sql_update, (nombre, apellidos, telefono, email, Identificador))
+        conexion.commit()
+        print("Cliente actualizado correctamente.")
+
+
+    elif opcion == 4:
+        Identificador = input("Introduce el ID del cliente a borrar: ")
+        sql_delete = "DELETE FROM clientes WHERE Identificador=%s"
+        cursor.execute(sql_delete, (Identificador,))
+        conexion.commit()
+        print("Cliente eliminado correctamente.")
+
+
+    elif opcion == 5:
+        print("Saliendo del programa...")
+        break
+
+    else:
+        print("Opción no válida. Ingresa un número del 1 al 5.")
+
+
+cursor.close()
+conexion.close()
+```
+
+Consola:
+
+PS C:\Users\Serena\Documents\Bases de datos\Actividades\tema 4> python gestionclientes.py
+
+--- MENÚ DE CLIENTES ---
+1.- Insertar un cliente
+2.- Listar los clientes
+3.- Actualizar un cliente
+4.- Borrar un cliente
+5.- Salir
+Escoge tu opción: 1
+Introduce el nombre del cliente: Serena
+Introduce los apellidos del cliente: Sania Esteve
+Introduce el teléfono del cliente: 637383762
+Introduce el email del cliente: serenaestevee@gmail.com
+Cliente insertado correctamente.
+
+--- MENÚ DE CLIENTES ---
+1.- Insertar un cliente
+2.- Listar los clientes
+3.- Actualizar un cliente
+4.- Borrar un cliente
+5.- Salir
+Escoge tu opción: 2
+
+Lista de clientes:
+ID: 1, Nombre: Serena, Apellidos: Sania Esteve, Teléfono: 637383762, Email: serenaestevee@gmail.com
+
+--- MENÚ DE CLIENTES ---
+1.- Insertar un cliente
+2.- Listar los clientes
+3.- Actualizar un cliente
+4.- Borrar un cliente
+5.- Salir
+Escoge tu opción: 3
+Introduce el ID del cliente a actualizar: 1
+Nuevo nombre: Andrea
+Nuevos apellidos: Gomez Torres
+Nuevo teléfono: 678432166
+Nuevo email: hola@gmail.com
+Cliente actualizado correctamente.
+
+--- MENÚ DE CLIENTES ---
+1.- Insertar un cliente
+2.- Listar los clientes
+3.- Actualizar un cliente
+4.- Borrar un cliente
+5.- Salir
+Escoge tu opción: 4
+Introduce el ID del cliente a borrar: 1
+Cliente eliminado correctamente.
+
+--- MENÚ DE CLIENTES ---
+1.- Insertar un cliente
+2.- Listar los clientes
+3.- Actualizar un cliente
+4.- Borrar un cliente
+5.- Salir
+Escoge tu opción: 5
+Saliendo del programa...
+PS C:\Users\Serena\Documents\Bases de datos\Actividades\tema 4>
+
+Con esta práctica aprendo a usar bases de datos relacionales en la vida real. Veo que es importante guardar copias de seguridad y mantener los datos ordenados para consultarlos y cambiarlos fácilmente.
+
+También entiendo que los conceptos que estudio, como tablas, claves y consultas, se parecen a cosas que hago en la vida diaria, como organizar excursiones o jugar a juegos de estrategia.
+
+Basicamente, esta práctica me ayuda a ver que organizar y acceder a la información es útil en la informática y en la vida, y me sirve para aprender para el futuro.

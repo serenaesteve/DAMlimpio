@@ -1,0 +1,147 @@
+Evaluación del Proyecto: Inserción SQL
+
+El objetivo principal de este proyecto era crear una base de datos y realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) utilizando SQL. Para lograr esto, se crearon dos tablas: cliente y producto, así como varias relaciones entre ellas.
+
+En primer lugar, se realizaron las inserciones de datos en cada tabla, lo que permitió generar los datos necesarios para las operaciones CRUD. Luego, se insertaron las relaciones entre las tablas mediante la creación de nuevas filas en la tabla lineapedido.
+
+Consejos para Practicar
+
+Para practicar el concepto impartido, te recomendamos seguir estos pasos:
+
+Crea una base de datos vacía y selecciona las columnas que desees utilizar.
+Inserta registros en cada tabla utilizando SQL.
+Realiza operaciones CRUD (Crear, Leer, Actualizar y Eliminar) en cada tabla.
+Utiliza las claves primarias para establecer relaciones entre las tablas.
+Prueba realizar consultas más complejas utilizando JOIN y otros operadores.
+Aplicación Práctica
+
+Un ejemplo práctico de aplicación es el caso del pedido de un cliente que desea comprar varios productos. En este escenario, se pueden utilizar las tablas creadas para realizar las operaciones CRUD y obtener la información necesaria.
+
+Por ejemplo, si un cliente deseaba pedir 2 camisetas azules y 1 sudadera roja, podría utilizar las operaciones CRUD realizadas anteriormente para obtener la información necesaria. Podría hacer una consulta como SELECT * FROM producto WHERE id = <id_camiseta>, SELECT * FROM lineaapedido WHERE pedido_id = <id_pedido> y SELECT * FROM cliente WHERE id = <id_cliente>. De esta manera, podría obtener la información de los productos y el cliente para realizar la compra.
+
+Cierre
+
+En conclusión, este proyecto ha permitido visualizar cómo se pueden relacionar tablas en una base de datos y realizar operaciones CRUD. Con esta habilidad, podrás trabajar con bases de datos de manera efectiva y crear aplicaciones prácticas que requieren la gestión de datos.
+
+
+Respuesta:
+
+En este ejercicio creo una base de datos utilizando SQL para aprender a trabajar con bases de datos relacionales. El objetivo es crear varias tablas y relacionarlas entre sí para gestionar los pedidos de una tienda. Para ello utilizo las tablas usuarios, productos, pedidos y detalle_pedidos. A lo largo del ejercicio realizo inserciones de datos y aplico las operaciones CRUD para entender cómo se guardan, consultan, modifican y eliminan los datos en una base de datos.
+
+1. Creo la base:
+```
+CREATE DATABASE tienda;
+USE tienda;
+```
+
+2. Creo las tablas:
+```
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100),
+  direccion VARCHAR(150),
+  correo VARCHAR(100)
+);
+
+CREATE TABLE productos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100),
+  descripcion VARCHAR(255),
+  precio DECIMAL(10,2),
+  categoria VARCHAR(50),
+  imagen VARCHAR(100)
+);
+
+CREATE TABLE pedidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT,
+  fecha DATETIME,
+  total DECIMAL(10,2),
+  estado VARCHAR(30),
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE detalle_pedidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_pedido INT,
+  id_producto INT,
+  cantidad INT,
+  precio DECIMAL(10,2),
+  FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
+  FOREIGN KEY (id_producto) REFERENCES productos(id)
+);
+```
+
+3. Inserto datos:
+```
+INSERT INTO usuarios (nombre, direccion, correo)
+VALUES ('Serena', 'Calle Castellón 25', 'serenaestevee@gmail.com');
+
+INSERT INTO productos (nombre, descripcion, precio, categoria, imagen)
+VALUES 
+('Telefono', 'Smartphone Android', 250.00, 'Electrónica', 'telefono.jpg'),
+('Portatil', 'Laptop 8GB RAM', 800.00, 'Electrónica', 'portatil.jpg'),
+('Camiseta', 'Camiseta de algodón', 20.00, 'Ropa', 'camiseta.jpg');
+
+INSERT INTO pedidos (id_usuario, fecha, total, estado)
+VALUES (1, NOW(), 0, 'Pendiente');
+
+INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio)
+VALUES 
+(1, 2, 2, 800.00),
+(1, 3, 1, 20.00);
+```
+
+
+4. Consulto los datos:
+```
+SELECT 
+    u.nombre AS usuario,
+    p.id AS pedido,
+    pr.nombre AS producto,
+    dp.cantidad,
+    dp.precio,
+    (dp.cantidad * dp.precio) AS total_producto,
+    p.total AS total_pedido,
+    p.estado
+FROM detalle_pedidos dp
+JOIN pedidos p ON dp.id_pedido = p.id
+JOIN usuarios u ON p.id_usuario = u.id
+JOIN productos pr ON dp.id_producto = pr.id;
+```
+
+usuario
+pedido
+producto
+cantidad
+precio
+total_producto
+total_pedido
+estado
+Serena
+1
+Portatil
+1
+800.00
+800.00
+800.00
+Pendiente
+
+5. Actualizo los datos:
+```
+UPDATE productos
+SET precio = 780.00
+WHERE id = 2;
+
+UPDATE pedidos
+SET estado = 'Pagado'
+WHERE id = 1;
+```
+
+6. Elimino datos:
+```
+DELETE FROM detalle_pedidos
+WHERE id_pedido = 1 AND id_producto = 3;
+```
+
+Con este ejercicio aprendo a crear una base de datos desde cero y a trabajar con varias tablas relacionadas entre sí. Realizo las operaciones CRUD y utilizo consultas con JOIN para obtener información completa de los pedidos. Este trabajo me ayuda a entender mejor cómo funcionan las bases de datos relacionales y cómo se pueden usar en situaciones reales, como la gestión de pedidos en una tienda.

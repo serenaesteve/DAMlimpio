@@ -1,0 +1,187 @@
+Enunciado de la actividad:
+
+Con el objeto de preparar tu futuro Curriculum: -Toma el CV que has realizado en la unidad 2 -Toma el JSON/XML que has desarollado en la unidad 1 -Usando Javascript + fetch, carga los datos del curriculum del JSON y pintalos en el HTML
+
+Contendrá todos tus datos, es decir, aquellos que más adelante figurarán en tu CV.
+
+Tu HTML/CSS + JS deberá tener la misma complejidad que los datos contenidos en un Curriculum -Sección de datos personales -Sección de formación -Sección de experiencia profesional -Idiomas -Vehiculos -Aficiones -Hobbies
+
+El CV deberá realizarse en base a los mismos parámetros que se ha desarrollado en la clase
+
+Por supuesto siempre debe seguirse la rúbrica de evaluación.
+
+
+
+
+Respuesta:
+
+
+En esta actividad del Tema 3 he aprendido a crear un Currículum Vitae dinámico utilizando JavaScript y fetch para cargar los datos desde un archivo JSON. La idea principal era separar el contenido de la presentación, de manera que toda la información de mi CV (datos personales, formación, experiencia, idiomas, competencias, etc.) se almacenara en un archivo externo y se mostrara automáticamente en el HTML.
+
+Con esta práctica he podido ver cómo los datos pueden gestionarse de forma más eficiente, evitando tener que modificar el HTML cada vez que quiero actualizar algún dato. Además, me ha permitido reforzar mis conocimientos sobre estructuras JSON, manejo de arrays y objetos en JavaScript, y la manipulación del DOM para generar contenido dinámico.
+
+micurriculumdinamico.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículum de Serena Sania Esteve</title>
+  <style>
+    body { font-family: Verdana, Geneva, sans-serif; background: linear-gradient(to bottom, #e9e4f0, #d3cce3); margin:0; padding:40px 0; display:flex; justify-content:center; }
+    main { width: 800px; background:white; padding:40px; box-shadow:0 4px 15px rgba(0,0,0,0.15); border-radius:10px; }
+    header { display:flex; align-items:center; border-bottom:3px solid #b7a2d6; padding-bottom:20px; margin-bottom:20px; }
+    header img { width:180px; aspect-ratio:1/1; border-radius:50%; margin-right:25px; object-fit:cover; box-shadow:0 0 10px rgba(0,0,0,0.3); }
+    h1 { font-size:2em; color:#4b3b73; margin:0; }
+    header p { font-style:italic; color:#333; margin-top:10px; }
+    h2 { color:white; background-color:#a48bd3; padding:6px 10px; border-radius:5px; margin-top:30px; font-size:1.2em; }
+    h3 { margin-top:15px; color:#333; }
+    ul { list-style-type:square; padding-left:25px; }
+    li { margin:3px 0; }
+    hr { border:none; height:2px; background-color:#b7a2d6; margin:30px 0; }
+    footer { text-align:center; margin-top:40px; color:#555; font-size:0.9em; border-top:2px solid #b7a2d6; padding-top:10px; }
+    @media print { body { background:white; padding:0; } main { box-shadow:none; border-radius:0; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="serena.jpg" alt="Foto de Serena Sania Esteve">
+      <div>
+        <h1 id="nombre"></h1>
+        <p id="perfil"></p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Datos personales</h2>
+      <ul>
+        <li id="email"></li>
+        <li id="telefono"></li>
+        <li id="ubicacion"></li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación académica</h2>
+      <ul id="formacion"></ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Experiencia profesional</h2>
+      <div id="experiencia"></div>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Idiomas</h2>
+      <ul id="idiomas"></ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación complementaria</h2>
+      <ul id="formacionComplementaria"></ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Otras competencias</h2>
+      <ul id="otrasCompetencias"></ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Vehículos</h2>
+      <p>Dispongo de vehículo propio.</p>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Aficiones y hobbies</h2>
+      <p>Viajar, aprender nuevas tecnologías, leer y practicar deporte.</p>
+    </section>
+
+    <footer>
+      <p>© 2025 Serena Sania Esteve</p>
+    </footer>
+  </main>
+
+  <script>
+    fetch('micurriculum.json')
+      .then(res => res.json())
+      .then(data => {
+        
+        document.getElementById('nombre').textContent = data.nombre;
+        document.getElementById('perfil').textContent = data.perfil;
+        document.getElementById('email').textContent = `📧 Email: ${data.contacto.email}`;
+        document.getElementById('telefono').textContent = `📞 Teléfono: ${data.contacto.telefono}`;
+        document.getElementById('ubicacion').textContent = `📍 Ubicación: ${data.contacto.ubicacion}`;
+
+       
+        const formacionList = document.getElementById('formacion');
+        data.formacion.forEach(f => {
+          const li = document.createElement('li');
+          li.textContent = `${f.titulo} – ${f.centro} (${f.años})`;
+          formacionList.appendChild(li);
+        });
+
+      
+        const experienciaDiv = document.getElementById('experiencia');
+        data.experiencia.forEach(e => {
+          const h3 = document.createElement('h3');
+          const periodo = e.periodo || e.duración || '';
+          h3.textContent = `${e.puesto} – ${e.empresa} (${periodo})`;
+          experienciaDiv.appendChild(h3);
+          const ul = document.createElement('ul');
+          e.tareas.forEach(t => {
+            const li = document.createElement('li');
+            li.textContent = t;
+            ul.appendChild(li);
+          });
+          experienciaDiv.appendChild(ul);
+        });
+
+        
+        const idiomasList = document.getElementById('idiomas');
+        for (const [idioma, nivel] of Object.entries(data.idiomas)) {
+          const li = document.createElement('li');
+          li.textContent = `${idioma.charAt(0).toUpperCase() + idioma.slice(1)}: ${nivel}`;
+          idiomasList.appendChild(li);
+        }
+
+     
+        const fcList = document.getElementById('formacionComplementaria');
+        data.formacion_complementaria.forEach(fc => {
+          const li = document.createElement('li');
+          li.textContent = fc;
+          fcList.appendChild(li);
+        });
+
+        
+        const ocList = document.getElementById('otrasCompetencias');
+        data.otras_competencias.forEach(oc => {
+          const li = document.createElement('li');
+          li.textContent = oc;
+          ocList.appendChild(li);
+        });
+      })
+      .catch(err => console.error('Error cargando JSON:', err));
+  </script>
+</body>
+</html>
+```
+
+Al finalizar esta actividad, he comprendido mejor la importancia de separar los datos del diseño y cómo usar JSON y fetch puede hacer que un proyecto web sea mucho más flexible y fácil de mantener. He logrado que mi CV se genere de manera automática, mostrando todas las secciones correctamente y con el mismo estilo visual que en la versión estática.
+
+Basicamente, he aprendido que este método no solo facilita actualizar información, sino que también me prepara para proyectos más complejos en el futuro, donde los datos podrían provenir de bases de datos o APIs externas. En definitiva, esta práctica me ha ayudado a combinar de manera práctica HTML, CSS y JavaScript para crear un CV profesional, dinámico y escalable.

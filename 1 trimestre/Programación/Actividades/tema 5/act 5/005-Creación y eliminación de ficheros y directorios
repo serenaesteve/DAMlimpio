@@ -1,0 +1,87 @@
+Enunciado paso a paso
+Crear un directorio:
+
+Primero, crea un directorio llamado juegos_de_mesa.
+Utiliza la función os.mkdir() para crear el directorio.
+Moverte al directorio creado:
+
+Cambia el directorio actual a juegos_de_mesa utilizando la función os.chdir().
+Crear un archivo de texto:
+
+Crea un nuevo archivo llamado lista_juegos.txt.
+Abre el archivo en modo escritura ('w') y escribe una lista de tus juegos favoritos de mesa, separados por comas.
+Cierra el archivo.
+Añadir más contenido al archivo:
+
+Abre el archivo lista_juegos.txt en modo adición ('a') para añadir un nuevo juego a la lista.
+Escribe el nombre del nuevo juego y cierra el archivo.
+Eliminar el directorio:
+
+Cambia de vuelta al directorio principal utilizando os.chdir("..").
+Elimina el directorio juegos_de_mesa utilizando la función os.rmdir().
+Restricciones
+No puedes usar librerías externas.
+Solo puedes utilizar los métodos y funciones mencionados en el contexto (import, mkdir, rmdir, os.chdir).
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+El estudiante demuestra una comprensión adecuada del contexto del ejercicio.
+Desarrollo técnico correcto y preciso (25%):
+
+El código es correcto y utiliza los métodos apropiados (os.mkdir(), os.chdir(), open()).
+Aplicación práctica con ejemplo claro (25%):
+
+El estudiante muestra una comprensión práctica del concepto, aplicándolo de manera clara y coherente.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+El estudiante concluye el ejercicio enlazando los conceptos aprendidos con la unidad actual.
+
+
+
+
+Respuesta:
+
+
+En este ejercicio se pone en práctica la gestión de archivos y directorios utilizando Python, aplicando funciones de la librería estándar como os.mkdir(), os.chdir(), os.rmdir() y open().
+El objetivo es simular la organización de información en un entorno digital, creando un directorio llamado juegos_de_mesa y gestionando un archivo de texto que contiene una lista de juegos de mesa favoritos.
+Este ejercicio permite comprender cómo se puede estructurar información de manera ordenada, cómo añadir contenido a archivos existentes y cómo mantener la limpieza del sistema eliminando directorios y archivos cuando ya no son necesarios.
+
+
+```
+import os
+
+
+os.mkdir("juegos_de_mesa")
+print("Directorio 'juegos_de_mesa' creado.")
+
+
+os.chdir("juegos_de_mesa")
+print("Cambiado al directorio 'juegos_de_mesa'.")
+
+
+with open("lista_juegos.txt", "w") as archivo:
+    archivo.write("Ajedrez, Monopoly, Catán, Risk")
+print("Archivo 'lista_juegos.txt' creado con juegos favoritos.")
+
+
+with open("lista_juegos.txt", "a") as archivo:
+    archivo.write(", Scrabble")
+print("Nuevo juego anadido al archivo.")
+```
+
+Salida del código en la terminal:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Programacion\Actividades\tema 5"
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> python juego.py
+Directorio 'juegos_de_mesa' creado.
+Cambiado al directorio 'juegos_de_mesa'.
+Archivo 'lista_juegos.txt' creado con juegos favoritos.
+Nuevo juego anadido al archivo.
+Volviendo al directorio principal.
+Directorio 'juegos_de_mesa' eliminado.
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5>
+
+Al hacer este ejercicio, he aprendido a manejar archivos y directorios en Python de manera práctica.
+Pude crear un directorio, escribir un archivo con mis juegos favoritos, añadir un nuevo juego y luego eliminar el directorio al terminar.
+Me di cuenta de lo útil que es saber cómo organizar y modificar información en el sistema de archivos, porque permite mantener todo ordenado y controlado.
+Creo que estos conocimientos se pueden aplicar en situaciones reales, como llevar registros o listas de manera digital, y me ayudan a entender mejor cómo funcionan las bases de datos y la gestión de información en general.

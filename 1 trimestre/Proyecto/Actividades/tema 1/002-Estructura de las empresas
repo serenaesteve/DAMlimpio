@@ -1,0 +1,100 @@
+Actividad: Análisis de oportunidades y competencias en el sector de IA
+Contexto: La creciente demanda de servicios de inteligencia artificial (IA) está impulsando el desarrollo de nuevas empresas tecnológicas. En Valencia, con su ecosistema empresarial vibrante y una gran concentración de startups en IA, hay un gran potencial para la adopción de soluciones tecnológicas innovadoras.
+
+Enunciado paso a paso:
+
+Identificación de sectores interesantes: Elige dos sectores locales que podrían tener un alto interés por servicios de IA. Puedes basarte en los ejemplos proporcionados (manufactura, retail, salud, etc.) o investigar otros nichos específicos.
+
+Estimación de clientes potenciales: Para cada sector seleccionado, realiza una estimación del número de empresas que podrían estar listas para contratar servicios de IA. Considera factores como el tamaño de la empresa, la digitalización existente y las necesidades reales de adopción de tecnologías avanzadas.
+
+Análisis de competencia: Identifica las principales empresas y startups de IA que actúan en los sectores seleccionados. Evalúa sus fortalezas y debilidades para entender cómo podrías diferenciarte del mercado.
+
+Definición de un nicho: Basándote en tu análisis, define un nicho específico dentro del sector elegido donde podrías competir con éxito. Este nicho debe ser algo que no esté completamente cubierto por las grandes empresas tecnológicas.
+
+Evaluación de oportunidades vs. amenazas: Evalúa la oportunidad de entrar en el mercado identificado y los desafíos principales que podrían surgir, como la competencia local o nacional, costes de implementación y regulaciones.
+
+Restricciones:
+
+No usar librerías externas ni estructuras no vistas.
+Solo utilizar conceptos y términos permitidos en la lista blanca.
+Evitar incluir soluciones o código final.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El estudiante debe mostrar una comprensión clara del contexto y el motivo por el que el análisis es relevante.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe realizar cálculos precisos, analizar datos de manera crítica y argumentar sus conclusiones con base en la información proporcionada.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe aplicar los conceptos aprendidos a un caso práctico específico, mostrando cómo se pueden identificar oportunidades y amenazas en el mercado de IA.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe concluir su análisis, sintetizando los hallazgos y sugiriendo estrategias futuras para maximizar las posibilidades de éxito en el sector elegido.
+Nota importante: Este ejercicio es una práctica para aplicar conceptos teóricos a un contexto real. El alumnado debe completar este apartado sin incluir soluciones o códigos finales.
+
+
+
+
+Respuesta:
+
+
+En los últimos años la inteligencia artificial (IA) se ha convertido en una tecnología muy importante para las empresas, ya que permite automatizar tareas, analizar grandes cantidades de datos y mejorar los procesos.
+En Valencia, hay cada vez más empresas y startups que trabajan con IA, sobre todo en sectores donde se busca optimizar recursos o mejorar la atención al cliente.
+
+El objetivo de este análisis es identificar qué sectores pueden aprovechar mejor la IA, analizar la competencia que ya existe y ver qué oportunidades hay para que una nueva empresa pueda entrar en este mercado con éxito.
+
+Después de revisar el contexto local, considero que dos sectores con mucho potencial para usar servicios de IA en Valencia son:
+
+***Sector Salud***
+Los hospitales y clínicas generan mucha información médica que puede ser analizada con IA para hacer diagnósticos más rápidos o mejorar la gestión de pacientes.
+
+Además, hay un interés creciente en la salud digital y la medicina personalizada.
+
+***Sector Agroalimentario***
+Valencia tiene muchas empresas agrícolas y de alimentación.
+La IA podría ayudar a predecir cosechas, controlar la calidad de los productos y reducir costes en la producción y distribución.
+
+
+***En el sector Salud:***
+En la Comunidad Valenciana hay más de 40 hospitales y muchas clínicas privadas.
+
+Se calcula que unas 15 a 20 instituciones podrían estar listas para usar servicios de IA, sobre todo las que ya tienen cierto nivel de digitalización.
+
+***En el sector Agroalimentario:***
+Hay alrededor de 1.000 empresas agroalimentarias, aunque no todas están digitalizadas.
+Aproximadamente un 10 o 15% podrían estar preparadas para adoptar soluciones de IA, lo que serían entre 100 y 150 empresas.
+
+En Valencia ya existen algunas empresas y startups que trabajan con IA, como Nunsys, Tyris AI o Belerofontech.
+Estas empresas ofrecen servicios variados de análisis de datos, automatización o visión artificial.
+
+**Análisis de competencia:**
+***Fortalezas de la competencia:***
+-Experiencia técnica y equipos especializados.
+-Colaboraciones con universidades y otras empresas.
+
+***Debilidades:***
+-Suelen ofrecer soluciones muy generales.
+-Algunas no se enfocan en las pequeñas y medianas empresas, que son la mayoría en Valencia.
+-Esto deja espacio para que surjan nuevos proyectos más enfocados en necesidades concretas de cada sector.
+
+**Definición de un nicho:**
+
+Después de analizar la situación, creo que un nicho interesante podría ser:
+IA para la predicción y optimización de cultivos en el sector agroalimentario.
+Este nicho permitiría ayudar a agricultores y cooperativas a mejorar la productividad con herramientas simples, sin depender de grandes empresas tecnológicas.
+
+También podría haber oportunidades en:
+IA para diagnóstico médico asistido en clínicas pequeñas que no pueden pagar sistemas grandes de salud digital.
+
+**Evaluación de oportunidades y amenazas**
+Oportunidades:
+-Apoyo de programas de digitalización y subvenciones europeas.
+-Interés creciente en tecnologías sostenibles y de automatización.
+-Demanda de soluciones accesibles para pymes.
+
+Amenazas:
+-Competencia de grandes empresas nacionales e internacionales.
+-Costes altos de implementación y mantenimiento.
+-Falta de personal especializado en IA dentro de las empresas clientes.
+
+Estrategia posible:
+Ofrecer soluciones simples, económicas y adaptadas al cliente local, centrándose en la personalización y el soporte cercano.
+
+Basicamente, Valencia es una ciudad con muchas oportunidades para el desarrollo de proyectos de inteligencia artificial, sobre todo en los sectores de salud y agroalimentario.
+Aunque ya existen competidores, todavía hay espacio para nuevos proyectos que se enfoquen en nichos concretos y necesidades reales de las pymes.
+
+Este análisis demuestra que conocer el entorno y la competencia es fundamental antes de crear un proyecto tecnológico, y que la IA puede ser una gran herramienta para mejorar la eficiencia de muchos sectores en la región.

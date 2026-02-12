@@ -1,0 +1,330 @@
+Actividad: Integración y Personalización de Contenido Web
+Introducción y Contextualización
+En esta actividad, vamos a integrar los conceptos aprendidos sobre estructura HTML y estilo CSS en un proyecto web interactivo. El objetivo es crear una página web que muestre categorías principales de juguetes recortables y destacados. Además, aplicaremos estilos para mejorar la visualización.
+
+Desarrollo Técnico Correcto y Preciso
+Estructura HTML: Crea un archivo index.html con las siguientes secciones:
+
+<header>: Contiene el título de la página.
+<main>: Aquí se colocará el contenido principal.
+<footer>: Para información adicional.
+Sección Heroe: Dentro de <main>, crea una sección con el id #heroe que incluya un título, una descripción y dos enlaces.
+
+Categorías Principales: Crea una sección con el id #categoriasprincipales que muestre las categorías principales como vehículos, edificios, robots, etc., utilizando <article> para cada categoría.
+
+Recortables Destacados: Agrega una sección con el id #recortablesdestacados donde se mostrarán los recortables destacados con su imagen y calificación.
+
+Estilo CSS: Crea un archivo styles.css y enlaza este archivo en tu index.html. Aplica estilos para mejorar la presentación de la página, incluyendo colores, tipografía y diseño responsivo.
+
+Aplicación Práctica con Ejemplo Claro
+Ejemplo de Código HTML: A continuación, se muestra un ejemplo parcial de cómo podría verse el código HTML para la sección #categoriasprincipales.
+
+<section id="categoriasprincipales">
+    <h3>Categorías principales</h3>
+    <div class="contenedor">
+        <article>
+            <img src="vehiculos.jpg" alt="Vehículos">
+            <p>Vehículos</p>
+        </article>
+        <article>
+            <img src="edificios.jpg" alt="Edificios">
+            <p>Edificios</p>
+        </article>
+        <!-- Añade más categorías aquí -->
+    </div>
+</section>
+Ejemplo de Código CSS: Aquí tienes un ejemplo básico de cómo podrías estilizar la sección #categoriasprincipales.
+
+#categoriasprincipales {
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+article {
+    text-align: center;
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: white;
+}
+Cierre/Conclusión enlazando con la Unidad
+Una vez que hayas completado tu página web, asegúrate de que todos los elementos estén correctamente estructurados y estilizados. Prueba tu página en diferentes navegadores para asegurarte de su compatibilidad.
+
+Recuerda que esta actividad te ayudará a practicar el uso de HTML y CSS para crear una interfaz web interactiva y visualmente atractiva. ¡Buena suerte!
+
+
+
+Respuesta:
+
+
+En esta actividad estoy creando una página web sencilla usando HTML y CSS. El objetivo es aprender a organizar una página web y a darle un poco de estilo para que se vea mejor. En la página muestro diferentes categorías de juguetes recortables y algunos recortables destacados.
+
+Para hacer la web utilizo HTML para crear la estructura, como el encabezado, el contenido principal y el pie de página. También uso CSS para cambiar los colores, el tamaño de las letras y la forma en la que se colocan los elementos en la pantalla. Con este trabajo practico lo que hemos aprendido en clase.
+
+index.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juguetes Recortables</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+
+  <header>
+    <h1>Juguetes Recortables</h1>
+    <p>Crea, recorta y diviértete</p>
+  </header>
+
+
+  <main>
+
+
+    <section id="heroe">
+      <h2>Recorta, arma y juega</h2>
+      <p>
+        Descubre recortables de vehículos, edificios, robots y mucho más.
+        Imprime, recorta y construye tus propios juguetes.
+      </p>
+      <a href="#categoriasprincipales">Ver categorías</a>
+      <a href="#recortablesdestacados">Ver destacados</a>
+    </section>
+
+
+    <section id="categoriasprincipales">
+      <h3>Categorías principales</h3>
+
+      <div class="contenedor">
+        <article>
+          <img src="vehiculos.jpg" alt="Vehículos">
+          <p>Vehículos</p>
+        </article>
+
+        <article>
+          <img src="edificios.jpg" alt="Edificios">
+          <p>Edificios</p>
+        </article>
+
+        <article>
+          <img src="robots.jpg" alt="Robots">
+          <p>Robots</p>
+        </article>
+
+        <article>
+          <img src="animales.jpg" alt="Animales">
+          <p>Animales</p>
+        </article>
+
+        <article>
+          <img src="fantasia.jpg" alt="Fantasía">
+          <p>Fantasía</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="recortablesdestacados">
+      <h3>Recortables destacados</h3>
+
+      <div class="contenedor">
+        <article class="destacado">
+          <img src="destacado1.jpg" alt="Coche deportivo">
+          <h4>Coche Deportivo</h4>
+          <p class="calificacion">⭐ 4.8</p>
+        </article>
+
+        <article class="destacado">
+          <img src="destacado2.jpg" alt="Castillo medieval">
+          <h4>Castillo Medieval</h4>
+          <p class="calificacion">⭐ 4.6</p>
+        </article>
+
+        <article class="destacado">
+          <img src="destacado3.jpg" alt="Robot explorador">
+          <h4>Robot Explorador</h4>
+          <p class="calificacion">⭐ 4.9</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Serena Sania Esteve</p>
+    <p>Proyecto realizado con HTML y CSS</p>
+  </footer>
+
+</body>
+</html>
+```
+
+styles.css:
+```
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+:root {
+  --principal: #ff6f61;
+  --secundario: #4dabf7;
+  --fondo: #f8f9fa;
+  --oscuro: #333;
+  --claro: #ffffff;
+}
+
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--fondo);
+  color: var(--oscuro);
+  line-height: 1.6;
+}
+
+img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+header {
+  background-color: var(--principal);
+  color: var(--claro);
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  margin-bottom: 5px;
+}
+
+
+#heroe {
+  background: linear-gradient(135deg, var(--secundario), var(--principal));
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#heroe h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+#heroe p {
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+#heroe a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: white;
+  color: var(--oscuro);
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+#heroe a:hover {
+  background-color: #eee;
+}
+
+
+section {
+  padding: 30px 20px;
+}
+
+section h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+article {
+  background-color: var(--claro);
+  width: 150px;
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+article p {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+
+.destacado {
+  width: 220px;
+}
+
+.calificacion {
+  margin-top: 8px;
+  font-size: 1.1rem;
+  color: #f4b400;
+}
+
+
+footer {
+  background-color: var(--oscuro);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+}
+
+
+@media (max-width: 600px) {
+  article {
+    width: 120px;
+  }
+
+  .destacado {
+    width: 180px;
+  }
+}
+```
+
+proyecto-recortables/
+│── index.html
+│── styles.css
+│── vehiculos.jpg
+│── edificios.jpg
+│── robots.jpg
+│── animales.jpg
+│── fantasia.jpg
+│── destacado1.jpg
+│── destacado2.jpg
+│── destacado3.jpg
+
+
+Con esta actividad aprendo a crear una página web básica y a usar HTML y CSS juntos. Veo que HTML sirve para ordenar el contenido y CSS para mejorar el diseño. También aprendo a trabajar con secciones, imágenes y estilos sencillos.
+
+Este ejercicio me ayuda a entender mejor cómo se hacen las páginas web y me sirve como base para seguir aprendiendo más.

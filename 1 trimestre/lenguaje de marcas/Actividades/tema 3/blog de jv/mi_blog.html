@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="El blog de Jose Vicente">
+    <meta name="keywords" content="blog, noticias, tecnología">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog</title>
+    <style>
+      body {background: lightgray; font-family: sans-serif;}
+      header, footer, main {background: white; padding: 20px; margin: auto; width: 600px;}
+      header, footer {text-align: center;}
+      main {display: grid; grid-template-columns: auto auto auto; gap: 20px;}
+      article img {width: 100%; border-radius: 5px;}
+    </style>
+  </head>
+  <body> 
+    <header>
+      <h1>El blog de Jose Vicente</h1>
+      <h2>Mis últimas noticias</h2>
+    </header>
+
+    <main></main>
+
+    <footer>
+      (c) 2025 Jose Vicente Carratalá
+    </footer>
+
+    <!-- Plantilla para los artículos -->
+    <template id="articulo">
+      <article>
+        <h1>Título de prueba</h1>
+        <time>Fecha de prueba</time>
+        <p>Texto de prueba</p>
+        <img src="" alt="">
+      </article>
+    </template>
+
+    <!-- Divs para mover elementos -->
+    <div id="origen">
+      <p>Este contenido será movido.</p>
+    </div>
+    <div id="destino"></div>
+
+    <!-- Script para cargar JSON -->
+    <script>
+      fetch("blog.json")
+        .then(function(resultado) {
+          return resultado.json();
+        })
+        .then(function(datos) {
+          console.log(datos);
+          var contenedor = document.querySelector("main");
+          var plantilla = document.querySelector("#articulo");
+          
+          datos.forEach(function(articulo) {
+            let clon = plantilla.content.cloneNode(true);
+            clon.querySelector("h1").textContent = articulo.titulo;
+            clon.querySelector("time").textContent = articulo.fecha;
+            clon.querySelector("p").textContent = articulo.texto;
+            clon.querySelector("img").src = articulo.imagen;
+            clon.querySelector("img").alt = articulo.titulo;
+            contenedor.appendChild(clon);
+          });
+        })
+        .catch(error => console.error("Error al cargar el JSON:", error));
+    </script>
+
+   
+    <script>
+      const origen = document.getElementById("origen");
+      const destino = document.getElementById("destino");
+
+      // Mueve todos los hijos de "origen" a "destino"
+      while (origen.firstChild) {
+        destino.appendChild(origen.firstChild);
+      }
+    </script>
+  </body>
+</html>
+
+

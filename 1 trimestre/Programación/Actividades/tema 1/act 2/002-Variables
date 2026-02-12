@@ -1,0 +1,68 @@
+Título
+Explorando las Variables: Un Juego en el Campo
+
+Contexto
+Imagine que estás jugando a un juego de mesa sobre la naturaleza, donde cada jugador tiene que recoger diferentes tipos de recursos del campo para ganar. En este juego, cada tipo de recurso es almacenado en una variable. Por ejemplo, tu variable bosques_recolectados podría representar el número de árboles que has recolectado hasta ahora.
+
+Enunciado paso a paso
+Declaración de Variables: Declara las siguientes variables para un juego de campo:
+
+bosques_recolectados: Representa el número de árboles recolectados.
+agua_recogida: Representa la cantidad de agua recogida del río.
+animales_capturados: Representa el número de animales capturados.
+Inicialización de Variables: Inicializa estas variables con los valores que consideres apropiados:
+
+bosques_recolectados = 0
+agua_recogida = 0
+animales_capturados = 0
+Modificación de Variables: Simula una serie de acciones en el juego y modifica las variables según sea necesario:
+
+Aumenta bosques_recolectados en 2.
+Disminuye agua_recogida en 1.
+Aumenta animales_capturados en 3.
+Mostrar Resultados: Imprime los valores de las variables después de realizar las modificaciones:
+
+print("Bosques recolectados:", bosques_recolectados)
+print("Agua recogida:", agua_recogida)
+print("Animales capturados:", animales_capturados)
+Restricciones
+Solo puedes usar las variables mencionadas en el paso 1.
+No uses valores fijos directamente en la inicialización (por ejemplo, bosques_recolectados = 2).
+Asegúrate de que las modificaciones sean coherentes con el contexto del juego.
+Criterios de evaluación
+Introducción y contextualización: Explica claramente cómo has integrado los hobbies en el contexto del ejercicio.
+Desarrollo técnico correcto y preciso: Asegúrate de que las variables estén correctamente declaradas e inicializadas, y que las modificaciones sean coherentes con el juego.
+Aplicación práctica con ejemplo claro: Muestra cómo has utilizado los conceptos aprendidos en un contexto práctico.
+Cierre/Conclusión enlazando con la unidad: Concluye explicando cómo este ejercicio te ha ayudado a entender mejor las variables y su uso en el contexto de un juego de campo.
+
+
+Respuesta:
+
+
+El objetivo de este ejercicio es aplicar variables en un juego de mesa donde el objetivo es recolectar una serie de elementos.
+
+Las variables en este caso funcionan como los elementos clave que permiten hacer seguimiento del progreso de cada jugador.
+
+Para resolver este ejercicio, vamos a:
+
+- Declarar las variables en su primer estado 
+- Declarar lo que le queremos sumar o restar a cada variable 
+- Poner las variables con el print para que se puedan ejecutar.
+
+A continuacion presento el codigo para poder hacer lo dicho en el punto anterior:
+```
+bosques_recolectados = 0
+agua_recogida = 0
+animales_capturados = 0
+
+bosques_recolectados += 2 
+agua_recogida -= 1
+animales_capturados += 3
+
+print("bosque: ", bosques_recolectados)
+print("agua:", agua_recogida)
+print("animales:", animales_capturados)
+
+```
+
+Este ejercicio me ha servido para comprender mejor las variables ya que se ha hecho en un contexto que me divierte y me motiva y ha sido muy gratificante al ejecutar el codigo por que ha salido bien. Basicamente he reforzado los conocimientos que ya tenia sobre las variables , entendiendolas mejor con un juego.

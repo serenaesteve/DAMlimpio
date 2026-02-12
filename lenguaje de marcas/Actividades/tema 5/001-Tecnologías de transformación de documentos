@@ -1,0 +1,126 @@
+Contexto
+En un mundo donde el juego de mesa y la exploración natural son pasiones compartidas, hemos decidido crear una aplicación web que muestre las entradas recientes de un diario digital. Este proyecto nos permitirá combinar nuestros hobbies favoritos: los juegos de mesa para mantenernos entretenidos mientras trabajamos en el código, y la naturaleza para inspirarnos con la estructura de nuestra aplicación.
+
+Enunciado paso a paso
+Conéctate a la base de datos: Utiliza las habilidades del juego de mesa para resolver problemas de conexión y configuración de bases de datos. Asegúrate de que el alumnado pueda conectarse correctamente a la base de datos blog2526 utilizando los credenciales proporcionados.
+
+Recoge datos en formato diccionario: Como amantes de la naturaleza, valoramos la belleza y la precisión de los datos. En este paso, deberás modificar el código para que recopile los datos de la base de datos en un formato de diccionario. Esto nos permitirá trabajar con ellos de manera más sencilla.
+
+Crea una API para mostrar datos: Imagina que estás explorando un campo lleno de diferentes especies de plantas y animales. Cada planta o animal es como una entrada en nuestro diario digital. Nuestro objetivo es crear una API que nos permita ver estas entradas desde cualquier lugar.
+
+Despliega los datos usando Flask: Finalmente, para disfrutar de nuestra aplicación web mientras exploramos el campo, deberás desplegar los datos recogidos y convertidos a JSON utilizando Flask. Esto nos permitirá mostrar las entradas en formato estructurado y fácil de leer.
+
+Restricciones
+No se permite el uso de librerías externas ni estructuras no vistas.
+El alumnado debe usar solo los conceptos y tecnologías que se han aprendido hasta la fecha.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumnado debe mostrar comprensión del contexto del proyecto, relacionando el trabajo con sus hobbies favoritos.
+Desarrollo técnico correcto y preciso (25%): El alumnado debe demostrar habilidad técnica para resolver problemas de conexión a la base de datos, recoger datos en formato diccionario, crear una API y desplegar los datos usando Flask.
+Aplicación práctica con ejemplo claro (25%): El alumnado debe proporcionar ejemplos claros de cómo ha aplicado cada paso del proyecto, mostrando su comprensión práctica del tema.
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe cerrar el ejercicio enlazándolo con lo aprendido en la unidad, reflexionando sobre cómo estos conceptos se aplican a su hobby de explorar el campo y jugar juegos de mesa.
+
+
+
+Resultado:
+
+En esta actividad hago una aplicación web que enseña las entradas de un diario digital. Uso una base de datos para guardar la información y Flask para enseñarla en pantalla. Aprendo a conectar Python con la base de datos, a recoger los datos en diccionarios y a mostrarlos en formato JSON. Me gusta porque puedo organizar la información como en un juego de mesa o cuando exploro la naturaleza.
+
+1. Creo la tabla entradas:
+```
+CREATE TABLE entradas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255),
+    contenido TEXT,
+    fecha DATE
+);
+```
+
+2. Añado datos:
+```
+INSERT INTO entradas (titulo, contenido, fecha) VALUES
+('Paseo por el bosque', 'Hoy exploré un sendero nuevo', '2025-10-01'),
+('Tarde de juegos de mesa', 'Jugamos a un juego nuevo', '2025-10-05'),
+('Ruta por la montaña', 'Disfrutamos de la naturaleza', '2025-10-10');
+```
+
+3. app.py:
+```
+from flask import Flask, jsonify
+import mysql.connector
+
+def conectar_bd():
+    return mysql.connector.connect(
+        host="localhost",
+        user="serena",
+        password="blog2526",
+        database="blog2526"
+    )
+
+def obtener_entradas():
+    conexion = conectar_bd()
+    cursor = conexion.cursor(dictionary=True)
+    cursor.execute(
+        "SELECT id, titulo, contenido, fecha FROM entradas ORDER BY fecha DESC"
+    )
+    entradas = cursor.fetchall()
+    cursor.close()
+    conexion.close()
+    return entradas
+
+app = Flask(__name__)
+
+@app.route("/api/entradas")
+def api_entradas():
+    return jsonify(obtener_entradas())
+
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+Consola:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\lenguaje de marcas\Actividades"
+PS C:\Users\Serena\Documents\lenguaje de marcas\Actividades> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [20/Dec/2025 10:57:34] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Dec/2025 10:57:35] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Dec/2025 10:58:26] "GET /api/entradas HTTP/1.1" 200 -
+
+
+En el navegador:  http://127.0.0.1:5000/api/entradas
+
+Resultado:
+
+[
+  {
+    "contenido": "Disfrutamos de la naturaleza",
+    "fecha": "Fri, 10 Oct 2025 00:00:00 GMT",
+    "id": 3,
+    "titulo": "Ruta por la montaña"
+  },
+  {
+    "contenido": "Jugamos a un juego nuevo",
+    "fecha": "Sun, 05 Oct 2025 00:00:00 GMT",
+    "id": 2,
+    "titulo": "Tarde de juegos de mesa"
+  },
+  {
+    "contenido": "Hoy exploré un sendero nuevo",
+    "fecha": "Wed, 01 Oct 2025 00:00:00 GMT",
+    "id": 1,
+    "titulo": "Paseo por el bosque"
+  }
+]
+
+o si no esta marcado el "dar formato al texto"
+
+[{"contenido":"Disfrutamos de la naturaleza","fecha":"Fri, 10 Oct 2025 00:00:00 GMT","id":3,"titulo":"Ruta por la montaña"},{"contenido":"Jugamos a un juego nuevo","fecha":"Sun, 05 Oct 2025 00:00:00 GMT","id":2,"titulo":"Tarde de juegos de mesa"},{"contenido":"Hoy exploré un sendero nuevo","fecha":"Wed, 01 Oct 2025 00:00:00 GMT","id":1,"titulo":"Paseo por el bosque"}]
+
+Con esta actividad aprendo a usar bases de datos y a hacer consultas con SQL. También aprendo a mostrar los datos con Flask en formato JSON. Me ayuda a entender cómo organizar la información y a ver los resultados de forma clara. Me gusta porque puedo relacionarlo con mis hobbies, jugar a juegos de mesa y explorar la naturaleza, donde es importante seguir pasos y organizar bien todo.

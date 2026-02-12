@@ -1,0 +1,133 @@
+Ejercicio:
+
+Título
+Creación de una Base de Datos para un Jardín de Recursos Naturales
+
+Contexto
+Imagine que eres un entusiasta de la naturaleza y estás creando un jardín de recursos naturales en tu campo. Quieres organizar todas las especies de plantas, insectos y otros animales que hayas encontrado para poder estudiarlos mejor y compartirlas con tus amigos. Para lograr esto, necesitas crear una base de datos.
+
+Enunciado paso a paso
+
+Definición de Entidades:
+Identifica las entidades principales que necesitarás para organizar tu jardín. Por ejemplo, podrías tener entidades como Planta, Insecto y Animal.
+ 
+Atributos de las Entidades: 
+Para cada entidad, define los atributos relevantes. Por ejemplo:
+Para la entidad Planta: nombre, tipo (flores, hierbas, árboles), altura.
+Para la entidad Insecto: nombre, especie, color.
+Para la entidad Animal: nombre, especie, hábitat.
+
+Relaciones entre Entidades:
+Define cómo las entidades están relacionadas. 
+Por ejemplo:
+Una planta puede tener varios insectos que se alimentan de ella.
+Un animal puede pertenecer a diferentes hábitats.
+
+Modelo ER: Dibuja el diagrama de entidad-relación (ER) basado en tus definiciones anteriores.
+
+Restricciones
+Solo puedes usar los conceptos y herramientas que se han enseñado hasta ahora.
+No uses librerías externas ni estructuras no vistas en clase.
+Criterios de evaluación
+
+Introducción y contextualización (25%): 
+El estudiante muestra comprensión del contexto y el propósito del ejercicio.
+Desarrollo técnico correcto y preciso (25%):
+ El estudiante define correctamente las entidades, sus atributos y las relaciones entre ellas.
+Aplicación práctica con ejemplo claro (25%):
+ El estudiante muestra habilidad para aplicar los conceptos en un ejemplo práctico.
+Cierre/Conclusión enlazando con la unidad (25%):
+ El estudiante concluye el ejercicio, mostrando cómo este conocimiento se aplica a su proyecto de jardín de recursos naturales.
+ 
+ 
+Respuesta:
+
+
+Como entusiasta de la naturaleza, he decidido crear un jardín de recursos naturales en el que pueda organizar y registrar toda la información sobre las especies que observo en mi entorno. El propósito de este proyecto es construir una base de datos estructurada que me permita clasificar plantas, insectos y animales, registrar observaciones y entender mejor cómo interactúan entre sí dentro de su hábitat. Con esta información organizada, podré estudiar la biodiversidad local, compartirla con otras personas interesadas y facilitar futuros proyectos educativos o de conservación ambiental.
+
+
+1. Creo la base de datos.
+```
+CREATE DATABASE recursos_naturales;
+```
+
+2. Creo las tablas de planta,insecto y animal con sus diferentes atributos.
+```
+CREATE TABLE Planta (
+  planta_id INTEGER PRIMARY KEY,
+  nombre_comun TEXT,
+  nombre_cientifico TEXT,
+  tipo TEXT,
+  altura_cm INTEGER,
+  descripcion TEXT
+);
+
+CREATE TABLE Insecto (
+  insecto_id INTEGER PRIMARY KEY,
+  nombre_comun TEXT,
+  especie TEXT,
+  color TEXT,
+  tamanio_mm INTEGER
+);
+
+CREATE TABLE Animal (
+  animal_id INTEGER PRIMARY KEY,
+  nombre_comun TEXT,
+  especie TEXT,
+  habitat_preferido TEXT,
+  observaciones TEXT
+);
+```
+
+3. Ahora creo tablas para relacionar las plantas, los insectos y los animales.
+```
+CREATE TABLE Habitat (
+  habitat_id INT PRIMARY KEY,
+  nombre VARCHAR(100),
+  descripcion TEXT
+);
+```
+-Un mismo animal puede habitar en diferentes hábitats.
+-Varias plantas pueden crecer en el mismo hábitat.
+Me permite hacer consultas como:
+“¿Qué animales hay en la charca?”
+“¿Qué plantas crecen en la pradera?”
+
+```
+CREATE TABLE Observacion (
+  observacion_id INT PRIMARY KEY,
+  fecha DATE,
+  lugar VARCHAR(100),
+  observador VARCHAR(100),
+  entidad_tipo VARCHAR(50),
+  entidad_id INT
+);
+```
+-Permite llevar un historial de observaciones.
+-Puedo registrar quién, cuándo y dónde vio una especie.
+-Evito duplicar información de plantas e insectos.
+
+```
+CREATE TABLE Planta_Insecto (
+  planta_id INT,
+  insecto_id INT,
+  interaccion VARCHAR(100),
+  PRIMARY KEY (planta_id, insecto_id)
+);
+```
+-Una planta puede tener muchos insectos.
+-Un insecto puede visitar o alimentarse de muchas plantas.
+-Me permite consultar relaciones ecológicas entre especies.
+
+Mi modelo ER en phpmyadmin:
+
+https://files.fm/u/fw75ty36ge
+
+Para llevar a la práctica el diseño de la base de datos, creé una base llamada recursos_naturales en phpMyAdmin. Dentro de ella definí las entidades principales: Planta, Insecto, Animal, Hábitat y Observación.
+
+Cada entidad cuenta con atributos que describen sus características: por ejemplo, la tabla Planta contiene campos como planta_id, nombre_comun, nombre_cientifico, tipo y altura_cm; mientras que Insecto incluye insecto_id, nombre_comun, especie, color y tamano_mm.
+Además, apliqué relaciones entre tablas para representar las interacciones reales del ecosistema. Por ejemplo, creé la tabla planta_insecto para modelar una relación de muchos a muchos entre Planta e Insecto, ya que una planta puede ser visitada por varios insectos y un insecto puede interactuar con muchas plantas.
+Finalmente, implementé la tabla Observación para registrar eventos reales: fecha, lugar, observador y el tipo de entidad observada. Esto permite documentar información de campo y analizar patrones de comportamiento y distribución de especies en mi jardín natural.
+
+Por este ejercicio, he aprendido a cómo diseñar y estructurar una base de datos desde cero, identificando entidades, atributos y relaciones que representan de forma fiel la realidad de un jardín de recursos naturales. Gracias al modelo entidad–relación pude organizar la información de manera clara y lógica, lo que facilita el análisis y la toma de decisiones.
+Con la base de datos recursos_naturales, ahora puedo registrar de forma ordenada las especies de plantas, insectos y animales que observo en mi jardín, así como sus interacciones y hábitats. Esta organización no solo mejora la gestión de mi información personal, sino que también puede servir como herramienta para compartir conocimientos con otras personas interesadas en la biodiversidad local.

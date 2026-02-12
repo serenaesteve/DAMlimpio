@@ -1,0 +1,184 @@
+Enunciado paso a paso
+
+Introducción y contextualización
+
+Imagina que eres un amante del campo y te gustaría gestionar tu colección de jardinería digitalmente. Para ello, te has decidido crear una aplicación que permita insertar, listar, actualizar y eliminar información sobre tus plantas favoritas.
+Tu objetivo es desarrollar las funcionalidades básicas de esta aplicación utilizando estructuras de control en Python.
+Desarrollo técnico correcto y preciso
+
+A partir del código base proporcionado, el alumno deberá completar la función de actualización y eliminación de piezas (plantas) en la base de datos.
+Deberá utilizar las estructuras de control if-elif-else para manejar diferentes opciones ingresadas por el usuario.
+El alumno debe asegurarse de que los datos ingresados sean correctos y seguros, evitando inyecciones SQL.
+Aplicación práctica con ejemplo claro
+
+Para la opción de actualización (n° 3), el alumno deberá pedir al usuario los nuevos valores para la pieza a actualizar y luego ejecutar una consulta UPDATE en la base de datos.
+De manera similar, para la opción de eliminación (n° 4), el alumno pedirá el identificador de la pieza a eliminar y ejecutará una consulta DELETE.
+El código debe manejar adecuadamente los casos en que no se encuentre ninguna pieza con el identificador proporcionado.
+Cierre/Conclusión enlazando con la unidad
+
+Una vez completadas las funciones de actualización y eliminación, el alumno podrá probar su aplicación ejecutándola.
+El programa debe mostrar un menú interactivo que permita al usuario seleccionar entre las diferentes opciones (insertar, listar, actualizar, eliminar).
+Al finalizar, el alumno deberá asegurarse de cerrar la conexión con la base de datos.
+Restricciones
+
+No se permite usar librerías externas ni estructuras no vistas en el tema actual.
+El código debe mantener una estructura clara y segura contra inyecciones SQL.
+Criterios de evaluación
+
+Introducción y contextualización (25%): El contexto debe estar claro y relacionado con la actividad propuesta.
+Desarrollo técnico correcto y preciso (25%): El código debe implementar correctamente las funciones de actualización y eliminación utilizando estructuras de control adecuadas.
+Aplicación práctica con ejemplo claro (25%): El alumno debe completar los bloques de código vacíos de manera segura y funcional.
+Cierre/Conclusión enlazando con la unidad (25%): El programa debe funcionar correctamente y mostrar un menú interactivo que permita al usuario realizar las operaciones deseadas.
+
+
+
+Respuesta:
+
+
+n este ejercicio he hecho un programa en Python para gestionar una pequeña base de datos de plantas.
+La idea es poder insertar, listar, actualizar y eliminar plantas, como si fuera una aplicacion de jardineria digital.
+Con este trabajo practico lo aprendido sobre bucles, condicionales y el uso de listas para guardar informacion.
+El programa tiene un menu que se repite hasta que el usuario decide salir.
+
+
+```
+print("Bienvenido al sistema de gestion de plantas")
+
+plantas = []
+
+while True:
+    print("\nMenu CRUD de plantas")
+    print("1. Insertar planta")
+    print("2. Listar plantas")
+    print("3. Actualizar planta")
+    print("4. Eliminar planta")
+    print("5. Salir")
+
+    opcion = input("\nElige una opcion: ")
+
+    if opcion == "1":
+        nombre = input("Introduce el nombre de la planta: ")
+        plantas.append(nombre)
+        print("Planta agregada correctamente.")
+
+    elif opcion == "2":
+        if len(plantas) == 0:
+            print("No hay plantas registradas.")
+        else:
+            print("Lista de plantas:")
+            for i, p in enumerate(plantas):
+                print(f"{i + 1}. {p}")
+
+    elif opcion == "3":
+        if len(plantas) == 0:
+            print("No hay plantas para actualizar.")
+        else:
+            for i, p in enumerate(plantas):
+                print(f"{i + 1}. {p}")
+            indice = int(input("Introduce el numero de la planta que deseas actualizar: ")) - 1
+            if 0 <= indice < len(plantas):
+                nuevo_nombre = input("Introduce el nuevo nombre: ")
+                plantas[indice] = nuevo_nombre
+                print("Planta actualizada correctamente.")
+            else:
+                print("Numero de planta no valido.")
+
+    elif opcion == "4":
+        if len(plantas) == 0:
+            print("No hay plantas para eliminar.")
+        else:
+            for i, p in enumerate(plantas):
+                print(f"{i + 1}. {p}")
+            indice = int(input("Introduce el numero de la planta que deseas eliminar: ")) - 1
+            if 0 <= indice < len(plantas):
+                plantas.pop(indice)
+                print("Planta eliminada correctamente.")
+            else:
+                print("Numero de planta no valido.")
+
+    elif opcion == "5":
+        print("Saliendo del sistema...")
+        break
+
+    else:
+        print("Opcion no valida. Intenta de nuevo.")
+```
+
+Salida del código en la terminal:
+
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 1> cd "C:\Users\Serena\Documents\Programacion\Actividades\tema 5"
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> python sistemacrudplantas.py
+Bienvenido al sistema de gestion de plantas
+
+Menu CRUD de plantas
+1. Insertar planta
+2. Listar plantas
+3. Actualizar planta
+4. Eliminar planta
+5. Salir
+
+Elige una opcion: 1
+Introduce el nombre de la planta: Rosal
+Planta agregada correctamente.
+
+Menu CRUD de plantas
+1. Insertar planta
+2. Listar plantas
+3. Actualizar planta
+4. Eliminar planta
+5. Salir
+
+Elige una opcion: 2
+Lista de plantas:
+1. Rosal
+
+Menu CRUD de plantas
+1. Insertar planta
+2. Listar plantas
+3. Actualizar planta
+4. Eliminar planta
+5. Salir
+
+Elige una opcion: 3
+1. Rosal
+Introduce el numero de la planta que deseas actualizar: 1
+Introduce el nuevo nombre: Manzano
+Planta actualizada correctamente.
+
+Menu CRUD de plantas
+1. Insertar planta
+2. Listar plantas
+3. Actualizar planta
+4. Eliminar planta
+5. Salir
+
+Elige una opcion: 4
+1. Manzano
+Introduce el numero de la planta que deseas eliminar: 1
+Planta eliminada correctamente.
+
+Menu CRUD de plantas
+1. Insertar planta
+2. Listar plantas
+3. Actualizar planta
+4. Eliminar planta
+5. Salir
+
+Elige una opcion: 2
+No hay plantas registradas.
+
+Menu CRUD de plantas
+1. Insertar planta
+2. Listar plantas
+3. Actualizar planta
+4. Eliminar planta
+5. Salir
+
+Elige una opcion: 5
+Saliendo del sistema...
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5>
+
+Con este programa he aprendido a usar estructuras de control como if, elif, else y el bucle while.
+Tambien he entendido mejor como funcionan las listas y como se pueden modificar segun las opciones del usuario.
+Me ha servido para ver de forma practica como se pueden crear menus y hacer un CRUD sencillo en Python.
+Creo que es una buena base para programas mas grandes en el futuro.

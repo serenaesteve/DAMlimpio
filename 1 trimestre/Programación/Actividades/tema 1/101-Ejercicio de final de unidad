@@ -1,0 +1,303 @@
+Ejercicio de final de unidad Tema 1:
+
+Tal y como hemos comentado en clase, haz un programa en Python que: 1.-Imprima un mensaje de bienvenida 2.-Imprima una serie de opciones en pantalla (un menu CRUD) 3.-Acoja una opción por parte del usuario con input 4.-Saque la opción del usuario escogida por pantalla
+
+
+
+
+Respuesta:
+
+
+
+En este programa he hecho un menu CRUD en Python. Sirve para crear, leer, actualizar y eliminar registros desde la consola.
+Tambien muestra un mensaje de bienvenida y repite el menu hasta que el usuario elige salir.
+Con este ejercicio practico lo aprendido sobre variables, entradas por teclado, bucles y condicionales.
+​
+​
+```
+print("Bienvenido al programa de gestion CRUD")
+​
+registros = []
+​
+while True:
+    print("\nMenu CRUD")
+    print("1. Crear un registro")
+    print("2. Leer registros")
+    print("3. Actualizar un registro")
+    print("4. Eliminar un registro")
+    print("5. Salir")
+​
+    opcion = input("\nElige una opcion: ")
+​
+    if opcion == "1":
+        nuevo = input("Introduce el nuevo registro: ")
+        registros.append(nuevo)
+        print("Registro agregado correctamente.")
+​
+    elif opcion == "2":
+        if len(registros) == 0:
+            print("No hay registros para mostrar.")
+        else:
+            print("Registros actuales:")
+            for i, r in enumerate(registros):
+                print(f"{i + 1}. {r}")
+​
+    elif opcion == "3":
+        if len(registros) == 0:
+            print("No hay registros para actualizar.")
+        else:
+            for i, r in enumerate(registros):
+                print(f"{i + 1}. {r}")
+            indice = int(input("Introduce el numero del registro que deseas actualizar: ")) - 1
+            if 0 <= indice < len(registros):
+                nuevo_valor = input("Introduce el nuevo valor: ")
+                registros[indice] = nuevo_valor
+                print("Registro actualizado correctamente.")
+            else:
+                print("Numero de registro no valido.")
+​
+    elif opcion == "4":
+        if len(registros) == 0:
+            print("No hay registros para eliminar.")
+        else:
+            for i, r in enumerate(registros):
+                print(f"{i + 1}. {r}")
+            indice = int(input("Introduce el numero del registro que deseas eliminar: ")) - 1
+            if 0 <= indice < len(registros):
+                registros.pop(indice)
+                print("Registro eliminado correctamente.")
+            else:
+                print("Numero de registro no valido.")
+​
+    elif opcion == "5":
+        print("Saliendo del programa...")
+        break
+​
+    else:
+        print("Opcion no valida. Intenta de nuevo.")
+```
+​
+Salida del código en la terminal:
+​
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 1> python actfinal.py
+Bienvenido al programa de gestion CRUD
+​
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+​
+Elige una opcion: 1
+Introduce el nuevo registro: hola
+Registro agregado correctamente.
+​
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+​
+Elige una opcion: 2
+Registros actuales:
+1. hola
+​
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+​
+Elige una opcion: 3
+1. hola
+Introduce el numero del registro que deseas actualizar: 1
+Introduce el nuevo valor: Hola que tal
+Registro actualizado correctamente.
+​
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+​
+Elige una opcion: 4
+1. Hola que tal
+Introduce el numero del registro que deseas eliminar: 1
+Registro eliminado correctamente.
+​
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+​
+Elige una opcion: 2
+No hay registros para mostrar.
+​
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+​
+Elige una opcion: 5
+Saliendo del programa...
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 1>
+​
+Con este programa he aprendido a usar mejor las estructuras basicas de Python.
+He entendido como funciona un menu con varias opciones y como guardar informacion en una lista.
+Tambien me ha servido para practicar el uso de input y print, y para ver como hacer un programa que interactue con el usuario.
+Autosaved: 09:25 AM144550
+Enviar
+Respuestas guardadas
+#1 · 2025-11-04T08:25:29+00:00
+En este programa he hecho un menu CRUD en Python. Sirve para crear, leer, actualizar y eliminar registros desde la consola.
+Tambien muestra un mensaje de bienvenida y repite el menu hasta que el usuario elige salir.
+Con este ejercicio practico lo aprendido sobre variables, entradas por teclado, bucles y condicionales.
+
+
+```
+print("Bienvenido al programa de gestion CRUD")
+
+registros = []
+
+while True:
+    print("\nMenu CRUD")
+    print("1. Crear un registro")
+    print("2. Leer registros")
+    print("3. Actualizar un registro")
+    print("4. Eliminar un registro")
+    print("5. Salir")
+
+    opcion = input("\nElige una opcion: ")
+
+    if opcion == "1":
+        nuevo = input("Introduce el nuevo registro: ")
+        registros.append(nuevo)
+        print("Registro agregado correctamente.")
+
+    elif opcion == "2":
+        if len(registros) == 0:
+            print("No hay registros para mostrar.")
+        else:
+            print("Registros actuales:")
+            for i, r in enumerate(registros):
+                print(f"{i + 1}. {r}")
+
+    elif opcion == "3":
+        if len(registros) == 0:
+            print("No hay registros para actualizar.")
+        else:
+            for i, r in enumerate(registros):
+                print(f"{i + 1}. {r}")
+            indice = int(input("Introduce el numero del registro que deseas actualizar: ")) - 1
+            if 0 <= indice < len(registros):
+                nuevo_valor = input("Introduce el nuevo valor: ")
+                registros[indice] = nuevo_valor
+                print("Registro actualizado correctamente.")
+            else:
+                print("Numero de registro no valido.")
+
+    elif opcion == "4":
+        if len(registros) == 0:
+            print("No hay registros para eliminar.")
+        else:
+            for i, r in enumerate(registros):
+                print(f"{i + 1}. {r}")
+            indice = int(input("Introduce el numero del registro que deseas eliminar: ")) - 1
+            if 0 <= indice < len(registros):
+                registros.pop(indice)
+                print("Registro eliminado correctamente.")
+            else:
+                print("Numero de registro no valido.")
+
+    elif opcion == "5":
+        print("Saliendo del programa...")
+        break
+
+    else:
+        print("Opcion no valida. Intenta de nuevo.")
+```
+
+Salida del código en la terminal:
+
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 1> python actfinal.py
+Bienvenido al programa de gestion CRUD
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 1
+Introduce el nuevo registro: hola
+Registro agregado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 2
+Registros actuales:
+1. hola
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 3
+1. hola
+Introduce el numero del registro que deseas actualizar: 1
+Introduce el nuevo valor: Hola que tal
+Registro actualizado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 4
+1. Hola que tal
+Introduce el numero del registro que deseas eliminar: 1
+Registro eliminado correctamente.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 2
+No hay registros para mostrar.
+
+Menu CRUD
+1. Crear un registro
+2. Leer registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+
+Elige una opcion: 5
+Saliendo del programa...
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 1>
+
+Con este programa he aprendido a usar mejor las estructuras basicas de Python.
+He entendido como funciona un menu con varias opciones y como guardar informacion en una lista.
+Tambien me ha servido para practicar el uso de input y print, y para ver como hacer un programa que interactue con el usuario.

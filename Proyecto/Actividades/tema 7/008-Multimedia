@@ -1,0 +1,70 @@
+Actividad: Explorando la Naturaleza y los Juegos de Mesa
+Contexto
+Ayer, mientras jugabamos a un emocionante juego de mesa sobre la exploración en el campo, nos dimos cuenta de cuántas maravillas naturales podemos disfrutar. La belleza del paisaje, la importancia de cuidar nuestro medio ambiente y las habilidades que desarrollamos al explorar juntos son temas que nos gustan mucho. Para esta actividad, vamos a crear un pequeño programa que nos ayude a llevar un registro de nuestras aventuras en el campo.
+
+Enunciado paso a paso
+Definir Variables: Crea variables para registrar los siguientes datos:
+
+arboles_contados: Número de árboles que hemos contado.
+litros_agua: Cantidad de agua que hemos recolectado en litros.
+sendero_actual: Nombre del sendero donde estamos explorando.
+Ingresar Datos: Pide al usuario que ingrese los datos correspondientes para cada variable:
+
+El número de árboles contados.
+La cantidad de agua recolectada en litros.
+El nombre del sendero actual.
+Mostrar Resultados: Imprime un mensaje que muestre la información recopilada, utilizando las variables definidas.
+
+Restricciones
+Solo puedes usar estructuras vistas hasta ahora (no estructuras como if, for, etc.).
+No se permite el uso de librerías adicionales.
+Criterios de evaluación
+Introducción y contextualización: El texto debe mencionar los hobbies de la naturaleza.
+Desarrollo técnico correcto y preciso: Las variables deben estar correctamente definidas y utilizadas en el programa.
+Aplicación práctica con ejemplo claro: El usuario debe ser capaz de ingresar datos y ver los resultados correspondientes.
+Cierre/Conclusión enlazando con la unidad: Se debe enfatizar el valor de explorar y aprender sobre el medio ambiente a través del juego de mesa.
+Esperamos que esta actividad te ayude a combinar tus intereses por la naturaleza y los juegos de mesa mientras practicas los conceptos de programación. ¡Buena suerte!
+
+
+Respuesta:
+
+Me gusta mucho pasar tiempo en la naturaleza y también jugar a juegos de mesa. Ayer, mientras juego con mis amigos a un juego sobre explorar el campo, me doy cuenta de que en la vida real también puedo explorar y aprender cosas nuevas. Por eso hago este programa, para guardar información de mis aventuras, como cuántos árboles veo, cuánta agua recojo y en qué sendero estoy. Así practico programación de una forma divertida.
+
+```
+arboles_contados = 0
+litros_agua = 0.0
+sendero_actual = ""
+
+
+arboles_contados = int(input("Ingresa el número de árboles contados: "))
+litros_agua = float(input("Ingresa la cantidad de agua recolectada (en litros): "))
+sendero_actual = input("Ingresa el nombre del sendero actual: ")
+
+
+print("\n--- Registro de Aventura ---")
+print("Sendero actual:", sendero_actual)
+print("Árboles contados:", arboles_contados)
+print("Litros de agua recolectados:", litros_agua)
+
+print("\n¡Genial! Explorar la naturaleza y llevar un registro como en un juego de mesa")
+print("nos ayuda a aprender, cuidar el medio ambiente y disfrutar más cada aventura. ")
+```
+
+
+Consola:
+
+serena@serena-portatil:/var/www/html/DAM/DAM1/Proyecto/Actividades$ python3 arbol.py
+Ingresa el número de árboles contados: 3
+Ingresa la cantidad de agua recolectada (en litros): 12
+Ingresa el nombre del sendero actual: montaña
+
+--- Registro de Aventura ---
+Sendero actual: montaña
+Árboles contados: 3
+Litros de agua recolectados: 12.0
+
+¡Genial! Explorar la naturaleza y llevar un registro como en un juego de mesa
+nos ayuda a aprender, cuidar el medio ambiente y disfrutar más cada aventura. 
+serena@serena-portatil:/var/www/html/DAM/DAM1/Proyecto/Actividades$ 
+
+Con este programa aprendo a usar variables y también a pedir datos al usuario. Me parece útil porque puedo anotar cosas de la naturaleza mientras exploro, igual que si fuera una partida de un juego de mesa. Además, me ayuda a fijarme más en el medio ambiente y a cuidarlo. Me gusta porque mezclo mis hobbies de explorar y jugar, y al mismo tiempo sigo aprendiendo programación paso a paso.

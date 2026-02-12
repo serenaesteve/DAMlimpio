@@ -1,0 +1,66 @@
+Contexto
+Estamos en un campo de juegos de mesa donde los participantes se encuentran interconectados por una red local (LAN) para jugar partidas en equipo. Cada jugador tiene su propio dispositivo conectado a la misma red, lo que facilita la comunicación y el acceso a los recursos necesarios para jugar.
+
+Enunciado paso a paso
+Definición de Red Local (LAN):
+
+Define qué es una red local (LAN) en términos del contexto del campo de juegos de mesa.
+Configuración de la red:
+
+Supongamos que cada jugador tiene un dispositivo con su propia dirección IP asignada por el sistema TCP/IP. ¿Cómo se asocian las direcciones IP a los dispositivos en este caso?
+Red de estrella (copo de nieve):
+
+Explique cómo se estructura una red de estrella en el campo de juegos de mesa, y cómo esta configuración facilita la comunicación entre los jugadores.
+Ejemplo práctico:
+
+Imagina que hay tres jugadores conectados a la misma LAN. Cada uno tiene un dispositivo con una dirección IP única asignada por el sistema TCP/IP. Si el jugador 1 necesita enviar un mensaje al jugador 3, ¿cómo se realiza esta comunicación?
+Restricciones
+No utilizar términos o conceptos que no estén presentes en los archivos proporcionados.
+Evitar usar la terminología técnica compleja.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+El estudiante debe mostrar una comprensión adecuada del contexto del campo de juegos de mesa y cómo se relaciona con las redes locales.
+Desarrollo técnico correcto y preciso (25%):
+
+La respuesta debe ser precisa y coherente, utilizando los términos técnicos apropiados.
+Aplicación práctica con ejemplo claro (25%):
+
+El estudiante debe proporcionar un ejemplo práctico que demuestre su comprensión del concepto de red local en el contexto del campo de juegos de mesa.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+La conclusión debe enlazar los conocimientos adquiridos con la unidad y mostrar cómo se aplican en situaciones reales.
+
+
+Respuesta:
+
+
+Lo que relaciona el contexto de las redes con los juegos de mesa es que se necesita estar conectados ya sea en el mismo sitio o separados para poder hacer la acción.
+
+**Definición de Red Local (LAN):**
+Equipos informáticos interconectados en torno a un area geográfica muy limitada como por ejemplo una casa. Entonces, en contexto de los juegos de mesa es que necesitan estar todos conectados a una red para poder jugar.
+
+**Configuración de la red:**
+Le asigna una dirección (algo así como un número de teléfono) a cada dispositivo conectado a internet.
+
+***Red de estrella (copo de nieve):***
+
+La esturcura de una red estrella es:
+-Todos los dispositivos se conectan a un punto central.
+-Si falla un dispositivo, los demás siguen funcionando.
+-Si falla el punto central, toda la red deja de funcionar.
+
+Con el jugo pasa que todos estan conectados al centro pero si a mi me falla no le va a fallar a mi compañero a no ser que fallase el centro y en ese caso no nos iria a nadie.
+
+
+**Ejemplo práctico:**
+-Un jugador le envia un mensaje 
+- Este llega al centro de red 
+- El centro de red identifica la ID del destinatario 
+- Le llega al otro jugador
+
+
+Basicamente la coincidencia de los jugadores en una red LAN ocurre cuando todos están conectados a la misma red local, lo que les permite interactuar, comunicarse y jugar en equipo sin necesidad de internet.
+
+La conclusion de esta actividad viene siendo que como con las redes (sean del tipo que sean), en nuestro dia dia siendo conscientes o no estamos interconectados unos con otros. Ya sea jugando , en una llamada , en un chat, en una plataforma.
+Esta actividad me ha ayudado para comprender mejor las redes.

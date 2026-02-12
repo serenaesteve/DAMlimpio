@@ -1,0 +1,96 @@
+Contexto
+En un mundo lleno de aventuras y desafíos, los gatos son uno de los animales más populares y queridos. El juego de mesa "El Gran Jardín Felino" es una excelente forma de disfrutar con amigos y aprender sobre estos felinos fascinantes.
+
+Enunciado paso a paso
+Definición de la clase Gato: Crea una clase Gato que tenga las siguientes propiedades: color, edad, raza, nombre y color_ojos. Asegúrate de que todas estas propiedades sean privadas para proteger su acceso directo.
+
+Método Maulla: Implementa un método llamado maulla() que imprima "miau" en la consola. Este método simulará el sonido característico de los gatos.
+
+Getter para Edad: Crea un método getter llamado getEdad() que devuelva el valor actual de la edad del gato.
+
+Setter con Control: Implementa un setter llamado setEdad(nuevaedad) que permita cambiar la edad del gato solo si la nueva edad es una unidad mayor que la edad actual. Si no cumple esta condición, imprime "operación no permitida".
+
+Método para Imprimir Información: Añade un método llamado imprimeInformacion() que muestre en pantalla todas las propiedades del gato.
+
+Restricciones
+No uses métodos estáticos.
+Evita usar variables globales.
+Asegúrate de que todos los métodos y propiedades estén correctamente definidos dentro de la clase Gato.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe entender el contexto del juego "El Gran Jardín Felino" y cómo se relaciona con la programación.
+
+Desarrollo técnico correcto y preciso (25%): El código debe implementar correctamente todos los métodos solicitados, asegurando que las propiedades sean privadas y que el setter tenga un control de entrada adecuado.
+
+Aplicación práctica con ejemplo claro (25%): El alumno debe proporcionar ejemplos claros de cómo instanciar un objeto Gato, utilizar sus métodos y verificar su funcionamiento.
+
+Cierre/Conclusión enlazando con la unidad (25%): El alumno debe discutir cómo los gatos pueden ser representados en programación y cómo este ejemplo puede aplicarse a otros problemas de modelado de objetos.
+
+
+
+Respuesta:
+
+
+En programación, puedo representar a esos gatos usando una clase llamada Gato.
+Cada vez que creo un gato en el programa, estoy creando un objeto con sus propias características.
+
+De esta forma, la programación me ayuda a simular el juego y a entender cómo funcionan los objetos con sus propiedades y acciones, igual que los gatos del jardín.
+
+
+```
+class Gato:
+    def __init__(self, color, edad, raza, nombre, color_ojos):
+        self.__color = color
+        self.__edad = edad
+        self.__raza = raza
+        self.__nombre = nombre
+        self.__color_ojos = color_ojos
+
+    def maulla(self):
+        print("miau")
+
+    def getEdad(self):
+        return self.__edad
+
+    def setEdad(self, nuevaedad):
+        if nuevaedad == self.__edad + 1:
+            self.__edad = nuevaedad
+            print("Edad cambiada correctamente.")
+        else:
+            print("Operacion no permitida.")
+
+    def imprimeInformacion(self):
+        print("Nombre:", self.__nombre)
+        print("Color:", self.__color)
+        print("Edad:", self.__edad)
+        print("Raza:", self.__raza)
+        print("Color de ojos:", self.__color_ojos)
+
+
+g1 = Gato("Negro", 2, "persa", "Luna", "avellana")
+g1.maulla()
+g1.imprimeInformacion()
+g1.setEdad(4)
+g1.setEdad(3)
+print("Edad actual:", g1.getEdad())
+```
+
+
+Salida del código:
+
+ python -u "c:\Users\Serena\Documents\Programacion\Actividades\elgranjardinfelino.py"
+miau
+Nombre: Luna
+Color: Negro
+Edad: 2
+Raza: persa
+Color de ojos: avellana
+Operacion no permitida.
+Edad cambiada correctamente.
+Edad actual: 3
+
+En programación, los gatos pueden representarse como objetos dentro de una clase llamada Gato. Cada objeto tiene sus propios datos, como el color, la edad o la raza, y también puede realizar acciones, como maullar o mostrar su información.
+
+Este ej sirve para entender cómo se pueden modelar otros seres u objetos en un programa, como perros, coches, personas o plantas.
+Cada uno tendría su propia clase con atributos y comportamientos diferentes, pero siguiendo la misma idea.
+
+Así, el ejercicio del gato ayuda a aprender cómo usar clases y objetos para organizar mejor la información y simular situaciones del mundo real dentro de la programación.

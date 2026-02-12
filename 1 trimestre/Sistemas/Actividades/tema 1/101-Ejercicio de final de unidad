@@ -1,0 +1,55 @@
+Enunciado de la actividad:
+
+Con el objeto de preparar un SERVIDOR para almacenar nuestros programas:
+
+Indica: -Las consideraciones con respecto al procesador, que tipo de procesador tendria que tener -Consideraciones con respecto a la RAM, cuanta RAM puede ser adecuada para un servidor de aplicaciones -Consideraciones con respecto al disco duro virtual
+
+-Crea una máquina virtual en VirtualBox que cumpla con estos requisitos, y explica los pasos que has dado y por que
+
+Enlaza con los contenidos que han sido comentados en clase (o en los videos) con respecto a estas cuestiones
+
+
+
+
+Respuesta:
+
+
+En esta actividad voy a preparar un servidor virtual para almacenar y ejecutar programas, aplicando los conceptos vistos en clase sobre virtualización y configuración de equipos. Antes de crear la máquina virtual en VirtualBox, es importante tener en cuenta varios aspectos del hardware, como el tipo de procesador, la cantidad de memoria RAM y el tamaño del disco duro virtual. Estos elementos son clave para asegurar un buen rendimiento del servidor y evitar problemas de lentitud o falta de recursos. A lo largo del desarrollo, iré explicando los pasos que he seguido, las decisiones que tomé y los motivos por los que elegí cada configuración.
+
+Consideraciónes con respecto al procesador:
+-  4 nucleos 
+-  4196 MB de RAM
+-  Disco 100-125 GB
+
+Instalacion y creacción de mi maquina virtual:
+1. Antes de entrar a virtual box me descargo la iso aqui: https://ubuntu.com/download/server
+2. Me voy a virtual box y le doy a nueva.
+3. Le ponemos nombre "UbuntuserverSerena"
+4. Ponemos la ISO que hemos descargado antes.
+5. Desmarcamos la pestaña de instalación destendida
+6. Ajustamos la memoria baje a 4194 MB , la CPU a 4  y el disco duro a 125 GB
+7. Le damos a terminar y esperamos a que arranque
+8. Seleccionamos idioma (Español)
+9. Identificamos el teclado a español
+10. Elijo ubuntu server
+11. Acepto la configuración de red
+12. Le doy a hecho por que no quiero proxy address
+13. Le doy a hecho aundo compruebo los mirrors
+14. Le doy a echo por que quiero particionar el disco entero
+15. Acepto la propuesta de puntos de montaje
+16. Le damos a continuar
+17. Ahora añado los datos para la maquina:
+-Nombre: Serena Sania Esteve 
+- Nombre servidor: ubuntuserverserena
+- Nombre de usuario : serenaesteve
+- Contraseña: Examen123
+- Repita contraseña: Examen123
+18. Como no quiero ubuntu pro lo quito marcando "Skip for now"
+19. No marco openssh por que luego lo instalare a mano
+20. No marco ninguno por que no quiero entornos preconfigurados
+21. Ahora se pone a instalar.
+22. Le damos a reiniciar
+23. Le damos enter
+24. Ahora ponemos usuario y contraseña
+
+Después de realizar la práctica, pude comprender mejor cómo los recursos asignados a una máquina virtual influyen directamente en el rendimiento de un servidor. Elegir un procesador multinúcleo, una cantidad adecuada de RAM y un disco duro virtual suficiente y dinámico resulta clave para garantizar estabilidad y eficiencia. La creación de la máquina en VirtualBox me permitió aplicar los conceptos teóricos sobre virtualización y configuración de servidores aprendidos en clase, entendiendo la importancia de planificar bien los recursos antes de poner en marcha cualquier entorno de trabajo o desarrollo.

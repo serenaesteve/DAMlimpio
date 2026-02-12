@@ -1,0 +1,54 @@
+Contexto
+Miguel es un joven aficionado a los videojuegos y la naturaleza. A menudo juega a juegos de estrategia durante largas horas en su campo de juegos, mientras disfruta de caminatas por sus hermosos senderos naturales. Hoy decidió crear un programa para ayudarle a gestionar su colección de videojuegos y las actividades que realiza en el campo.
+
+Enunciado paso a paso
+Definir variables:
+
+nombre_videojuego (El nombre del videojuego que Miguel quiere añadir a su colección)
+numero_jugadores (La cantidad de jugadores necesarios para jugar ese juego)
+ruta_sendero (La ubicación del sendero en el campo que Miguel desea visitar)
+Pedir al usuario:
+
+Solicitar el nombre del videojuego a añadir (nombre_videojuego)
+Pedir la cantidad de jugadores necesarios para ese juego (numero_jugadores)
+Preguntar por la ubicación del sendero que Miguel desea visitar (ruta_sendero)
+Mostrar información:
+
+Imprimir un mensaje indicando el videojuego añadido a su colección.
+Mostrar la cantidad de jugadores necesarios para ese juego.
+Informar sobre la ubicación del sendero que Miguel ha elegido.
+Restricciones
+No se pueden usar funciones o estructuras no vistas en las clases anteriores.
+El código debe ser simple y seguir el estilo de los ejemplos proporcionados.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe presentar el contexto del ejercicio, relacionándolo con su hobby de videojuegos y naturaleza.
+Desarrollo técnico correcto y preciso (25%): El código debe definir correctamente las variables y solicitar al usuario la información necesaria.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe mostrar cómo utilizar las variables y cómo imprimir la información solicitada.
+Cierre/Conclusión enlazando con la unidad (25%): El ejercicio debe finalizar con un mensaje que refleje la importancia del manejo de variables y el intercambio de datos en programas informáticos.
+
+
+Respuesta:
+
+Basicamente a Miguel que le encanta la naturaleza y los videojuegos , ha decidido que ya que tiene muchos hacer un programa para archivarse todos los que tiene y ademas hubicaciones de partes del sendero que quiere visitar mientras juega tranquilamente.
+
+
+```
+nombre_videojuego=input("Ingresa el nombre del videojuego que quieres añadir a tu colección":) 
+numero_jugadores=input("¿Cuántos jugadores se necesitan para este videojuego?":) 
+ruta_sendero=input("¿Cuál es la ubicación del sendero que deseas visitar?":)
+
+print("Has añadido el videojuego:", nombre_videojuego) 
+print("Número de jugadores necesarios:", numero_jugadores) 
+print("El sendero que visitarás está en:", ruta_sendero)
+```
+
+Resultado del codigo:
+
+Ingresa el nombre del videojuego que quieres añadir a tu colección: Prueba para el ejercicio 
+¿Cuántos jugadores se necesitan para este videojuego?: 30/09/2025
+¿Cuál es la ubicación del sendero que deseas visitar?: Tame , Mislata 
+Has añadido el videojuego:  Prueba para el ejercicio 
+Número de jugadores necesarios:  30/09/2025
+El sendero que visitarás está en:  Tame , Mislata
+
+Aprender esto es super importante y super util por que nos puede servir para muchas cosas en nuestra vida. Cada vez me siento mas comoda con las variabeles y con los codigos.

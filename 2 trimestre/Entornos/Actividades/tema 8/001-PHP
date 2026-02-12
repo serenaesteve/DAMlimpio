@@ -1,0 +1,80 @@
+Contexto
+Nuestro curso ha estado explorando los fundamentos de PHP, y hemos trabajado en crear y manipular objetos utilizando clases. Imagina que eres un entusiasta de los juegos de mesa y adorador del campo, especialmente los perros. Quieres crear una aplicación sencilla para gestionar tus mascotas favoritas, utilizando la programación orientada a objetos.
+
+Enunciado paso a paso
+Definir la clase Perro:
+
+Crea una clase llamada Perro con dos propiedades privadas: color y edad.
+Añade un constructor que inicialice estas propiedades.
+Crear instancias de la clase:
+
+Crea dos objetos, perro1 y perro2, utilizando la clase Perro.
+Asignar valores a las propiedades:
+
+Asigna el color "marrón" a perro1 y 5 años de edad.
+Asigna el color "blanco" a perro2 y 3 años de edad.
+Mostrar los datos de los perros:
+
+Imprime el color y la edad de cada perro utilizando echo.
+Restricciones
+Solo puedes usar las funciones y operadores permitidos en la lista blanca.
+No utilices variables globales ni estructuras complejas no vistas hasta ahora.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica cómo has integrado tus hobbies en el contexto del ejercicio.
+Desarrollo técnico correcto y preciso (25%)
+
+Asegúrate de que la clase Perro esté correctamente definida con propiedades privadas e inicializadas por el constructor.
+Verifica que las instancias de perros tengan los valores asignados correctamente.
+Aplicación práctica con ejemplo claro (25%)
+
+Muestra cómo has creado y utilizado objetos en PHP, utilizando el contexto de tus hobbies.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Reflexiona sobre cómo esta actividad te ha ayudado a aplicar los conceptos de clases y objetos en un escenario práctico relacionado con tu vida personal.
+
+
+Respuesta:
+
+Como mis hobbies son los juegos de mesa y del campo y especialmente de los perro he creado una pequeña aplicación orientada a objetos que permita gestionar mis mascotas favoritas. Igual que en los juegos de mesa donde cada ficha tiene atributos específicos, aquí cada perro será un objeto con características propias. Así, el ejercicio sirve como puente entre mis aficiones y la programación en PHP.
+
+```
+<?php
+
+class Perro {
+    private $color;
+    private $edad;
+
+    public function __construct($color, $edad) {
+        $this->color = $color;
+        $this->edad = $edad;
+    }
+
+    public function getColor() {
+        return $this->color;
+    }
+
+    public function getEdad() {
+        return $this->edad;
+    }
+}
+
+$perro1 = new Perro("marrón", 5);
+$perro2 = new Perro("blanco", 3);
+
+echo "Perro 1: Color = " . $perro1->getColor() . ", Edad = " . $perro1->getEdad() . " años<br>";
+echo "Perro 2: Color = " . $perro2->getColor() . ", Edad = " . $perro2->getEdad() . " años<br>";
+
+?>
+```
+
+Este código enseña cómo crear objetos en PHP basados en una clase definida por mi. En este caso, los objetos representan perros, cada uno con su propio color y edad. Gracias al uso de métodos getter, tengo sus valores y los imprimo de forma clara. Esto se relaciona  con el contexto de mis hobbies, ya que permite gestionar “mis perros” como si fueran componentes de un juego o compañeros de excursión.
+
+Salida del código:
+PS C:\WINDOWS\System32> cd "C:\Users\Serena\Documents\Entornos\Actividades"
+PS C:\Users\Serena\Documents\Entornos\Actividades> php perro.php
+Perro 1: Color = marrón, Edad = 5 años<br>Perro 2: Color = blanco, Edad = 3 años<br>
+PS C:\Users\Serena\Documents\Entornos\Actividades>
+
+Esta actividad me ha permitido relacionar un concepto de programación (las clases y objetos) con algo cercano y significativo para mí: mis hobbies y mi gusto por los perros. Trabajar así hace más fácil entender cómo los objetos pueden representar elementos reales, cada uno con sus atributos y comportamientos. Basicamente, refuerza la comprensión de la encapsulación mediante propiedades privadas y del uso de constructores, fundamentos esenciales de la programación orientada a objetos que estamos estudiando.

@@ -1,0 +1,90 @@
+Actividad de final de unidad:
+
+Crea la base de datos de tu propio blog/portafolio
+
+Crea al menos dos tablas: 1.-la tabla de noticias/piezas de portafolio, que tendrá: -Identificador (PK) -titulo -descripcion -fecha -imagen -autor (FK)
+
+2.-La tabla de autores -Identificador (PK) -nombre -apellidos -email
+
+Crea las claves primarias de cada una de las dos tablas
+
+Crea la clave foránea de una tabla a otra
+
+Inserta un registro en cada tabla
+
+Crea una peticion cruzada (left join)
+
+Crea una vista
+
+Crea un usuario con permisos para poder acceder
+
+
+
+Respuesta:
+
+
+En esta actividad he creado la base de datos de mi propio blog/portafolio. He trabajado con dos tablas: una para los autores y otra para las noticias o piezas del portafolio. Cada tabla tiene su clave primaria para identificar los registros, y la tabla de piezas tiene una clave foránea que se conecta con los autores. También he aprendido a insertar datos, hacer consultas que combinan información de las dos tablas, crear una vista y generar un usuario con permisos para acceder a la base de datos. Esta práctica me ha ayudado a entender cómo se organiza y gestiona la información en una base de datos antes de usar sistemas más grandes.
+
+
+1. Creo la base de datos:
+```
+CREATE DATABASE mi_blog;
+USE mi_blog;
+```
+
+2. Creo la tabla de autores:
+```
+CREATE TABLE autores (
+    id_autor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellidos VARCHAR(50),
+    email VARCHAR(100)
+);
+```
+
+3. Creo la tabla de noticias/piezas de portafolio:
+```
+CREATE TABLE piezas (
+    id_pieza INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100),
+    descripcion TEXT,
+    fecha DATE,
+    imagen VARCHAR(255),
+    autor_id INT,
+    FOREIGN KEY (autor_id) REFERENCES autores(id_autor)
+);
+```
+
+4. Inserto datos en cada tabla:
+```
+INSERT INTO autores (nombre, apellidos, email)
+VALUES ('Serena', 'Sania', 'serena@example.com');
+```
+```
+INSERT INTO piezas (titulo, descripcion, fecha, imagen, autor_id)
+VALUES ('Mi primera noticia', 'Descripción de mi primera noticia', '2025-11-03', 'imagen1.jpg', 1);
+```
+
+5. Creo una consulta cruzada:
+```
+SELECT piezas.titulo, piezas.fecha, autores.nombre, autores.apellidos
+FROM piezas
+LEFT JOIN autores ON piezas.autor_id = autores.id_autor;
+```
+
+6. Creo una vista:
+```
+CREATE VIEW vista_piezas_autores AS
+SELECT piezas.titulo, piezas.descripcion, piezas.fecha, autores.nombre, autores.apellidos
+FROM piezas
+LEFT JOIN autores ON piezas.autor_id = autores.id_autor;
+```
+
+7. Creo un usuario con permisos:
+```
+CREATE USER 'usuario_blog'@'localhost' IDENTIFIED BY 'contraseña123';
+GRANT SELECT, INSERT, UPDATE, DELETE ON mi_blog.* TO 'usuario_blog'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+Con esta actividad he aprendido a crear y relacionar tablas, insertar registros y consultar datos usando un JOIN. Además, he visto cómo crear una vista para facilitar las consultas y cómo dar permisos a un usuario para que pueda trabajar en la base de datos. Todo esto me ayuda a entender cómo se organiza la información en un blog o portafolio y me da una base para trabajar con bases de datos más grandes en el futuro.

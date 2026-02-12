@@ -1,0 +1,67 @@
+Contexto
+En un mundo donde tanto los juegos de mesa como la naturaleza son pasatiempos populares, es importante conocer cómo estructurar y presentar información de manera efectiva usando lenguajes de marcas. En esta actividad, aprenderemos a usar listas, separadores y tablas para organizar datos de una forma clara y visualmente atractiva.
+
+Enunciado paso a paso
+Crea una lista no ordenada con los siguientes elementos:
+
+Aprender a jugar al ajedrez
+Explorar el bosque local
+Leer un nuevo libro sobre programación
+Fotografiar la flora y fauna local
+Añade un separador entre la lista de actividades y el siguiente texto.
+
+Crea una lista ordenada con los siguientes elementos:
+
+Recoger 10 hojas de diferentes tipos
+Capturar 5 imágenes de animales silvestres
+Realizar un recuento de las especies de árboles en la zona
+Fotografiar el río cercano
+Añade una tabla con los siguientes datos:
+
+Tipo de actividad	Duración estimada
+Jugar al ajedrez	2 horas
+Explorar el bosque	3 horas
+Leer un libro	1 hora
+Fotografiar flora	4 horas
+Restricciones
+No usar etiquetas HTML que no se hayan visto en clase.
+No utilizar atributos adicionales en las etiquetas.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del ejercicio, relacionándolo con sus hobbies.
+Desarrollo técnico correcto y preciso (25%): El uso correcto de listas no ordenadas, separadores y tablas en HTML.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar ejemplos claros y precisos de cómo organizar información usando estos elementos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe relacionar el ejercicio con los conceptos aprendidos en clase, como la estructura y sintaxis de lenguajes de marcas.
+
+
+
+Respuesta:
+
+
+Basicamnete es que en los juegos, la informacion que se le proporciona al jugador tiene que estar bien estructurada. Ya sea en listas ordenadas o no o en tablas.
+
+***Codigo que yo he escrito:
+
+Esto es una lista no ordenada:
+
+- Aprender a jugar al ajedrez
+- Explorar el bosque local
+- Leer un nuevo libro sobre programación
+- Fotografiar la flora y fauna local
+
+---
+
+Esto es una lista ordenada:
+
+1. Recoger 10 hojas de diferentes tipos
+2. Capturar 5 imágenes de animales silvestres
+3. Realizar un recuento de las especies de árboles en la zona
+4. Fotografiar el río cercano
+
+
+|Jugar al ajedrez     |2 horas|
+|---------------------|--------|
+|Explorar el bosque|3 horas|
+|Leer un libro	        |1 hora |
+|Fotografiar flora    |4 horas|
+
+Este ejercicio lo aprendi ha hacer en clase y es super util para casi todo. Hace que el texto se vea ordenado y estrucurado. Esto es importate ya que lenguaje de marcas es la cara bonita de cualquier app/web, entonces tener un texto tan bien puesto hace que todo se vea ordenado y facil de leer.

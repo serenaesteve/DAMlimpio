@@ -1,0 +1,345 @@
+Enunciado paso a paso
+Conexión con la base de datos: El objetivo es realizar una conexión a la base de datos blog2526 utilizando las credenciales proporcionadas en el archivo servidor.py.
+
+Consulta de tablas: Seleccionar todas las tablas presentes en la base de datos y mostrar sus nombres.
+
+Recuperación de registros: Para cada tabla, recuperar todos los registros y organizarlos en un diccionario JSON.
+
+Visualización de resultados: Implementar una interfaz web que muestre el contenido de las tablas en formato tabular.
+
+Autenticación de usuario: Crear una funcionalidad básica de login para mostrar o ocultar la interfaz administrativa según el usuario autenticado.
+
+Restricciones
+Usar solo los conceptos y tecnologías mencionados en el contexto.
+No utilizar librerías externas ni estructuras no vistas en las unidades anteriores.
+El código debe estar bien organizado y legible.
+Criterios de evaluación
+Introducción y contextualización: (25%) El estudiante demuestra un entendimiento adecuado del contexto y la relevancia de la actividad para el campo de estudio.
+
+Desarrollo técnico correcto y preciso: (25%) El código implementa correctamente las funciones requeridas, utilizando los conceptos aprendidos en clase.
+
+Aplicación práctica con ejemplo claro: (25%) El estudiante muestra una comprensión práctica del contenido a través de la creación de una interfaz web funcional y el manejo de autenticación.
+
+Cierre/Conclusión enlazando con la unidad: (25%) El estudiante concluye la actividad relacionándola con los conceptos previamente aprendidos y sugiriendo posibles mejoras o extensiones del ejercicio.
+
+Actividad
+Conexión a la base de datos:
+
+Implementa una función en servidor.py que establezca una conexión a la base de datos blog2526.
+Utiliza las credenciales proporcionadas para autenticarse.
+Consulta y recuperación de registros:
+
+Crea un endpoint /api que devuelva un JSON con los nombres de las tablas y sus registros correspondientes.
+Utiliza el cursor para ejecutar consultas SQL y recuperar los datos.
+Interfaz web:
+
+Modifica index.html para mostrar una tabla en la interfaz principal.
+Implementa la funcionalidad JavaScript en comportamiento.js para cargar los datos de las tablas al seleccionarlas desde el menú.
+Autenticación de usuario:
+
+Actualiza login.js para implementar un sistema básico de login que oculte o muestre la interfaz administrativa según el usuario autenticado.
+Utiliza los elementos de entrada y botón en el HTML para gestionar la interacción del usuario.
+Ejemplo de estructura
+servidor.py
+
+# ... (código previo)
+@aplicacion.route("/api")
+def api():
+    cursor.execute("SHOW TABLES;")
+    tablas = cursor.fetchall()
+    documento = {}
+    for tabla in tablas:
+        cursor.execute(f"SELECT * FROM {tabla['Tables_in_blog2526']};")
+        registros = cursor.fetchall()
+        documento[tabla['Tables_in_blog2526']] = registros
+    return json.dumps(documento, indent=4, ensure_ascii=False)
+index.html
+
+<!doctype html>
+<html lang="es">
+<head>
+  <title>Panel de administración</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="static/estilo.css">
+</head>
+<body>
+  <header> Panel de administración jocarsa </header>
+  <main>
+    <nav></nav>
+    <section id="contenedor-tablas">
+      <table>
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <input type="text" id="usuario" placeholder="Usuario:">
+    <input type="password" id="contrasena" placeholder="Contraseña:">
+    <button>Enviar</button>
+    <p id="advertencia"></p>
+  </footer>
+  <script src="static/login.js"></script>
+  <script src="static/comportamiento.js"></script>
+</body>
+</html>
+comportamiento.js
+
+let menu = document.querySelector("nav");
+menu.addEventListener("click", function(event) {
+  if (event.target.tagName === "BUTTON") {
+    let tablaSeleccionada = event.target.textContent;
+    fetch(`/api`)
+      .then(response => response.json())
+      .then(data => {
+        let contenidoTabla = data[tablaSeleccionada];
+        // Actualizar la interfaz con los datos de la tabla seleccionada
+      });
+  }
+});
+login.js
+
+let botonlogin = document.querySelector("footer button");
+botonlogin.onclick = function() {
+  let usuario = document.querySelector("#usuario").value;
+  let contrasena = document.querySelector("#contrasena").value;
+
+  if (usuario == "jocarsa" && contrasena == "jocarsa") {
+    document.querySelector("footer").style.display = "none";
+    document.querySelector("header").style.display = "block";
+    document.querySelector("main").style.display = "flex";
+  } else {
+    document.querySelector("#advertencia").textContent = "Usuario y/o contraseña incorrectos";
+  }
+};
+Conclusión
+Al completar esta actividad, el estudiante demostrará su comprensión del manejo de bases de datos, la creación de interfaces web interactivas y el uso de autenticación básica. La práctica de estos conceptos en un contexto real ayudará a fortalecer las habilidades adquiridas durante este tema.
+
+
+Respuesta:
+
+En este ejercicio conecto la base de datos blog2526 con mi aplicación web. Creo un endpoint que me da todas las tablas y sus registros en formato JSON. Después, en la web, genero botones para cada tabla y muestro los datos en una tabla HTML. También hago un login sencillo para que solo los usuarios autorizados puedan ver la información. Con este ejercicio aprendo a trabajar con bases de datos, JavaScript y Python de manera práctica.
+
+1. Primero he creado la base de datos blog2526:
+```
+CREATE DATABASE blog2526;
+```
+2. He creado la tabla usuarios:
+```
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    correo VARCHAR(50)
+);
+```
+
+3. He creado un usuario:
+```
+CREATE DATABASE IF NOT EXISTS blog2526;
+
+CREATE USER IF NOT EXISTS 'serena'@'localhost' IDENTIFIED BY 'blog2526';
+
+GRANT ALL PRIVILEGES ON blog2526.* TO 'serena'@'localhost';
+
+FLUSH PRIVILEGES;
+```
+
+4. Servidor.py:
+```
+from flask import Flask, render_template
+import mysql.connector
+import json
+
+aplicacion = Flask(__name__)
+
+conexion = mysql.connector.connect(
+    host="localhost",
+    user="serena",
+    password="blog2526",
+    database="blog2526"
+)
+
+cursor = conexion.cursor(dictionary=True)
+
+@aplicacion.route("/")
+def index():
+    return render_template("index.html")
+
+
+@aplicacion.route("/api")
+def api():
+    cursor.execute("SHOW TABLES;")
+    tablas = cursor.fetchall()
+    documento = {}
+
+    for tabla in tablas:
+        nombre_tabla = tabla["Tables_in_blog2526"]
+        cursor.execute(f"SELECT * FROM {nombre_tabla};")
+        registros = cursor.fetchall()
+        documento[nombre_tabla] = registros
+
+    return json.dumps(documento, indent=4, ensure_ascii=False)
+
+aplicacion.run(debug=True)
+```
+
+5. Index.html:
+```
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Panel de administracion</title>
+    <link rel="stylesheet" href="static/estilo.css">
+</head>
+<body>
+
+<header style="display:none;">
+    Panel de administracion jocarsa
+</header>
+
+<main style="display:none;">
+    <nav></nav>
+    <section id="contenedor-tablas">
+        <table border="1">
+            <thead>
+                <tr></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</main>
+
+<footer>
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="password" id="contrasena" placeholder="Contrasena">
+    <button>Enviar</button>
+    <p id="advertencia"></p>
+</footer>
+
+<script src="static/login.js"></script>
+<script src="static/comportamiento.js"></script>
+
+</body>
+</html>
+```
+
+6. Comportamiento.js:
+```
+fetch("/api")
+    .then(response => response.json())
+    .then(data => {
+
+        let nav = document.querySelector("nav");
+
+        for (let tabla in data) {
+            let boton = document.createElement("button");
+            boton.textContent = tabla;
+            nav.appendChild(boton);
+        }
+
+        nav.addEventListener("click", function (event) {
+
+            if (event.target.tagName === "BUTTON") {
+
+                let nombreTabla = event.target.textContent;
+                let registros = data[nombreTabla];
+
+                let thead = document.querySelector("thead tr");
+                let tbody = document.querySelector("tbody");
+
+                thead.innerHTML = "";
+                tbody.innerHTML = "";
+
+                if (registros.length > 0) {
+
+                    for (let campo in registros[0]) {
+                        let th = document.createElement("th");
+                        th.textContent = campo;
+                        thead.appendChild(th);
+                    }
+
+                    registros.forEach(registro => {
+                        let tr = document.createElement("tr");
+
+                        for (let valor in registro) {
+                            let td = document.createElement("td");
+                            td.textContent = registro[valor];
+                            tr.appendChild(td);
+                        }
+
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+        });
+    });
+```
+
+7. login.js:
+```
+let boton = document.querySelector("footer button");
+
+boton.onclick = function () {
+
+    let usuario = document.querySelector("#usuario").value;
+    let contrasena = document.querySelector("#contrasena").value;
+
+    if (usuario === "jocarsa" && contrasena === "jocarsa") {
+
+        document.querySelector("footer").style.display = "none";
+        document.querySelector("header").style.display = "block";
+        document.querySelector("main").style.display = "flex";
+
+    } else {
+        document.querySelector("#advertencia").textContent =
+            "Usuario y o contrasena incorrectos";
+    }
+};
+```
+
+8. estilo.css:
+```
+body {
+    font-family: Arial;
+}
+
+nav button {
+    margin: 5px;
+}
+
+table {
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+}
+```
+
+
+Consola:
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. Todos los derechos reservados.
+
+Instale la versión más reciente de PowerShell para obtener nuevas características y mejoras. https://aka.ms/PSWindows
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Programacion\Actividades\tema 6\proyectoblog"
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 6\proyectoblog> python servidor.py
+ * Serving Flask app 'servidor'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [16/Dec/2025 11:41:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Dec/2025 11:41:32] "GET /static/estilo.css HTTP/1.1" 304 -
+127.0.0.1 - - [16/Dec/2025 11:41:32] "GET /static/comportamiento.js HTTP/1.1" 304 -
+127.0.0.1 - - [16/Dec/2025 11:41:32] "GET /static/login.js HTTP/1.1" 304 -
+127.0.0.1 - - [16/Dec/2025 11:41:32] "GET /api HTTP/1.1" 200 -
+
+Con este ejercicio entiendo cómo enseñar los datos de una base de datos en una página web y cómo controlar el acceso con un login. Aprendo a usar JSON, a crear tablas dinámicas y a hacer que la interfaz sea interactiva. Me ayuda a practicar lo que he visto en clase y me da ideas para mejorar la aplicación en el futuro.

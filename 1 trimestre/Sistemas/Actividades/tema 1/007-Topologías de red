@@ -1,0 +1,64 @@
+Ejercicio: Explorando la Topología Estrella (Copo de Nieve)
+Contexto: La topología estrella, conocida como copo de nieve en español, es una forma eficiente de organizar dispositivos en una red local. Esta estructura permite que todos los nodos se conecten a un punto central llamado concentrador o súper nodo, lo que facilita la gestión y el mantenimiento del sistema.
+
+Enunciado paso a paso:
+
+Definición de la Topología Estrella:
+
+El alumno debe definir qué es la topología estrella (copo de nieve) en su propia palabras.
+Ejemplo Práctico:
+
+Imagina que tienes un equipo de desarrollo con 5 computadoras y un router como concentrador. Cada computadora está conectada al router a través de cables Ethernet. El router es el súper nodo de esta topología estrella.
+Desventajas de la Topología Estrella:
+
+Listar las principales desventajas de esta configuración, considerando aspectos como la redundancia y la capacidad de soporte.
+Aplicación en la Naturaleza:
+
+Analizar cómo las ramas de un árbol pueden ser comparadas con los cables de una red estrella. ¿Cuáles son las similitudes y diferencias?
+Restricciones:
+
+El alumno no debe usar términos o conceptos que no hayan sido explicados en la clase.
+Solo se permiten referencias a los contenidos del tema actual.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El alumno debe mostrar comprensión básica de qué es la topología estrella y cómo se aplica en una red local.
+Desarrollo técnico correcto y preciso (25%): La definición del término debe ser precisa y concisa, mostrando un buen entendimiento del concepto.
+Aplicación práctica con ejemplo claro (25%): El ejemplo práctico debe reflejar correctamente la configuración de una red estrella y mostrar cómo se gestiona.
+Cierre/Conclusión enlazando con la unidad (25%): El alumno debe relacionar el concepto aprendido con la topología estrella y cómo se aplica en situaciones reales, como en un entorno de trabajo o en la naturaleza.
+Instrucciones para el alumno: Explora la topología estrella utilizando los conocimientos adquiridos en clase. Analiza su estructura y las desventajas que presenta. A continuación, compara esta configuración con la forma en que las ramas de un árbol están organizadas, destacando sus similitudes y diferencias.
+
+
+Respuesta:
+
+
+Es una red que consiste en estar todos los dispositivos conectados a un centro de red.
+
+Ejemplo práctico:
+
+https://files.fm/u/7p6aas3j9p
+
+***Se gestiona:***
+-Lo primero revisar el nodo central: Asegúrandonos de que esté encendido y funcionando.
+-Verificar los cables: Asegúrandonos de que todos los cables estén bien conectados.
+-No sobrecargar el nodo: Si hay muchos dispositivos, asegúrar que el nodo central pueda gestionarlo.
+-Hacer mantenimiento: Revisar el equipo de vez en cuando para asegurarnos de que todo funcione bien.
+-Tener un respaldo: Si el nodo central se estropea, tener uno de repuesto.
+
+***Desventajas:***
+-Si el nodo central se rompe, toda la red deja de funcionar.
+-No se pueden conectar demasiados dispositivos sin que se ponga lenta.
+-Necesitas un equipo caro para que funcione bien.
+-No tiene respaldo, si algo falla, la red no se arregla sola.
+-Tienes que usar mucho cable si tienes muchos dispositivos.
+
+1. En el trabajo:
+Imaginate que todos los PCs de la oficina están conectados a un switch o router central. Ese switch es el "centro" de la red.
+Si el switch se apaga o falla, nadie puede usar la red. Por eso, se debe cuidar bien el switch.
+
+2. En el campo:
+Las abejas trabajan juntas y se comunican con la reina, que es el "centro".
+Si la reina se pierde, el enjambre se desorganiza.Como en la red estrella, si el "centro" falla, todo el sistema se detiene.
+
+En la red estrella, todos los dispositivos se conectan a un nodo central (como el tronco del árbol).
+Tanto en la red estrella como en el árbol, todo se organiza a partir de un centro (el nodo o el tronco).
+Si el nodo central de la red estrella se rompe, toda la red se cae. En el árbol, si una rama se rompe, las otras siguen funcionando.

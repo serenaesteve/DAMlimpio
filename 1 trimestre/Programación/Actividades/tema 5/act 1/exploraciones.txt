@@ -1,0 +1,18 @@
+archivo = open("exploraciones.txt", 'w')
+
+
+archivo.write("Explorando la selva tropical\n")
+archivo.write("Encontré una especie de ave que no conocía\n")
+
+archivo.close()
+
+
+archivo = open("exploraciones.txt", 'r')
+
+
+contenido = archivo.read()
+print("Contenido de la bitácora de exploraciones:\n")
+print(contenido)
+
+
+archivo.close()

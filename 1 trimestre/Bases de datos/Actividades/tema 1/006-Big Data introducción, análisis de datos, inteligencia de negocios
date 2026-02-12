@@ -1,0 +1,96 @@
+Contexto
+En un mundo cada vez más digitalizado, el Big Data ha convertido en una oportunidad invaluable para las empresas y organizaciones que pueden recopilar y analizar grandes cantidades de datos. Imagina un ecoturismo digital donde los visitantes pueden registrar sus experiencias en el campo a través de una aplicación móvil.
+
+Enunciado paso a paso
+Definición del problema: Desarrolla una base de datos para almacenar las experiencias turísticas registradas por los visitantes de un parque nacional.
+Identificación de entidades y relaciones:
+Entidad: Visitante
+Atributos: id_visitante, nombre, edad
+Entidad: Experiencia
+Atributos: id_experiencia, tipo_actividad, fecha, ubicación
+Relación: Realiza (muchos a muchos)
+Modelo ER:
+Dibuja el diagrama de entidad-relación que represente las entidades y relaciones identificadas.
+Modelo relacional:
+Transcribe el modelo ER al modelo relacional, incluyendo las tablas necesarias y sus respectivas claves primarias.
+Consultas SQL:
+Escribe consultas SQL para realizar las siguientes operaciones: a) Listar todos los visitantes que han realizado una actividad de senderismo en el parque nacional. b) Contar el número total de experiencias registradas por tipo de actividad (por ejemplo, senderismo, paseos, picnic).
+Optimización:
+Sugerir al menos dos índices para mejorar la eficiencia de las consultas realizadas.
+Restricciones
+No utilizar librerías externas.
+No usar input()/lectura de teclado.
+No estructuras no vistas en el tema actual.
+Criterios de evaluación
+Introducción y contextualización (25%): El contexto debe ser claro y contextualizar el problema dentro del Big Data.
+Desarrollo técnico correcto y preciso (25%): Las consultas SQL deben ser precisas y los índices sugeridos deben ser relevantes para mejorar la eficiencia.
+Aplicación práctica con ejemplo claro (25%): El modelo ER debe ser detallado y las consultas deben demostrar una comprensión práctica del tema.
+Cierre/Conclusión enlazando con la unidad (25%): Concluir el ejercicio con un breve resumen de cómo este proyecto puede aplicarse en el campo del Big Data.
+
+
+Respuesta:
+
+En un mundo cada vez más digital, los visitantes de parques nacionales generan muchos datos al registrar sus experiencias a través de aplicaciones móviles. Estos datos forman parte del Big Data, ya que permiten analizar patrones de comportamiento, preferencias de actividades y tendencias en el turismo.
+
+Crear una base de datos de experiencias turísticas permite almacenar esta información de manera organizada, facilitando consultas rápidas y análisis que ayudan a mejorar la gestión del parque, optimizar recursos y ofrecer mejores experiencias a los visitantes.
+
+
+1. Creo la base de datos:
+```
+CREATE DATABASE experiencias_turisticas;
+```
+
+2. Creo las tablas visitante y experienciencia con sus respectivos atrivutos:
+```
+CREATE TABLE Visitante (
+    id_visitante INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    edad INT
+);
+
+CREATE TABLE Experiencia (
+    id_experiencia INT PRIMARY KEY,
+    tipo_actividad VARCHAR(50),
+    fecha DATE,
+    ubicacion VARCHAR(100)
+);
+```
+
+3. Creo la tabla para relacionar:
+```
+CREATE TABLE Realiza (
+    id_visitante INT,
+    id_experiencia INT,
+    PRIMARY KEY (id_visitante, id_experiencia),
+    FOREIGN KEY (id_visitante) REFERENCES Visitante(id_visitante),
+    FOREIGN KEY (id_experiencia) REFERENCES Experiencia(id_experiencia)
+);
+```
+
+4. Creo indices para optimizar:
+```
+CREATE INDEX idx_tipo_actividad ON Experiencia(tipo_actividad);
+CREATE INDEX idx_realiza ON Realiza(id_visitante, id_experiencia);
+```
+
+5. Listar todos los visitantes que han realizado una actividad de senderismo:
+```
+SELECT v.id_visitante, v.nombre, v.edad
+FROM Visitante v
+JOIN Realiza r ON v.id_visitante = r.id_visitante
+JOIN Experiencia e ON r.id_experiencia = e.id_experiencia
+WHERE e.tipo_actividad = 'Senderismo';
+```
+
+6.Contar el número total de experiencias registradas por tipo de actividad:
+```
+SELECT tipo_actividad, COUNT(*) AS total_experiencias
+FROM Experiencia
+GROUP BY tipo_actividad;
+```
+
+
+Modelo ER:
+https://files.fm/u/cm4gqnvd4j
+
+Este proyecto muestra cómo almacenar las experiencias de los visitantes permite analizar datos para mejorar la gestión del parque y ofrecer mejores actividades, aplicando conceptos de Big Data.

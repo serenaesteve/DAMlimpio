@@ -1,0 +1,56 @@
+Creación de una clase para un perro
+Contexto: En nuestro campo de juegos de mesa, los perros son compañeros inseparables. Imagina que estás desarrollando un juego donde los jugadores controlan a sus perros. Para esto, necesitas crear una clase Perro en Python que encapsule las características y comportamientos de estos animales.
+
+Enunciado paso a paso:
+
+Define la clase Perro.
+Añade propiedades para el color del pelaje, la edad, la raza, el nombre y el color de los ojos.
+Crea un método ladrar que imprima "guau" en la consola.
+Restricciones:
+
+No uses librerías externas ni estructuras no vistas hasta ahora.
+Asegúrate de que todas las propiedades y métodos estén correctamente definidos dentro de la clase Perro.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): Explica el contexto del juego en el que necesitas una clase para los perros.
+Desarrollo técnico correcto y preciso (25%): Define correctamente las propiedades y método dentro de la clase Perro.
+Aplicación práctica con ejemplo claro (25%): Crea un objeto de la clase Perro e invoca el método ladrar para probar su funcionamiento.
+Cierre/Conclusión enlazando con la unidad (25%): Explique cómo esta clase puede ser útil en tu proyecto de juego y cómo se relaciona con los conceptos de clases vistos hasta ahora.
+
+
+
+Respuesta:
+
+
+En mi juego de mesa, los jugadores no solo controlan personajes humanos, sino que también cuentan con compañeros caninos que los ayudan durante la aventura. Estos perros no son simples mascotas; tienen habilidades, personalidades y comportamientos que pueden marcar la diferencia entre ganar o perder una partida.
+
+Por eso, necesito modelar a estos perros dentro del código de mi juego. Para ello, usaré programación orientada a objetos (POO), creando una clase llamada Perro que encapsule sus características físicas y su comportamiento.
+
+He querido añadir para que imprima " Luna hace: ...." 
+
+```
+class Perro:
+    def __init__(self, nombre, raza, edad, color_pelaje, color_ojos):
+        self.nombre = nombre
+        self.raza = raza
+        self.edad = edad
+        self.color_pelaje = color_pelaje
+        self.color_ojos = color_ojos
+
+    def ladrar(self):
+        print(f"{self.nombre} hace: guau")
+
+mi_perro = Perro("Luna", "mestiza", 10, "negro", "avellana")
+
+mi_perro.ladrar()
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Programacion\perro.py"
+Luna hace: guau
+
+
+Este ejercicio demuestra cómo aplicar los conceptos básicos de la programación orientada a objetos, que hemos estudiado en la unidad. La clase Perro es un ejemplo claro de encapsulamiento, ya que agrupa tanto los atributos (estado) como los métodos (comportamiento) de un objeto del mundo real.
+
+En el contexto de mi juego, esta clase permitirá a cada jugador personalizar su perro compañero, dotándolo de identidad y funcionalidad. En un futuro, podria ampliar esta clase con nuevos métodos como correr, buscar o  proteger, para enriquecer la jugabilidad y hacer que los perros sean piezas clave en la estrategia del juego.

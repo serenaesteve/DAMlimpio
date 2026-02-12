@@ -1,0 +1,23 @@
+{
+  "categorias": [
+    "Naturaleza",
+    "Animales",
+    "Tecnología",
+    "Viajes"
+  ],
+  "enlaces": [
+    {
+      "nombre": "Sobre nosotros",
+      "enlace": "pagina.php?p=sobrenosotros"
+    },
+    {
+      "nombre": "Contacto",
+      "enlace": "contacto.php"
+    },
+    {
+      "nombre": "Aviso legal",
+      "enlace": "#"
+    }
+  ]
+}
+

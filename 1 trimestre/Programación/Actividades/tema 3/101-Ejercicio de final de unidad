@@ -1,0 +1,179 @@
+Actividad de final de la unidad:
+
+Toma el resultado del ejercicio de final de unidad de la unidad 2 Toma el input que se ha creado al final del ejercicio de final de la unidad de unidad 1 Crea un bucle infinito mediante while True Captura la opcion del usuario con if-elif Atrapa los casos crear, listar, actualizar, eliminar
+
+
+
+
+respuesta:
+
+
+En esta actividad final de la unidad, desarrollo un programa CRUD que me permite crear, listar, actualizar y eliminar registros. El objetivo es aplicar lo que aprendo sobre bucles, condicionales y manejo de datos, y entender cómo interactúa Python con una base de datos MySQL. Con esto, comprendo mejor cómo manipular información de forma dinámica.
+
+
+```
+import mysql.connector
+
+
+conexion = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",
+    database="crud_python"
+)
+cursor = conexion.cursor()
+
+print("Bienvenido al programa de gestión CRUD con MySQL")
+
+while True:
+    print("\n--- Menú CRUD ---")
+    print("1. Crear un registro")
+    print("2. Listar registros")
+    print("3. Actualizar un registro")
+    print("4. Eliminar un registro")
+    print("5. Salir")
+
+    opcion = input("Elige una opción: ")
+
+    if opcion == "1":  
+        nuevo = input("Introduce el nuevo registro: ")
+        cursor.execute("INSERT INTO registros (contenido) VALUES (%s)", (nuevo,))
+        conexion.commit()
+        print("Registro agregado correctamente.")
+
+    elif opcion == "2":  
+        cursor.execute("SELECT * FROM registros")
+        resultados = cursor.fetchall()
+        if resultados:
+            print("\nRegistros actuales:")
+            for fila in resultados:
+                print(f"{fila[0]}. {fila[1]}")
+        else:
+            print("No hay registros para mostrar.")
+
+    elif opcion == "3":  
+        cursor.execute("SELECT * FROM registros")
+        resultados = cursor.fetchall()
+        if resultados:
+            print("\nRegistros disponibles:")
+            for fila in resultados:
+                print(f"{fila[0]}. {fila[1]}")
+            id_registro = input("Introduce el ID del registro a actualizar: ")
+            nuevo_valor = input("Introduce el nuevo valor: ")
+            cursor.execute(
+                "UPDATE registros SET contenido = %s WHERE id = %s",
+                (nuevo_valor, id_registro)
+            )
+            conexion.commit()
+            print("Registro actualizado correctamente.")
+        else:
+            print("No hay registros para actualizar.")
+
+    elif opcion == "4": 
+        cursor.execute("SELECT * FROM registros")
+        resultados = cursor.fetchall()
+        if resultados:
+            print("\nRegistros disponibles:")
+            for fila in resultados:
+                print(f"{fila[0]}. {fila[1]}")
+            id_registro = input("Introduce el ID del registro a eliminar: ")
+            cursor.execute("DELETE FROM registros WHERE id = %s", (id_registro,))
+            conexion.commit()
+            print("Registro eliminado correctamente.")
+        else:
+            print("No hay registros para eliminar.")
+
+    elif opcion == "5":  
+        print("Saliendo del programa...")
+        break
+
+    else:
+        print("Opción no válida. Intenta de nuevo.")
+
+
+cursor.close()
+conexion.close()
+print("Conexión cerrada correctamente.")
+```
+
+Salida de consola:
+
+:\Users\Serena\Documents\Programacion\Actividades\tema 3> python actfinal.py
+Bienvenido al programa de gestión CRUD con MySQL
+
+--- Menú CRUD ---
+1. Crear un registro
+2. Listar registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+Elige una opción: 1
+Introduce el nuevo registro: Serena
+Registro agregado correctamente.
+
+--- Menú CRUD ---
+1. Crear un registro
+2. Listar registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+Elige una opción: 2
+
+Registros actuales:
+3. Serena
+5. Serena
+
+--- Menú CRUD ---
+1. Crear un registro
+2. Listar registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+Elige una opción: 3
+
+Registros disponibles:
+3. Serena
+5. Serena
+Introduce el ID del registro a actualizar: 5
+Introduce el nuevo valor: Hector
+Registro actualizado correctamente.
+
+--- Menú CRUD ---
+1. Crear un registro
+2. Listar registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+Elige una opción: 2
+
+Registros actuales:
+3. Serena
+5. Hector
+
+--- Menú CRUD ---
+1. Crear un registro
+2. Listar registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+Elige una opción: 4
+
+Registros disponibles:
+3. Serena
+5. Hector
+Introduce el ID del registro a eliminar: 5
+Registro eliminado correctamente.
+
+--- Menú CRUD ---
+1. Crear un registro
+2. Listar registros
+3. Actualizar un registro
+4. Eliminar un registro
+5. Salir
+Elige una opción: 5
+Saliendo del programa...
+Conexión cerrada correctamente.
+
+C:\Users\Serena\Documents\Programacion\Actividades\tema 3>
+
+Con esta actividad, refuerzo mi comprensión sobre estructuras de control y bases de datos. Aprendo a manejar la interacción entre Python y MySQL, y veo la importancia de organizar y validar los datos antes de modificarlos. Este ejercicio me ayuda a consolidar habilidades prácticas que puedo usar en futuros proyectos.

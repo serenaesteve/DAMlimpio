@@ -1,0 +1,374 @@
+Perfil del estudiante
+Idioma: Español.
+Nivel: Iniciación (FP) — SOLO contenidos de la carpeta/tema actual.
+Hobbies (todos): Juegos de mesa / videojuegos, La naturaleza (todo lo que tenga que ver con el campo), Los animales, Los libros, Series/películas
+Hobbies que DEBES usar en el enunciado: Juegos de mesa / videojuegos, La naturaleza (todo lo que tenga que ver con el campo)
+Actividad
+Continuando con nuestro proyecto de página web para una empresa llamada "Jocarsa", es momento de integrar la información de las categorías y los productos desde archivos JSON. Este ejercicio te permitirá practicar cómo leer y mostrar datos externos en tu sitio web, lo que es una habilidad muy valiosa.
+
+Crea el archivo 013-organizar.php: En este archivo, vamos a organizar la estructura de nuestra página web para que muestre las categorías y los productos de manera eficiente.
+
+Importa los archivos JSON: Utiliza PHP para leer los archivos categorias.json, productos.json y piedepagina.json. Almacena estos datos en variables para su posterior uso.
+
+Muestra las categorías: En el footer, muestra una lista de categorías usando los datos del archivo categorias.json.
+
+Muestra los productos: Muestra los productos en la sección principal de la página. Utiliza un bucle para recorrer los productos y mostrarlos en una estructura de grilla.
+
+Añade estilos personalizados: Para mejorar la apariencia de tu página, añade tus propias fuentes personalizadas desde el archivo 008-fuentes personalizadas.php.
+
+Restricciones
+Solo puedes usar los archivos y conceptos proporcionados en la carpeta actual.
+No utilices librerías externas ni estructuras no vistas hasta ahora.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente qué es lo que debes hacer para organizar los datos de las categorías y productos en tu página web.
+Desarrollo técnico correcto y preciso (25%): Muestra cómo importas y muestras los datos desde los archivos JSON, utilizando bucles y estructuras adecuadas.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo claro de cómo organizar la información en tu página web.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye explicando cómo este ejercicio te ayuda a entender mejor el manejo de datos externos en páginas web y cómo puedes aplicar estas técnicas en proyectos futuros.
+
+
+Respuesta:
+
+
+En este ejercicio he trabajado con una página web usando PHP y archivos JSON. El objetivo es aprender a organizar la información de una web sin escribir todos los datos directamente en el código.
+
+Este tipo de ejercicios sirve para entender cómo funcionan las páginas web que muestran muchos productos y categorías de forma automática.
+
+organizar.php:
+```
+<?php
+$archivoCategorias = file_get_contents('db/categorias.json');
+$categorias = json_decode($archivoCategorias, true);
+
+$archivoProductos = file_get_contents('db/productos.json');
+$productos = json_decode($archivoProductos, true);
+
+$archivoPie = file_get_contents('db/piedepagina.json');
+$pie = json_decode($archivoPie, true);
+?>
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>jocarsa</title>
+    <meta charset="utf-8">
+
+    <style>
+      
+      @font-face {font-family: Ubuntu;src: url(estilo/Ubuntu-R.ttf);}
+      @font-face {font-family: UbuntuB;src: url(estilo/Ubuntu-B.ttf);}
+
+      
+      html,body{
+        padding:0px;
+        margin:0px;
+        font-family:Ubuntu,sans-serif;
+        width:100%;
+        height:100%;
+        background:#f3f3f7;
+      }
+
+     
+      header{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        box-shadow:0px 2px 4px rgba(0,0,0,0.3);
+        gap:20px;
+        padding:10px;
+        background:white;
+      }
+      header img{width:30px;}
+      header a{text-decoration:none;color:indigo;font-size:11px;}
+
+      
+      main{
+        width:100%;
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+        padding:10px;
+        box-sizing:border-box;
+      }
+
+      main article{
+        width:100%;
+        height:320px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:white;
+        flex-direction:column;
+        gap:10px;
+        border:1px solid #d1d5db;
+        border-radius:10px;
+        box-shadow:0 2px 4px rgba(0,0,0,0.08);
+      }
+      main article h3,main article h4{padding:0px;margin:0px;text-align:center;}
+      main article h3{font-size:26px;font-family:UbuntuB;}
+      main article h4{font-size:14px;color:#374151;max-width:260px;}
+      main article a{
+        background:indigo;
+        text-decoration:none;
+        color:white;
+        padding:10px 20px;
+        border-radius:50px;
+        font-size:12px;
+      }
+
+      
+      main article:nth-child(-n+3){
+        grid-column:1 / -1;
+      }
+
+     
+      @media (min-width:600px){
+        main{ grid-template-columns:1fr 1fr; }
+        main article:nth-child(-n+3){ grid-column:1 / -1; }
+      }
+
+      
+      footer{
+        margin-top:10px;
+        background:#111827;
+        color:#e5e7eb;
+        padding:20px;
+      }
+      footer .cols{
+        display:grid;
+        grid-template-columns:1fr;
+        gap:20px;
+        max-width:900px;
+        margin:0 auto;
+      }
+      footer h5{
+        margin:0 0 10px 0;
+        font-family:UbuntuB;
+        font-size:14px;
+        color:#ffffff;
+      }
+      footer ul{ list-style:none; padding:0; margin:0; }
+      footer li{ padding:4px 0; font-size:12px; }
+      footer a{ color:#c7d2fe; text-decoration:none; }
+      footer a:hover{ text-decoration:underline; }
+
+      @media (min-width:600px){
+        footer .cols{ grid-template-columns:1fr 1fr; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <a href="?"><img src="https://static.jocarsa.com/logos/jocarsa%20%7C%20Indigo.svg" alt="jocarsa"></a>
+      <a href="?">Inicio</a>
+    </header>
+
+    <main>
+      <?php
+     
+      for($i = 0; $i < count($productos); $i++){
+        $nombre = htmlspecialchars($productos[$i]['nombre']);
+        $slogan = htmlspecialchars($productos[$i]['slogan']);
+      ?>
+        <article>
+          <h3><?= $nombre ?></h3>
+          <h4><?= $slogan ?></h4>
+          <a href="producto.php">Saber más</a>
+        </article>
+      <?php } ?>
+    </main>
+
+    <footer>
+      <div class="cols">
+
+        
+        <div>
+          <h5>Categorías</h5>
+          <ul>
+            <?php for($i = 0; $i < count($categorias); $i++){ ?>
+              <li><?= htmlspecialchars($categorias[$i]) ?></li>
+            <?php } ?>
+          </ul>
+        </div>
+
+        
+        <div>
+          <h5>Enlaces</h5>
+          <ul>
+            <?php
+            
+            for($i = 0; $i < count($pie['enlaces']); $i++){
+              $nombre = htmlspecialchars($pie['enlaces'][$i]['nombre']);
+              $enlace = htmlspecialchars($pie['enlaces'][$i]['enlace']);
+            ?>
+              <li><a href="<?= $enlace ?>" target="_blank"><?= $nombre ?></a></li>
+            <?php } ?>
+          </ul>
+        </div>
+
+      </div>
+    </footer>
+  </body>
+</html>
+```
+
+fuentespersonalizadas.php:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>jocarsa</title>
+    <meta charset="utf-8">
+    <style>
+      @font-face {font-family: Ubuntu;src: url(Ubuntu-R.ttf);}
+      @font-face {font-family: UbuntuB;src: url(Ubuntu-B.ttf);}
+      
+      html,body{
+        padding:0px;
+        margin:0px;
+        font-family:Ubuntu,sans-serif;
+        width:100%;
+        height:100%; 
+      }
+
+      
+      header{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        box-shadow:0px 2px 4px rgba(0,0,0,0.3);
+        gap:20px;
+        padding:10px;
+      }
+      header img{width:30px;}
+      header a{text-decoration:none;color:indigo;font-size:11px;}
+
+     
+      main{
+        width:100%;
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+      }
+
+      
+      main article{
+        width:100%;
+        height:400px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:lightgrey;
+        flex-direction:column;
+        gap:10px;
+      }
+      main article h3,main article h4{padding:0px;margin:0px;}
+      main article h3{font-size:32px;}
+      main article a{background:indigo;text-decoration:none;color:white;padding:10px 20px;border-radius:50px;}
+
+      
+      main article:nth-child(-n+3){
+        grid-column:1 / -1;
+      }
+
+      
+      @media (min-width:600px){
+        main{
+          grid-template-columns:1fr 1fr;
+        }
+
+        main article:nth-child(-n+3){
+          grid-column:1 / -1;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+    <header>
+      <a href="?"><img src="https://static.jocarsa.com/logos/jocarsa%20%7C%20Indigo.svg"></a>
+      <?php for($i = 0;$i<8;$i++){ ?>
+        <a href="?">Elemento <?= $i?></a>
+      <?php }?>
+    </header>
+    <main>
+      <?php for($i = 0;$i<9;$i++){ ?>
+        <article>
+          <h3>Nombre del producto</h3>
+          <h4>Slogan del producto</h4>
+          <a href="accion.php">Saber más</a>
+        </article>
+      <?php }?>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>
+```
+
+categorias.json:
+```
+[
+  "Empresa",
+  "Educación",
+  "Facturación"
+]
+```
+
+piedepagina.json:
+```
+{
+  "categorias":[
+    "Empresa",
+    "Educación",
+    "Facturación"
+  ],
+  "enlaces":[
+    {"nombre":"cookies","enlace":"https://jocarsa.com/cookies"},
+    {"nombre":"política de privacidad","enlace":"https://jocarsa.com/cookies"},
+    {"nombre":"términos de uso","enlace":"https://jocarsa.com/cookies"}
+  ]
+}
+```
+
+productos.json:
+```
+[
+  { "nombre":"jocarsa | teal", "slogan":"Sistema de gestión empresarial personalizado" },
+  { "nombre":"jocarsa | darksalmon", "slogan":"Sistema de fichaje empresarial" },
+  { "nombre":"jocarsa | rosybrown", "slogan":"Software de facturación para autónomos y PYMEs" }
+]
+```
+
+
+Ubuntu-R.ttf
+Ubuntu-B.ttf
+
+Orden de los archivos:
+
+jocarsa/
+├─organizar.php
+├─fuentes personalizadas.php
+├─ db/
+│   ├─ categorias.json
+│   ├─ productos.json
+│   └─ piedepagina.json
+└─ estilo/
+    ├─ Ubuntu-R.ttf
+    └─ Ubuntu-B.ttf
+
+
+
+En este ejercicio he creado una página web usando PHP y archivos JSON. El objetivo ha sido enseñar información de categorías y productos de forma ordenada.
+
+He trabajado con el archivo organizar.php, que es el archivo principal de la página. En él he leído los archivos categorias.json, productos.json y piedepagina.json usando PHP. Gracias a esto, los datos no están escritos directamente en el código.
+
+Las categorías se ven en el pie de página y los productos se muestran en la parte principal de la web utilizando bucles. Cada producto aparece con su nombre y su eslogan.
+
+También he usado fuentes personalizadas, copiándolas en una carpeta y añadiéndolas al CSS.
+Con este ejercicio he aprendido a leer datos desde archivos JSON y a mostrarlos en una página web de forma sencilla.
+
+Con este ejercicio he aprendido a leer información desde archivos JSON y a enseñarla en una página web usando PHP. También he aprendido a organizar mejor los archivos de un proyecto y a usar bucles para mostrar los datos.
+
+Este ejercicio me ha ayudado a entender mejor cómo se pueden crear páginas web más ordenadas y fáciles de modificar.

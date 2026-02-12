@@ -1,0 +1,564 @@
+Enunciado de la actividad:
+
+Con el objeto de preparar tu futuro Curriculum, crea: -Una plantilla en HTML con todos los apartados necesarios para tu curriculum, tal y como hemos trabajado en clase -Un estilo CSS que contenga todo lo que hemos hecho durante las clases
+
+Contendrá todos tus datos, es decir, aquellos que más adelante figurarán en tu CV.
+
+Tu HTML/CSS deberá tener la misma complejidad que los datos contenidos en un Curriculum -Sección de datos personales -Sección de formación -Sección de experiencia profesional -Idiomas -Vehiculos -Aficiones -Hobbies
+
+El CV deberá realizarse en base a los mismos parámetros que se ha desarrollado en la clase
+
+Por supuesto siempre debe seguirse la rúbrica de evaluación.
+
+
+
+
+
+Respuesta:
+
+
+
+En esta actividad he creado mi propio currículum utilizando HTML y CSS, aplicando los conocimientos que hemos aprendido durante el primer trimestre de la asignatura de Lenguaje de Marcas.
+He estructurado el documento en diferentes secciones (datos personales, formación, experiencia laboral, idiomas, etc.) siguiendo una organización clara y coherente, similar a la de un CV profesional.
+También he utilizado etiquetas básicas de HTML.
+En la parte de diseño he aplicado estilos sencillos con colores suaves, márgenes y un fondo degradado, con el objetivo de que el resultado sea visualmente atractivo pero manteniendo un formato limpio y formal.
+
+
+Para redactar mi curriculum he seguido una estrategia: 
+1. He creado yo bajo mis conocimientos un curriculum mas basico que ahora mostraré:
+
+micurriculum.json:
+
+```
+{
+  "nombre": "Serena Sania Esteve",
+  "contacto": {
+    "email": "serenaestevee@gmail.com",
+    "telefono": "637383762",
+    "ubicacion": "Mislata, Valencia"
+  },
+  "perfil": "Gran facilidad de comunicación. Capacidad de organización alta. Responsabilidad elevada. Con espíritu emprendedor. Aptitudes para el trabajo en equipo. Resolutiva. Dispongo de vehículo propio.",
+  "idiomas": {
+    "español": "Nativo",
+    "inglés": "Nivel A1 (en proceso de aprendizaje)",
+    "valenciano": "Alto"
+  },
+  "experiencia": [
+    {
+      "puesto": "Administrativa",
+      "empresa": "MISLATA FORMACION SL",
+      "tareas": [
+        "Atención telefónica y física a clientes",
+        "Documentación",
+        "Redactar y enviar correos",
+        "Marketing de las redes sociales",
+        "Plan de igualdad",
+        "Informes"
+      ],
+      "periodo": "2022 - Actual"
+    },
+    {
+      "puesto": "Administrativa",
+      "empresa": "NEMASA",
+      "tareas": [
+        "Fichajes",
+        "Documentación",
+        "Informes"
+      ],
+      "duración": "3 meses - Plan social del Ayuntamiento"
+    },
+    {
+      "puesto": "Administrativa (prácticas)",
+      "empresa": "FOREDU",
+      "tareas": [
+        "Documentación",
+        "Redactar y enviar correos",
+        "Búsqueda de información"
+      ],
+      "duración": "3 meses - Prácticas"
+    }
+  ],
+  "formacion": [
+    {
+      "titulo": "Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)",
+      "centro": "TAME FORMACIÓN",
+      "años": "Cursando actualmente"
+    },
+    {
+      "titulo": "Grado Medio Técnico Auxiliar Administrativo",
+      "centro": "Colegio Santa Cruz de Mislata",
+      "años": "2019 - 2021"
+    },
+    {
+      "titulo": "ESO",
+      "centro": "Colegio Santa Cruz de Mislata",
+      "años": "2015 - 2019"
+    }
+  ],
+  "formacion_complementaria": [
+    "Implantación de planes y medidas de igualdad en las empresas",
+    "IFCT163PO - Inteligencia artificial aplicada a la empresa",
+    "Aprende a usar un CRM",
+    "Gestión de posicionamiento SEM",
+    "Plan estratégico de social media nivel 1 y 2"
+  ],
+  "otras_competencias": [
+    "Conocimientos y experiencia en paquete Office",
+    "Curso de mecanografía",
+    "Conocimientos en Contasol y Factusol"
+  ]
+}
+```
+
+
+Micurriculum.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículum de Serena Sania Esteve</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #eceaf4;
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      width: 800px;
+      background-color: white;
+      padding: 40px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid #b7a2d6;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      width: 180px;          
+      aspect-ratio: 1/1;     
+      border-radius: 50%;    
+      margin-right: 25px;
+      object-fit: cover;     
+      border: none;          
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #4b3b73;
+      margin: 0;
+    }
+
+    header p {
+      font-style: italic;
+      color: #333;
+    }
+
+    h2 {
+      color: #4b3b73;
+      border-bottom: 2px solid #b7a2d6;
+      padding-bottom: 4px;
+      margin-top: 30px;
+    }
+
+    h3 {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #555;
+      font-size: 0.9em;
+      border-top: 2px solid #b7a2d6;
+      padding-top: 10px;
+    }
+
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      main {
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <header>
+      <img src="serena.jpg" alt="Foto de Serena Sania Esteve">
+      <div>
+        <h1>Serena Sania Esteve</h1>
+        <p>Gran facilidad de comunicación. Capacidad de organización alta. Responsabilidad elevada. Con espíritu emprendedor. Aptitudes para el trabajo en equipo. Resolutiva. Dispongo de vehículo propio.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Datos personales</h2>
+      <ul>
+        <li>Email: serenaestevee@gmail.com</li>
+        <li>Teléfono: 637383762</li>
+        <li>Ubicación: Mislata, Valencia</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Formación académica</h2>
+      <ul>
+        <li>Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) – TAME FORMACIÓN (Cursando actualmente)</li>
+        <li>Grado Medio Técnico Auxiliar Administrativo – Colegio Santa Cruz de Mislata (2019 - 2021)</li>
+        <li>ESO – Colegio Santa Cruz de Mislata (2015 - 2019)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Experiencia profesional</h2>
+
+      <h3>Administrativa – MISLATA FORMACIÓN SL (2022 - Actual)</h3>
+      <ul>
+        <li>Atención telefónica y física a clientes</li>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Marketing de las redes sociales</li>
+        <li>Plan de igualdad</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa – NEMASA (3 meses - Plan social del Ayuntamiento)</h3>
+      <ul>
+        <li>Fichajes</li>
+        <li>Documentación</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa (prácticas) – FOREDU (3 meses - Prácticas)</h3>
+      <ul>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Búsqueda de información</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Idiomas</h2>
+      <ul>
+        <li>Español: Nativo</li>
+        <li>Inglés: Nivel A1 (en proceso de aprendizaje)</li>
+        <li>Valenciano: Alto</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Formación complementaria</h2>
+      <ul>
+        <li>Implantación de planes y medidas de igualdad en las empresas</li>
+        <li>IFCT163PO - Inteligencia artificial aplicada a la empresa</li>
+        <li>Aprende a usar un CRM</li>
+        <li>Gestión de posicionamiento SEM</li>
+        <li>Plan estratégico de social media nivel 1 y 2</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Otras competencias</h2>
+      <ul>
+        <li>Conocimientos y experiencia en paquete Office</li>
+        <li>Curso de mecanografía</li>
+        <li>Conocimientos en Contasol y Factusol</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Vehículos</h2>
+      <p>Dispongo de vehículo propio.</p>
+    </section>
+
+    <section>
+      <h2>Aficiones y hobbies</h2>
+      <p>Viajar, aprender nuevas tecnologías, leer y practicar deporte.</p>
+    </section>
+
+    <footer>
+      <p>© 2025 Serena Sania Esteve</p>
+    </footer>
+  </main>
+
+</body>
+</html>
+```
+
+
+file:///C:/Users/Serena/Documents/lenguaje%20de%20marcas/Actividades/tema%202/mi%20curriculum/micurriculum.html
+
+
+2. Pero ahora con ayuda de la IA (por que hay cosas que no me se jajaja) voy a ponerlo un poco mas bonito:
+- El json es el mismo que el de arriba.
+micurriculum.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículum de Serena Sania Esteve</title>
+
+  <style>
+    /* Fondo con degradado suave */
+    body {
+      font-family: Verdana, Geneva, sans-serif;
+      background: linear-gradient(to bottom, #e9e4f0, #d3cce3);
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Contenedor principal con sombra */
+    main {
+      width: 800px;
+      background-color: white;
+      padding: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-radius: 10px;
+    }
+
+    /* Encabezado con foto y nombre */
+    header {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid #b7a2d6;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      width: 180px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      margin-right: 25px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      border: none;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #4b3b73;
+      margin: 0;
+    }
+
+    header p {
+      font-style: italic;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    /* Títulos de sección destacados */
+    h2 {
+      color: white;
+      background-color: #a48bd3;
+      padding: 6px 10px;
+      border-radius: 5px;
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+
+    h3 {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 25px;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+
+    /* Separador decorativo */
+    hr {
+      border: none;
+      height: 2px;
+      background-color: #b7a2d6;
+      margin: 30px 0;
+    }
+
+    /* Pie de página */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #555;
+      font-size: 0.9em;
+      border-top: 2px solid #b7a2d6;
+      padding-top: 10px;
+    }
+
+    /* Versión lista para imprimir */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      main {
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <header>
+      <img src="serena.jpg" alt="Foto de Serena Sania Esteve">
+      <div>
+        <h1>Serena Sania Esteve</h1>
+        <p>Gran facilidad de comunicación. Capacidad de organización alta. Responsabilidad elevada. Con espíritu emprendedor. Aptitudes para el trabajo en equipo. Resolutiva. Dispongo de vehículo propio.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Datos personales</h2>
+      <ul>
+        <li>📧 Email: serenaestevee@gmail.com</li>
+        <li>📞 Teléfono: 637383762</li>
+        <li>📍 Ubicación: Mislata, Valencia</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación académica</h2>
+      <ul>
+        <li>Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) – TAME FORMACIÓN (Cursando actualmente)</li>
+        <li>Grado Medio Técnico Auxiliar Administrativo – Colegio Santa Cruz de Mislata (2019 - 2021)</li>
+        <li>ESO – Colegio Santa Cruz de Mislata (2015 - 2019)</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Experiencia profesional</h2>
+
+      <h3>Administrativa – MISLATA FORMACIÓN SL (2022 - Actual)</h3>
+      <ul>
+        <li>Atención telefónica y física a clientes</li>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Marketing de las redes sociales</li>
+        <li>Plan de igualdad</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa – NEMASA (3 meses - Plan social del Ayuntamiento)</h3>
+      <ul>
+        <li>Fichajes</li>
+        <li>Documentación</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa (prácticas) – FOREDU (3 meses - Prácticas)</h3>
+      <ul>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Búsqueda de información</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Idiomas</h2>
+      <ul>
+        <li>Español: Nativo</li>
+        <li>Inglés: Nivel A1 (en proceso de aprendizaje)</li>
+        <li>Valenciano: Alto</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación complementaria</h2>
+      <ul>
+        <li>Implantación de planes y medidas de igualdad en las empresas</li>
+        <li>IFCT163PO - Inteligencia artificial aplicada a la empresa</li>
+        <li>Aprende a usar un CRM</li>
+        <li>Gestión de posicionamiento SEM</li>
+        <li>Plan estratégico de social media nivel 1 y 2</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Otras competencias</h2>
+      <ul>
+        <li>Conocimientos y experiencia en paquete Office</li>
+        <li>Curso de mecanografía</li>
+        <li>Conocimientos en Contasol y Factusol</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Vehículos</h2>
+      <p>Dispongo de vehículo propio.</p>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Aficiones y hobbies</h2>
+      <p>Viajar, aprender nuevas tecnologías, leer y practicar deporte.</p>
+    </section>
+
+    <footer>
+      <p>© 2025 Serena Sania Esteve</p>
+    </footer>
+  </main>
+
+</body>
+</html>
+```
+
+file:///C:/Users/Serena/Documents/lenguaje%20de%20marcas/Actividades/tema%202/mi%20curriculum/micurriculum.html
+
+
+Gracias a esta práctica he podido poner en marcha los conocimientos adquiridos sobre la estructura y el diseño de documentos HTML y CSS.
+He comprendido la importancia de organizar correctamente la información y de utilizar las etiquetas adecuadas para que el contenido sea claro y fácil de leer.
+Además, he aprendido cómo los estilos influyen en la presentación visual y cómo pequeños detalles de diseño pueden hacer que un currículum resulte más profesional.
+Considero que el resultado final refleja mi perfil y que me servirá como base para en un futuro ir cambiando cosas y añadiendo.

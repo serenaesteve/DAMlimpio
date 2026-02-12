@@ -1,0 +1,74 @@
+Ejercicio práctico: Funciones y Arrays
+Contexto:
+¡Hola exploradores del campo! Hoy vamos a combinar nuestros juegos de mesa favoritos con el mundo digital. Imagina que estás en un juego donde tienes que gestionar una expedición en el campo. Necesitas crear funciones para manejar información sobre los animales que encuentras y arrays para almacenarlos.
+
+Enunciado paso a paso:
+Crea una función llamada muestraAnimal que tome como parámetro un animal (string) y lo muestre en la consola con el mensaje: "Encontramos un(a) [animal] en el campo!".
+
+Define un array llamado animalesEnCampo con los nombres de cinco animales distintos que hayas visto durante tus expediciones.
+
+Utiliza un bucle for para recorrer el array animalesEnCampo y llamar a la función muestraAnimal para cada animal.
+
+Añade una nueva función llamada compararAnimales que tome dos animales como parámetros y devuelva un mensaje indicando si son iguales o diferentes.
+
+Restricciones:
+No puedes usar bucles while.
+No puedes utilizar variables globales.
+Debes seguir los ejemplos proporcionados en la clase para declarar funciones y arrays.
+Criterios de evaluación:
+Introducción y contextualización (25%): Explica cómo has integrado tus hobbies en el contexto del ejercicio.
+Desarrollo técnico correcto y preciso (25%): Verifica que las funciones y el bucle for estén correctamente implementados.
+Aplicación práctica con ejemplo claro (25%): Asegúrate de que cada paso se ejecute correctamente y produzca los resultados esperados.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio te ha ayudado a entender mejor el manejo de funciones y arrays en JavaScript, especialmente en el contexto del campo.
+¡Buena suerte en tu expedición digital!
+
+
+Respuesta:
+
+He integrado mis hobbies en este ejercicio usando la exploración del campo y los juegos de aventuras. Cada animal que aparece en el array representa un encuentro en la naturaleza, como si estuviéramos en una expedición real. La función muestraAnimal sirve para “anotar” en la consola cada animal que vemos, y la función compararAnimales nos ayuda a decidir si los animales son iguales o diferentes, como en un juego de mesa donde tomamos decisiones según lo que encontramos.
+​
+Así, el ejercicio combina mis hobbies con la programación de manera divertida y sencilla.
+​
+```
+function iniciarExpedicion() {
+   
+    function muestraAnimal(animal) {
+        console.log("Encontramos un(a) " + animal + " en el campo!");
+    }
+    
+    let animalesEnCampo = ["zorro", "conejo", "ardilla", "búho", "ciervo"];
+​
+    for (let i = 0; i < animalesEnCampo.length; i++) {
+        muestraAnimal(animalesEnCampo[i]);
+    }
+​
+    function compararAnimales(animal1, animal2) {
+        if (animal1 === animal2) {
+            console.log(animal1 + " y " + animal2 + " son iguales.");
+        } else {
+            console.log(animal1 + " y " + animal2 + " son diferentes.");
+        }
+    }
+​
+    compararAnimales("zorro", "zorro");   
+    compararAnimales("conejo", "búho");   
+}
+​
+iniciarExpedicion();
+```
+​
+Resultado del codigo:
+```
+node "c:\Users\Serena\Documents\lenguaje de marcas\Actividades\animales.js"
+Encontramos un(a) zorro en el campo!
+Encontramos un(a) conejo en el campo!
+Encontramos un(a) ardilla en el campo!
+Encontramos un(a) búho en el campo!
+Encontramos un(a) ciervo en el campo!
+zorro y zorro son iguales.
+conejo y búho son diferentes.
+```
+​
+Este ejercicio me a ayudado a entender mejor cómo usar funciones y arrays en JavaScript. He aprendido a mostrar información con la función muestraAnimal, a guardar varios animales en un array y recorrerlos con un bucle for. También he aprendido a comparar dos animales con la función compararAnimales.
+​
+En el contexto del campo, sirve para organizar los animales que encuentro en mis expediciones de manera clara y divertida.

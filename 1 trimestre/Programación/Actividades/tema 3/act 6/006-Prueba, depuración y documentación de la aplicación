@@ -1,0 +1,76 @@
+División y validación en Python
+En este ejercicio, aprenderás a crear una función que realice divisiones seguras, considerando casos especiales como división por cero y entradas no numéricas.
+
+Contexto
+A veces, al jugar videojuegos o explorar el campo, es importante realizar cálculos matemáticos. En este ejercicio, implementaremos una función que divida dos números, pero con validaciones adicionales para manejar situaciones como la división por cero y entradas que no sean números.
+
+Enunciado paso a paso
+Definición de la función: Crea una función llamada creaDivision que acepte dos parámetros: dividendo y divisor.
+Validación del divisor: Verifica si el divisor es cero. Si lo es, la función debe devolver la cadena "infinidad", ya que cualquier número dividido por cero es infinito.
+Validación de los tipos de datos: Asegúrate de que tanto dividendo como divisor sean números (enteros o flotantes). Si no lo son, conviértelos a flotantes usando la función float(). Si no es posible convertirlos, la función debe devolver 0.
+Realización de la división: Realiza la división y devuelve el resultado.
+Restricciones
+No uses estructuras como try/except.
+No utilices funciones o métodos que no hayan sido explicados en clase hasta ahora.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumnado debe entender el contexto del ejercicio y cómo la función puede ser útil en situaciones reales.
+Desarrollo técnico correcto y preciso (25%): La función debe implementarse correctamente, considerando todos los casos especiales descritos.
+Aplicación práctica con ejemplo claro (25%): El alumnado debe probar la función con diferentes valores de entrada para verificar su funcionamiento.
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe explicar cómo esta función podría ser útil en un videojuego o cuando se explora el campo, por ejemplo, al calcular ratios de distancia o velocidad.
+
+
+
+Respuesta:
+
+Cuando hacemos divisiones en un programa, a veces puede pasar que el número por el que dividimos sea cero, y eso no se puede hacer. También puede pasar que alguien ponga letras en vez de números, y eso causa errores.
+
+Por ej, en un videojuego, para calcular la velocidad, tenemos que dividir distancia por tiempo. Si el tiempo es cero o ponen algo que no es número, el cálculo puede fallar.
+
+Esta función ayuda a que esos casos no rompan el programa. Si el divisor es cero, devuelve "infinidad". Si no puede convertir las entradas a números, devuelve 0. Así el programa funciona bien siempre.
+
+```
+def creaDivision(dividendo, divisor):
+    
+    if type(dividendo) == str:
+        if dividendo.replace('.', '', 1).isdigit():
+            dividendo = float(dividendo)
+        else:
+            return 0
+
+    
+    if type(divisor) == str:
+        if divisor.replace('.', '', 1).isdigit():
+            divisor = float(divisor)
+        else:
+            return 0
+
+    
+    if divisor == 0:
+        return "infinidad"
+
+    return dividendo / divisor
+
+
+print(creaDivision(10, 2))         
+print(creaDivision(10, 0))         
+print(creaDivision("20", "4"))    
+print(creaDivision("hola", 5))    
+print(creaDivision(100, "0"))      
+print(creaDivision("7.5", "2.5"))
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\tema 3\creardivisiones.py"
+5.0
+infinidad
+5.0
+0
+infinidad
+3.0
+
+En un videojuego, esta función puede ayudar a calcular cosas como la velocidad de un personaje, que es distancia dividida por tiempo. Si el tiempo es cero o los datos no son correctos, la función evita que el juego se bloquee y da resultados claros.
+
+Cuando exploro el campo, podría usarla para calcular cuánto tardo en llegar a un sitio o para medir velocidades, siempre cuidando que no haya divisiones por cero o datos incorrectos. Así, los cálculos son seguros y no dan errores.
+
+Basicamente, esta función hace que los cálculos sean más fiables y seguros en muchas situaciones, tanto en juegos como en la vida real.

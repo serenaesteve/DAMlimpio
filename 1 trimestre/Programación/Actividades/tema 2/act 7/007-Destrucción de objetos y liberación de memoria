@@ -1,0 +1,82 @@
+Título
+Destrucción de Objetos y Liberación de Memoria
+
+Contexto
+En un mundo donde los personajes son objetos vivos en un escenario digital, es crucial entender cómo estos personajes se desvanecen cuando ya no son necesarios. Imagina que estás explorando una vasta región de campo mientras recoges muestras naturales y jugas a juegos de mesa con amigos. Cada objeto que creas durante este viaje necesita ser destruido correctamente para evitar fugas de memoria.
+
+Enunciado paso a paso
+Crear Objetos: Primero, crea un objeto que represente una muestra natural recogida en el campo.
+
+nombre_muestra: Nombre del tipo de planta o roca recogida.
+peso_muestra: Peso de la muestra en gramos.
+Destruir Objetos: Luego, cuando hayas terminado con una muestra, es importante destruirla para liberar memoria.
+
+destruir_muestra(nombre_muestra): Función que "destruye" el objeto y libera la memoria asociada.
+Ejemplo Práctico: Simula un viaje en campo donde recoges varias muestras naturales y luego las destruyes.
+
+nombre_muestras = ["roca_granito", "hiedra_verde", "pétala_rosa"]
+Recoge cada muestra y guárdala en una lista llamada muestras_recolectadas.
+Luego, recorre la lista de muestras recolectadas y destruye cada una usando la función destruir_muestra.
+Restricciones
+No se permite crear clases personalizadas.
+Solo utilizar objetos predeterminados existentes en el lenguaje de programación.
+Evita usar estructuras que no hayan sido vistas hasta ahora.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe entender la importancia de la destrucción de objetos y la liberación de memoria en el contexto del viaje en campo.
+Desarrollo técnico correcto y preciso (25%): El código debe implementar correctamente la creación y destrucción de objetos, utilizando nombres de variables y funciones adecuados.
+Aplicación práctica con ejemplo claro (25%): El alumno debe simular un viaje en campo recogiendo muestras naturales y luego liberando memoria al destruir cada muestra.
+Cierre/Conclusión enlazando con la unidad (25%): El ejercicio debe cerrar enlazándolo con el concepto de destrucción de objetos y liberación de memoria, similar a cómo se libera espacio en un campo mientras se recolectan muestras naturales.
+
+
+
+Respuesta:
+
+
+
+Cuando estoy en un viaje de campo y recojo muchas muestras, mi mochila se llena.
+Si no saco las muestras que ya no necesito, no queda espacio para más.
+
+En programación pasa lo mismo:
+Cada objeto que creo usa memoria.
+Si no lo destruyo cuando ya no lo necesito, la memoria se llena y el programa puede fallar.
+
+Destruir objetos = liberar memoria
+Así el programa funciona rápido y no se queda sin espacio.
+
+```
+nombre_muestras = ["roca_granito", "hiedra_verde", "petala_rosa"]
+
+muestras_recolectadas = []
+
+for nombre in nombre_muestras:
+    muestra = {"nombre": nombre, "peso": 100}
+    print(f"Muestra '{nombre}' creada.")
+    muestras_recolectadas.append(muestra)
+
+    
+    def destruir_muestra(muestra):
+        print(f"Muestra '{muestra['nombre']}' destruida.")
+    del muestra
+
+    for muestra in muestras_recolectadas:
+     destruir_muestra(muestra)
+
+muestras_recolectadas.clear()
+
+print("Todas las muestras fueron destruidas y la memoria liberada.")
+```
+
+Salida del código:
+
+uestra 'roca_granito' creada.
+Muestra 'roca_granito' destruida.
+Muestra 'hiedra_verde' creada.
+Muestra 'roca_granito' destruida.
+Muestra 'hiedra_verde' destruida.
+Muestra 'petala_rosa' creada.
+Muestra 'roca_granito' destruida.
+Muestra 'hiedra_verde' destruida.
+Muestra 'petala_rosa' destruida.
+Todas las muestras fueron destruidas y la memoria liberada.
+
+Basicamente, destruir objetos es como ordenar y liberar espacio , así mantengo el programa limpio, eficiente y listo para seguir trabajando.

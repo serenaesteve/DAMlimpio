@@ -1,0 +1,219 @@
+Ejercicio Práctico: Maquetado de un Currículum Vitae con Flexbox y Fuentes Personalizadas
+Continuando con nuestro estudio sobre maquetación web utilizando Flexbox y fuentes personalizadas, es momento de poner en práctica estos conceptos creando un currículum vitae profesional.
+
+Paso 1: Configuración del HTML
+Abre el archivo 012-fuentes_personalizadas.html y asegúrate de que el contenido básico esté presente. El archivo ya tiene estructura básica con dos secciones principales: #izquierda para la información personal y #derecha para el resumen profesional.
+
+Paso 2: Estilo con Flexbox
+El archivo CSS en este ejercicio ya incluye algunas reglas básicas de Flexbox para organizar los elementos. Asegúrate de entender cómo se usa Flexbox para distribuir el espacio entre las dos columnas y alinear los contenidos correctamente.
+
+Paso 3: Personalización de Fuentes
+Este ejercicio también te pide agregar fuentes personalizadas utilizando @font-face. Añade las siguientes reglas en la sección <style> del archivo:
+
+@font-face {
+    font-family: "LemonBold";
+    src: url("LEMONMILK-Bold.otf");
+}
+@font-face {
+    font-family: "LemonRegular";
+    src: url("LEMONMILK-Light.otf");
+}
+Paso 4: Aplicación de Fuentes y Estilos
+Aplíca las fuentes personalizadas a los elementos HTML según lo indicado en el archivo. Por ejemplo, puedes usar font-family: LemonBold; para los encabezados <h1> y <h2>, y font-family: LemonRegular; para el resto del contenido.
+
+Paso 5: Ajuste Final
+Revisa tu currículum vitae finalizando los detalles como el correo electrónico, la información de contacto completa, y cualquier otro dato que desees incluir. Asegúrate de que todo esté alineado correctamente y sea fácilmente legible.
+
+Conclusión
+Este ejercicio te ha permitido aplicar conceptos avanzados de CSS, como Flexbox y fuentes personalizadas, para crear un diseño profesional. Practica estos técnicas en otros proyectos futuros para mejorar tus habilidades en desarrollo web. Recuerda que la práctica es clave para dominar cualquier herramienta o lenguaje de programación.
+
+¿Qué opinas sobre el diseño final? ¿Hay algún aspecto que te gustaría mejorar? Comparte tu trabajo con un compañero y discutamos los resultados juntos.
+
+
+
+
+
+
+Respuesta:
+
+
+
+
+```
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículum Vitae - Jose Vicente Carratalá</title>
+    <style>
+        @font-face {
+            font-family: "LemonBold";
+            src: url("LEMONMILK-Bold.otf");
+        }
+        @font-face {
+            font-family: "LemonRegular";
+            src: url("LEMONMILK-Light.otf");
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc;
+            font-family: "LemonRegular", sans-serif;
+            color: #5c105a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        main {
+            width: 210mm;
+            height: 297mm;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 40px;
+            background-color: #ffffff;
+            background-image: url("fondocv.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding: 50px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        }
+        #izquierda {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #izquierda img {
+            display: block;
+            margin: 30px auto 20px auto;
+            width: 180px;
+            border-radius: 50%;
+            border: 5px solid white;
+        }
+        #izquierda ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        #derecha {
+            flex: 2;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+        h1, h2, h3 {
+            font-family: "LemonBold";
+            text-transform: uppercase;
+            margin: 10px 0;
+        }
+        h1 {
+            font-size: 28px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h3 {
+            font-size: 16px;
+            border-bottom: 2px solid #5c105a;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        p, li {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        @media print {
+            body {
+                background: none;
+            }
+            main {
+                box-shadow: none;
+                background-size: cover;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="izquierda">
+            <img src="josevicente.jpg" alt="Foto de perfil">
+            <ul>
+                <li><strong>Fecha de nacimiento:</strong> 14/04/1978</li>
+                <li><strong>Edad:</strong> 47 años</li>
+                <li><strong>Nacionalidad:</strong> Española</li>
+            </ul>
+            <article>
+                <h3>Contacto</h3>
+                <p><strong>Dirección:</strong> Calle Falsa 123, Ciudad, País</p>
+                <p><strong>Teléfono:</strong> +34 123 456 789</p>
+                <p><strong>Email:</strong> jose@example.com</p>
+            </article>
+            <article>
+                <h3>Habilidades</h3>
+                <ul>
+                    <li>HTML5, CSS3, JavaScript</li>
+                    <li>Diseño responsivo</li>
+                    <li>Gestión de proyectos</li>
+                </ul>
+            </article>
+            <article>
+                <h3>Idiomas</h3>
+                <ul>
+                    <li>Español: Nativo</li>
+                    <li>Inglés: Avanzado</li>
+                    <li>Francés: Intermedio</li>
+                </ul>
+            </article>
+        </div>
+        <div id="derecha">
+            <h1>Jose Vicente Carratalá Sanchis</h1>
+            <h2>Profesor, desarrollador y diseñador</h2>
+            <h3>Sobre mí</h3>
+            <p>Soy un profesional con más de 20 años de experiencia en el desarrollo web y la enseñanza. Me apasiona crear soluciones innovadoras y compartir mis conocimientos con otros.</p>
+            <h3>Formación Académica</h3>
+            <ul>
+                <li>Grado en Ingeniería Informática - Universidad de Valencia (2000-2004)</li>
+                <li>Máster en Desarrollo Web - Universidad Politécnica de Madrid (2005-2006)</li>
+            </ul>
+            <h3>Experiencia Profesional</h3>
+            <ul>
+                <li>Profesor de Desarrollo Web - Instituto Tecnológico de Valencia (2010-presente)</li>
+                <li>Desarrollador Web Freelance (2006-2010)</li>
+            </ul>
+            <h3>Proyectos Destacados</h3>
+            <ul>
+                <li>Desarrollo de una plataforma de e-learning para una universidad local.</li>
+                <li>Diseño y desarrollo de sitios web para pequeñas y medianas empresas.</li>
+            </ul>
+            <h3>Referencias</h3>
+            <p>Disponibles a solicitud.</p>
+        </div>
+    </main>
+</body>
+</html>
+```
+​
+file:///C:/Users/Serena/Documents/lenguaje%20de%20marcas/Actividades/tema%202/corriculomjosevicente.html
+​
+​
+Este ejercicio me ha permitido aplicar conceptos avanzados de CSS, como Flexbox y fuentes personalizadas, para crear un diseño profesional. Practicaré estas técnicas en otros proyectos futuros para mejorar mis habilidades en desarrollo web. La práctica es clave para dominar cualquier herramienta o lenguaje de programación.
+​
+Creo que el diseño final está bastante bien. Se ve todo ordenado y se entiende la información. Me gusta que tenga dos columnas y que los títulos estén en mayúsculas y en negrita.
+​
+Lo que cambiaría es el color del texto para que se lea mejor y dejar un poco más de espacio entre las secciones. La foto también podría integrarse mejor con el resto del currículum.
+​
+En general estoy contenta porque se ve profesional y es mi primer ejercicio con Flexbox y fuentes personalizadas.

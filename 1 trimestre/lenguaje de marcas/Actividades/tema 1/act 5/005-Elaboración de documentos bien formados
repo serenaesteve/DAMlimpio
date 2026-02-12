@@ -1,0 +1,80 @@
+Enunciado paso a paso
+Introducción y Contextualización
+
+El mundo digital actual está repleto de documentos estructurados que utilizan lenguajes de marcas. Uno de estos lenguajes es XML, utilizado para representar datos en una forma independiente del software o plataforma que los genere.
+Imagina que estás explorando un campo natural y encuentras una serie de personajes míticos descritos en un documento XML. Tu tarea es crear un nuevo documento XML descriptivo de un ser humano con atributos como nombre, mote y edad.
+Desarrollo Técnico Correcto y Preciso
+
+Crea un nuevo archivo XML que describa a una persona utilizando el formato adecuado.
+Asegúrate de incluir todos los elementos necesarios: nombre, edad y profesion.
+Utiliza atributos como id para identificar cada elemento.
+Aplicación Práctica con Ejemplo Claro
+
+Basándote en el ejemplo proporcionado, crea un nuevo documento XML que describa a una persona llamada "Juan Pérez" con mote "JP", edad 35 años y profesión de "Arquitecto".
+Asegúrate de incluir los espacios de nombres y la declaración del esquema XSD.
+Cierre/Conclusión enlazando con la Unidad
+
+Una vez que hayas creado tu documento XML, valida su estructura utilizando un validador online como el proporcionado.
+Reflexiona sobre cómo este ejercicio te ha ayudado a entender mejor la importancia de la estructura y sintaxis correcta en los documentos XML.
+Restricciones
+Solo puedes usar los conceptos y términos que se han presentado en clase (version, encoding, persona, con, xsd).
+No utilices elementos adicionales o atributos no definidos.
+Asegúrate de mantener la estructura jerárquica correcta del documento XML.
+Criterios de Evaluación
+Introducción y contextualización: El estudiante demuestra comprensión del contexto y el propósito del ejercicio.
+Desarrollo técnico correcto y preciso: El estudiante crea un documento XML bien formado con todos los elementos necesarios.
+Aplicación práctica con ejemplo claro: El estudiante aplica los conceptos aprendidos creando un ejemplo práctico de un documento XML.
+Cierre/conclusión enlazando con la unidad: El estudiante reflexiona sobre el ejercicio y su relevancia en el contexto del tema.
+(El alumnado debe completar este apartado)
+
+
+
+Respuesta:
+
+
+PAra validar un archivo XML tenemos los archivos XSD que son como plantillas para que no podamos escribir lo que queramos sino que lo que escribamos responda a lo que la plantilla dice que se puede hacer.
+
+En este ejemplo tenemos este archivo XML:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- En este documento voy a describir a un ser humano -->
+<personas>
+
+  <persona xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="006-validar xml.xsd">
+    <nombre id="propio">Juan Pérez</nombre>
+    <nombre id="mote">JP</nombre>
+    <edad medida="años">35</edad>
+    <profesion>Arquitecto</profesion>
+  </persona>
+  
+  <persona>
+    <nombre id="propio">Juan Pérez</nombre>
+    <nombre id="mote">JP</nombre>
+    <edad medida="años">35</edad>
+    <profesion>Arquitecto</profesion>
+  </persona>
+  
+</personas>
+```
+
+Que esta validado por este otro archico XSD:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="persona">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="nombre" type="xs:string"/>
+        <xs:element name="edad" type="xs:integer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+```
+
+Este ejercicio me ha costado hacerlo por que no lo comprendía, al entenderlo se me ha hecho muy sencillo despues. Es importante este ejercicio por que ayuda a que no siempre codemos poner lo que nos de la gana y debe de haber unas pautas/normas.

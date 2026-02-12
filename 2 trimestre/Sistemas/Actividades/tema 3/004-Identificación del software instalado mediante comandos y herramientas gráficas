@@ -1,0 +1,225 @@
+Contexto
+En la naturaleza, los juegos de mesa pueden ser una excelente forma de pasar tiempo al aire libre y desarrollar habilidades de estrategia y colaboración. Además, conocer cómo identificar y gestionar software instalado en sistemas operativos es crucial para cualquier profesional en el campo informático.
+
+Enunciado paso a paso
+Identificación del software instalado:
+
+Utiliza el comando apt list --installed para obtener una lista de todos los programas instalados en tu sistema.
+Guarda esta información en un archivo llamado software_instalado.txt.
+Instalar un nuevo programa:
+
+Elige un juego de mesa que te gustaría jugar en tu sistema operativo.
+Utiliza el comando sudo apt install [nombre del juego] para instalarlo.
+Buscar información sobre un programa:
+
+Elige otro programa instalado en tu sistema.
+Utiliza el comando sudo apt search [nombre del programa] para buscar más información sobre él.
+Mostrar detalles de un programa:
+
+Utiliza el comando sudo apt show [nombre del programa] para mostrar los detalles detallados del programa que acabas de instalar.
+Eliminar un programa:
+
+Elige un juego de mesa que ya no necesites.
+Utiliza el comando sudo apt remove [nombre del juego] para eliminarlo.
+Restricciones
+No utilizar librerías externas ni estructuras no vistas en este tema.
+Solo usar comandos y herramientas disponibles en sistemas operativos basados en Debian (como Ubuntu).
+Criterios de evaluación
+Introducción y contextualización: El estudiante debe explicar cómo los juegos de mesa pueden ser una actividad al aire libre y cómo gestionar software instalado es crucial para profesionales.
+Desarrollo técnico correcto y preciso: El estudiante debe ejecutar correctamente todos los comandos y guardar la información requerida.
+Aplicación práctica con ejemplo claro: El estudiante debe proporcionar ejemplos claros de cómo instalar, buscar información, mostrar detalles y eliminar un programa usando apt.
+Cierre/Conclusión enlazando con la unidad: El estudiante debe relacionar los conceptos aprendidos con el tema actual de gestión de la información en sistemas operativos.
+
+
+Respuesta:
+
+
+En esta actividad he aprendido a manejar programas en Windows usando PowerShell y winget. He instalado un juego de ajedrez para practicar cómo poner programas nuevos, ver información sobre ellos y quitar los que no necesito. Me ha gustado porque he visto que gestionar los programas es importante tanto en el ordenador como en trabajos de informática. Además, me ha recordado cómo en los juegos de mesa se necesita pensar y organizarse bien.
+
+Esta actividad la he adaptado a windows ya que es el sistema operativo con el que trabajo. Pero que conste que lo he probado a hacer en la maquina virtual de linux y tambien me he salido bien lo que pasa que no lo pongo por que no me deje copiar y pegar.
+
+```
+Microsoft Windows [Versión 10.0.26100.7462]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\Serena> winget list
+The `msstore` source requires that you view the following agreements before using.
+Terms of Transaction: https://aka.ms/microsoft-store-terms-of-transaction
+The source requires the current machine's 2-letter geographic region to be sent to the backend service to function properly (ex. "US").
+
+Do you agree to all the source agreements terms?
+[Y] Yes  [N] No: y
+Name                                Id                                  Version              Available           Source
+-----------------------------------------------------------------------------------------------------------------------
+Git                                 ARP\Machine\X64\Git_is1             2.51.2
+RustDesk                            RustDesk.RustDesk                   1.4.3.29345376                           winget
+XAMPP                               ARP\Machine\X64\xampp               8.0.30-0
+Node.js                             OpenJS.NodeJS.22                    22.20.0              22.21.1             winget
+IIS 10.0 Express                    ARP\Machine\X64\{0F4F67F8-21E1-422… 10.0.10007
+RustDesk                            ARP\Machine\X64\{33B7415A-376F-4D8… 1.4.3.29345376
+Oracle VirtualBox 7.2.2             Oracle.VirtualBox                   7.2.2                7.2.4               winget
+NVIDIA Controlador de gráficos 566… ARP\Machine\X64\{B2FE1952-0186-46C… 566.14
+Microsoft Web Deploy 4.0            Microsoft.WebDeploy                 10.0.9419                                winget
+Microsoft SQL Server 2019 LocalDB   ARP\Machine\X64\{E5B3A478-C4C3-49E… 15.0.4382.1
+FileZilla 3.69.3                    ARP\Machine\X86\FileZilla Client    3.69.3
+Google Chrome                       Google.Chrome.EXE                   142.0.7444.177       143.0.7499.170      winget
+Microsoft Edge                      Microsoft.Edge                      143.0.3650.96                            winget
+Microsoft Visual C++ 2013 Redistri… Microsoft.VCRedist.2013.x64         12.0.40664.0                             winget
+Microsoft Visual C++ 2015-2022 Red… Microsoft.VCRedist.2015+.x86        14.44.35211.0        14.50.35719.0       winget
+vs_CoreEditorFonts                  ARP\Machine\X86\{1851460E-0E63-411… 17.7.40001
+Python Launcher                     Python.Launcher                     > 3.13.5                                 winget
+vertical-canvas version 1.5.2       ARP\Machine\X86\{9072EA15-785B-4BD… 1.5.2
+Microsoft Visual C++ 2013 Redistri… Microsoft.VCRedist.2013.x86         12.0.40664.0                             winget
+Microsoft Visual C++ 2015-2022 Red… Microsoft.VCRedist.2015+.x64        14.44.35211.0        14.50.35719.0       winget
+Microsoft .NET SDK 8.0.301 (x64)    Microsoft.DotNet.SDK.8              8.0.301              8.0.416             winget
+Discord                             Discord.Discord                     1.0.9210             1.0.9219            winget
+GitHub Desktop                      GitHub.GitHubDesktop                3.5.4                                    winget
+Microsoft OneDrive                  Microsoft.OneDrive                  25.222.1112.0002                         winget
+Zoom Workplace                      Zoom.Zoom.EXE                       6.6.6 (19875)        6.7.0 (24657)       winget
+Ollama version 0.13.4               Ollama.Ollama                       0.13.4               0.13.5              winget
+Microsoft Visual Studio Code (User) Microsoft.VisualStudioCode          1.107.0                                  winget
+Python 3.13.7 (64-bit)              Python.Python.3.13                  3.13.7               3.13.11             winget
+gedit-text-editor                   MSIX\8457gedit.gedit-text-editor_4… 48.1.0.0
+AMD Radeon Software                 MSIX\AdvancedMicroDevicesInc-2.AMD… 10.24.10035.0
+Microsoft Clipchamp                 MSIX\Clipchamp.Clipchamp_4.4.10720… 4.4.10720.0
+Microsoft Teams                     Microsoft.Teams                     25212.2204.3869.2204 25306.804.4102.7193 winget
+AV1 Video Extension                 MSIX\Microsoft.AV1VideoExtension_2… 2.0.6.0
+Extensión de vídeo del codificador… MSIX\Microsoft.AVCEncoderVideoExte… 1.1.21.0
+Mejoras de compatibilidad de aplic… MSIX\Microsoft.ApplicationCompatib… 1.2511.9.0
+Noticias                            MSIX\Microsoft.BingNews_4.55.62231… 4.55.62231.0
+Microsoft Bing                      MSIX\Microsoft.BingSearch_1.1.40.0… 1.1.40.0
+MSN El Tiempo                       MSIX\Microsoft.BingWeather_4.54.63… 4.54.63029.0
+Copilot                             MSIX\Microsoft.Copilot_1.25121.60.… 1.25121.60.0
+App Installer                       Microsoft.AppInstaller              1.27.349.0           1.27.350.0          winget
+Asistente de juegos de Microsoft E… MSIX\Microsoft.Edge.GameAssist_1.0… 1.0.3590.0
+Xbox                                MSIX\Microsoft.GamingApp_2512.1001… 2512.1001.34.0
+Obtener ayuda                       MSIX\Microsoft.GetHelp_10.2409.332… 10.2409.33293.0
+Extensión de imágenes HEIF          MSIX\Microsoft.HEIFImageExtension_… 1.2.28.0
+Extensiones de vídeo HEVC del fabr… MSIX\Microsoft.HEVCVideoExtension_… 2.4.39.0
+Paquete de experiencia local en es… MSIX\Microsoft.LanguageExperienceP… 26100.154.232.0
+Extensión de vídeo MPEG-2           MSIX\Microsoft.MPEG2VideoExtension… 1.2.13.0
+Microsoft Edge                      MSIX\Microsoft.MicrosoftEdge.Stabl… 140.0.3485.54
+Microsoft 365 Copilot               MSIX\Microsoft.MicrosoftOfficeHub_… 19.2512.49061.0
+Solitaire & Casual Games            MSIX\Microsoft.MicrosoftSolitaireC… 4.24.12040.0
+Notas rápidas de Microsoft          MSIX\Microsoft.MicrosoftStickyNote… 4.0.6105.0
+Microsoft .Net Native Framework Pa… MSIX\Microsoft.NET.Native.Framewor… 2.2.29512.0
+Microsoft .Net Native Framework Pa… MSIX\Microsoft.NET.Native.Framewor… 2.2.29512.0
+Microsoft .Net Native Runtime Pack… MSIX\Microsoft.NET.Native.Runtime.… 2.2.28604.0
+Microsoft .Net Native Runtime Pack… MSIX\Microsoft.NET.Native.Runtime.… 2.2.28604.0
+OneDrive                            MSIX\Microsoft.OneDriveSync_25174.… 25174.907.3.0
+Outlook for Windows                 MSIX\Microsoft.OutlookForWindows_1… 1.2025.806.300
+Paint                               MSIX\Microsoft.Paint_11.2510.311.0… 11.2510.311.0
+Power Automate                      MSIX\Microsoft.PowerAutomateDeskto… 1.0.2047.0
+Raw Image Extension                 MSIX\Microsoft.RawImageExtension_2… 2.5.7.0
+Herramienta Recortes                MSIX\Microsoft.ScreenSketch_11.251… 11.2510.31.0
+Seguridad de Windows                MSIX\Microsoft.SecHealthUI_1000.29… 1000.29429.1000.0
+Microsoft Engagement Framework      MSIX\Microsoft.Services.Store.Enga… 10.0.23012.0
+Microsoft Engagement Framework      MSIX\Microsoft.Services.Store.Enga… 10.0.23012.0
+Aplicación Experiencias de inicio   MSIX\Microsoft.StartExperiencesApp… 1.195.0.0
+Host de la experiencia de Store     MSIX\Microsoft.StorePurchaseApp_22… 22509.1401.1.0
+Microsoft To Do                     MSIX\Microsoft.Todos_0.148.3611.0_… 0.148.3611.0
+Microsoft.UI.Xaml.2.8               Microsoft.UI.Xaml.2.8               8.2501.31001.0                           winget
+Microsoft.UI.Xaml.2.8               Microsoft.UI.Xaml.2.8               8.2501.31001.0                           winget
+Microsoft Visual C++ 2015 UWP Desk… Microsoft.VCLibs.Desktop.14         14.0.33728.0                             winget
+Microsoft Visual C++ 2015 UWP Desk… Microsoft.VCLibs.Desktop.14         14.0.33728.0                             winget
+Microsoft Visual C++ 2015 UWP Runt… MSIX\Microsoft.VCLibs.140.00_14.0.… 14.0.33519.0
+Microsoft Visual C++ 2015 UWP Runt… MSIX\Microsoft.VCLibs.140.00_14.0.… 14.0.33519.0
+Extensiones de vídeo VP9            MSIX\Microsoft.VP9VideoExtensions_… 1.2.12.0
+Extensiones de multimedia web       MSIX\Microsoft.WebMediaExtensions_… 2.1.8.0
+Extensión de imagen WebP            MSIX\Microsoft.WebpImageExtension_… 1.2.14.0
+Widgets Platform Runtime            MSIX\Microsoft.WidgetsPlatformRunt… 1.6.14.0
+Inicio de desarrollo                MSIX\Microsoft.Windows.DevHome_0.1… 0.1700.597.0
+Fotos de Microsoft                  MSIX\Microsoft.Windows.Photos_2025… 2025.11110.18001.0
+Reloj de Windows                    MSIX\Microsoft.WindowsAlarms_11.25… 11.2510.4.0
+WindowsAppRuntime.1.4               MSIX\Microsoft.WindowsAppRuntime.1… 4000.1309.2056.0
+WindowsAppRuntime.1.4               MSIX\Microsoft.WindowsAppRuntime.1… 4000.1309.2056.0
+WindowsAppRuntime.1.5               MSIX\Microsoft.WindowsAppRuntime.1… 5001.373.1736.0
+WindowsAppRuntime.1.5               MSIX\Microsoft.WindowsAppRuntime.1… 5001.373.1736.0
+WindowsAppRuntime.1.6               MSIX\Microsoft.WindowsAppRuntime.1… 6000.519.329.0
+WindowsAppRuntime.1.6               MSIX\Microsoft.WindowsAppRuntime.1… 6000.519.329.0
+WindowsAppRuntime.1.7               MSIX\Microsoft.WindowsAppRuntime.1… 7000.617.2103.0
+WindowsAppRuntime.1.7               MSIX\Microsoft.WindowsAppRuntime.1… 7000.652.1806.0
+WindowsAppRuntime.1.7               MSIX\Microsoft.WindowsAppRuntime.1… 7000.676.1651.0
+WindowsAppRuntime.1.7               MSIX\Microsoft.WindowsAppRuntime.1… 7000.676.1651.0
+WindowsAppRuntime.1.8               MSIX\Microsoft.WindowsAppRuntime.1… 8000.675.1142.0
+WindowsAppRuntime.1.8               MSIX\Microsoft.WindowsAppRuntime.1… 8000.675.1142.0
+Calculadora de Windows              MSIX\Microsoft.WindowsCalculator_1… 11.2508.4.0
+Cámara de Windows                   MSIX\Microsoft.WindowsCamera_2025.… 2025.2510.2.0
+Centro de opiniones                 MSIX\Microsoft.WindowsFeedbackHub_… 1.2510.14102.0
+Bloc de notas de Windows            MSIX\Microsoft.WindowsNotepad_11.2… 11.2508.38.0
+Grabadora de sonidos de Windows     MSIX\Microsoft.WindowsSoundRecorde… 1.1.47.0
+Microsoft Store                     MSIX\Microsoft.WindowsStore_22511.… 22511.1401.5.0
+Terminal Windows                    Microsoft.WindowsTerminal           1.23.13503.0                             winget
+Windows Package Manager Source (wi… MSIX\Microsoft.Winget.Source_2025.… 2025.1222.1135.18
+Xbox TCUI                           MSIX\Microsoft.Xbox.TCUI_1.24.1000… 1.24.10001.0
+Game Bar                            MSIX\Microsoft.XboxGamingOverlay_7… 7.325.11061.0
+Xbox Identity Provider              MSIX\Microsoft.XboxIdentityProvide… 12.130.16001.0
+Game Speech Window                  MSIX\Microsoft.XboxSpeechToTextOve… 1.111.30001.0
+Enlace Móvil                        MSIX\Microsoft.YourPhone_0.25102.6… 0.25102.64.0
+Reproductor multimedia de Windows   MSIX\Microsoft.ZuneMusic_11.2510.7… 11.2510.7.0
+Microsoft Family                    MSIX\MicrosoftCorporationII.Micros… 0.2.44.0
+Asistencia rápida                   MSIX\MicrosoftCorporationII.QuickA… 2.0.35.0
+Windows Web Experience Pack         MSIX\MicrosoftWindows.Client.WebEx… 525.31002.150.0
+Host de experiencia entre disposit… MSIX\MicrosoftWindows.CrossDevice_… 0.25112.60.0
+NVIDIA Control Panel                MSIX\NVIDIACorp.NVIDIAControlPanel… 8.1.969.0
+Realtek Audio Control               MSIX\RealtekSemiconductorCorp.Real… 1.53.373.0
+
+C:\Users\Serena> winget list > software_instalado.txt
+
+C:\Users\Serena> winget install Microsoft.MicrosoftSolitaireCollection
+No package found matching input criteria.
+
+C:\Users\Serena> winget install FreeChessClub.FreeChess
+No package found matching input criteria.
+
+C:\Users\Serena>winget install FreeChessClub.FreeChess
+No package found matching input criteria.
+
+C:\Users\Serena> winget install -e --id BrutalChess.BrutalChess
+Found Brutal Chess [BrutalChess.BrutalChess] Version 0.5.2
+This application is licensed to you by its owner.
+Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Downloading https://sourceforge.net/projects/brutalchess/files/brutalchess-alpha/brutalchess-alpha-0.5.2/brutalchess-alpha-0.5.2-win32.exe/download
+  ██████████████████████████████  5.40 MB / 5.40 MB
+Successfully verified installer hash
+Starting package install...
+Successfully installed
+
+C:\Users\Serena> winget search Notepad++
+Name         Id                   Version Match                  Source
+-----------------------------------------------------------------------
+Notepad++    Notepad++.Notepad++  8.8.9   ProductCode: notepad++ winget
+Notepad Next dail8859.NotepadNext 0.12    Tag: notepad++         winget
+
+C:\Users\Serena> winget show BrutalChess.BrutalChess
+Found Brutal Chess [BrutalChess.BrutalChess]
+Version: 0.5.2
+Publisher: Brutal Chess Team
+Publisher Support Url: https://sourceforge.net/projects/brutalchess/support
+Author: Michael Cook, Joe Flint, neilpa
+Moniker: brutalchess
+Description: Brutal Chess features full 3D graphics, an advanced particle engine, and several different levels of intelligent AI, inspired by the once popular »Battle Chess« released by Interplay circa 1988.
+Homepage: https://sourceforge.net/projects/brutalchess/
+License: GPL-2.0-only
+License Url: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+Tags:
+  boardgame
+  chess
+  game
+  turn-based
+Installer:
+  Installer Type: nullsoft
+  Installer Locale: en-US
+  Installer Url: https://sourceforge.net/projects/brutalchess/files/brutalchess-alpha/brutalchess-alpha-0.5.2/brutalchess-alpha-0.5.2-win32.exe/download
+  Installer SHA256: 666cdbc51258008189510f8840033a651e9a55f03b9ccd4be14d5c76d8cd78cd
+  Offline Distribution Supported: true
+
+C:\Users\Serena> winget uninstall --id BrutalChess.BrutalChess
+Found Brutal Chess [BrutalChess.BrutalChess]
+Starting package uninstall...
+Successfully uninstalled
+
+C:\Users\Serena>
+```
+
+Haciendo esta actividad he entendido cómo ver los programas que tengo en el ordenador, instalar uno nuevo, buscar información sobre otros, mirar sus detalles y quitar los que ya no quiero. Me ha servido para aprender a controlar el software de Windows de manera fácil y rápida, y también para ver que, como en los juegos de mesa, planificar y organizar es importante.

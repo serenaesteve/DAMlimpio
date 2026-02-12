@@ -1,0 +1,92 @@
+Contexto
+
+En nuestro mundo tan lleno de juegos y aventuras, imagina que estás explorando un campo mágico en una misión de búsqueda. Tu objetivo es encontrar los secretos ocultos bajo las hojas de los árboles y descubrir qué tipo de criaturas vive allí. Para ayudarte en esta gran expedición, has decidido crear una base de datos para almacenar la información que encuentres.
+
+Enunciado paso a paso
+
+Crea un listado de nombres de clientes: En tu campo mágico, tienes varios clientes que han visitado tu tienda de juegos y videojuegos. Para organizar mejor tus registros, debes crear una tabla llamada clientes con las siguientes columnas: id, nombre, apellidos, telefono y email. Luego, inserta los datos de ejemplo proporcionados en la carpeta.
+
+Consulta los nombres de los clientes: Ahora que tienes tus registros organizados, es el momento de probar tu conocimiento sobre las consultas SQL. Escribe una consulta que te devuelva solo los nombres de los clientes en orden alfabético descendente.
+
+Ordena por apellidos y nombre: Imagina que estás recogiendo muestras del campo para un estudio científico. Para organizar tus muestras, es importante clasificarlas primero por el apellido del cliente y luego por su nombre. Escribe una consulta que te devuelva todos los registros de clientes ordenados por apellidos en orden ascendente y luego por nombres también en orden ascendente.
+
+Añade un alias a las columnas: Durante tu expedición, decides nombrar a cada cliente según sus preferencias. Escribe una consulta que muestre los nombres de los clientes como "Nombres de los clientes" y sus apellidos como "Apellidos de los clientes".
+
+Usa comodines para buscar clientes: A medida que avanzas en tu expedición, descubres que algunos clientes tienen apellidos que contienen la palabra "ez". Escribe una consulta que te devuelva todos los registros de clientes cuyos apellidos contengan esta palabra.
+
+Restricciones
+
+No uses librerías externas.
+No utilices input()/lectura de teclado.
+No emplees estructuras no vistas hasta ahora en la asignatura.
+Criterios de evaluación
+
+Introducción y contextualización (25%): Explica cómo has aplicado los conocimientos aprendidos en el campo mágico, creando una base de datos y realizando consultas SQL.
+Desarrollo técnico correcto y preciso (25%): Muestra tu capacidad para escribir consultas SQL precisas y técnicamente correctas.
+Aplicación práctica con ejemplo claro (25%): Proporciona ejemplos claros de cómo has aplicado los conceptos en un contexto práctico.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye tu actividad, explicando cómo estos conocimientos te ayudarán en futuras misiones de exploración en el campo mágico.
+
+
+
+
+Resultado:
+
+
+En esta misión en el campo mágico, tuve que organizar la información de los clientes que visitaron mi tienda de juegos y videojuegos. Como un explorador que clasifica sus descubrimientos, creé una base de datos llamada recursos_naturales, donde puedo guardar y consultar los datos de cada persona.
+​
+Gracias a esta actividad, he puesto en práctica lo que he aprendido sobre bases de datos y consultas SQL. Ahora puedo guardar, buscar y ordenar información de forma más fácil.
+​
+​
+1. En mi base de datos recursos_naturales creo la tabla clientes:
+```
+CREATE TABLE clientes (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellidos VARCHAR(50),
+    telefono VARCHAR(15),
+    email VARCHAR(100)
+);
+```
+2. Añado datos de los clientes:
+```
+INSERT INTO clientes (id, nombre, apellidos, telefono, email) VALUES
+(1, 'Serena', 'Sania', '637383762', 'serena@example.com'),
+(2, 'Hector', 'Gómez', '634567890', 'hector@example.com'),
+(3, 'Thais', 'Sania', '645678901', 'thais@example.com'),
+(4, 'Jonathan', 'Fernández', '656789012', 'jonathan@example.com'),
+(5, 'Miguel', 'López', '667890123', 'miguell@example.com');
+```
+3.Obtener solo los nombres de los clientes en orden alfabético descendente:
+```
+SELECT nombre
+FROM clientes
+ORDER BY nombre DESC;
+```
+https://files.fm/u/vgxrwn6utq
+​
+4. Ordenar por apellidos y luego por nombres (ambos en orden ascendente):
+```
+SELECT *
+FROM clientes
+ORDER BY apellidos ASC, nombre ASC;
+```
+https://files.fm/u/jfb8ynd3fd
+​
+5.Mostrar nombres y apellidos con alias:
+```
+SELECT nombre AS "Nombres de los clientes", apellidos AS "Apellidos de los clientes"
+FROM clientes;
+```
+https://files.fm/u/93ftgwmnzx
+​
+6. Buscar clientes cuyo apellido contenga "ez":
+```
+SELECT *
+FROM clientes
+WHERE apellidos LIKE '%ez%';
+```
+https://files.fm/u/3jv8qvq6tp
+​
+Esta actividad me a ayudado a aprender cosas importantes sobre bases de datos, como crear tablas, agregar datos y hacer consultas SQL para ordenar y buscar información. Cada línea de código me a permitido encontrar y organizar los datos de forma clara y útil.
+​
+Este conocimiento me servirá en el futuro cuando necesite manejar información, clasificar datos o analizar patrones. Saber usar SQL es una herramienta muy útil para trabajar con bases de datos de forma eficiente.

@@ -1,0 +1,136 @@
+Ejercicio práctico: Manipulación de estilos en JavaScript
+Contexto
+En este ejercicio, vamos a trabajar con la manipulación de estilos en JavaScript utilizando los conceptos de eventos y clases CSS. Imagina que eres un entusiasta del campo, y has decidido crear una aplicación web para ayudar a tus amigos a calcular el DNI (Número de Identificación Nacional) español. Quieres que cuando se introduzca el número completo de DNI, cambie el color de fondo del input a verde si es correcto y rojo si no lo es.
+
+Enunciado paso a paso
+Crea una página HTML con un input para el DNI:
+
+El input debe permitir solo números.
+Debe tener un tamaño adecuado para que se puedan introducir 8 dígitos.
+Añade JavaScript para calcular la letra del DNI:
+
+Crea una función calculaLetra(numero) que reciba el número del DNI y devuelva la letra correspondiente.
+La fórmula para calcular la letra es: TRWAGMYFPDXBNJZSQVHLCKE[numero % 23].
+Manipula el estilo del input:
+
+Cuando se introduzca el número completo de DNI (8 dígitos), añade una clase CSS que cambie el color de fondo del input a verde si es correcto.
+Si no se introduce el número completo, añade una clase CSS que cambie el color de fondo del input a rojo.
+Muestra la letra del DNI:
+
+Añade un div con id letra para mostrar la letra del DNI cuando sea correcto.
+Restricciones
+No puedes usar librerías externas ni estructuras no vistas en el curso.
+Solo puedes usar los conceptos de eventos y clases CSS que se han visto en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): El ejercicio debe estar claramente contextualizado dentro del tema de la manipulación de estilos en JavaScript.
+Desarrollo técnico correcto y preciso (25%): El código debe ser correcto y seguir los pasos descritos en el enunciado.
+Aplicación práctica con ejemplo claro (25%): El ejercicio debe incluir un ejemplo práctico de cómo funciona la aplicación.
+Cierre/Conclusión enlazando con la unidad (25%): La conclusión debe enlazar con el tema actual y mostrar cómo se puede aplicar lo aprendido en situaciones reales.
+Para practicar este concepto, sigue los pasos descritos en el enunciado y completa el código HTML y JavaScript. Asegúrate de que la aplicación funcione correctamente y muestra el color de fondo del input según si el DNI es correcto o no.
+
+
+
+Respuesta:
+
+
+En este ejercicio voy a cambiar el color de un cuadro cuando el usuario escribe algo.
+El cuadro es donde escribes el número del DNI.
+-Si escribes 8 números, el cuadro se vuelve verde y aparece la letra correcta del DNI.
+-Si escribes menos o más números, el cuadro se vuelve rojo y te dice que está mal.
+​
+​
+-Eventos: JavaScript puede “escuchar” cuando escribes en el cuadro.
+-Clases CSS: Son como etiquetas que le dicen al cuadro de qué color debe ser.
+-JavaScript: Calcula la letra del DNI y decide si el cuadro debe ser verde o rojo.
+​
+```
+<!doctype html>
+<html>
+  <head>
+    <title>Serena Sania | DNI</title>
+    <meta charset="utf-8">
+    <style>
+      body{background:lightpink;font-family:sans-serif;text-align:center;}
+      input{background:lightpink;border:none;padding:5px;outline:none;height:30px;}
+      .error{background:lightcoral;}
+      .correcto{background:lightgreen;}
+      header,main,footer{background:white;padding:20px;margin:auto;width:250px;font-size:11px;}
+      main{display:flex;justify-content:center;}
+      #letra{border:3px solid lightsteelblue;width:30px;text-align:center;line-height:30px;height:34.0px;font-size:20px;font-weight:bold;}
+      footer p{font-size:10px;}
+      header{border-radius:10px 10px 0px 0px;}
+      footer{border-radius:0px 0px 10px 10px;}
+      input{border-radius:5px 0px 0px 5px;}
+      #letra{border-radius:0px 5px 5px 0px;}
+    </style>
+  </head>
+  <body> 
+    <header>
+      <h1>Serena Sania| DNI</h1>
+      <p>Introduce los números de un DNI para calcular la letra</p>
+    </header>
+    <main>
+      <input type="number"><div id="letra">
+    </main>
+    <footer>
+    <p>Retroalimentación:</p>
+    (c) 2025 Serena Sania Esteve
+    
+    </footer>
+    <script>
+      function calculaLetra(numero){
+        let cadena = "TRWAGMYFPDXBNJZSQVHLCKE";
+        return cadena[numero % 23];
+      }
+ 
+      let entrada = document.querySelector("input");
+      let salida = document.querySelector("#letra")
+      let retroalimentacion = document.querySelector("footer p")
+      entrada.onkeyup = function(){
+        let contenido = this.value;
+        // Compruebo la longitud del campo
+        if(contenido.length == 8){
+          entrada.classList.add("correcto")
+          salida.textContent = calculaLetra(contenido)
+          retroalimentacion.textContent = "Ahora es correcto."
+          retroalimentacion.style.color = "green"
+          salida.style.border = "3px solid lightgreen";
+        }else{
+          entrada.classList = ""
+          entrada.classList.add("error")
+          retroalimentacion.innerHTML = "El valor que has introducido tiene  "+this.value.length+" caracteres. <br>Debe tener 8 caracteres."
+          retroalimentacion.style.color = "red"
+          salida.style.border = "3px solid lightcoral";
+        }
+        
+      }
+    </script>
+  </body>
+</html>
+```
+​
+​
+***Paso 1: Escribes el número del DNI***
+-Escribes: 12345678 en el cuadro de texto.
+​
+***Paso 2: La aplicación reacciona***
+-El fondo del input se vuelve verde.
+-En el cuadro de la letra aparece: Z.
+-En la parte de retroalimentación dice:
+“Ahora es correcto.”
+​
+***Paso 3: Si escribes un número incorrecto o incompleto***
+-Escribes: 1234
+-El fondo del input se vuelve rojo.
+-El cuadro de la letra queda vacío.
+-La retroalimentación dice:
+“El valor que has introducido tiene 4 caracteres. Debe tener 8 caracteres.”
+​
+​
+Cuando escribes tu DNI en la página:
+-8 números correctos → cuadro verde y muestra la letra 
+-Menos o más números → cuadro rojo y mensaje de error 
+​
+JavaScript hace esto escuchando lo que escribo y cambiando el color y el mensaje.
+Sirve para dar retroalimentación visual al usuario, como cuando una web te dice si tu correo o contraseña es correcto.
+

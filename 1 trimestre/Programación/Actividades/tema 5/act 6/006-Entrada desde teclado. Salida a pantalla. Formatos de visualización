@@ -1,0 +1,93 @@
+Actividad: Escribir Texto Centrado en la Consola
+Contexto
+Te gustan tanto los juegos de mesa como recorrer el campo. Imagina que estás jugando a un juego donde debes centrar mensajes importantes en la pantalla para que sea fácilmente visible. Para ello, aprenderemos a escribir texto centrado en la consola utilizando Python.
+
+Enunciado paso a paso
+Importar módulo os: Este módulo nos permitirá obtener el tamaño de la terminal y manipularla.
+
+import os
+Obtener el tamaño de la terminal: Usaremos os.get_terminal_size() para conocer las dimensiones de la consola en términos de columnas y filas.
+
+columnas, filas = os.get_terminal_size()
+Borrar la pantalla: Para asegurarnos de que el texto se vea bien centrado, primero borramos cualquier contenido previo en la terminal.
+
+print("\033[2J")  # Borrar pantalla
+Definir el texto a centrar: Aquí escribirás tu propio mensaje que deseas centrar.
+
+texto = "¡Bienvenido al juego!"
+Establecer colores de texto: Para hacer que el texto destaque, puedes cambiar su color usando ANSI escape codes.
+
+print("\033[34m")  # Texto azul
+Calcular la posición centrada: Utiliza las dimensiones de la terminal para calcular dónde comenzar a imprimir el texto para que esté alineado en el centro.
+
+centrox = round(columnas / 2)
+centroy = round(filas / 2)
+iniciox = round(centrox - len(texto) / 2)
+Imprimir el texto centrado: Mueves el cursor a la posición calculada y luego imprimes el texto.
+
+print(f"\033[{centroy};{iniciox}H", end="")
+print(texto)
+Reiniciar el estilo de texto: Para que los siguientes textos no hereden el estilo azul, reinicia el estilo de texto a su valor por defecto.
+
+print("\033[0m")
+Restricciones
+Solo puedes usar los conceptos y funciones que se han enseñado en la clase actual (importar módulos, obtener tamaño de terminal, borrar pantalla, imprimir texto, cambiar estilo de texto).
+No uses bucles ni estructuras de control adicionales.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica cómo el juego de mesa o la actividad en el campo te lleva a centrar mensajes en la pantalla.
+Desarrollo técnico correcto y preciso (25%): Demonstra que has comprendido correctamente el concepto y aplicado los pasos para escribir texto centrado.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo práctico de cómo centrar cualquier mensaje en la consola, utilizando tu propio texto.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye explicando cómo esta actividad te ayudará a mejorar tus habilidades en la programación y cómo puedes aplicarlas en otros contextos similares.
+
+
+
+Respuesta:
+
+
+
+Me gustan mucho los juegos de mesa y también pasear por el campo. Cuando juego, a veces quiero que los mensajes importantes del juego aparezcan en el centro de la pantalla para que se vean mejor. Por ejemplo, cuando alguien gana, quiero que el mensaje “¡Ganaste!” aparezca centrado y sea fácil de leer. Por eso he decidido aprender a centrar texto en la consola con Python.
+
+
+```
+import os
+
+
+columnas, filas = os.get_terminal_size()
+
+print("\033[2J")
+
+
+texto = "¡Bienvenido al juego!"
+
+
+print("\033[34m")
+
+
+centrox = round(columnas / 2)
+centroy = round(filas / 2)
+iniciox = round(centrox - len(texto) / 2)
+
+
+print(f"\033[{centroy};{iniciox}H", end="")
+print(texto)
+
+
+print("\033[0m")
+```
+
+
+Salida del código en el tarminal:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Programacion\Actividades\tema 5"
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> python texto_centrado.py
+
+
+
+
+
+                                                                       ¡Bienvenido al juego!
+
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> 
+
+
+Aprender a centrar texto me ayuda a que mis programas se vean más organizados y profesionales. Esto es útil no solo para juegos, sino también para cualquier programa que tenga mensajes importantes, como alertas o instrucciones. Gracias a esta actividad, voy entendiendo mejor cómo funciona Python y cómo puedo usar los módulos y los comandos de la consola para mejorar mis programas.

@@ -1,0 +1,86 @@
+Contexto El día siguiente del lanzamiento de las bombas nucleares en la segunda guerra mundial empieza la guerra fría. El resto de potencias, especialmente la URSS, se lanza a una carrera armamentística. Se introduce el concepto de mutua destrucción asegurada (MDS). La USA idea un sistema a través del departamento DARPA para descentralizar el sistema. Este sistema requiere una red robusta y confiable para su funcionamiento.
+
+Enunciado paso a paso
+
+Definición de la red: El alumnado debe definir la infraestructura física (equipos) y lógica (software) que componen una red informática.
+Ejemplo práctico: Supongamos que un equipo militar necesita establecer una red para coordinar operaciones en el campo. El alumnado debe diseñar esta red, incluyendo los equipos necesarios y cómo estos se comunican entre sí.
+Cierre/Conclusión: Concluya la actividad explicando cómo la red diseñada contribuirá a la seguridad y eficiencia de las operaciones militares en el campo.
+Restricciones
+
+No usar términos o conceptos que no se hayan presentado en clase.
+El diseño de la red debe ser basado únicamente en los conocimientos adquiridos hasta ahora.
+Criterios de evaluación
+
+Introducción y contextualización (25%): El alumnado debe mostrar una comprensión adecuada del contexto histórico y la importancia de las redes en situaciones de guerra.
+Desarrollo técnico correcto y preciso (25%): La definición de la red debe ser precisa y abordar todos los aspectos físicos y lógicos.
+Aplicación práctica con ejemplo claro (25%): El ejemplo práctico debe mostrar una comprensión aplicada del concepto, incluyendo el diseño y la implementación de la red.
+Cierre/Conclusión enlazando con la unidad (25%): La conclusión debe enlazar el ejercicio con los contenidos previos y presentes de la asignatura.
+Actividad El alumnado debe diseñar una red informática para un equipo militar que necesita coordinar operaciones en el campo. Debe incluir:
+
+Una lista de equipos necesarios (por ejemplo, servidores, computadoras portátiles, dispositivos de comunicación).
+La topología de la red y cómo se comunican los equipos entre sí.
+Un esquema básico del mapa físico y lógico de la red.
+El alumnado debe presentar su diseño en un informe escrito, explicando por qué cada elemento es necesario para el éxito de las operaciones militares.
+
+
+Respuesta:
+
+Las redes en situaciones de guerra son muy importantes ya que te permite llegar a donde no puedes/quieres de forma física. Conseguir "inventar" las redes evitó la muerte de todos.
+
+Una red consiste en la infraestructura física (equipos) y lógica (software) para interconectar sistemas informáticos y comunicarlos entre ellos. Los equipos son todos los componentes que contiene un PC como procesador,placa base,tarjeta gráfica, RAM....etc.
+Software es el conjunto de programas y datos que le dicen a un PC qué hacer. Es lo que permite que funcione y realice tareas, como abrir una app, navegar por internet o escribir un documento.
+
+Esto es todo lo que me haría falta para diseñar una red:
+
+***En la base:***
+-1 servidor (para guardar información y coordinar)
+-3 PC (para los oficiales)
+-1 switch (conecta todos los equipos entre sí)
+-1 router (para conectarse con el exterior)
+
+***Equipos móviles:***
+-3 portátiles potentes
+-3 radios (Para escuchar las comunicaciones)
+-1 antena o switch por grupo y también un router por grupo tambien (para tener otra red por si acaso)
+-Baterías portátiles
+-Un walkie talkie por persona (así en el caso de estropearse la red principal les avisan a la base)
+
+***La red:***
+Pondría una red estrella para que todos los dispositivos estuvieran conectados a un switch.
+Y como en los equipos móviles habría otra Switch de emergencia.
+
+***Switch portátil esquema:***
+(Switch portátil) →(Antena) → (Base)
+
+***Walkie Talkie***
+Cada persona → (Walkie Talkie) → (Base)
+
+***Esquema de la base:***
+          (Internet)
+                |
+          (Router)
+                |
+          (Switch)
+          /    |     |    \
+ (PC1)  (PC2)  (PC3)  (Servidor)
+		 
+***Esquema equipos móviles:***
+(Switch de la base) (Servidor de la base)
+                  /       |       \
+  (Portátil1) (Portátil2) (Portátil3)
+        
+-En la base, todos conectados al switch.
+-En el campo, portátiles conectados al switch portátil.
+-Conectados entre sí.
+-Si algo falla, usan walkie talkies para comunicarse.
+
+-Todos los dispositivos están conectados a través de un sistema controlado (con switches y routers), lo que evita interferencias externas.
+-La red cuenta con una vía principal (por internet/antena) y una alternativa (walkie talkies) para seguir comunicando si algo falla.
+-Los oficiales en la base reciben información rápidamente desde el campo, lo que permite tomar decisiones más rápidas.
+-Los soldados pueden compartir datos entre ellos fácilmente (mapas, posiciones), gracias a la red en estrella.
+-Hay un switch portátil de emergencia en los equipos móviles por si se cae la red principal (la de la base).
+-Los walkie talkies garantizan comunicación básica incluso sin internet o electricidad.
+
+
+Con los conocimientos adquiridos en clase he sabido escoger que red sería mejor para este caso y lo que necesito para montar una red.
+Con este ejercicio he entendido mejor el "esqueleto" de una red.

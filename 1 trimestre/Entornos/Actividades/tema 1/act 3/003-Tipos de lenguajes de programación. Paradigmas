@@ -1,0 +1,55 @@
+Enunciado paso a paso
+Introducción y contextualización:
+
+Imagina que eres un programador de videojuegos que está trabajando en un nuevo juego de aventuras en el campo. Tu objetivo es diseñar un sistema para gestionar los recursos naturales disponibles en diferentes áreas del juego.
+Desarrollo técnico correcto y preciso:
+
+Define una variable llamada area_actual que represente la zona actual del jugador dentro del juego.
+Crea una lista llamada recursos_area que contenga los tipos de recursos naturales disponibles en esa área (por ejemplo, "agua", "madera", "roca").
+Implementa una función llamada obtener_recursos que reciba el nombre de un recurso y devuelva la cantidad disponible en la zona actual.
+Aplicación práctica con ejemplo claro:
+
+Inicializa area_actual a "bosque".
+Añade los recursos "agua" (10 litros) y "madera" (5 unidades) a recursos_area.
+Llama a la función obtener_recursos("agua") y muestra el resultado.
+Cierre/Conclusión enlazando con la unidad:
+
+Reflexiona sobre cómo este sistema de gestión de recursos naturales podría ayudar al jugador a explorar y sobrevivir en diferentes áreas del juego.
+Considera cómo podrías expandir este sistema para incluir más tipos de recursos o áreas.
+Restricciones
+No puedes usar estructuras como input() ni funciones externas.
+Solo puedes utilizar los lenguajes de programación que se han visto hasta ahora (C, C++, Java).
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe mostrar comprensión del contexto del juego y cómo se relaciona con la gestión de recursos.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe definir variables, crear listas y implementar funciones correctamente.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe aplicar el conocimiento en un ejemplo práctico y mostrar resultados correctos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe reflexionar sobre los beneficios del sistema implementado y cómo podría ser mejorado.
+
+
+Respuesta:
+
+
+El contexto es que es un juego de aventuras por el campo que recolecta recursos naturales disponibles en diferentes areas del juego. Se relaciona con la gestion de recursos por que va de recolectar recursos naturales disponibles en diferentes areas el juego.
+
+A continuación pongo el codigo:
+```
+area_actual=  "bosque"
+
+recursos_area=["agua","agua","agua","agua","agua","agua","agua","agua","agua","agua","madera","madera","madera","madera","madera"]
+
+def obtener_recursos(recurso):
+    return recursos_area.count(recurso)
+
+print(obtener_recursos("agua"))
+```
+
+Resultado del codigo:
+
+```
+10
+PS C:\Users\Serena\Documents\programacion>
+```
+
+El sistema de gestión de recursos ayuda al jugador porque le permite saber qué materiales tiene en cada zona y usarlos para sobrevivir. Hace que el juego sea más realista y que el jugador piense en cómo aprovechar lo que encuentra.
+
+Se puede mejorar añadiendo más recursos como comida o roca, y más áreas como ríos o montañas. También sería útil permitir gastar y recolectar recursos para que el jugador tenga que administrarlos con cuidado.

@@ -1,0 +1,285 @@
+Actividad: Diseño y Análisis de Diagramas de Comportamiento
+En esta actividad, te desafiarás a diseñar y analizar un diagrama de comportamiento utilizando las herramientas aprendidas en clase. El objetivo es modelar los flujos de trabajo dentro de una tienda virtual, incluyendo los pasos desde el inicio hasta la finalización de una compra.
+
+Paso 1: Diseño del Diagrama
+Identifica los elementos: Determina los diferentes estados y actividades que pueden ocurrir en tu tienda virtual. Algunos ejemplos podrían ser "Inicio", "Catálogo", "Producto", "Carrito", "Datos personales" y "Finalización".
+Representa los estados: Utiliza cajas rectangulares para representar cada estado.
+Representa las actividades: Utiliza cajas de texto para indicar las acciones que ocurren en cada estado.
+Dibuja las transiciones: Conecta las cajas con flechas para mostrar el flujo entre estados.
+Paso 2: Análisis del Diagrama
+Verifica la consistencia: Asegúrate de que todas las transiciones sean lógicas y que no haya bucles infinitos.
+Identifica los puntos críticos: Busca partes del diagrama donde el flujo pueda verse retrasado o complicado.
+Optimiza el flujo: Propón mejoras para simplificar el proceso y reducir el tiempo de espera.
+Paso 3: Documentación
+Captura el diseño final: Realiza una captura de pantalla del diagrama diseñado.
+Escribe la documentación: Describa los estados, las actividades y las transiciones en un documento corto. Incluye cualquier optimización que hayas realizado.
+Ejemplo Claro
+Supongamos que el estado "Inicio" lleva a "Catálogo", donde el usuario puede seleccionar productos. Desde "Catálogo", se puede pasar al "Producto" para ver detalles específicos y luego al "Carrito". Una vez en el carrito, los datos personales del cliente son solicitados antes de finalizar la compra.
+
+Cierre
+Este ejercicio te permite aplicar los conceptos aprendidos sobre diagramas de comportamiento en un contexto práctico. Analizar y optimizar flujos de trabajo es una habilidad valiosa en cualquier campo que requiera gestión de procesos o sistemas. Recuerda que el objetivo final es mejorar la eficiencia y la experiencia del usuario.
+
+Buena suerte con tu actividad!
+
+
+
+Respuesta:
+
+
+En esta actividad he realizado el diseño y análisis de un diagrama de comportamiento de una tienda virtual. Este diagrama sirve para mostrar de forma sencilla los pasos que sigue un usuario desde que entra a la tienda hasta que finaliza una compra.
+
+El objetivo de este ejercicio es aplicar lo aprendido en clase y entender mejor cómo funciona el proceso de compra en una tienda online, identificando los estados, las acciones que se realizan en cada uno y el recorrido que hace el usuario dentro del sistema.
+
+
+Captura de pantalla del diagrama:
+https://files.fm/u/tq7s2baket
+
+
+Exportado a json:
+```
+{
+  "formas": [
+    {
+      "id": "forma-1",
+      "tipo": "rectangle",
+      "left": "197px",
+      "top": "98px",
+      "width": "",
+      "height": "",
+      "texto": "-ENTRAR"
+    },
+    {
+      "id": "forma-2",
+      "tipo": "pill",
+      "left": "196px",
+      "top": "57px",
+      "width": "",
+      "height": "",
+      "texto": "INICIO"
+    },
+    {
+      "id": "forma-3",
+      "tipo": "pill",
+      "left": "194px",
+      "top": "179px",
+      "width": "",
+      "height": "",
+      "texto": "CÁTALOGO"
+    },
+    {
+      "id": "forma-4",
+      "tipo": "rectangle",
+      "left": "182.444px",
+      "top": "218px",
+      "width": "",
+      "height": "",
+      "texto": "-BUSCAR , -EXPLORAR"
+    },
+    {
+      "id": "forma-5",
+      "tipo": "pill",
+      "left": "197px",
+      "top": "305px",
+      "width": "",
+      "height": "",
+      "texto": "PRODUCTO"
+    },
+    {
+      "id": "forma-6",
+      "tipo": "rectangle",
+      "left": "174.556px",
+      "top": "345.111px",
+      "width": "",
+      "height": "",
+      "texto": "- VER DETALLES , - AÑADIR"
+    },
+    {
+      "id": "forma-7",
+      "tipo": "pill",
+      "left": "198.988px",
+      "top": "443.889px",
+      "width": "",
+      "height": "",
+      "texto": "CARRITO"
+    },
+    {
+      "id": "forma-8",
+      "tipo": "pill",
+      "left": "191.444px",
+      "top": "576px",
+      "width": "",
+      "height": "",
+      "texto": "DATOS PERSONALES"
+    },
+    {
+      "id": "forma-9",
+      "tipo": "pill",
+      "left": "205.964px",
+      "top": "852.873px",
+      "width": "",
+      "height": "",
+      "texto": "FINALIZACIÓN"
+    },
+    {
+      "id": "forma-10",
+      "tipo": "pill",
+      "left": "200.095px",
+      "top": "717px",
+      "width": "",
+      "height": "",
+      "texto": "PAGO"
+    },
+    {
+      "id": "forma-11",
+      "tipo": "rectangle",
+      "left": "174.444px",
+      "top": "482.778px",
+      "width": "",
+      "height": "",
+      "texto": "-MODIFICAR, -CONFIRMAR"
+    },
+    {
+      "id": "forma-12",
+      "tipo": "rectangle",
+      "left": "186.99px",
+      "top": "617.108px",
+      "width": "",
+      "height": "",
+      "texto": "-NOMBRE, -DIRECCIÓN"
+    },
+    {
+      "id": "forma-13",
+      "tipo": "rectangle",
+      "left": "183.109px",
+      "top": "758.111px",
+      "width": "",
+      "height": "",
+      "texto": "-MÉTODO,<-AUTORIZAR"
+    },
+    {
+      "id": "forma-14",
+      "tipo": "rectangle",
+      "left": "206.531px",
+      "top": "891.976px",
+      "width": "",
+      "height": "",
+      "texto": "-CONFIRMACIÓN"
+    }
+  ],
+  "flechas": [
+    {
+      "desde": {
+        "shapeId": "forma-2",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-1",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "ortho"
+    },
+    {
+      "desde": {
+        "shapeId": "forma-1",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-3",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "straight"
+    },
+    {
+      "desde": {
+        "shapeId": "forma-4",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-5",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "straight"
+    },
+    {
+      "desde": {
+        "shapeId": "forma-6",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-7",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "straight"
+    },
+    {
+      "desde": {
+        "shapeId": "forma-11",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-8",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "straight"
+    },
+    {
+      "desde": {
+        "shapeId": "forma-12",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-10",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "straight"
+    },
+    {
+      "desde": {
+        "shapeId": "forma-13",
+        "propId": null,
+        "side": null
+      },
+      "hasta": {
+        "shapeId": "forma-9",
+        "propId": null,
+        "side": null
+      },
+      "tipo": "simple",
+      "estilo": "straight"
+    }
+  ]
+}
+```
+
+El diagrama presenta un flujo lógico y coherente desde el inicio hasta la finalización de la compra. No se identifican bucles infinitos, ya que todas las transiciones tienen una salida clara hacia el siguiente estado.
+
+Los puntos críticos se localizan principalmente en los estados de Datos Personales y Pago, ya que requieren interacción directa del usuario y pueden generar retrasos si la información ingresada es incorrecta.
+
+Para optimizar el flujo, se propone permitir la corrección de datos sin reiniciar el proceso y simplificar los formularios, mejorando así la experiencia del usuario y reduciendo el tiempo de finalización de la compra.
+
+El diagrama de comportamiento enseña el proceso de compra en una tienda virtual. Comienza en el estado Inicio, donde el usuario accede al sistema, y continúa por Catálogo, Producto y Carrito, donde se seleccionan los artículos.
+
+Luego, el usuario introduce sus Datos Personales, realiza el Pago y finaliza el proceso en el estado Finalización, donde se confirma la compra. Las transiciones permiten una navegación flexible, asegurando un flujo eficiente y fácil de usar.
+
+
+Por haber hecho este diagrama he podido comprender mejor cómo se organiza el proceso de compra en una tienda virtual. Representar el flujo paso a paso me ha ayudado a identificar las partes más importantes y a ver dónde podrían surgir problemas o retrasos.
+
+Basicamente, esta actividad me ha servido para practicar los conceptos vistos en clase y para entender la importancia de diseñar procesos claros y sencillos que faciliten la experiencia del usuario.

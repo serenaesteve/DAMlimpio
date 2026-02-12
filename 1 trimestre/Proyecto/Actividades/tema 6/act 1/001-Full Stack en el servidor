@@ -1,0 +1,94 @@
+Contexto
+
+Hoy vamos a aprender cómo cambiar la IP de escucha en nuestro servidor Flask para permitirnos acceder desde cualquier dispositivo en nuestra red local. Este proceso nos ayudará a explorar cómo podemos compartir nuestras aplicaciones web con otros usuarios, similar a cómo compartimos juegos de mesa o libros con amigos.
+
+Enunciado paso a paso
+
+Instala Flask: Si aún no lo has instalado, asegúrate de tener Flask instalado en tu entorno de desarrollo.
+
+pip install flask
+Crea una nueva aplicación Flask: Vamos a crear un archivo llamado app.py y escribir el siguiente código:
+
+from flask import Flask
+
+aplicacion = Flask(__name__)
+
+@aplicacion.route("/")
+def raiz():
+  return "<h1>Esto es HTML desde Flask</h1>"
+
+if __name__ == "__main__":
+  aplicacion.run(host="0.0.0.0", port=5000, debug=True)
+Ejecuta la aplicación: Guarda el archivo y ejecútalo en tu terminal.
+
+python3 app.py
+Accede desde otro dispositivo: Ahora, abre un navegador en cualquier dispositivo conectado a la misma red local y visita http://<Tu_IP>:5000. Deberías ver el mensaje "Esto es HTML desde Flask".
+
+Restricciones
+
+No uses librerías externas que no estén dentro de los conocimientos previos.
+Asegúrate de usar la IP correcta en tu red local.
+Criterios de evaluación
+
+Introducción y contextualización (25%): Explica cómo cambiar la IP de escucha permite compartir aplicaciones web con otros dispositivos.
+Desarrollo técnico correcto y preciso (25%): Asegúrate de que el código esté bien estructurado y funcione correctamente.
+Aplicación práctica con ejemplo claro (25%): Comparte la URL desde donde puedes acceder a tu aplicación web.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio te ha ayudado a entender el concepto de IP y su importancia en la red local.
+
+
+
+
+Respuesta:
+
+
+
+
+En esta práctica aprendí que al cambiar la IP de escucha de una aplicación Flask, puedo hacer que otros dispositivos conectados a mi misma red Wi-Fi puedan acceder a mi proyecto.
+Esto me pareció muy interesante porque es parecido a cuando comparto un juego de mesa o un libro con mis amigos: en lugar de jugar o leer sola, puedo “compartir” mi aplicación para que otros la vean desde sus móviles u ordenadores.
+
+
+1. He creado mi archivo app.py
+```
+from flask import Flask
+
+aplicacion = Flask(__name__)
+
+@aplicacion.route("/")
+def raiz():
+  return "<h1>Esto es HTML desde Flask</h1>"
+
+if __name__ == "__main__":
+  aplicacion.run(host="0.0.0.0", port=5000, debug=True)
+```
+3. Me he ido a la terminal y he escrito esto:
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 1\mi_tablero_flask> cd "C:\Users\Serena\Documents\Proyecto\Actividades\tema 2"
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 2> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.135:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [02/Nov/2025 17:07:27] "GET / HTTP/1.1" 200 -
+
+
+Este es el link por el cual yo entro en mi ordenador:
+
+http://127.0.0.1:5000
+
+
+Y este es por el que pueden entrar los dispositivos que esten conectados a mi misma red:
+http://192.168.1.135:5000
+
+
+Y al hacerlo enseña este mensaje:
+
+Esto es HTML desde Flask
+
+Con esta práctica entendí mejor qué es una dirección IP y cómo los dispositivos se comunican dentro de una misma red local.
+Cambiar la IP de escucha en Flask me permitió “compartir” mi aplicación con otros, igual que comparto mis juegos de mesa cuando quiero jugar en grupo.
+Este ejercicio me ayudó a comprender cómo una aplicación web puede volverse accesible para otros usuarios, algo fundamental si en el futuro quiero desarrollar y publicar mis propios proyectos.

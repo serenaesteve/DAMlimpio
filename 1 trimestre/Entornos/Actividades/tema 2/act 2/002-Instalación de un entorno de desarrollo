@@ -1,0 +1,84 @@
+Actividad
+Contexto En un proyecto de desarrollo de software para una aplicación que ayuda a los amantes de la naturaleza a planificar sus excursiones, necesitas configurar y usar un entorno de desarrollo adecuado. Para ello, te has inscrito en un juego de mesa que simula el proceso de instalación de Visual Studio Code, un IDE popular para desarrolladores.
+
+Enunciado paso a paso
+
+Introducción al contexto
+
+Abre tu navegador y ve a la página web oficial de Visual Studio Code (https://code.visualstudio.com/).
+Descarga e instala el instalador de Visual Studio Code en tu computadora.
+Una vez instalado, abre Visual Studio Code.
+Configuración del entorno
+
+Configura un nuevo proyecto para tu aplicación de excursiones en la carpeta de trabajo de Visual Studio Code.
+Crea una nueva carpeta llamada ProyectoExcursiones y dentro de ella, crea otro archivo con el nombre config.py.
+Definición de variables
+
+En el archivo config.py, define las siguientes variables:
+nombre_proyecto = "ProyectoExcursiones"
+ruta_carpeta = "/ruta/a/ProyectoExcursiones"
+idioma_preferido = "español"
+Configuración de la aplicación
+
+Abre el archivo config.py en Visual Studio Code.
+Añade las siguientes líneas para configurar los parámetros básicos de la aplicación:
+nombre_app = "Aplicación de Excursiones"
+version_app = "1.0"
+autor_app = "TuNombre"
+Pruebas y ejecución
+
+Guarda el archivo config.py.
+Abre una terminal en Visual Studio Code y navega hasta la carpeta del proyecto.
+Ejecuta el siguiente comando para verificar que las variables se han configurado correctamente:
+python config.py
+Restricciones
+
+No puedes usar librerías externas ni estructuras no vistas en los contenidos actuales de la asignatura.
+El código debe ser escrito completamente en Python.
+Criterios de evaluación
+
+Introducción y contextualización (25%): El estudiante ha comprendido el contexto del proyecto y ha descargado e instalado Visual Studio Code correctamente.
+Desarrollo técnico correcto y preciso (25%): El estudiante ha configurado un nuevo proyecto en Visual Studio Code, creado un archivo de configuración y definido las variables correctamente.
+Aplicación práctica con ejemplo claro (25%): El estudiante ha ejecutado el código para verificar que las variables se han configurado correctamente y ha verificado la salida.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante ha cerrado el ejercicio explicando cómo este proceso de instalación y configuración se relaciona con el desarrollo de software para aplicaciones de excursiones.
+
+
+
+
+Respuesta:
+
+
+-El proyecto es crear una aplicación para planificar excursiones.
+-Me he descargado e instalado Visual Studio Code y se a abierto correctamente.
+-Esto me permite escribir y probar el código de manera fácil y organizada.
+
+```
+nombre_proyecto = "ProyectoExcursiones"
+ruta_carpeta = "/ruta/a/ProyectoExcursiones"
+idioma_preferido = "español"
+
+nombre_app = "Aplicación de Excursiones"
+version_app = "1.0"
+autor_app = "TuNombre"
+
+print("Nombre del proyecto:", nombre_proyecto)
+print("Ruta de la carpeta:", ruta_carpeta)
+print("Idioma preferido:", idioma_preferido)
+print("Nombre de la app:", nombre_app)
+print("Versión de la app:", version_app)
+print("Autor:", autor_app)
+```
+
+Salida del código:
+
+PS C:\Users\Serena\Documents\Entornos\Actividades\ProyectoExcursiones.py> python config.py
+Nombre del proyecto: ProyectoExcursiones
+Ruta de la carpeta: /ruta/a/ProyectoExcursiones
+Idioma preferido: español
+Nombre de la app: Aplicación de Excursiones
+Versión de la app: 1.0
+Autor: TuNombre
+PS C:\Users\Serena\Documents\Entornos\Actividades\ProyectoExcursiones.py> 
+
+Instalar y configurar Visual Studio Code ayuda a crear un entorno listo para programar.
+Esto es importante porque permite organizar archivos, definir variables y probar el código, pasos necesarios para desarrollar una aplicación de excursiones.

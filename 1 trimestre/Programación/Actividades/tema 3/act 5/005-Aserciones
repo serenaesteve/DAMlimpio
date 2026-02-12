@@ -1,0 +1,60 @@
+Enunciado paso a paso
+Contexto: Imagina que estás explorando un parque natural y encuentras una serie de senderos con indicadores numéricos. Cada indicador representa un nivel de dificultad en un juego de mesa. Tu tarea es verificar si los indicadores son correctos utilizando aserciones.
+
+Desarrollo del ejercicio:
+
+Declara las variables nivel_sendero1, nivel_sendero2, y nivel_sendero3 con valores numéricos que representen la dificultad de cada sendero.
+Utiliza aserciones para verificar si los valores asignados a las variables son correctos. Por ejemplo, si el nivel del primer sendero es 1, asegúrate de que assert nivel_sendero1 == 1 no lance una excepción.
+Restricciones:
+
+No se permite usar librerías externas.
+No se puede utilizar la función input() ni lectura de teclado.
+Solo puedes usar estructuras vistas hasta el momento (if, else, assert).
+Criterios de evaluación
+Introducción y contextualización: 25%
+
+El estudiante debe explicar el contexto del ejercicio utilizando los hobbies de la naturaleza y los juegos de mesa.
+Desarrollo técnico correcto y preciso: 25%
+
+El estudiante debe declarar las variables correctamente y usar aserciones para verificar sus valores.
+Aplicación práctica con ejemplo claro: 25%
+
+El estudiante debe proporcionar un ejemplo claro de cómo utilizar aserciones en el contexto del ejercicio.
+Cierre/Conclusión enlazando con la unidad: 25%
+
+El estudiante debe cerrar el ejercicio relacionándolo con los conceptos aprendidos en clase y cómo estos se aplican a la realidad cotidiana.
+
+
+
+Respuesta:
+
+
+La relación de mis hobbies con el ejercicio es que me pide que verifique con aserciones, que los datos metidos en las variables sean correctos.
+
+```
+nivel_sendero1 = 1
+nivel_sendero2 = 2
+nivel_sendero3 = 3
+
+
+assert nivel_sendero1 == 1
+assert nivel_sendero2 == 2
+assert nivel_sendero3 == 3
+
+print("Todos los niveles son correctos")
+```
+
+Resultado del codigo:
+
+```
+Todos los niveles son correctos
+PS C:\Users\Serena>
+```
+
+-Cada variable representa el nivel de dificultad de un sendero.
+-Las aserciones (assert) verifican que los valores sean los esperados.
+-Si todo está bien, el mensaje final confirma que los indicadores son correctos.
+
+Este ejercicio me hace ver cómo usar aserciones para comprobar que los valores en un programa sean correctos.
+He aprendido que las aserciones ayudan a evitar errores y asegurar que el código funcione como se espera.
+En la vida real, es como revisar que los indicadores de un sendero o las reglas de un juego estén bien antes de empezar.

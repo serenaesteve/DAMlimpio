@@ -1,0 +1,71 @@
+Actividad: Identificación de departamentos y roles en clientes pymes valencianas
+
+El objetivo de este ejercicio es identificar los departamentos clave en un cliente potencial (pyme valenciana) y determinar quiénes son los decidores, influenciadores y bloqueadores dentro de estos departamentos. Además, se evaluará cómo la Inteligencia Artificial (IA) puede ser implementada en cada uno de ellos.
+
+Identificación de departamentos: Basándote en el mapa de departamentos proporcionado, lista los principales departamentos típicos en un cliente pymes valenciana y describe su rol típico dentro de dicha empresa.
+
+Roles clave en cada departamento:
+
+Decisor / Influenciador: Identifica quién es el decisor o influenciador principal en cada departamento. Por ejemplo, en el departamento de Operaciones/Producción, el Campeón sería el encargado de ahorro.
+Aplicación práctica con ejemplo claro:
+
+Elige un departamento específico (por ejemplo, Marketing) y describe cómo se vería la IA implementada dentro de ese departamento. Por ejemplo, podrías mencionar cómo se utilizarían chatbots para mejorar la atención al cliente o cómo se aplicaría el análisis de datos para optimizar las estrategias de marketing.
+Cierre/Conclusión:
+
+Con base en tu análisis, realiza un resumen de los departamentos clave y sus roles principales en una pyme valenciana. Reflexiona sobre cómo la IA podría ser utilizada para mejorar la eficiencia operativa y la toma de decisiones en cada uno de estos departamentos.
+Restricciones:
+
+No usar librerías externas ni estructuras no vistas hasta el momento del curso.
+Solo utilizar los conceptos permitidos en la lista blanca.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El ejercicio debe comenzar con una introducción clara que contextualice el tema y la importancia de identificar roles y departamentos en clientes pymes valencianas.
+
+Desarrollo técnico correcto y preciso (25%): El alumno debe presentar una lista precisa de los departamentos y describir correctamente los roles dentro de cada uno, utilizando términos técnicos apropiados.
+
+Aplicación práctica con ejemplo claro (25%): La aplicación práctica debe incluir un ejemplo detallado de cómo la IA se podría implementar en un departamento específico, mostrando una comprensión profunda del tema.
+
+Cierre/Conclusión enlazando con la unidad (25%): El cierre debe resumir los puntos principales y reflexionar sobre el impacto potencial de la IA en la eficiencia operativa y las decisiones estratégicas dentro de los departamentos identificados.
+
+
+
+Respuesta:
+
+
+
+En esta actividad voy a analizar los departamentos más importantes que suelen tener las pymes valencianas, quiénes son las personas que toman decisiones dentro de ellos y cómo la Inteligencia Artificial (IA) puede ayudar a mejorar su trabajo.
+Entender cómo funcionan los departamentos y los diferentes roles dentro de una empresa es fundamental para saber cómo se toman las decisiones y cómo se pueden aplicar nuevas tecnologías, como la IA, para hacer las tareas más fáciles y eficientes.
+
+***Departamentos y roles principales***
+En una pyme normal hay varios departamentos, aunque al ser empresas pequeñas, a veces una misma persona hace tareas de varios.
+
+1. El departamento de Dirección es el que manda y toma las decisiones más importantes. El director o gerente es el decisor, y los socios o asesores suelen ser los influenciadores, ya que dan su opinión antes de decidir algo.
+
+2. El departamento de Finanzas/Contabilidad controla el dinero, los pagos y los presupuestos. El responsable contable decide en qué se gasta, y la dirección puede ser un bloqueador si no ve claro el gasto.
+
+3. El departamento de Recursos Humanos se encarga de los empleados, de contrataciones y de nóminas. El responsable de RRHH es el decisor, y los jefes de equipo pueden influir dando su opinión sobre el personal.
+
+4. El departamento de Marketing y Ventas busca atraer clientes y vender los productos. El jefe de marketing es el decisor, y el equipo, como el community manager, puede ser influenciador al proponer ideas.
+
+5. El departamento de Operaciones o Producción organiza el trabajo diario y controla que todo funcione bien. El encargado de producción decide los cambios, y los técnicos o trabajadores influyen con su experiencia.
+
+6. El departamento de Informática o IT se ocupa de los ordenadores, redes y programas. El técnico informático principal es el decisor, aunque la dirección suele aprobar los gastos.
+
+Por último, el departamento de Atención al Cliente trata directamente con los clientes. El responsable del área toma las decisiones, y los trabajadores de soporte son influenciadores porque están en contacto con las personas que compran.
+
+***Ejemplo práctico: IA en el departamento de Marketing***
+
+He elegido el departamento de Marketing para explicar cómo se puede usar la Inteligencia Artificial.
+Una pyme puede usar la IA para mejorar su publicidad y conocer mejor a sus clientes.
+
+Por ejemplo, puede usar chatbots en su web para responder preguntas de los clientes sin necesidad de que haya una persona todo el tiempo conectada.
+También puede usar programas con IA para analizar datos, saber qué productos se venden más y cuándo lanzar ofertas.
+
+Esto ayuda a la empresa a ahorrar tiempo, atender mejor a los clientes y vender más.
+
+
+Basicamente, las pymes valencianas tienen varios departamentos que trabajan juntos para que la empresa funcione bien.
+Cada uno tiene personas que deciden, otras que influyen y algunas que pueden frenar decisiones.
+
+La Inteligencia Artificial puede ayudar mucho en todos los departamentos. En marketing mejora la atención al cliente, en finanzas organiza mejor el dinero y en recursos humanos puede ayudar a elegir al mejor personal.
+Gracias a la IA, las empresas pueden trabajar de forma más rápida, con menos errores y con mejores resultados.

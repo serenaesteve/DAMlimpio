@@ -1,0 +1,73 @@
+Contexto
+En un mundo donde tanto los juegos de mesa como las actividades al aire libre son una parte integral de nuestras vidas, necesitamos aprender a manejar eficientemente la información que nos rodea. Los sistemas gestores de base de datos (SGBDs) son herramientas esenciales para mantener nuestra información organizada y segura.
+
+Enunciado paso a paso
+Introducción al Sistemas Gestores de Bases de Datos
+
+Explora el concepto de una base de datos como un conjunto de archivos o recursos que almacenan la información de una forma estructurada.
+Comprende cómo los SGBDs son fundamentales para proteger y organizar la información en entornos digitales.
+Ejemplo práctico con SQLite
+
+Considera la base de datos empresa.sqlite, que almacena información sobre empleados, departamentos y proyectos.
+Crea una tabla llamada empleados con las siguientes columnas: id_empleado, nombre, apellidos, edad, departamento.
+Aplicación práctica
+
+Inserta varios registros en la tabla empleados.
+INSERT INTO empleados (id_empleado, nombre, apellidos, edad, departamento) VALUES 
+(1, 'Juan', 'Pérez', 30, 'Recursos Humanos'),
+(2, 'María', 'González', 25, 'Finanzas'),
+(3, 'Carlos', 'López', 40, 'Ventas');
+Consulta la tabla empleados para mostrar todos los registros.
+SELECT * FROM empleados;
+Restricciones
+No utilices librerías externas o funciones que no hayamos visto en clase.
+Solo puedes usar las funciones y componentes de SQLite que hemos aprendido.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica claramente qué es una base de datos y cómo los SGBDs son importantes para la organización y protección de información.
+Desarrollo técnico correcto y preciso (25%)
+
+Muestra un entendimiento profundo del concepto de tablas y registros en SQLite.
+Demuestra habilidad técnica al insertar y consultar datos en una base de datos.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona ejemplos prácticos de cómo aplicar los conocimientos adquiridos en un escenario real.
+Muestra capacidad para resolver problemas utilizando las herramientas aprendidas.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluye el ejercicio relacionándolo con el contexto del tema y cómo aplicar estos conceptos en situaciones reales de trabajo o estudio.
+
+
+Respuesta:
+
+Una base de datos sirve para guardar la información que le añadamos de manera ordenada y fácil de encontrar.
+Un SGBD (Sistema Gestor de Bases de Datos) es un programa que nos ayuda a guardar, organizar y proteger la información, para no perderla y poder usarla cuando la necesitamos.
+
+Dentro de la base de datos de empresa.sqlite he creado la tabla "empleados" de esta manera:
+-Dentro de la base de datos me he metido en la pestaña de SQL y he puesto este código:
+CREATE TABLE empleados (
+    id_empleado INT(11) NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(50) NOT NULL,
+    edad INT(3) NOT NULL,
+    departamento VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_empleado)
+);
+
+-Despues me he vuelto al inicio de la base de datos y me he vuelto ha meter en la pestaña de SQL para hacer la consulta de empleados poniendo esto:
+
+SELECT * FROM empleados;
+
+***Empresa con empleados***
+Guardar los nombres, apellidos, edad y departamento de los empleados en una base de datos ayuda a encontrar la información rápido y no perder datos.
+
+***Club de actividades***
+Registrar quién participa en cada excursión permite saber quién fue a cada actividad sin tener que recordar todo.
+
+***Tienda de juegos de mesa***
+Guardar los juegos vendidos y quién los compró ayuda a saber cuáles son los más populares y organizar mejor las ventas.
+
+Aprender sobre bases de datos ayuda a guardar y organizar información fácilmente.
+En la vida real, podemos usarlo en empresas para encontrar datos rápido y evitar errores.
+Lo que he apendido en este ejercicio me sirve para trabajar o estudiar mejor.

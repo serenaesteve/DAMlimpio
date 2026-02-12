@@ -1,0 +1,64 @@
+Buscar archivos en una carpeta con Python
+
+Como entusiasta de los juegos de mesa y el campo, has decidido explorar un nuevo proyecto que combina tus dos pasiones: crear un programa para buscar archivos específicos en una carpeta utilizando Python.
+
+Introducción
+
+Crea un script en Python que te permita buscar archivos con un patrón específico dentro de una carpeta dada.
+Por ejemplo, si tienes una colección de libros digitales y quieres encontrar todos los PDFs, puedes usar este programa para hacerlo rápidamente.
+Desarrollo
+
+Utiliza la biblioteca os y fnmatch para navegar por la carpeta y buscar archivos que coincidan con el patrón proporcionado.
+El programa debe solicitar al usuario la carpeta donde desea buscar y el patrón de nombre del archivo (por ejemplo, *.pdf).
+Implementa una función llamada buscar_archivos() que realice la búsqueda y muestre las rutas completas de los archivos encontrados.
+Aplicación
+
+Prueba tu programa con diferentes carpetas y patrones para asegurarte de que funcione correctamente.
+Por ejemplo, prueba a buscar todos los PDFs en una carpeta de libros digitales o todos los archivos .txt en un directorio de notas personales.
+Cierre
+
+Con este proyecto, has aplicado tus conocimientos sobre la gestión de sistemas de archivos y el uso de bibliotecas en Python.
+Recuerda que esta habilidad es útil no solo para explorar tu colección personal, sino también para gestionar proyectos más grandes y complejos.
+
+
+Respuesta:
+
+Hoy quiero hacer un programa en Python que me ayude a buscar archivos dentro de una carpeta. Me interesa porque muchas veces tengo muchos archivos y me cuesta encontrarlos. Con este programa puedo poner un patrón, como *.pdf o *.txt, y el programa me muestra todos los archivos que coinciden. Así puedo organizar mejor mis cosas y aprender a usar Python para trabajar con archivos.
+​
+buscararchivos.py:
+```
+import os
+import fnmatch
+​
+def buscar_archivos(carpeta, patron):
+    encontrados = False
+    for ruta_actual, subcarpetas, archivos in os.walk(carpeta):
+        for archivo in archivos:
+            if fnmatch.fnmatch(archivo, patron):
+                print(os.path.join(ruta_actual, archivo))
+                encontrados = True
+    if not encontrados:
+        print("No se encontraron archivos")
+​
+carpeta = r"C:\Users\Serena\Documents\Sistemas\Actividades\tema 3"
+patron = "*"
+​
+if os.path.isdir(carpeta):
+    buscar_archivos(carpeta, patron)
+else:
+    print("La ruta no es valida")
+```
+​
+​
+​
+Consola:
+​
+C:\Users\Serena> cd "C:\Users\Serena\Documents\Sistemas\Actividades"
+​
+C:\Users\Serena\Documents\Sistemas\Actividades> python buscararchivos.py
+C:\Users\Serena\Documents\Sistemas\Actividades\tema 3\001-Gestión de sistemas de archivos mediante comandos y entornos gráficos
+C:\Users\Serena\Documents\Sistemas\Actividades\tema 3\004-Identificación del software instalado mediante comandos y herramientas gráficas
+​
+C:\Users\Serena\Documents\Sistemas\Actividades>
+​
+Con este proyecto aprendo a usar Python para buscar archivos y manejar carpetas. Es muy útil porque me ayuda a encontrar rápidamente lo que busco. También practico cómo usar funciones, bibliotecas como os y fnmatch, y cómo pedir información al usuario. Me gusta ver cómo algo que parece dificil se hace fácil con un programa sencillo.

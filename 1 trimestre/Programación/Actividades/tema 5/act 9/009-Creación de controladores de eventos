@@ -1,0 +1,73 @@
+Contexto
+
+En este ejercicio práctico, vamos a mejorar una aplicación web que muestra los posts de un blog en orden cronológico inverso. Para ello, integraremos juegos de mesa y la naturaleza en nuestro contexto.
+
+Enunciado paso a paso
+
+Introducción: Abre el archivo articulos por fecha inversa.py y observa cómo se genera una página web que muestra los posts del blog.
+Desarrollo: Modifica el código para mostrar los posts en orden cronológico inverso, lo que simula un juego de mesa donde los jugadores deben resolver tareas en orden inverso. Añade la funcionalidad necesaria para ello.
+Aplicación práctica: Implementa una función que ordene los posts por fecha y actualiza la página web para mostrarlos en ese orden.
+Restricciones
+
+No puedes usar librerías externas adicionales.
+Mantén el código dentro de las estructuras vistas hasta ahora (no funciones o clases).
+Criterios de evaluación
+
+Introducción y contextualización: El alumno debe entender cómo la naturaleza puede inspirar la organización inversa en juegos de mesa.
+Desarrollo técnico correcto y preciso: El código debe ordenar correctamente los posts por fecha y mostrarlos en el navegador.
+Aplicación práctica con ejemplo claro: El alumno debe probar su función y comprobar que funciona correctamente, similar a cómo se juega un juego de mesa donde cada jugador realiza una tarea en orden inverso.
+Cierre/Conclusión
+
+En este ejercicio, hemos integrado juegos de mesa y la naturaleza para mejorar la funcionalidad de una aplicación web. Algunos libros sobre estrategias de juegos pueden ayudar a entender cómo organizar tareas en orden inverso. ¡Buena suerte con tu proyecto!
+
+
+
+Respuesta:
+
+
+En la naturaleza muchas cosas ocurren en un orden diferente al que parece lógico al principio, como cuando algunas semillas germinan antes que otras o cuando ciertas plantas completan su ciclo antes que otras. Esto me ha hecho pensar en los juegos de mesa, donde a veces los jugadores tienen que hacer las tareas en orden inverso para poder ganar o avanzar. Por eso, en mi ejercicio he decidido mostrar los posts del blog empezando por los más recientes, imitando esa idea de la naturaleza y los juegos de mesa: lo más importante o lo más reciente primero, y lo antiguo después. De esta manera entiendo mejor cómo se puede organizar información de forma estratégica y divertida.
+​
+```
+posts = [
+    ["05/10/2025", "Plantando rosas en otoño"],
+    ["10/09/2025", "Cómo cuidar el césped"],
+    ["01/11/2025", "Explorando senderos en la naturaleza"]
+]
+​
+​
+posts_orden_inverso = posts[::-1]
+​
+​
+with open("blog.html", "w", encoding="utf-8") as archivo:
+    archivo.write("<html>\n")
+    archivo.write("<head><title>Blog de Naturaleza y Juegos de Mesa</title></head>\n")
+    archivo.write("<body>\n")
+    archivo.write("<header><h1>Posts recientes</h1></header>\n")
+    archivo.write("<main>\n")
+​
+    for post in posts_orden_inverso:
+        archivo.write(f"<article><time>{post[0]}</time><p>{post[1]}</p></article>\n")
+​
+    archivo.write("</main>\n")
+    archivo.write("<footer>(c) 2025 Serena Sania Esteve</footer>\n")
+    archivo.write("</body>\n</html>")
+​
+print("Archivo blog.html creado correctamente. Abrelo en tu navegador.")
+​
+```
+​
+Salida del código:
+​
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\tema 5\inverso.py"
+Archivo blog.html creado correctamente. Abrelo en tu navegador.
+​
+Desde aqui se puede ver mi BLOG:HTML:
+​
+file:///C:/Users/Serena/Documents/Programacion/Actividades/tema%205/blog.html
+​
+Con este ejercicio he aprendido:
+-Cómo ordenar información en orden inverso usando listas.
+-Cómo aplicar este concepto a una página web, simulando un juego de mesa donde las tareas se resuelven de atrás hacia adelante.
+​
+Que la naturaleza puede inspirar la forma de organizar tareas o posts de manera estratégica.
+Este tipo de ejercicios ayuda a mejorar la funcionalidad de un blog y a pensar de forma estructurada, como en un juego o proyecto real.

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Diagrama UML – Relaciones</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  background: #f3f3f7;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.page {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  width: 740px;
+  height: 450px;
+}
+
+/* ENTIDADES */
+.shape.entity {
+  position: absolute;
+  width: 160px;
+  background: #fff;
+  border: 2px solid #111827;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  font-size: 13px;
+}
+
+.entity-header {
+  background: #f3f4f6;
+  text-align: center;
+  font-weight: 600;
+  padding: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.entity-properties {
+  padding: 4px 8px;
+}
+
+.entity-properties div {
+  padding: 2px 0;
+}
+
+/* FLECHAS */
+.arrow {
+  position: absolute;
+  height: 2px;
+  background: #111827;
+}
+
+.arrow::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: -4px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #111827;
+}
+
+/* TEXTOS */
+.text {
+  position: absolute;
+  font-size: 12px;
+  background: #ffffff;
+  padding: 2px 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  color: #111827;
+}
+
+.card {
+  font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<!-- CLIENTE -->
+<div class="shape entity" style="left:40px; top:40px;">
+  <div class="entity-header">Cliente</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>nombre</div>
+    <div>apellidos</div>
+    <div>email</div>
+    <div>direccion</div>
+  </div>
+</div>
+
+<!-- PEDIDO -->
+<div class="shape entity" style="left:290px; top:40px;">
+  <div class="entity-header">Pedido</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>fecha</div>
+    <div>id_cliente</div>
+  </div>
+</div>
+
+<!-- PRODUCTO -->
+<div class="shape entity" style="left:290px; top:240px;">
+  <div class="entity-header">Producto</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>nombre</div>
+    <div>descripcion</div>
+    <div>precio</div>
+  </div>
+</div>
+
+<!-- LINEA PEDIDO -->
+<div class="shape entity" style="left:540px; top:140px;">
+  <div class="entity-header">LineaPedido</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>pedido_id</div>
+    <div>producto_id</div>
+    <div>cantidad</div>
+  </div>
+</div>
+
+<!-- FLECHAS -->
+<!-- Cliente -> Pedido -->
+<div class="arrow" style="left:200px; top:95px; width:90px;"></div>
+
+<!-- Pedido -> LineaPedido -->
+<div class="arrow" style="left:450px; top:95px; width:90px;"></div>
+
+<!-- Producto -> LineaPedido -->
+<div class="arrow" style="left:450px; top:285px; width:90px;"></div>
+
+<!-- TEXTOS DE RELACIÓN -->
+<div class="text" style="left:215px; top:70px;">realiza</div>
+<div class="text card" style="left:205px; top:45px;">1</div>
+<div class="text card" style="left:280px; top:45px;">0..*</div>
+
+<div class="text" style="left:465px; top:70px;">contiene</div>
+<div class="text card" style="left:455px; top:45px;">1</div>
+<div class="text card" style="left:530px; top:95px;">1..*</div>
+
+<div class="text" style="left:465px; top:260px;">está en</div>
+<div class="text card" style="left:455px; top:290px;">1</div>
+<div class="text card" style="left:530px; top:245px;">0..*</div>
+
+</div>
+</body>
+</html>
+

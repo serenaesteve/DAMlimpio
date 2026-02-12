@@ -1,0 +1,41 @@
+Enunciado paso a paso
+Introducción y Contextualización: Algunos estudiantes disfrutan mucho de pasar tiempo en la naturaleza, explorando senderos y observando los diferentes tipos de árboles. En este ejercicio, vamos a crear una función que nos ayude a contar cuántos árboles hemos visto durante un día de campo.
+
+Desarrollo Técnico Correcto y Preciso: Crea una función llamada contar_arboles que reciba como parámetro una lista de nombres de árboles que se han observado durante el día. La función debe devolver la cantidad total de árboles contados.
+
+Aplicación Práctica con Ejemplo Claro: Utiliza la siguiente lista de árboles como ejemplo: ["roble", "abedul", "pinos", "roble"]. Llama a la función contar_arboles con esta lista y muestra el resultado.
+
+Cierre/Conclusión enlazando con la Unidad: Reflexiona sobre cómo podrías usar esta función durante un día de campo para llevar un registro de los árboles que ves. ¿Qué otros tipos de datos podrías contar durante tu exploración?
+
+Restricciones
+No puedes utilizar bucles (for, while) ni estructuras de control condicional complejas.
+La solución debe ser implementada utilizando funciones simples.
+Criterios de Evaluación
+Introducción y Contextualización (25%): El contexto debe mencionar explícitamente la actividad en el campo y contar árboles.
+Desarrollo Técnico Correcto y Preciso (25%): La función debe ser implementada correctamente y devolver el resultado esperado.
+Aplicación Práctica con Ejemplo Claro (25%): El ejemplo de uso debe ser claro y mostrar cómo se utiliza la función.
+Cierre/Conclusión enlazando con la Unidad (25%): La reflexión final debe estar relacionada con el contexto del tema y cómo se puede aplicar en una situación real.
+
+
+
+Respuesta:
+
+
+Algunos estudiantes disfrutan mucho de pasar tiempo en la naturaleza, explorando senderos y observando los diferentes tipos de árboles. En este ejercicio, vamos a crear una función que nos ayude a contar cuántos árboles hemos visto durante un día de campo.
+
+```
+def contar_arboles(lista_arboles):
+    return len(lista_arboles)
+
+arboles_observados = ["roble", "abedul", "pinos", "roble"]
+resultado = contar_arboles(arboles_observados)
+print("Cantidad total de arboles observados:", resultado)
+```
+
+Salida del código:
+
+python -u "C:\Users\Serena\AppData\Local\Temp\tempCodeRunnerFile.python"
+Cantidad total de arboles observados: 4
+
+Esta sencilla función puede ser muy útil durante un día de campo para llevar un registro de los árboles observados y analizar posteriormente la diversidad del entorno.
+De forma parecida, podría adaptar esta idea para contar aves, flores, insectos o tipos de rocas encontradas durante la exploración. De esta manera, combinaría la observación de la naturaleza con herramientas de programación que me ayudan a organizar y analizar la información recolectada.

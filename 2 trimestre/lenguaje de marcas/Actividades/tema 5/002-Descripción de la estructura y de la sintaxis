@@ -1,0 +1,129 @@
+Contexto
+En nuestro mundo digital actual, conocer cómo convertir datos en formatos intercambiables es esencial para cualquier profesionista. Este ejercicio te ayudará a entender cómo crear endpoints utilizando Flask y MySQL para obtener información de una base de datos y presentarla en formato JSON. Imagina que estás desarrollando un sistema para gestionar las reservas de un campo, donde necesitas mostrar la lista de todas las áreas disponibles y sus respectivos detalles.
+
+Enunciado paso a paso
+Conectar a la base de datos: Comienza por establecer una conexión con tu base de datos MySQL utilizando mysql.connector. Asegúrate de tener los detalles correctos, como el host, usuario, contraseña y nombre de la base de datos.
+
+Crear un endpoint para mostrar las áreas del campo: Define una función en Flask que muestre todas las áreas disponibles en el campo. Utiliza SHOW TABLES; para obtener una lista de todas las tablas en la base de datos.
+
+Obtener los detalles de cada área: Para cada tabla, ejecuta un SELECT * FROM <nombre_tabla>; para recuperar todos los registros. Almacena estos registros en un diccionario con el nombre de la tabla como clave.
+
+Convertir el diccionario a JSON: Utiliza json.dumps() para convertir el diccionario en una cadena JSON formateada adecuadamente.
+
+Devolver la respuesta JSON: Envuelve la cadena JSON en tu función Flask y devuelve la respuesta al cliente.
+
+Restricciones
+No uses librerías externas adicionales.
+Asegúrate de que todos los pasos se realicen dentro del contexto proporcionado, utilizando solo los archivos y conceptos permitidos en la lista blanca.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica cómo el ejercicio se relaciona con el manejo de datos en sistemas de gestión empresarial.
+
+Desarrollo técnico correcto y preciso (25%): Comprueba que la conexión a la base de datos esté establecida correctamente y que los endpoints funcionen según lo esperado.
+
+Aplicación práctica con ejemplo claro (25%): Muestra cómo el código se ejecuta y qué resultados se obtienen al acceder a través del endpoint.
+
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio podría aplicarse en un sistema real de gestión de áreas en un campo.
+
+
+Respuesta:
+
+En este ejercicio trabajo con una base de datos MySQL y un servidor Flask para aprender a obtener información y mostrarla en formato JSON. El objetivo es entender cómo se conectan una base de datos y una aplicación web, algo muy importante en los sistemas de gestión actuales. En mi caso, simulo un sistema para gestionar las áreas de un campo, donde cada área se guarda en una tabla de la base de datos. A través de un endpoint, puedo consultar todas las áreas disponibles y ver sus datos de forma clara y ordenada.
+​
+1. Creo la base , las tablas y añado datos:
+```
+CREATE DATABASE campo_reservas;
+​
+CREATE TABLE cancha_futbol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    capacidad INT
+);
+​
+​
+CREATE TABLE area_picnic (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    mesas INT
+);
+​
+​
+INSERT INTO cancha_futbol (nombre, capacidad)
+VALUES ('Cancha Principal', 22);
+​
+INSERT INTO area_picnic (nombre, mesas)
+VALUES ('Zona Familiar', 10);
+```
+​
+app.py:
+```
+from flask import Flask
+import mysql.connector
+import json
+​
+app = Flask(__name__)
+​
+​
+def conectar_bd():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",          
+        password="",          
+        database="campo_reservas"
+    )
+​
+​
+@app.route('/areas', methods=['GET'])
+def mostrar_areas():
+    conexion = conectar_bd()
+    cursor = conexion.cursor()
+​
+    
+    cursor.execute("SHOW TABLES;")
+    tablas = cursor.fetchall()
+​
+    resultado = {}
+​
+    
+    for (nombre_tabla,) in tablas:
+        cursor.execute(f"SELECT * FROM {nombre_tabla};")
+        registros = cursor.fetchall()
+​
+        
+        columnas = [col[0] for col in cursor.description]
+​
+       
+        datos = []
+        for fila in registros:
+            datos.append(dict(zip(columnas, fila)))
+​
+        resultado[nombre_tabla] = datos
+​
+    cursor.close()
+    conexion.close()
+```
+​
+Consola:
+​
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\lenguaje de marcas\Actividades\tema 5"
+PS C:\Users\Serena\Documents\lenguaje de marcas\Actividades\tema 5> python ap.py
+ * Serving Flask app 'ap'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [04/Jan/2026 10:44:41] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [04/Jan/2026 10:44:41] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [04/Jan/2026 10:44:43] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [04/Jan/2026 10:44:44] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [04/Jan/2026 10:46:05] "GET /areas HTTP/1.1" 200 -
+​
+​
+En el navegador : http://127.0.0.1:5000/areas
+​
+{ "area_picnic": [ { "id": 1, "nombre": "Zona Familiar", "mesas": 10 } ], "cancha_futbol": [ { "id": 1, "nombre": "Cancha Principal", "capacidad": 22 } ] }
+​
+​
+En este ejercicio trabajo con una base de datos MySQL y un servidor Flask para aprender a obtener información y enseñarla en formato JSON. El objetivo es entender cómo se conectan una base de datos y una aplicación web, algo muy importante en los sistemas de gestión actuales. En mi caso, simulo un sistema para gestionar las áreas de un campo, donde cada área se guarda en una tabla de la base de datos. A través de un endpoint, puedo consultar todas las áreas disponibles y ver sus datos de forma clara y ordenada.

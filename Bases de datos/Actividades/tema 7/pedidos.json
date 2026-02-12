@@ -1,0 +1,11 @@
+{
+  "cliente": {
+    "nombre": "Jose Vicente",
+    "apellidos": "Carratala Sanchis"
+  },
+  "productos": [
+    {"nombre": "Producto 1", "cantidad": 3, "precio": 43},
+    {"nombre": "Producto 2", "cantidad": 2, "precio": 50}
+  ],
+  "precio_total": 279
+}

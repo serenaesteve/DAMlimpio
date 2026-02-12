@@ -1,0 +1,127 @@
+Contexto
+En nuestro mundo cada vez más digitalizado, las herramientas como localStorage nos permiten almacenar información en el navegador para su uso posterior. Este sistema es especialmente útil cuando queremos guardar datos complejos que necesitan ser recuperados y modificados frecuentemente.
+
+Para explorar cómo funciona localStorage, vamos a realizar varios ejercicios prácticos. Estos ejercicios te ayudarán a entender cómo guardar, recuperar y manipular datos en el navegador utilizando esta herramienta. A lo largo del camino, puedes disfrutar de tus hobbies favoritos como jugar videojuegos o explorar la naturaleza.
+
+Enunciado paso a paso
+Guardando un dato simple
+
+Abre el archivo 002-recuperar-datos.html y observa cómo se guarda el nombre "Jose Vicente" en localStorage.
+Intenta guardar otro dato, por ejemplo tu edad o tu color favorito.
+Recuperando datos simples
+
+A continuación, abre el archivo 003-guardar-datos-complejos.html y observa cómo se guarda un objeto JSON en localStorage.
+Abre el archivo 005-recuperar-un-objeto-complejo.html para ver cómo recuperas ese objeto guardado.
+Convertir datos entre cadenas y objetos
+
+Aprende a convertir un objeto JavaScript a una cadena JSON utilizando JSON.stringify().
+Descubre cómo convertir una cadena JSON de vuelta a un objeto JavaScript con JSON.parse().
+Restricciones
+No utilices funciones o métodos que no estén en la lista blanca.
+Mantén el código dentro del ámbito de los archivos proporcionados.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica cómo localStorage te permite almacenar datos en el navegador y cómo esto puede ser útil para tus hobbies como jugar videojuegos o explorar la naturaleza.
+
+Desarrollo técnico correcto y preciso (25%): Completa los ejercicios correctamente, utilizando las funciones y métodos proporcionados.
+
+Aplicación práctica con ejemplo claro (25%): Asegúrate de que tus datos se guarden y recuperen correctamente en localStorage.
+
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo estos conceptos pueden ser útiles en proyectos futuros relacionados con almacenamiento de información y cómo podrías aplicarlos a tus hobbies como explorar la naturaleza o jugar videojuegos.
+
+Recuerda que el objetivo es entender cómo funciona localStorage y cómo puedes utilizarlo para mejorar tu experiencia en línea. ¡Buena suerte!
+
+
+Respuesta:
+
+En este ejercicio aprendo a usar localStorage para guardar y recuperar información en el navegador. Primero guardo datos simples como mi nombre y luego los recupero para ver que se han guardado bien. También trabajo con datos más completos, como un objeto con mi nombre, apellidos y correo, y aprendo a convertirlo en JSON para guardarlo y luego recuperarlo. Esto me ayuda a entender cómo puedo guardar información en páginas web y usarla después.
+
+guardar-datos-complejos.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Guardar datos complejos</title>
+  </head>
+  <body>
+    <script>
+      var mis_datos = {
+        "nombre": "Serena Sania",
+        "apellidos": "Esteve",
+        "email": "serenaestevee@gmail.com"
+      };
+
+      
+      localStorage.setItem("mis_datos", JSON.stringify(mis_datos));
+      console.log("Objeto complejo guardado correctamente");
+    </script>
+  </body>
+</html>
+```
+
+guardar-dato-simple.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Guardar dato simple</title>
+  </head>
+  <body>
+    <script>
+      
+      localStorage.setItem("minombre", "Serena Sania");
+      console.log("Dato simple guardado correctamente");
+    </script>
+  </body>
+</html>
+```
+
+recuperar-dato-simple.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Recuperar dato simple</title>
+  </head>
+  <body>
+    <script>
+     
+      console.log(localStorage.getItem("minombre"));
+    </script>
+  </body>
+</html>
+```
+
+recuperar-un-objeto-complejo.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Recuperar un objeto complejo</title>
+  </head>
+  <body>
+    <script>
+      
+      var datosTexto = localStorage.getItem("mis_datos");
+
+      var mis_datos = JSON.parse(datosTexto);
+
+      console.log(mis_datos.nombre);
+      console.log(mis_datos.apellidos);
+      console.log(mis_datos.email);
+    </script>
+  </body>
+</html>
+```
+
+Primero abro el archivo guardar-dato-simple.html. Esto sirve para guardar mi nombre “Serena Sania” en el navegador. Así, aunque cierre el navegador, el dato sigue ahí.
+
+Luego abro recuperar-dato-simple.html. Este archivo saca el nombre que he guardado y lo enseña en la consola del navegador. Así puedo ver que se a guardado bien.
+
+Luego abro guardar-datos-complejos.html. Aquí guardo más información sobre mí: nombre, apellidos y correo. Como son varios datos juntos, los pongo en un objeto y lo convierto en texto para que el navegador pueda guardarlo.
+
+Por último abro recuperar-un-objeto-complejo.html. Este archivo toma los datos que he guardado, los convierte otra vez en un objeto y me enseña en la consola todos los datos: nombre, apellidos y correo.
+
+Basicamente, primero guardo los datos y después los recupero para ver que se han guardado bien.
+
+
+Con este ejercicio entiendo cómo funciona localStorage y cómo puedo guardar y recuperar datos en el navegador. Aprendo a trabajar con datos simples y con objetos más completos usando JSON. Ahora sé cómo guardar información que quiero que se mantenga incluso si cierro la página, y puedo usar estos conocimientos en proyectos o aplicaciones web que haga en el futuro.

@@ -1,0 +1,41 @@
+Contexto En el campo, un buen juego de mesa puede ayudarte a relajarte y mejorar tus habilidades de toma de decisiones y colaboración. Imagina que estás organizando una expedición en el bosque y necesitas llevar un registro de los animales que encuentras. Algunos animales pueden no tener información completa sobre su edad o hábitat, por lo que es útil usar valores NULL para representar estas ausencias.
+
+Enunciado paso a paso
+
+Introducción al concepto: En la tabla animales de tu expedición, el campo edad_animal puede contener valores NULL si no se conoce la edad del animal.
+Modificar la tabla: Utiliza el comando SQL para modificar el campo edad_animal en la tabla animales, permitiendo que pueda almacenar valores NULL.
+Ejemplo de consulta: Escribir una consulta que muestre todos los animales junto con su edad, incluyendo aquellos cuya edad no se conoce.
+Restricciones
+
+Solo puedes usar el comando SQL proporcionado en el contexto.
+No utilices funciones adicionales ni estructuras complejas.
+Criterios de evaluación
+
+Introducción y contextualización (25%): Explica claramente cómo el concepto de NULL puede aplicarse a tu expedición en el campo.
+Desarrollo técnico correcto y preciso (25%): Escribe correctamente la sentencia SQL para modificar la tabla animales.
+Aplicación práctica con ejemplo claro (25%): Proporciona una consulta que muestre todos los animales, incluyendo aquellos cuya edad no se conoce.
+Cierre/Conclusión enlazando con la unidad (25%): Relaciona el concepto de NULL con el manejo de datos incompletos en tu expedición y cómo puede facilitar la gestión de información.
+
+
+Respuesta:
+
+Durante una expedición en el bosque, registramos información sobre los animales que encontramos: especie, edad y hábitat. A veces no tenemos todos los datos, por ejemplo, la edad exacta de un animal. En esos casos usamos el valor NULL.
+Esto significa que no se conoce la información y evita confundir un dato faltante con un valor incorrecto. De esta forma, los registros se mantienen claros y organizados.
+
+Para que el campo edad_animales en la tabla animales pueda tener valores NULL pondremos el sigueinte codigo en la pestaña SQL:
+
+```
+ALTER TABLE animales
+MODIFY edad_animal INT NULL;
+```
+
+Y para mostrar todos los animales incluyendo los valores NULL nos iremos a la pestaña SQL y escribiremos:
+
+```
+SELECT nombre_animal, especie, edad_animal
+FROM animales;
+```
+
+El valor NULL sirve para indicar que un dato no se conoce.
+En la expedición, si no sabemos algo (como la edad de un animal), ponemos NULL.
+Esto ayuda a guardar la información sin inventar datos y nos permite actualizarla después si la conseguimos.

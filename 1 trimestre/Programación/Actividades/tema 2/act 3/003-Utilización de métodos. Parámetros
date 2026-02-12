@@ -1,0 +1,44 @@
+Enunciado paso a paso
+Introducción y contextualización: El alumnado debe explorar cómo utilizar métodos existentes en el lenguaje de programación Python para resolver problemas prácticos relacionados con su pasión por los juegos de mesa y la naturaleza. Específicamente, se les pedirá que utilicen el método sqrt del módulo math para calcular la raíz cuadrada de un número, lo que puede ser útil cuando jueguen a juegos de azar o cuando quieran medir distancias en su campo.
+
+Desarrollo técnico correcto y preciso: El alumnado debe crear una variable llamada numero_juego para almacenar el valor del número sobre el que quieren calcular la raíz cuadrada, por ejemplo, 16 (que es el resultado de tirar dos dados). Luego, deben utilizar el método sqrt del módulo math para calcular la raíz cuadrada de numero_juego. El resultado debe almacenarse en una variable llamada raiz_calculada.
+
+Aplicación práctica con ejemplo claro: El alumnado debe proporcionar un ejemplo práctico de cómo utilizar el método sqrt para calcular la raíz cuadrada de 16 y mostrar el resultado en pantalla.
+
+Cierre/Conclusión enlazando con la unidad: Finalmente, el alumnado debe reflejar cómo este ejemplo práctico se relaciona con su pasión por los juegos de mesa y la naturaleza. Por ejemplo, si juegan a un juego que requiere calcular distancias o probabilidades, este conocimiento les será útil.
+
+Restricciones
+No se permite el uso de clases personalizadas ni la creación de nuevos métodos.
+Solo se puede utilizar el método sqrt del módulo math.
+Las variables y nombres de métodos deben seguir las convenciones establecidas en el contexto del tema.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumnado debe explicar cómo el ejemplo práctico se relaciona con su pasión por los juegos de mesa y la naturaleza.
+Desarrollo técnico correcto y preciso (25%): El alumnado debe utilizar correctamente el método sqrt del módulo math para calcular la raíz cuadrada de un número.
+Aplicación práctica con ejemplo claro (25%): El alumnado debe proporcionar un ejemplo práctico de cómo utilizar el método sqrt y mostrar el resultado en pantalla.
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe reflejar cómo este ejemplo práctico se relaciona con su pasión por los juegos de mesa y la naturaleza.
+
+
+
+Respuesta:
+
+
+Este ejemplo se relaciona con los juegos de mesa y la naturaleza porque calcular raíces cuadradas puede ayudar a medir distancias o tomar decisiones en el juego. Así, usamos las matemáticas para jugar y explorar mejor.
+
+```
+numero_juego = 16
+
+
+import math as matematicas
+raiz = matematicas.sqrt(numero_juego)
+print(raiz)
+
+raiz_cuadrada = 4.0
+```
+
+
+Resultado código:
+
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\metodos.py"
+4.0
+
+Este ejemplo se relaciona con los juegos de mesa y la naturaleza porque calcular raíces cuadradas nos ayuda a medir distancias o planear movimientos en un juego, haciendo más fácil y divertido aplicar matemáticas en situaciones reales.

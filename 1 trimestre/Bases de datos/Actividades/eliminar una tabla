@@ -1,0 +1,3 @@
+Eliminar una tabla en mysql:
+
+DROP TABLE pedidos;

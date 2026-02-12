@@ -1,0 +1,178 @@
+Ejercicio práctico: Diseño de un curriculum vitae con CSS Flexbox
+Contexto:
+En este ejercicio, te proponemos diseñar un curriculum vitae utilizando CSS Flexbox para mejorar su apariencia y organización. El objetivo es crear una página web que muestre tus habilidades, experiencia laboral y formación académica de manera clara y atractiva.
+
+Enunciado paso a paso:
+Abrir el archivo HTML: Comienza abriendo uno de los archivos HTML proporcionados en la carpeta 002-Utilización de lenguajes de marcas en entornos web/008-Ejercicio curriculum/101-Ejercicios. Por ejemplo, abre 005-un poco de estilo.html.
+
+Revisar el código HTML: Explora la estructura básica del archivo HTML. Identifica las secciones principales como #izquierda y #derecha, así como los elementos dentro de ellas.
+
+Aplicar CSS Flexbox:
+
+En la sección <head>, asegúrate de que el estilo base esté correctamente configurado con *{margin:0px;padding:0px;} y body,html{background:black;font-size:11px;}.
+Aplica el estilo Flexbox a las secciones principales utilizando la propiedad display: flex;. Por ejemplo:
+main { display: flex; }
+#izquierda, #derecha { display: flex; flex-direction: column; gap: 20px; }
+Ajusta el tamaño y el color de fondo según sea necesario para que la página tenga un aspecto atractivo.
+Estilo de los elementos:
+
+Aplica estilos adicionales a los artículos dentro de #izquierda para que tengan bordes inferiores y colores alternados.
+Ajusta el tamaño del texto y las márgenes según sea necesario para mejorar la legibilidad.
+Añadir elementos:
+
+Agrega más artículos o secciones si lo deseas, asegurándote de que sigan el diseño Flexbox establecido.
+Restricciones:
+No usar librerías externas.
+Mantener los estilos y estructuras vistas en clase.
+Evitar usar atributos CSS específicos no vistos en la asignatura.
+Criterios de evaluación:
+Introducción y contextualización (25%): Explica el uso del CSS Flexbox para mejorar la organización y diseño de un curriculum vitae.
+Desarrollo técnico correcto y preciso (25%): Asegúrate de que el código HTML y CSS esté bien estructurado y funcione correctamente.
+Aplicación práctica con ejemplo claro (25%): Muestra cómo aplicar los conceptos vistos en clase para mejorar la apariencia del curriculum vitae.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio puede ser útil en el contexto de la gestión de información y cómo se relaciona con otros proyectos futuros.
+Recuerda que este ejercicio es una oportunidad para practicar los conceptos vistos en clase y mejorar tus habilidades en la manipulación de documentos web utilizando CSS Flexbox. ¡Buena suerte!
+
+
+
+
+Respuesta:
+
+
+El uso de CSS Flexbox sirve para organizar mejor las partes del curriculum y que se vea más ordenado. Con Flexbox puedo colocar las secciones una al lado de la otra, por ejemplo, la parte izquierda con mis datos personales y la derecha con mi experiencia y estudios.
+También me permite ajustar el espacio entre los elementos y hacer que todo se mantenga alineado sin usar posiciones complicadas. De esta forma, el curriculum se ve más limpio, equilibrado y fácil de leer.
+
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Curriculum Jose Vicente Carratala</title>
+    <meta charset="utf-8">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body, html {
+        background: black;
+        font-size: 11px;
+        font-family: Arial, sans-serif;
+      }
+      main {
+        display: flex;
+        justify-content: space-between;
+        background: white;
+        width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        gap: 20px;
+      }
+      #izquierda {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 35%;
+        background: #f4f4f4;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      #izquierda img {
+        width: 100%;
+        border-radius: 10px;
+      }
+      #izquierda article {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+      }
+      #izquierda article:nth-child(even) {
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      #derecha {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 65%;
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      #derecha article {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #333;
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+      h3 {
+        color: #0066cc;
+        margin-bottom: 5px;
+      }
+      ul {
+        list-style: none;
+        padding-left: 10px;
+      }
+      li::before {
+        content: "• ";
+        color: #0066cc;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section id="izquierda">
+        <h2>Informacion Personal</h2>
+        <img src="josevicente.jpg" alt="Fotografia">
+        <article>
+          <h3>Datos personales</h3>
+          <ul>
+            <li>Nombre: Jose Vicente Carratala</li>
+            <li>Email: josevicente@example.com</li>
+            <li>Telefono: 600 123 456</li>
+            <li>Ciudad: Valencia</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Habilidades</h3>
+          <ul>
+            <li>HTML y CSS</li>
+            <li>JavaScript basico</li>
+            <li>Diseno web responsive</li>
+            <li>Trabajo en equipo</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Idiomas</h3>
+          <ul>
+            <li>Espanol - Nativo</li>
+            <li>Ingles - Intermedio</li>
+            <li>Frances - Basico</li>
+          </ul>
+        </article>
+      </section>
+      <section id="derecha">
+        <h2>Experiencia y Formacion</h2>
+        <article>
+          <h3>Experiencia laboral</h3>
+          <ul>
+            <li>2022 - Presente: Desarrollador web en TechCorp</li>
+            <li>2020 - 2022: Disenador web freelance</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Formacion academica</h3>
+          <ul>
+            <li>Grado en Ingenieria Informatica (Universidad de Valencia)</li>
+            <li>Curso de desarrollo Front-End (Online)</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+```
+Este ejercicio me ayuda a entender cómo organizar bien la información y presentarla de forma clara. Usar Flexbox facilita colocar cada parte del curriculum en su sitio y hace que todo se vea más ordenado.
+
+En la gestión de información, esto es útil porque permite mostrar los datos de manera fácil de leer y mantener. Además, lo aprendido aquí me servirá en futuros proyectos, como crear páginas web, portafolios o cualquier diseño donde haya que estructurar contenido de forma limpia y adaptable.

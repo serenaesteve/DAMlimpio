@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Guardar datos complejos</title>
+  </head>
+  <body>
+    <script>
+      var mis_datos = {
+        "nombre": "Serena Sania",
+        "apellidos": "Esteve",
+        "email": "serenaestevee@gmail.com"
+      };
+
+      
+      localStorage.setItem("mis_datos", JSON.stringify(mis_datos));
+      console.log("Objeto complejo guardado correctamente");
+    </script>
+  </body>
+</html>
+

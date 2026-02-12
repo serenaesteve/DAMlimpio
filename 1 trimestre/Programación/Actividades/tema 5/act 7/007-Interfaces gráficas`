@@ -1,0 +1,155 @@
+Creación de una interfaz gráfica para gestionar clientes
+En este ejercicio, vamos a crear una pequeña aplicación gráfica que permita insertar y listar clientes. Esta aplicación será útil tanto para aprender sobre interfaces gráficas como para entender cómo manejar datos en archivos CSV.
+
+Contexto
+Para esta actividad, considera tus hobbies de juegos de mesa y la naturaleza. Imagina que eres un dueño de una tienda de juguetes que vende productos al aire libre, y necesitas un sistema para gestionar a los clientes que visitan tu tienda. Esta aplicación podría ayudarte a mantener un registro de los clientes.
+
+Enunciado paso a paso
+Importar la librería tkinter:
+
+Comienza importando la librería tkinter que nos permite crear interfaces gráficas.
+Definir las variables para el formulario:
+
+Declara variables para los nombres de los campos del formulario: nombre, apellidos y email.
+Crear la interfaz gráfica:
+
+Crea una ventana principal con etiquetas y entradas para recoger los datos del cliente.
+Añade un botón que guarde los datos en un archivo CSV cuando se pulse.
+Función para insertar clientes:
+
+Escribe una función insertaCliente que abra el archivo "clientes.csv", escriba los datos del formulario y cierre el archivo.
+Mostrar la interfaz gráfica:
+
+Finalmente, muestra la ventana principal con ventana.mainloop().
+Restricciones
+Solo puedes usar los conceptos y ejercicios que se han enseñado en clase.
+No uses librerías externas ni estructuras no vistas hasta ahora.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del ejercicio y cómo aplicar los conocimientos adquiridos.
+Desarrollo técnico correcto y preciso (25%): El código debe seguir las estructuras y buenas prácticas vistas en clase.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe mostrar un ejemplo claro de cómo aplicar los conceptos aprendidos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio explicando cómo este proyecto podría ser útil en una situación real, como la gestión de clientes en una tienda.
+¡Buena suerte! Recuerda que puedes usar tus hobbies para inspirarte y hacer que el ejercicio sea más divertido. ¡No dudes en pedir ayuda si necesitas!
+
+
+
+
+Respuesta:
+
+
+Este ejercicio sirve para crear una ventana donde se puedan registrar los clientes de mi tienda de juguetes al aire libre. He aprendido a usar tkinter para hacer la interfaz, variables para guardar los datos y archivos CSV para poder guardarlos y verlos después.
+​
+```
+import tkinter as tk
+from tkinter import messagebox
+import csv
+​
+​
+ventana = tk.Tk()
+ventana.title("Gestión de Clientes - Tienda de Juguetes al Aire Libre")
+ventana.geometry("400x250")
+​
+​
+nombre_var = tk.StringVar()
+apellidos_var = tk.StringVar()
+email_var = tk.StringVar()
+​
+​
+tk.Label(ventana, text="Nombre:").grid(row=0, column=0, padx=10, pady=10)
+tk.Label(ventana, text="Apellidos:").grid(row=1, column=0, padx=10, pady=10)
+tk.Label(ventana, text="Email:").grid(row=2, column=0, padx=10, pady=10)
+​
+​
+tk.Entry(ventana, textvariable=nombre_var).grid(row=0, column=1, padx=10, pady=10)
+tk.Entry(ventana, textvariable=apellidos_var).grid(row=1, column=1, padx=10, pady=10)
+tk.Entry(ventana, textvariable=email_var).grid(row=2, column=1, padx=10, pady=10)
+​
+​
+def insertaCliente():
+    nombre = nombre_var.get()
+    apellidos = apellidos_var.get()
+    email = email_var.get()
+    
+    if nombre == "" or apellidos == "" or email == "":
+        messagebox.showwarning("Advertencia", "Todos los campos son obligatorios")
+        return
+​
+    with open("clientes.csv", "a", newline="") as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerow([nombre, apellidos, email])
+    
+    nombre_var.set("")
+    apellidos_var.set("")
+    email_var.set("")
+    
+    messagebox.showinfo("Éxito", "Cliente registrado correctamente")
+​
+​
+tk.Button(ventana, text="Guardar Cliente", command=insertaCliente).grid(row=3, column=0, columnspan=2, pady=20)
+​
+​
+ventana.mainloop()
+```
+​
+Este proyecto es útil porque permite llevar un registro de los clientes de forma sencilla. En una tienda real, podría ayudar a guardar los datos de contacto, seguir las visitas de los clientes y enviar promociones o novedades. Así, la tienda puede organizar mejor su información y ofrecer un mejor servicio a sus clientes.
+Autosaved: 01:37 PM55292
+Enviar
+Respuestas guardadas
+#1 · 2025-11-07T12:37:48+00:00
+Este ejercicio sirve para crear una ventana donde se puedan registrar los clientes de mi tienda de juguetes al aire libre. He aprendido a usar tkinter para hacer la interfaz, variables para guardar los datos y archivos CSV para poder guardarlos y verlos después.
+
+```
+import tkinter as tk
+from tkinter import messagebox
+import csv
+
+
+ventana = tk.Tk()
+ventana.title("Gestión de Clientes - Tienda de Juguetes al Aire Libre")
+ventana.geometry("400x250")
+
+
+nombre_var = tk.StringVar()
+apellidos_var = tk.StringVar()
+email_var = tk.StringVar()
+
+
+tk.Label(ventana, text="Nombre:").grid(row=0, column=0, padx=10, pady=10)
+tk.Label(ventana, text="Apellidos:").grid(row=1, column=0, padx=10, pady=10)
+tk.Label(ventana, text="Email:").grid(row=2, column=0, padx=10, pady=10)
+
+
+tk.Entry(ventana, textvariable=nombre_var).grid(row=0, column=1, padx=10, pady=10)
+tk.Entry(ventana, textvariable=apellidos_var).grid(row=1, column=1, padx=10, pady=10)
+tk.Entry(ventana, textvariable=email_var).grid(row=2, column=1, padx=10, pady=10)
+
+
+def insertaCliente():
+    nombre = nombre_var.get()
+    apellidos = apellidos_var.get()
+    email = email_var.get()
+    
+    if nombre == "" or apellidos == "" or email == "":
+        messagebox.showwarning("Advertencia", "Todos los campos son obligatorios")
+        return
+
+    with open("clientes.csv", "a", newline="") as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerow([nombre, apellidos, email])
+    
+    nombre_var.set("")
+    apellidos_var.set("")
+    email_var.set("")
+    
+    messagebox.showinfo("Éxito", "Cliente registrado correctamente")
+
+
+tk.Button(ventana, text="Guardar Cliente", command=insertaCliente).grid(row=3, column=0, columnspan=2, pady=20)
+
+
+ventana.mainloop()
+```
+
+Este proyecto es útil porque permite llevar un registro de los clientes de forma sencilla. En una tienda real, podría ayudar a guardar los datos de contacto, seguir las visitas de los clientes y enviar promociones o novedades. Así, la tienda puede organizar mejor su información y ofrecer un mejor servicio a sus clientes.
+
+

@@ -1,0 +1,90 @@
+Título: Creando una página web para una empresa de software educativa
+
+Contexto: Imagine que eres un joven entusiasta del campo y de los videojuegos, pero también amante de la inteligencia artificial y la formación profesional. Quieres crear una empresa llamada "Cultura Digital" que se especialice en productos de software para mejorar el aprendizaje interactivo a través de la inteligencia artificial.
+
+Enunciado paso a paso:
+
+Introducción
+
+Crea una variable llamada nombre_empresa y asigna el valor "Cultura Digital".
+Escribe una línea de código que imprima en consola un mensaje de bienvenida a tu empresa, por ejemplo, "¡Bienvenido/a a Cultura Digital!".
+Catálogo de productos
+
+Define una lista llamada productos que contenga al menos tres productos principales de software para formación:
+productos = ["IntelliMath", "CodeMaster", "AI Tutor"]
+Crea un bucle for que itere sobre la lista productos y imprima cada producto en una línea separada.
+Contacto con el cliente
+
+Define una variable llamada email_contacto y asigna el valor "contacto@culturadigital.com".
+Escribe una línea de código que muestre un mensaje indicando cómo contactar a los clientes, por ejemplo, "Para cualquier consulta, no dudes en escribirnos a [email_contacto]".
+Presentación del producto "IntelliMath"
+
+Define una variable llamada intellimath_descripcion y asigna el valor "Un software de aprendizaje interactivo que utiliza inteligencia artificial para adaptar la dificultad según el nivel del usuario.".
+Escribe una línea de código que imprima la descripción de IntelliMath.
+Restricciones:
+
+No se pueden usar funciones o librerías externas.
+Solo se deben utilizar las estructuras y conceptos vistos en clase.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): La actividad debe estar bien contextualizada dentro del tema impartido y mostrar un entendimiento claro de los conceptos básicos.
+Desarrollo técnico correcto y preciso (25%): El código debe ser escrito correctamente, siguiendo las instrucciones dadas.
+Aplicación práctica con ejemplo claro (25%): El alumno debe mostrar un buen uso de estructuras de datos y control de flujo básicas.
+Cierre/Conclusión enlazando con la unidad (25%): La actividad debe terminar con una conclusión que muestre el alcance del tema actual y cómo se relaciona con lo aprendido en clase.
+
+
+
+Respuesta:
+
+
+En esta actividad voy a crear una pequeña simulación de una página web para mi empresa llamada Cultura Digital. Esta empresa se dedica a hacer programas educativos para aprender de forma más divertida y fácil, usando inteligencia artificial.
+Con este ejercicio practico lo que estoy aprendiendo en clase, como usar variables, listas y bucles, para mostrar información como si fuera una web.
+​
+​
+```
+nombre_empresa = "Cultura Digital"
+print("¡Bienvenido/a a " + nombre_empresa + "!")
+​
+print("\n--- Catálogo de productos ---")
+​
+​
+productos = ["IntelliMath", "CodeMaster", "AI Tutor"]
+​
+for producto in productos:
+    print(producto)
+​
+print("\n--- Contacto ---")
+​
+​
+email_contacto = "contacto@culturadigital.com"
+print("Para cualquier consulta, no dudes en escribirnos a " + email_contacto)
+​
+print("\n--- Producto destacado: IntelliMath ---")
+​
+​
+intellimath_descripcion = (
+    "Un software de aprendizaje interactivo que utiliza inteligencia artificial "
+    "para adaptar la dificultad según el nivel del usuario."
+)
+print(intellimath_descripcion)
+```
+​
+Consola:
+```
+serena@serena-portatil:/var/www/html/DAM/DAM1/Proyecto/Actividades$ python3 web.py
+¡Bienvenido/a a Cultura Digital!
+​
+--- Catálogo de productos ---
+IntelliMath
+CodeMaster
+AI Tutor
+​
+--- Contacto ---
+Para cualquier consulta, no dudes en escribirnos a contacto@culturadigital.com
+​
+--- Producto destacado: IntelliMath ---
+Un software de aprendizaje interactivo que utiliza inteligencia artificial para adaptar la dificultad según el nivel del usuario.
+```
+​
+Para terminar, con este programa ya soy capaz de mostrar información básica en consola como si fuera una página web sencilla. He usado variables para guardar datos como el nombre de la empresa o el email, una lista para el catálogo de productos y un bucle for para enseñar cada producto por pantalla.
+Gracias a esto entiendo mejor cómo se pueden organizar datos en un programa y cómo se relaciona con lo que estamos aprendiendo en la unidad.

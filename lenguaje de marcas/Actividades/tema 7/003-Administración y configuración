@@ -1,0 +1,261 @@
+Ejercicio práctico: Manipulación de estados y comportamientos en una plataforma web
+En esta actividad, te proponemos trabajar con un menú desplegable que aparece y desaparece al hacer clic en un ícono de hamburguesa. Este es el mismo ejemplo que vimos en clase, pero vamos a añadir algunas mejoras para que sea más funcional y visualmente atractivo.
+
+Desarrollo
+Modifica el estilo del menú: Cambia el color de fondo del menú desplegable y la letra a blanco. Añade un efecto de sombra para darle profundidad.
+
+Añade flechas de navegación: En cada sección, añade dos flechas (🡠 y 🡢) que permitan navegar entre los artículos dentro de la misma sección.
+
+Implementa el comportamiento dinámico: Utiliza JavaScript para controlar el estado del menú desplegable al hacer clic en el ícono de hamburguesa. Cuando el menú está abierto, el ícono debe cambiar a "🗙". Cuando está cerrado, el ícono debe volverse "☰".
+
+Restricciones
+Solo puedes modificar el código dentro de las etiquetas <style> y <script>.
+No puedes usar librerías externas ni estructuras no vistas en clase.
+Mantén la estructura HTML proporcionada.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente qué cambios has realizado en el menú desplegable y cómo se ha modificado su comportamiento.
+
+Desarrollo técnico correcto y preciso (25%): Demuestra que has aplicado correctamente los conceptos de CSS para modificar estilos y JavaScript para controlar eventos.
+
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo claro de cómo el menú desplegable funciona, incluyendo las flechas de navegación y el cambio en el ícono de hamburguesa.
+
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio te ha ayudado a entender los conceptos de manipulación de estados y comportamientos en una plataforma web, y cómo se puede aplicar en proyectos futuros.
+
+
+
+Respuesta:
+
+
+En este ejercicio trabajo con una página web interactiva para practicar el uso de HTML, CSS y JavaScript. El objetivo principal es aprender a controlar el comportamiento de distintos elementos de la página, como el menú desplegable y la navegación entre artículos.
+
+plataformavideos.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Plataforma de videos</title>
+    <meta charset="utf-8">
+    <style>
+      *{margin:0px;padding:0px;}
+
+      html,body{
+        width:100%;
+        height:100%;
+        font-family:ubuntu,sans-serif;
+        overflow-x:hidden;
+        color:white;
+
+        
+        background:
+          radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 2px, transparent 3px),
+          radial-gradient(circle at 70% 60%, rgba(255,255,255,0.12) 1.5px, transparent 3px),
+          radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 1px, transparent 2px),
+          linear-gradient(120deg, #050024, #12003a, #000010);
+        background-size: 400px 400px, 500px 500px, 300px 300px, 100% 100%;
+        animation: galaxia 60s linear infinite;
+      }
+
+      @keyframes galaxia{
+        from{ background-position: 0 0, 0 0, 0 0, 0 0; }
+        to{ background-position: 1000px 800px, -800px 600px, 600px -400px, 0 0; }
+      }
+
+      nav{
+        width:300px;
+        background:midnightblue;
+        position:fixed;
+        height:100%;
+        padding:20px;
+        color:white;
+        box-sizing:border-box;
+        left:-300px;
+        transition:all 1s;
+        z-index:1000;
+        box-shadow:8px 0px 20px rgba(0,0,0,0.6);
+      }
+      .sacado{left:0px;}
+
+      header,main,footer{padding:20px;}
+      header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        position:fixed;
+        top:0px;
+        width:100%;
+        background:rgba(0,0,0,0.8);
+        box-sizing:border-box;
+        z-index:999;
+      }
+
+      main{padding-top:100px;}
+
+     
+      section{
+        width:100%;
+        position:relative;
+        min-height:240px;
+        margin-bottom:60px;
+      }
+
+      section .contenedor{
+        display:flex;
+        gap:20px;
+        width:10000px;
+        position:relative;
+        transition:all 1s;
+        left:0px;
+      }
+
+      section article{
+        width:300px;
+        height:150px;
+        background:lightgrey;
+        padding:20px;
+        box-sizing:border-box;
+        border-radius:5px;
+        color:black;
+      }
+
+      .izquierda,.derecha{
+        position:absolute;
+        top:50%;
+        width:40px;
+        height:40px;
+        background:black;
+        color:white;
+        font-size:20px;
+        line-height:40px;
+        text-align:center;
+        border-radius:40px;
+        transition:all 1s;
+        opacity:0.15;
+        font-weight:bold;
+        cursor:pointer;
+        user-select:none;
+      }
+      .izquierda{left:0px;}
+      .derecha{right:0px;}
+      .izquierda:hover,.derecha:hover{opacity:0.9;}
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      Yo soy el menú de navegación
+    </nav>
+
+    <header>
+      <h1>Logo</h1>
+      <div id="hamburguesa">☰</div>
+    </header>
+
+    <main> 
+      <section>
+        <h3>Título de la sección</h3>
+        <div class="contenedor" style="left:0px;">
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+        </div>
+        <div class="izquierda">🡠</div>
+        <div class="derecha">🡢</div>
+      </section>
+
+      <section>
+        <h3>Título de la sección</h3>
+        <div class="contenedor">
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article>
+        </div>
+        <div class="izquierda">🡠</div>
+        <div class="derecha">🡢</div>
+      </section>
+
+      <section>
+        <h3>Título de la sección</h3>
+        <div class="contenedor">
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article>
+        </div>
+        <div class="izquierda">🡠</div>
+        <div class="derecha">🡢</div>
+      </section>
+
+      <section>
+        <h3>Título de la sección</h3>
+        <div class="contenedor">
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article><article>Nombre</article>
+          <article>Nombre</article><article>Nombre</article>
+        </div>
+        <div class="izquierda">🡠</div>
+        <div class="derecha">🡢</div>
+      </section>
+    </main>
+
+    <script>
+      
+      var abierto = false;
+      let hamburguesa = document.querySelector("#hamburguesa");
+      let navegacion = document.querySelector("nav");
+
+      hamburguesa.onclick = function(){
+        if(abierto){
+          hamburguesa.textContent = "☰";
+          navegacion.classList.remove("sacado");
+          abierto = false;
+        }else{
+          hamburguesa.textContent = "🗙";
+          navegacion.classList.add("sacado");
+          abierto = true;
+        }
+      }
+
+      
+      let izquierdas = document.querySelectorAll(".izquierda");
+      izquierdas.forEach(function(izquierda){
+        izquierda.onclick = function(){
+          let tira = this.parentElement.querySelector(':scope > .contenedor');
+
+         
+          let actual = parseFloat(tira.style.left);
+          if(isNaN(actual)) actual = 0;
+
+          tira.style.left = (actual + 320) + "px";
+        }
+      })
+
+      let derechas = document.querySelectorAll(".derecha");
+      derechas.forEach(function(derecha){
+        derecha.onclick = function(){
+          let tira = this.parentElement.querySelector(':scope > .contenedor');
+
+         
+          let actual = parseFloat(tira.style.left);
+          if(isNaN(actual)) actual = 0;
+
+          tira.style.left = (actual - 320) + "px";
+        }
+      })
+    </script>
+  </body>
+</html>
+```
+
+En este ejercicio he creado una página web con varias secciones y un menú desplegable usando HTML, CSS y JavaScript. He modificado el diseño inicial y he añadido un fondo tipo galaxia con animación porque me gustaba más que el fondo negro original y hacía la página más llamativa.
+
+El menú se abre y se cierra al hacer clic en el icono de hamburguesa. Para ello he utilizado una variable que controla si el menú está abierto o cerrado y cambio el icono según el estado.
+
+En cada sección hay flechas que permiten mover los artículos horizontalmente. Al pulsarlas se modifica la posición del contenedor de artículos. También he ajustado la altura de las secciones para que todas se vean correctamente una debajo de otra.
+
+Me ha servido para practicar el uso de eventos y JavaScript para controlar el comportamiento de los elementos en una página web.
+Con este ejercicio entiendo mejor cómo se combinan JavaScript y CSS para crear páginas más dinámicas. También me sirve para practicar la manipulación de elementos y el control de estados, que son conceptos importantes y que puedo aplicar en futuros proyectos.

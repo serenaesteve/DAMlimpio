@@ -1,0 +1,762 @@
+📌 Enunciado de actividad: “Creación de Portafolio Personal”
+
+Objetivo:
+Desarrollar un portafolio web personal utilizando HTML, CSS y JavaScript, que muestre tu información personal, habilidades y proyectos profesionales.
+
+Requisitos de la actividad:
+
+Estructura básica:
+-Crear un archivo index.html que contenga todas las secciones del portafolio.
+-Utilizar un archivo style.css para los estilos.
+
+
+Secciones del portafolio:
+-Inicio: Presentación personal con nombre completo y título profesional.
+-Sobre mí: Información sobre ti, foto de perfil y descripción de tu experiencia y objetivos.
+-Proyectos: Lista de proyectos realizados. Al menos un proyecto debe ser tu Currículum personal hecho en HTML/CSS/JS, accesible desde un botón “Ver Currículum” que abra el proyecto en una nueva pestaña.
+-Habilidades: Mostrar tus habilidades principales con barras de progreso. Incluir HTML, CSS, JavaScript, Python y SQL.
+-Contacto: Formulario de contacto funcional y datos personales (email, teléfono, ubicación).
+
+Diseño y estilo:
+-Colores principales: morado pastel (#d8b4f8) y blanco (#ffffff).
+-Fuentes: Google Fonts Poppins.
+-Diseño responsive: Adaptable a dispositivos móviles y escritorio.
+-Botones con efecto hover y transiciones suaves.
+
+Interactividad:
+-Botón de cada proyecto para abrirlo en nueva pestaña.
+
+Entrega:
+-Archivos: index.html, style.css,  imagen de perfil y archivo del currículum micurriculum.html.
+-Estructura organizada y código limpio.
+
+Criterios de evaluación:
+-Cumplimiento de todas las secciones y requisitos.
+-Diseño visual consistente y atractivo.
+-Funcionamiento correcto de enlaces y botones.
+-Código bien estructurado.
+
+
+
+
+Respuesta:
+
+
+Hola, me llamo Serena Sania Esteve y estoy formándome como desarrolladora multiplataforma. Este portafolio lo he creado como proyecto personal para mostrar mis conocimientos actuales y mis primeros trabajos, y también como preparación para mi futuro profesional. Aquí podrás conocer un poco sobre mí, ver algunos de mis proyectos y comprobar cómo aplico HTML, CSS, JavaScript y Python en trabajos reales. Me apasiona crear soluciones prácticas y estéticas, cuidando cada detalle para que la experiencia del usuario sea agradable y funcional.
+
+
+index.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Serena Sania Esteve — Portafolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+   
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">Serena Sania Esteve</h1>
+
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+        </nav>
+    </header>
+
+    
+    <section id="inicio" class="inicio">
+        <div class="contenido-inicio">
+            <p class="saludo">Hola, soy</p>
+            <h2 class="nombre">Serena Sania Esteve</h2>
+            <p class="titulo">Técnico Superior en Desarrollo Multiplataforma</p>
+            <p class="descripcion">Diseño y desarrollo aplicaciones y sitios web modernos, con atención al detalle y experiencia de usuario.</p>
+            <a href="#proyectos" class="boton">Ver mis proyectos</a>
+        </div>
+    </section>
+
+    
+    <section id="sobre-mi">
+        <div class="contenedor-sobre-mi">
+            <img src="serena.jpg" alt="Foto de Serena Sania Esteve" class="foto-perfil">
+            <div class="texto-sobre-mi">
+                <h2>Sobre mí</h2>
+                <h3>Serena Sania Esteve</h3>
+                <h4>Técnico Superior en Desarrollo Multiplataforma</h4>
+                <p>
+                    Soy una desarrolladora apasionada por la tecnología, el diseño y la creación de soluciones prácticas.
+                    Me encanta aprender nuevas herramientas, optimizar procesos y cuidar cada detalle del desarrollo.
+                </p>
+                <p>
+                    Mi objetivo es seguir creciendo profesionalmente, participar en proyectos innovadores y combinar creatividad con lógica en cada aplicación que desarrollo.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="proyectos">
+        <h2 class="titulo-seccion">Mis Proyectos</h2>
+        <div class="contenedor-proyectos">
+            
+            <div class="proyecto">
+                <img src="serena.jpg" alt="Currículum de Serena">
+                <h3>Mi Currículum</h3>
+                <p>Mi primer proyecto profesional, hecho con HTML, CSS y JavaScript.</p>
+                <a href="micurriculum.html" class="boton" target="_blank">Ver Currículum</a>
+            </div>
+            
+            <div class="proyecto">
+                <img src="https://via.placeholder.com/300x200" alt="Proyecto 2">
+                <h3>Proyecto 2</h3>
+                <p>Descripción breve del proyecto, tecnologías usadas y objetivos.</p>
+            </div>
+            
+            <div class="proyecto">
+                <img src="https://via.placeholder.com/300x200" alt="Proyecto 3">
+                <h3>Proyecto 3</h3>
+                <p>Descripción breve del proyecto, tecnologías usadas y objetivos.</p>
+            </div>
+        </div>
+    </section>
+```
+
+
+style.css:
+```
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff; 
+    color: #3e206d; 
+}
+
+
+header {
+    background-color: #d8b4f8; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #f5e1ff;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.inicio {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5e1ff 0%, #ffffff 100%);
+    padding: 0 20px;
+    text-align: center;
+}
+
+.contenido-inicio {
+    max-width: 700px;
+}
+
+.saludo {
+    font-size: 1.2rem;
+    color: #8a5cc2;
+}
+
+.nombre {
+    font-size: 2.5rem;
+    color: #3e206d;
+    margin: 10px 0;
+}
+
+.titulo {
+    font-size: 1.3rem;
+    color: #5b4288;
+    margin-bottom: 15px;
+}
+
+.descripcion {
+    font-size: 1.1rem;
+    color: #5b4288;
+    margin-bottom: 25px;
+}
+
+.boton {
+    display: inline-block;
+    background-color: #b185db;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #9f74cf;
+    transform: scale(1.05);
+}
+
+
+#sobre-mi {
+    padding: 120px 20px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-sobre-mi {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 1000px;
+    gap: 50px;
+}
+
+.foto-perfil {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #e5ccff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.texto-sobre-mi {
+    flex: 1;
+    min-width: 280px;
+}
+
+.texto-sobre-mi h2 {
+    color: #3e206d;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.texto-sobre-mi h3 {
+    color: #8a5cc2;
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+}
+
+.texto-sobre-mi h4 {
+    color: #b185db;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.texto-sobre-mi p {
+    color: #5b4288;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+
+
+#proyectos {
+    padding: 100px 20px;
+    background-color: #f5e1ff;
+    text-align: center;
+}
+
+.contenedor-proyectos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.proyecto {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.proyecto img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.proyecto h3 {
+    color: #8a5cc2;
+    font-size: 1.3rem;
+    margin: 15px 10px 5px 10px;
+    text-align: center;
+}
+
+.proyecto p {
+    color: #5b4288;
+    font-size: 1rem;
+    margin: 0 10px 15px 10px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.proyecto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+
+#habilidades {
+    padding: 100px 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.contenedor-habilidades {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.habilidad {
+    flex: 1 1 300px;
+}
+
+.habilidad h3 {
+    color: #3e206d;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.barra {
+    background-color: #f0dfff;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progreso {
+    background-color: #b185db;
+    height: 100%;
+    width: 0;
+    border-radius: 10px;
+    transition: width 1.5s ease-in-out;
+}
+
+
+#contacto {
+    padding: 100px 20px;
+    background-color: #f5e1ff;
+    text-align: center;
+}
+
+.contenedor-contacto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.info-contacto {
+    flex: 1 1 300px;
+    color: #3e206d;
+    font-size: 1.1rem;
+    text-align: left;
+}
+
+.info-contacto p {
+    margin-bottom: 15px;
+}
+
+.form-contacto {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-contacto input,
+.form-contacto textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #b185db;
+    font-size: 1rem;
+    outline: none;
+}
+
+.form-contacto input:focus,
+.form-contacto textarea:focus {
+    border-color: #8a5cc2;
+}
+
+.form-contacto .boton {
+    align-self: flex-start;
+    padding: 12px 30px;
+    border-radius: 30px;
+    background-color: #b185db;
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form-contacto .boton:hover {
+    background-color: #9f74cf;
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #d8b4f8;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .contenedor-sobre-mi,
+    .contenedor-proyectos,
+    .contenedor-habilidades,
+    .contenedor-contacto {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .foto-perfil {
+        width: 180px;
+        height: 180px;
+    }
+
+    .habilidad h3,
+    .info-contacto {
+        text-align: center;
+    }
+
+    .form-contacto .boton {
+        align-self: center;
+    }
+}
+```
+
+micurriculum.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículum de Serena Sania Esteve</title>
+
+  <style>
+    /* Fondo con degradado suave */
+    body {
+      font-family: Verdana, Geneva, sans-serif;
+      background: linear-gradient(to bottom, #e9e4f0, #d3cce3);
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Contenedor principal con sombra */
+    main {
+      width: 800px;
+      background-color: white;
+      padding: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-radius: 10px;
+    }
+
+    /* Encabezado con foto y nombre */
+    header {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid #b7a2d6;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      width: 180px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      margin-right: 25px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      border: none;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #4b3b73;
+      margin: 0;
+    }
+
+    header p {
+      font-style: italic;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    /* Títulos de sección destacados */
+    h2 {
+      color: white;
+      background-color: #a48bd3;
+      padding: 6px 10px;
+      border-radius: 5px;
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+
+    h3 {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 25px;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+
+    /* Separador decorativo */
+    hr {
+      border: none;
+      height: 2px;
+      background-color: #b7a2d6;
+      margin: 30px 0;
+    }
+
+    /* Pie de página */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #555;
+      font-size: 0.9em;
+      border-top: 2px solid #b7a2d6;
+      padding-top: 10px;
+    }
+
+    /* Versión lista para imprimir */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      main {
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <header>
+      <img src="serena.jpg" alt="Foto de Serena Sania Esteve">
+      <div>
+        <h1>Serena Sania Esteve</h1>
+        <p>Gran facilidad de comunicación. Capacidad de organización alta. Responsabilidad elevada. Con espíritu emprendedor. Aptitudes para el trabajo en equipo. Resolutiva. Dispongo de vehículo propio.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Datos personales</h2>
+      <ul>
+        <li>📧 Email: serenaestevee@gmail.com</li>
+        <li>📞 Teléfono: 637383762</li>
+        <li>📍 Ubicación: Mislata, Valencia</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación académica</h2>
+      <ul>
+        <li>Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) – TAME FORMACIÓN (Cursando actualmente)</li>
+        <li>Grado Medio Técnico Auxiliar Administrativo – Colegio Santa Cruz de Mislata (2019 - 2021)</li>
+        <li>ESO – Colegio Santa Cruz de Mislata (2015 - 2019)</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Experiencia profesional</h2>
+
+      <h3>Administrativa – MISLATA FORMACIÓN SL (2022 - Actual)</h3>
+      <ul>
+        <li>Atención telefónica y física a clientes</li>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Marketing de las redes sociales</li>
+        <li>Plan de igualdad</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa – NEMASA (3 meses - Plan social del Ayuntamiento)</h3>
+      <ul>
+        <li>Fichajes</li>
+        <li>Documentación</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa (prácticas) – FOREDU (3 meses - Prácticas)</h3>
+      <ul>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Búsqueda de información</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Idiomas</h2>
+      <ul>
+        <li>Español: Nativo</li>
+        <li>Inglés: Nivel A1 (en proceso de aprendizaje)</li>
+        <li>Valenciano: Alto</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación complementaria</h2>
+      <ul>
+        <li>Implantación de planes y medidas de igualdad en las empresas</li>
+        <li>IFCT163PO - Inteligencia artificial aplicada a la empresa</li>
+        <li>Aprende a usar un CRM</li>
+        <li>Gestión de posicionamiento SEM</li>
+        <li>Plan estratégico de social media nivel 1 y 2</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Otras competencias</h2>
+      <ul>
+        <li>Conocimientos y experiencia en paquete Office</li>
+        <li>Curso de mecanografía</li>
+        <li>Conocimientos en Contasol y Factusol</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Vehículos</h2>
+      <p>Dispongo de vehículo propio.</p>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Aficiones y hobbies</h2>
+      <p>Viajar, aprender nuevas tecnologías, leer y practicar deporte.</p>
+    </section>
+
+    <footer>
+      <p>© 2025 Serena Sania Esteve</p>
+    </footer>
+  </main>
+
+</body>
+</html>
+```
+
+
+La imagen:
+
+https://files.fm/u/3jvb5kp9k4
+
+Este portafolio representa mi primer paso hacia mi desarrollo profesional como futura desarrolladora multiplataforma. Cada proyecto que presento refleja lo que he aprendido hasta ahora y mi entusiasmo por seguir creciendo, aprendiendo nuevas tecnologías y enfrentando nuevos retos. Espero que este portafolio sirva para mostrar mis capacidades actuales y mi motivación para avanzar en el mundo del desarrollo web y multiplataforma.

@@ -1,0 +1,234 @@
+Para practicar el concepto impartido sobre recuperación de correos electrónicos con IMAP en PHP, sigue estos pasos:
+
+1. Entendimiento y Configuración
+Primero, asegúrate de entender cómo funcionan los correos electrónicos y cómo puedes interactuar con ellos a través de IMAP. Crea un archivo PHP que configure la conexión a tu cuenta de correo electrónico utilizando las credenciales proporcionadas en el ejemplo ($hostname, $username, $password).
+
+2. Implementación del Código
+El código proporcionado incluye funciones para decodificar partes del contenido, extraer el cuerpo y una imagen destacada de los correos electrónicos. Utiliza este código como base para crear tu propio sistema de recuperación de correos.
+
+Paso a paso:
+Conexión al Servidor IMAP: Abre la conexión con tu servidor IMAP utilizando las credenciales proporcionadas.
+Búsqueda de Correos: Utiliza imap_search() para obtener una lista de todos los correos electrónicos en tu bandeja de entrada.
+Procesamiento de Cada Correo:
+Para cada correo, obtén el resumen del correo utilizando imap_fetch_overview().
+Extrae el asunto, remitente y fecha del correo.
+Utiliza la función extractEmailParts() para obtener el contenido HTML o texto del correo y una imagen destacada, si está disponible.
+3. Visualización de los Correos
+Después de procesar los correos electrónicos, visualízalos en tu página web. Crea un diseño sencillo que muestre la lista de correos con sus respectivos asuntos, remitentes y fechas. Para cada correo, muestra el contenido HTML o texto del correo y una imagen destacada, si está disponible.
+
+4. Prueba y Refinamiento
+Una vez que hayas implementado el código, prueba tu sistema para asegurarte de que funcione correctamente. Revisa la salida en tu navegador y corrige cualquier problema que encuentres.
+
+Cierre/Conclusión
+En conclusión, este ejercicio te permitirá aplicar los conocimientos teóricos sobre recuperación de correos electrónicos con IMAP en PHP a una situación práctica. Asegúrate de que tu sistema sea eficiente y fácil de usar para visualizar los correos electrónicos. Este proyecto puede ser útil para un futuro desarrollo web donde necesites mostrar contenido desde una bandeja de entrada de correo electrónico.
+
+Recuerda que el objetivo es crear un sistema funcional que te permita interactuar con tus correos electrónicos a través de tu sitio web, lo que es una habilidad valiosa en muchos proyectos web modernos.
+
+
+Respuesta:
+
+
+Hoy quiero practicar cómo leer correos electrónicos usando IMAP en PHP. Aprendo cómo conectarme a mi correo, buscar los mensajes y ver su contenido. Voy a crear un pequeño programa en PHP que me muestre los correos en mi página web. Así entiendo mejor cómo funcionan los correos y cómo puedo usar PHP para trabajar con ellos.
+​
+Lo he intentado hacer el windows y me ha dado un monton de errores pero se me ha ocurrido hacerlo en la maquina virtual de linux ya que he pensado que funcionaría. 
+ En la maquina  he instalado:
+  -php
+  -apache
+  -curl
+  -php-imap
+  -php-curl
+y he  descomentado lineas en php.ini
+/etc/php/8.3/apache2/php.ini
+​
+He echo una primera version para comprobar que funcionaba:
+```
+<?php
+$mailbox = imap_open("{imap.ionos.es:993/imap/ssl/novalidate-cert}INBOX", "serena@jocarsa.com", "TAME123$");
+if (!$mailbox) {
+    die("Failed to connect: " . imap_last_error());
+}
+​
+$emails = imap_search($mailbox, 'ALL');
+if ($emails) {
+    foreach ($emails as $email_number) {
+        $header = imap_headerinfo($mailbox, $email_number);
+        echo "From: {$header->fromaddress}\n<br>";
+        echo "Subject: {$header->subject}\n<br>";
+        echo "Date: {$header->date}\n\n<br><br><hr>";
+    }
+}
+​
+imap_close($mailbox);
+?>
+```
+​
+Y al comprobar que funcionaba ya le he dado estilo:
+```
+<?php
+// Conexión al servidor IMAP
+$mailbox = imap_open("{imap.ionos.es:993/imap/ssl/novalidate-cert}INBOX", "serena@jocarsa.com", "TAME123$");
+if (!$mailbox) {
+    die("No se pudo conectar: " . imap_last_error());
+}
+​
+// Función para decodificar texto MIME
+function decodeMimeStr($string) {
+    $elements = imap_mime_header_decode($string);
+    $decoded = '';
+    foreach ($elements as $el) {
+        $charset = $el->charset ?? 'UTF-8';
+        $decoded .= iconv($charset, 'UTF-8//IGNORE', $el->text);
+    }
+    return $decoded;
+}
+​
+// Función para obtener cuerpo e imágenes
+function getEmailContent($mailbox, $email_number) {
+    $structure = imap_fetchstructure($mailbox, $email_number);
+    $body = '';
+    $images = [];
+​
+    if (!isset($structure->parts)) {
+        $body = imap_body($mailbox, $email_number);
+    } else {
+        foreach ($structure->parts as $partNumber => $part) {
+            if ($part->type == 0) { // Texto
+                $partBody = imap_fetchbody($mailbox, $email_number, $partNumber+1);
+                if ($part->encoding == 3) $partBody = base64_decode($partBody);
+                elseif ($part->encoding == 4) $partBody = quoted_printable_decode($partBody);
+​
+                if (strtolower($part->subtype) == 'plain') {
+                    $body .= nl2br(htmlspecialchars($partBody));
+                } else {
+                    $body .= $partBody;
+                }
+            }
+            if ($part->type == 3) { // Imagen
+                $imageData = imap_fetchbody($mailbox, $email_number, $partNumber+1);
+                if ($part->encoding == 3) $imageData = base64_decode($imageData);
+                elseif ($part->encoding == 4) $imageData = quoted_printable_decode($imageData);
+                $images[] = "data:{$part->subtype};base64," . base64_encode($imageData);
+            }
+        }
+    }
+​
+    return ['body' => $body, 'images' => $images];
+}
+​
+// Función para formatear la fecha en español
+function fecha_es($fecha_ingles) {
+    setlocale(LC_TIME, 'es_ES.UTF-8');
+    $date = new DateTime($fecha_ingles);
+    return strftime("%A, %d de %B de %Y, %H:%M", $date->getTimestamp());
+}
+​
+// Buscar correos
+$emails = imap_search($mailbox, 'ALL');
+if ($emails) {
+    rsort($emails);
+    $emails = array_slice($emails, 0, 20);
+}
+?>
+​
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi Web Cute - Correos</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: #fdf0ff;
+        font-family: 'Comic Neue', cursive;
+    }
+    h1 {
+        color: #a678f0; 
+        text-shadow: 1px 1px 2px #f4e3ff;
+    }
+    .card {
+        background-color: #ffffff;
+        border: 2px solid #d8b4ff;
+        border-radius: 20px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(166, 126, 240, 0.3);
+    }
+    .card-title {
+        color: #6a4ca8;
+    }
+    .card-subtitle {
+        color: #9f7aea;
+    }
+    .card-text {
+        color: #4a4a4a;
+    }
+    .img-fluid {
+        border-radius: 15px;
+        margin-top: 10px;
+    }
+    .alert-info {
+        background-color: #f3e8ff;
+        color: #6a4ca8;
+        border: 1px solid #d8b4ff;
+    }
+</style>
+</head>
+<body>
+​
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Mis Correos</h1>
+​
+    <?php if ($emails): ?>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <?php foreach ($emails as $email_number): 
+                $header = imap_headerinfo($mailbox, $email_number);
+​
+                // Remitente seguro
+                $from = '';
+                if (isset($header->from) && count($header->from) > 0) {
+                    $fromMailbox = $header->from[0]->mailbox ?? '';
+                    $fromHost = $header->from[0]->host ?? '';
+                    $from = $fromMailbox . ($fromHost ? "@$fromHost" : '');
+                }
+                $from = decodeMimeStr($from);
+​
+                $subject = decodeMimeStr($header->subject ?? '(Sin asunto)');
+                $date = fecha_es($header->date);
+​
+                $content = getEmailContent($mailbox, $email_number);
+                $body = $content['body'];
+                $images = $content['images'];
+            ?>
+                <div class="col">
+                    <div class="card h-100 shadow-sm p-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $subject; ?></h5>
+                            <h6 class="card-subtitle mb-2">De: <?php echo $from ?: '(Remitente desconocido)'; ?></h6>
+                            <p class="text-muted small"><?php echo $date; ?></p>
+                            <div class="card-text"><?php echo $body; ?></div>
+                            <?php foreach($images as $img): ?>
+                                <img src="<?php echo $img; ?>" class="img-fluid" alt="Imagen destacada">
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info text-center">No se encontraron correos.</div>
+    <?php endif; ?>
+</div>
+​
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+​
+<?php imap_close($mailbox); ?>
+```
+​
+Esta actividad a sido muy complicada de hacer pero estoy contenta por haberlo conseguido =)
+​
+Con este ejercicio aprendo a leer correos desde mi página web usando PHP e IMAP. Puedo ver los asuntos, los remitentes, las fechas y el contenido de los correos. También aprendo a mostrar imágenes que vienen en los correos. Me sirve para entender mejor cómo funciona el correo electrónico y cómo usarlo en proyectos web.

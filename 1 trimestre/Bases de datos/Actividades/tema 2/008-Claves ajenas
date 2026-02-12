@@ -1,0 +1,121 @@
+Enunciado paso a paso
+Introducción Supongamos que tienes una pequeña tienda de juguetes en el campo. Necesitas organizar tus ventas y mantener un registro de los clientes y productos disponibles. Para ello, decides crear una base de datos relacional para gestionar esta información.
+
+Creación de las tablas
+
+Primero, creas una tabla llamada clientes que almacenará la información de los clientes.
+CREATE TABLE `empresarial`.`clientes` (
+  `Identificador` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `direccion` VARCHAR(255),
+  PRIMARY KEY (`Identificador`)
+) ENGINE = InnoDB;
+Luego, creas una tabla llamada productos que almacenará la información de los productos.
+CREATE TABLE `empresarial`.`productos` (
+  `Identificador` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `precio` DECIMAL(10, 2),
+  PRIMARY KEY (`Identificador`)
+) ENGINE = InnoDB;
+Creación de la tabla de pedidos
+
+Ahora, necesitas una tabla para almacenar los pedidos realizados por los clientes.
+CREATE TABLE `empresarial`.`pedidos` (
+  `Identificador` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NOT NULL,
+  `id_cliente` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  PRIMARY KEY (`Identificador`)
+) ENGINE = InnoDB;
+Establecimiento de claves foráneas
+
+Para mantener la integridad referencial, necesitas establecer claves foráneas en la tabla pedidos.
+ALTER TABLE `pedidos` ADD CONSTRAINT `pedidosaclientes` FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`Identificador`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `pedidos` ADD CONSTRAINT `pedidosaproductos` FOREIGN KEY (`id_producto`) REFERENCES `productos`(`Identificador`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+Inserción de datos
+
+Inserta algunos clientes y productos en las tablas correspondientes.
+INSERT INTO `clientes` (`nombre`, `direccion`) VALUES ('Juan', 'Calle del Campo 123');
+INSERT INTO `productos` (`nombre`, `precio`) VALUES ('Juego de mesa', 50.99);
+Realización de un pedido
+
+Finalmente, realiza un pedido para el cliente y el producto que acabas de insertar.
+INSERT INTO `pedidos` (`fecha`, `id_cliente`, `id_producto`) VALUES ('2025-09-25', 1, 1);
+Restricciones
+Límites de conocimientos y qué NO usar: Solo puedes utilizar los conceptos y comandos que se han visto en la clase. No utilices librerías externas ni estructuras no vistas.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El estudiante debe entender el contexto del problema y cómo las tablas y claves foráneas se relacionan en una base de datos relacional.
+Desarrollo técnico correcto y preciso (25%)
+
+El estudiante debe escribir correctamente las sentencias SQL para crear las tablas, establecer las claves foráneas y realizar inserciones.
+Aplicación práctica con ejemplo claro (25%)
+
+El estudiante debe mostrar una comprensión práctica del concepto mediante ejemplos claros y precisos.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El estudiante debe cerrar el ejercicio enlazándolo con los contenidos de la unidad, mostrando cómo estos conceptos se aplican en un contexto real.
+
+
+
+Respuesta:
+
+
+Tengo una tienda llamada “Juguetes del Campo”.
+Para organizarme bien las ventas, uso una base de datos con tres tablas:
+-clientes → guarda la información de las personas que compran.
+-productos → guarda los juguetes que vendo.
+-pedidos → guarda cada venta, uniendo cliente, producto y fecha.
+​
+Cada tabla tiene un ID único (clave primaria).
+La tabla pedidos usa claves foráneas para asegurar que solo guarde clientes y productos que existan.
+​
+​
+1. Dentro de mi base de datos "tienda_juguetes" creo la labla de clientes, productos y pedidos:
+```
+CREATE TABLE `tienda_juguetes`.`clientes` (
+  `Identificador` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `direccion` VARCHAR(255),
+  PRIMARY KEY (`Identificador`)
+) ENGINE = InnoDB;
+```
+```
+CREATE TABLE `tienda_juguetes`.`productos` (
+  `Identificador` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `precio` DECIMAL(10, 2),
+  PRIMARY KEY (`Identificador`)
+) ENGINE = InnoDB;
+```
+```
+CREATE TABLE `tienda_juguetes`.`pedidos` (
+  `Identificador` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NOT NULL,
+  `id_cliente` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  PRIMARY KEY (`Identificador`)
+) ENGINE = InnoDB;
+```
+2. Establezco claves foraneas en la tabla de productos:
+```
+ALTER TABLE `pedidos` ADD CONSTRAINT `pedidosaclientes` FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`Identificador`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `pedidos` ADD CONSTRAINT `pedidosaproductos` FOREIGN KEY (`id_producto`) REFERENCES `productos`(`Identificador`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+```
+3. Inserto clientes y productos en sus tablas correspondientes:
+```
+INSERT INTO `clientes` (`nombre`, `direccion`) VALUES ('Juan', 'Calle del Campo 123');
+INSERT INTO `productos` (`nombre`, `precio`) VALUES ('Juego de mesa', 50.99);
+```
+4. Finalmente hago un pedido:
+```
+INSERT INTO `pedidos` (`fecha`, `id_cliente`, `id_producto`) VALUES ('2025-09-25', 1, 1);
+```
+​
+https://files.fm/u/kkd8xb5v9x
+​
+Lo aprendido se usa en la vida real:
+-Cada cliente, producto y pedido tiene un ID único (clave primaria) para no confundirlos.
+-Los pedidos solo pueden apuntar a clientes y productos que existen (clave foránea).
+-Esto ayuda a llevar un registro ordenado de ventas, productos y clientes en la tienda.

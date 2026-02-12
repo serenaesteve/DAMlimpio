@@ -1,0 +1,346 @@
+Actividad: Generación automática de informes de respuestas
+Contexto y Objetivo
+Durante esta sesión, hemos trabajado en la generación automática de informes de respuestas utilizando Python y una API externa. El objetivo es que practiques este concepto creando un script que lea las respuestas almacenadas en un archivo CSV y genere un informe detallado sobre el rendimiento de los estudiantes.
+
+Desarrollo
+Entendiendo la estructura del proyecto:
+
+El archivo mejoramos el prompt.py contiene una función para calcular las puntuaciones y generar un informe a partir de un CSV.
+El archivo guarda.php es un script PHP que recoge las respuestas enviadas por los usuarios y las guarda en un archivo CSV.
+Tarea principal:
+
+Modifica el script mejoramos el prompt.py para adaptarlo a tu entorno local. Asegúrate de cambiar la URL de la API externa si es necesario.
+Ejecuta el script para ver cómo se generan los informes y verifica que las respuestas se guarden correctamente en el archivo CSV.
+Pruebas adicionales:
+
+Prueba el funcionamiento del script con diferentes datos en el archivo respuestas.csv.
+Verifica que el informe generado sea preciso y que no haya errores en la clasificación de las respuestas.
+Cierre
+Al finalizar esta actividad, deberás tener un script funcional que genere informes detallados sobre los rendimientos de los estudiantes. Este ejercicio te ayudará a entender mejor cómo se pueden automatizar procesos de análisis de datos y cómo interactuar con APIs externas desde Python.
+
+Recuerda que la práctica es clave para dominar estos conceptos, así que asegúrate de probar el script en diferentes situaciones y verificar que funcione correctamente.
+
+
+
+
+Respuesta:
+
+En esta actividad se ha trabajado la automatización de la corrección de respuestas utilizando diferentes herramientas. El objetivo principal ha sido aprender a guardar datos en un archivo CSV y después procesarlos con un programa en Python para obtener resultados de forma automática. De esta manera, se puede facilitar el trabajo de corrección y evitar hacerlo de forma manual.
+
+mejoramoselpront.py:
+```
+import sys
+import csv
+import json
+import requests
+from collections import defaultdict
+
+
+URL = "http://localhost:11434/api/generate"
+
+MODEL = "llama3:latest"
+
+CSV_PATH = "respuestas.csv"
+
+OLLAMA_OPTIONS = {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "num_ctx": 4096,
+}
+
+
+ANSWER_KEY = {
+    "PHP es un lenguaje de:": "Servidor",
+    "Javascript es un lenguaje de": "Cliente",
+    "CSS es un lenguaje de": "Estilo",
+    "HTML es un lenguaje de": "Marcas",
+    "IF es:": "Estructura condicional",
+    "While es una estructura de:": "Bucle",
+}
+
+
+def compute_scores_base10(csv_path: str, answer_key: dict) -> dict:
+    stats = defaultdict(lambda: {"aciertos": 0, "fallos": 0, "sin_clave": 0})
+
+    with open(csv_path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row or len(row) < 3:
+                continue
+
+            name = (row[0] or "").strip()
+            question = (row[1] or "").strip()
+            answer = (row[2] or "").strip()
+
+            
+            if name == "":
+                continue
+
+            if question not in answer_key:
+                stats[name]["sin_clave"] += 1
+                continue
+
+            expected = answer_key[question]
+            if answer == expected:
+                stats[name]["aciertos"] += 1
+            else:
+                stats[name]["fallos"] += 1
+
+    
+    results = {}
+    for name, s in stats.items():
+        total_con_clave = s["aciertos"] + s["fallos"]
+        nota10 = None if total_con_clave <= 0 else (s["aciertos"] / total_con_clave) * 10.0
+        results[name] = {
+            **s,
+            "total_con_clave": total_con_clave,
+            "nota_sobre_10": nota10,
+        }
+    return results
+
+
+def render_console_table(scores: dict) -> str:
+    
+    def sort_key(item):
+        name, s = item
+        nota = s["nota_sobre_10"]
+        return (-(nota if nota is not None else -1e9), name)
+
+    rows = []
+    for name, s in sorted(scores.items(), key=sort_key):
+        nota = s["nota_sobre_10"]
+        nota_str = "N/A" if nota is None else f"{nota:.2f}"
+        rows.append([
+            name,
+            str(s["aciertos"]),
+            str(s["fallos"]),
+            str(s["sin_clave"]),
+            str(s["total_con_clave"]),
+            nota_str,
+        ])
+
+    headers = ["Alumno", "OK", "FAIL", "SIN_CLAVE", "TOTAL_CLAVE", "NOTA/10"]
+
+    cols = list(zip(headers, *rows)) if rows else [headers]
+    widths = [max(len(str(cell)) for cell in col) for col in cols]
+
+    def fmt_row(r):
+        return " | ".join(str(cell).ljust(widths[i]) for i, cell in enumerate(r))
+
+    sep = "-+-".join("-" * w for w in widths)
+
+    out = []
+    out.append(fmt_row(headers))
+    out.append(sep)
+    for r in rows:
+        out.append(fmt_row(r))
+    return "\n".join(out)
+
+
+
+def build_truth_by_student(csv_path: str, answer_key: dict) -> dict:
+    per_student = defaultdict(list)
+
+    with open(csv_path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row or len(row) < 3:
+                continue
+
+            name = (row[0] or "").strip()
+            question = (row[1] or "").strip()
+            answer = (row[2] or "").strip()
+            options_json = row[3] if len(row) > 3 else ""
+
+           
+            if name == "":
+                continue
+
+            if question not in answer_key:
+                verdict = "SIN_CLAVE"
+                expected = None
+            else:
+                expected = answer_key[question]
+                verdict = "OK" if answer == expected else "FAIL"
+
+            per_student[name].append({
+                "pregunta": question,
+                "respuesta": answer,
+                "veredicto": verdict,
+                "esperada": expected,
+                "opciones_json": options_json,
+            })
+
+    return per_student
+
+
+
+try:
+    with open(CSV_PATH, "r", encoding="utf-8") as f:
+        csv_raw = f.read()
+except FileNotFoundError:
+    print(f"ERROR: No existe el archivo: {CSV_PATH}", file=sys.stderr)
+    sys.exit(1)
+
+scores = compute_scores_base10(CSV_PATH, ANSWER_KEY)
+table_txt = render_console_table(scores)
+
+truth = build_truth_by_student(CSV_PATH, ANSWER_KEY)
+truth_json = json.dumps(truth, ensure_ascii=False, indent=2)
+
+
+prompt = f"""
+Eres un generador de INFORMES. NO corrige ni decide veredictos.
+Recibirás un JSON que YA contiene la corrección hecha por Python.
+
+REGLAS:
+1) NO cambies los veredictos.
+2) NO inventes preguntas ni errores.
+3) Formato estilo terminal Linux, monoespaciado, claro.
+4) Por alumno:
+   - Lista cada entrada con: Pregunta, Respuesta, Veredicto, y si hay, Esperada.
+   - Al final del alumno: resumen (OK/FAIL/SIN_CLAVE).
+5) Incluye un resumen final global con ranking por NOTA/10 si está disponible.
+
+Tabla de notas (verdad):
+{table_txt}
+
+Datos detallados (verdad) en JSON:
+{truth_json}
+"""
+
+payload = {
+    "model": MODEL,
+    "prompt": prompt,
+    "stream": False,
+    "options": OLLAMA_OPTIONS,
+}
+
+report = None
+try:
+    response = requests.post(URL, json=payload, timeout=120)
+    data = response.json()
+    report = data.get("response")
+    if not report:
+        raise RuntimeError(str(data))
+except Exception as e:
+    print("\n[AVISO] No se pudo generar informe con Ollama. Se mostrará solo la tabla.")
+    print(f"[DETALLE] {e}\n")
+    report = None
+
+
+print()
+print("=== TABLA DE NOTAS (0..10) ===")
+print(table_txt)
+print()
+
+if report:
+    print("=== INFORME DETALLADO ===")
+    print(report)
+else:
+    print("=== INFORME DETALLADO ===")
+    print("(No disponible: Ollama no respondió con 'response')")
+```
+
+guarda.php:
+```
+<?php
+
+
+$usuario   = $_GET['usuario']   ?? '';
+$pregunta  = $_GET['pregunta']  ?? '';
+$respuesta = $_GET['respuesta'] ?? '';
+$opciones  = $_GET['opciones']  ?? '[]';
+
+
+$opciones_array = json_decode($opciones, true);
+if (!is_array($opciones_array)) {
+    $opciones_array = [];
+}
+
+
+$opciones_json = json_encode($opciones_array, JSON_UNESCAPED_UNICODE);
+
+
+$fp = fopen("respuestas.csv", "a");
+
+
+fputcsv($fp, [
+    $usuario,
+    $pregunta,
+    $respuesta,
+    $opciones_json
+]);
+
+fclose($fp);
+```
+
+
+respuestas.csv:
+
+"Jose Vicente","PHP es un lenguaje de:",Servidor,"[""Cliente"",""Servidor"",""Base de datos""]"
+Javi,"Javascript es un lenguaje de",Servidor,"[""Cliente"",""Servidor"",""Bases de datos"",""Estilo""]"
+javier,"CSS es un lenguaje de",Estilo,"[""Cliente"",""Estilo"",""Servidor"",""Marcas""]"
+Diego,"While es una estructura de:",Bucle,"[""Bucle"",""Condicional"",""Es una función""]"
+
+Terminal:
+```
+serena@serena-portatil:/var/www/html/DAM/lenguaje de marcas/Actividades$ python3 mejoramos_el_prompt.py
+
+=== TABLA DE NOTAS (0..10) ===
+Alumno       | OK | FAIL | SIN_CLAVE | TOTAL_CLAVE | NOTA/10
+-------------+----+------+-----------+-------------+--------
+Diego        | 1  | 0    | 0         | 1           | 10.00  
+Jose Vicente | 1  | 0    | 0         | 1           | 10.00  
+javier       | 1  | 0    | 0         | 1           | 10.00  
+Javi         | 0  | 1    | 0         | 1           | 0.00   
+
+=== INFORME DETALLADO ===
+**INFORME DE EVALUACIÓN**
+
+**Alumno: Jose Vicente**
+Pregunta | Respuesta | Veredicto | Esperada
+---------|----------|----------|---------
+PHP es un lenguaje de: | Servidor | OK | Servidor
+
+**Resumen:** OK
+
+**Alumno: Javi**
+Pregunta | Respuesta | Veredicto | Esperada
+---------|----------|----------|---------
+Javascript es un lenguaje de | Servidor | FAIL | Cliente
+
+**Resumen:** FAIL
+
+**Alumno: javier**
+Pregunta | Respuesta | Veredicto | Esperada
+---------|----------|----------|---------
+CSS es un lenguaje de | Estilo | OK | Estilo
+
+**Resumen:** OK
+
+**Alumno: Diego**
+Pregunta | Respuesta | Veredicto | Esperada
+---------|----------|----------|---------
+While es una estructura de: | Bucle | OK | Bucle
+
+**Resumen:** OK
+
+**RESUMEN GLOBAL**
+
+Alumno       | OK | FAIL | SIN_CLAVE | TOTAL_CLAVE | NOTA/10
+-------------+----+------+-----------+-------------+--------
+Jose Vicente | 1  | 0    | 0         | 1           | 10.00  
+Javi         | 0  | 1    | 0         | 1           | 0.00   
+javier       | 1  | 0    | 0         | 1           | 10.00  
+Diego        | 1  | 0    | 0         | 1           | 10.00  
+```
+
+En esta actividad he creado un sistema para guardar y corregir respuestas de estudiantes de forma automática.
+
+Primero, hice un archivo guarda.php que recoge las respuestas de los alumnos y las guarda en un archivo CSV llamado respuestas.csv. En este archivo se guarda el nombre del alumno, la pregunta y la respuesta.
+
+Después, hice un programa en Python que lee el archivo CSV y compara las respuestas con una lista de respuestas correctas. El programa cuenta los aciertos y los fallos de cada alumno y calcula una nota sobre 10.
+
+El programa muestra una tabla con las notas y un informe donde se ve qué ha respondido cada alumno y si está bien o mal.
+Esta actividad me ha ayudado a entender mejor cómo se pueden automatizar tareas y trabajar con datos de forma sencilla.

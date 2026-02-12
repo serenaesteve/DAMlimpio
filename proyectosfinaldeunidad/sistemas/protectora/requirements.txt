@@ -1,0 +1,9 @@
+requests
+diffusers
+transformers
+accelerate
+safetensors
+pillow
+torch
+torchvision
+

@@ -1,0 +1,149 @@
+🎯 Objetivo:
+Aprender cómo pasar información escrita (como listados de alumnos o notas) a una base de datos relacional y hacer consultas simples en SQL.
+ 
+📋 Actividad paso a paso:
+ 
+🔹 Parte 1 – Información en papel (tema 001: Almacenamiento)
+1. Imagina que tienes todos estos datos escritos en papel:
+o Nombres de alumnos
+o Cursos que ofrece la escuela
+o Qué alumnos están en qué cursos
+o Las notas que han sacado
+2. Responde:
+o ¿Cómo organizarías esa información usando ficheros simples?
+(Por ejemplo, un fichero para alumnos, otro para cursos...)
+o Escribe 2 problemas que tendría trabajar con esa información en papel o en ficheros.
+ 
+🔹 Parte 2 – Crear una base de datos simple 
+1. Imagina que ahora quieres pasar esa información a una base de datos.
+2. Crea 3 tablas con sus campos:
+o Alumnos: id, nombre, apellido, fecha_nacimiento
+o Cursos: id, nombre_curso, año
+o Matriculas: id, id_alumno, id_curso, fecha_matricula
+​
+ 
+🔹 Parte 3 – Consultas SQL (tema 003: Consultas)
+Escribe las siguientes consultas en SQL (puedes escribirlas aunque no uses ningún programa):
+1. Muestra todos los nombres de alumnos.
+2. SELECT nombre FROM Alumnos;
+3. Muestra todos los cursos del año 2024.
+4. SELECT * FROM Cursos WHERE año = 2024;
+5. Muestra los nombres de alumnos con los cursos en los que están. (Usa JOIN)
+(Puedes escribirlo en lenguaje natural si no sabes hacerlo en SQL aún.)
+6. Muestra los alumnos nacidos después del 1 de enero de 2008.
+7. SELECT * FROM Alumnos WHERE fecha_nacimiento > '2008-01-01';
+ 
+​
+​
+​
+​
+Respuesta:
+​
+En este ejercicio aprendí cómo transformar información escrita o guardada en ficheros simples en una base de datos relacional. El objetivo fue entender cómo organizar los datos de manera más eficiente y lógica, evitando errores o repeticiones.
+​
+Comencé imaginando una situación real en la que tenía listados de alumnos, cursos y notas en papel, y luego pasé esa información a una base de datos MySQL. Para ello, creé tres tablas principales: Alumnos, Cursos y Matriculas, definiendo sus campos y relaciones.
+De esta forma, pude comprender mejor cómo se estructuran los datos en un sistema de gestión escolar y cómo se pueden consultar fácilmente usando instrucciones SQL.
+​
+***Imaginemos que tengo toda la información escrita en papel:***
+​
+-Nombres de alumnos
+-Cursos que ofrece la escuela
+-Qué alumnos están en qué cursos
+-Las notas que han sacado
+​
+***Organización usando ficheros simples***
+​
+Si tuviera que organizarlo con archivos (sin base de datos), lo haría así:
+-alumnos.txt → Contiene los datos de cada alumno (nombre, apellidos, fecha de nacimiento).
+-cursos.txt → Contiene los cursos disponibles (nombre del curso, año).
+-matriculas.txt → Indica qué alumno está en qué curso y en qué fecha se matriculó.
+-notas.txt → Contiene las calificaciones de los alumnos en los cursos.
+​
+***Problemas al trabajar con información en papel o ficheros***
+-Es muy fácil cometer errores o duplicar datos (por ejemplo, escribir el mismo alumno dos veces con distinto formato).
+-Buscar o relacionar la información entre ficheros es lento y complicado (por ej, encontrar qué cursos tiene cada alumno requiere abrir varios archivos).
+​
+​
+1. Creo mi base de datos:
+```
+CREATE DATABASE Escuela;
+USE Escuela;
+```
+​
+2. Ahora creo las tablas:
+```
+CREATE TABLE Alumnos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    fecha_nacimiento DATE
+);
+```
+```
+CREATE TABLE Cursos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_curso VARCHAR(100) NOT NULL,
+    año INT NOT NULL
+);
+```
+```
+CREATE TABLE Matriculas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_alumno INT NOT NULL,
+    id_curso INT NOT NULL,
+    fecha_matricula DATE,
+    FOREIGN KEY (id_alumno) REFERENCES Alumnos(id),
+    FOREIGN KEY (id_curso) REFERENCES Cursos(id)
+);
+```
+​
+3. Añado datos a las tablas:
+```
+INSERT INTO Alumnos (nombre, apellido, fecha_nacimiento) VALUES
+('Serena', 'Sania', '2007-03-15'),
+('Jonathan', 'Torres', '2008-11-02'),
+('Hecor', 'Lopez', '2006-07-22');
+```
+```
+INSERT INTO Cursos (nombre_curso, año) VALUES
+('Matemáticas', 2024),
+('Lengua y Literatura', 2024),
+('Ciencias', 2025);
+```
+```
+INSERT INTO Matriculas (id_alumno, id_curso, fecha_matricula) VALUES
+(1, 1, '2024-01-10'),
+(2, 1, '2024-01-11'),
+(2, 2, '2024-01-12'),
+(3, 3, '2025-02-05');
+```
+​
+4. Ver todos los alumnos:
+```
+SELECT * FROM Alumnos;
+```
+​
+5. Ver todos los cursos del año 2024:
+```
+SELECT * FROM Cursos WHERE año = 2024;
+```
+​
+6. Ver qué alumnos están en qué cursos (usando JOIN):
+```
+SELECT Alumnos.nombre, Alumnos.apellido, Cursos.nombre_curso
+FROM Alumnos
+JOIN Matriculas ON Alumnos.id = Matriculas.id_alumno
+JOIN Cursos ON Cursos.id = Matriculas.id_curso;
+```
+​
+7. Ver alumnos nacidos después del 1 de enero de 2008:
+```
+SELECT * FROM Alumnos WHERE fecha_nacimiento > '2008-01-01';
+```
+​
+​
+Gracias a esta actividad entendí la importancia de las bases de datos relacionales y cómo facilitan el manejo de la información. Al crear las tablas y establecer relaciones entre ellas, pude ver cómo se evita la duplicación de datos y se mejora la organización.
+​
+También aprendí a escribir consultas SQL para obtener información específica, como los alumnos de un curso o los que nacieron después de cierta fecha.
+Este ejercicio me ayudó a conectar la teoría con la práctica, entendiendo cómo funcionan los sistemas que usan escuelas, empresas o instituciones para gestionar datos de manera ordenada y profesional.
+

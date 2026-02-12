@@ -1,0 +1,12 @@
+[
+  {
+    "nombre":"Fortnite",
+    "descripcion":"Juego multijugador",
+    "categoria":"RPG"
+  },
+ {
+    "nombre":"Minecraft",
+    "descripcion":"Mundo abierto",
+    "categoria":"Sandbox"
+  }
+]

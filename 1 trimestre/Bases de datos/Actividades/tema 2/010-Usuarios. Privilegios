@@ -1,0 +1,150 @@
+Crear un Usuario Limitado
+En tu campo de estudio, los videojuegos y la naturaleza te ofrecen diversión y aprendizaje simultáneamente. Imagina que estás desarrollando una aplicación para gestionar tus juegos de mesa favoritos. Para asegurar la seguridad de esta aplicación, es necesario crear diferentes usuarios con privilegios limitados.
+
+Contexto
+Imagina que eres un jardinería aficionado y necesitas crear un sistema para gestionar tus plantas y jardines. Al igual que en los videojuegos, hay diferentes roles: uno que solo puede ver las plantas (lectura) y otro que puede agregar nuevas plantas (escritura).
+
+Enunciado paso a paso
+Crear un Usuario Limitado para Lectura:
+
+Crea un usuario llamado lector_jardineria con la contraseña jardin123.
+Asegúrate de que este usuario solo pueda leer los datos de tus jardines.
+Crear un Usuario Limitado para Escritura:
+
+Crea otro usuario llamado escritor_jardineria con la contraseña jardin456.
+Asegúrate de que este usuario solo pueda agregar nuevas plantas a los jardines.
+Asignar Privilegios:
+
+Para el usuario lector_jardineria, asigna solo los privilegios de lectura en la base de datos jardineria.
+Para el usuario escritor_jardineria, asigna los privilegios de lectura y escritura en la base de datos jardineria.
+Restricciones
+No uses librerías externas.
+No utilices estructuras no vistas en clase.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Explica el concepto de usuarios limitados y cómo se aplican a la gestión de un jardín.
+Desarrollo técnico correcto y preciso (25%):
+
+Escribe las consultas SQL necesarias para crear los usuarios y asignarles los privilegios adecuados.
+Aplicación práctica con ejemplo claro (25%):
+
+Muestra un ejemplo práctico de cómo estos usuarios podrían interactuar con la base de datos jardineria.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Concluye el ejercicio, enfatizando la importancia de tener diferentes roles y privilegios en sistemas de gestión de información.
+Completa los pasos descritos para crear los usuarios limitados y asignarles los privilegios correspondientes. Asegúrate de seguir las instrucciones y usar solo los conceptos vistos en clase.
+
+
+
+
+Respuesta:
+
+
+
+En esta práctica voy a crear usuarios limitados en una base de datos llamada jardineria.
+La idea es que cada usuario tenga unos permisos distintos según lo que tenga que hacer.
+
+Por ej, en un jardín hay personas que solo observan las plantas, y otras que pueden plantar o cuidar.
+En una base de datos pasa algo parecido: un usuario puede tener solo permiso para leer los datos (verlos) y otro puede agregar o modificar información.
+
+Esto es importante porque así protegemos la información y evitamos errores o cambios que no deberían hacerse.
+
+
+Esta actividad la he tenido que hacer desde la teminal de mi maquina virtual por que tras varios intentos en PHP myadmin no me dejaba.
+
+1. sudo mysql -u root -p
+
+2. CREATE DATABASE jardines;
+   USE jardines;
+
+3.CREATE USER
+  'lector_jardineria'@'localhost'
+  IDENTIFIED  BY 'jardin123';
+
+4. GRANT
+  SELECT
+  ON *.*
+  TO 'lector_jardineria'@'localhost';
+
+5. ALTER USER
+  'lector_jardineria'@'localhost'
+  REQUIRE NONE
+ WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0           MAX_USER_CONNECTIONS 0;
+
+6. GRANT ALL PRIVILEGES ON
+  `jardineria`.*
+  TO 'lector_jardineria'@'localhost';
+
+Creo la tabla PLANTAS:
+
+7. CREATE TABLE plantas (
+  nombre VARCHAR(100),
+    tipo VARCHAR(100)
+  );
+
+Creo el usuario ilimitado:
+
+8. CREATE USER
+  'escritor_jardineria'@'localhost'
+  IDENTIFIED BY 'jardin456';
+
+ Conceder permiso solo para agregar nuevas plantas (INSERT):
+ 
+9. GRANT INSERT
+   ON `jardineria`.*
+   TO 'escritor_jardineria'@'localhost';
+
+Configurar límites de conexión (opcional, como en el otro usuario)
+
+10. ALTER USER
+    'escritor_jardineria'@'localhost'
+     REQUIRE NONE
+     WITH MAX_QUERIES_PER_HOUR 0
+     MAX_CONNECTIONS_PER_HOUR 0
+     MAX_UPDATES_PER_HOUR 0
+     MAX_USER_CONNECTIONS 0;
+
+Aplicar cambios de privilegios:
+
+11. FLUSH PRIVILEGES;
+
+Asignar permisos:
+
+Eliminar usuarios anteriores si ya existían (opcional):
+
+12. DROP USER IF EXISTS 'lector_jardineria'@'localhost';
+      DROP USER IF EXISTS 'escritor_jardineria'@'localhost';
+
+Creo el usuario lector_jardineria:
+
+13. CREATE USER 'lector_jardineria'@'localhost' IDENTIFIED BY 'jardin123';
+
+Concedo solo privilegios de lectura en la base de datos jardineria:
+
+14. GRANT SELECT
+      ON `jardineria`.*
+      TO 'lector_jardineria'@'localhost';
+
+Creo el usuario escritor_jardineria:
+
+15. CREATE USER 'escritor_jardineria'@'localhost' IDENTIFIED BY 'jardin456';
+
+Concedo privilegios de lectura y escritura en la base de datos jardineria:
+
+16. GRANT SELECT, INSERT, UPDATE, DELETE
+      ON `jardineria`.*
+       TO 'escritor_jardineria'@'localhost';
+
+Aplico los cambios de privilegios:
+
+17. FLUSH PRIVILEGES;
+
+Con esta práctica he aprendido a crear usuarios con diferentes privilegios en una base de datos.
+Esto sirve para tener un sistema más seguro y ordenado, donde cada persona solo hace lo que le corresponde.
+
+En mi caso:
+-El usuario lector_jardineria solo lee los datos.
+-El usuario escritor_jardineria puede leer y agregar plantas.
+
+Me ha parecido una práctica útil, porque es algo que se usa mucho en bases de datos reales para proteger la información y trabajar en equipo sin riesgos.

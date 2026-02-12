@@ -1,0 +1,122 @@
+El ejercicio implica trabajar con campos BLOB en una base de datos MySQL y procesar formularios que incluyen archivos binarios como imágenes o documentos.
+
+Actividad
+Paso 1: Comprender los tipos de campos BLOB
+
+Familiarízate con los diferentes tipos de campos BLOB disponibles en MySQL (TINYBLOB, BLOB, MEDIUMBLOB, LONGBLOB).
+Entiende el tamaño máximo que cada tipo puede almacenar.
+Paso 2: Procesar formularios con archivos
+
+Abre el archivo index.php proporcionado.
+Analiza cómo se manejan los campos de texto y otros tipos en el formulario.
+Modifica la lógica para incluir un campo BLOB que permita subir archivos binarios.
+Paso 3: Probar el formulario
+
+Ejecuta el script index.php en tu entorno local o servidor web.
+Prueba subiendo diferentes tipos de archivos (imágenes, documentos) y verifica que se almacenen correctamente en la base de datos.
+Cierre
+Este ejercicio te permite aplicar lo aprendido sobre tipos de datos BLOB en MySQL y cómo procesar formularios con archivos binarios. Recuerda la importancia de manejar adecuadamente los tamaños de archivo y el tipo de contenido al interactuar con bases de datos que contienen datos binarios.
+
+Hobbies
+Juegos de mesa / videojuegos: Desarrolla habilidades de pensamiento lógico y resolución de problemas, que son útiles tanto en programación como en otros campos.
+La naturaleza: Aprende sobre la conservación del medio ambiente y el impacto de las actividades humanas en los ecosistemas, lo que puede influir en cómo manejas datos sensibles o geográficos.
+Practica estos hobbies para mantener un equilibrio saludable entre tu vida académica y personal.
+
+
+Respuesta:
+
+En este ejercicio he aprendido a trabajar con campos BLOB en MySQL y a subir archivos desde un formulario en PHP. Me ha gustado ver cómo se pueden guardar imágenes y documentos en la base de datos y entender un poco mejor cómo funcionan los archivos binarios.
+
+1. Creo la base de datos:
+```
+CREATE DATABASE archivos_db;
+```
+```
+USE archivos_db;
+```
+
+2. Creo tablas:
+```
+CREATE TABLE archivos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    datos LONGBLOB NOT NULL
+);
+```
+
+3. Creo el archivo index.php:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Archivo</title>
+</head>
+<body>
+    <h1>Subir archivo a la base de datos</h1>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required>
+        <br><br>
+        <label for="archivo">Selecciona un archivo:</label>
+        <input type="file" name="archivo" id="archivo" required>
+        <br><br>
+        <input type="submit" value="Subir archivo">
+    </form>
+</body>
+</html>
+```
+
+4. Creo el archivo upload.php:
+```
+<?php
+
+$mysqli = new mysqli("localhost", "root", "", "archivos_db");
+if ($mysqli->connect_error) {
+    die("Error de conexión: " . $mysqli->connect_error);
+}
+
+
+$nombre = $_POST['nombre'];
+
+
+if(isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK){
+    $archivoTmp = $_FILES['archivo']['tmp_name'];
+    $archivoBinario = file_get_contents($archivoTmp);
+
+    
+    $stmt = $mysqli->prepare("INSERT INTO archivos (nombre, datos) VALUES (?, ?)");
+    $stmt->bind_param("sb", $nombre, $null);
+    $stmt->send_long_data(1, $archivoBinario);
+    $stmt->execute();
+
+    if($stmt->affected_rows > 0){
+        echo "Archivo subido correctamente.";
+    } else {
+        echo "Error al subir el archivo.";
+    }
+
+    $stmt->close();
+} else {
+    echo "No se ha subido ningún archivo o hubo un error.";
+}
+
+$mysqli->close();
+?>
+```
+
+5. Ahora he puesto mis archivos en esta ruta C:\xampp\htdocs\subir_archivos
+6. Ahora ejecuto esto en el navegador http://localhost/subir_archivos/index.php , me sale esto:
+https://files.fm/u/w9ksjx642a
+
+7. Ahora voy a probar que se pueden subir cosas 
+8.  He subido una foto y me ha salido esto "Archivo subido correctamente."
+9.  Ahora voy a comprobarlo en la base de datos.
+10.  Editar Editar
+Copiar Copiar
+Borrar Borrar
+1
+prueba 1
+[BLOB - 25.7 KB]
+
+Al hacer la actividad, he conseguido subir archivos y guardarlos en la base de datos. Me ha ayudado a entender cómo funcionan los campos BLOB y cómo manejar archivos en PHP. Creo que me será útil para futuras prácticas y proyectos.

@@ -1,0 +1,74 @@
+Configuración y Transferencia de Archivos con Ubuntu Server
+Contexto
+A lo largo de este módulo hemos aprendido cómo instalar sistemas operativos como Ubuntu Server y configurar servicios básicos para su uso en una red local. Además, hemos explorado la transferencia de archivos entre ordenadores utilizando herramientas como FileZilla Client. En esta actividad, vamos a aplicar estos conocimientos prácticamente.
+
+Enunciado paso a paso
+Configuración del Servidor SSH
+
+Abre tu terminal y actualiza el sistema ejecutando:
+sudo apt update
+Instala los herramientas de red necesarias:
+sudo apt install net-tools
+Comprueba la configuración de tu interfaz de red utilizando ifconfig:
+ifconfig
+Nota la dirección IP asignada a tu máquina, por ejemplo, 192.168.1.129.
+Instalación del Servicio SSH
+
+Instala el servidor SSH para permitir conexiones remotas:
+sudo apt install openssh-server
+Transferencia de Archivos
+
+Descarga e instala FileZilla Client en tu ordenador.
+Arranca FileZilla y crea un nuevo sitio con los siguientes parámetros:
+Tipo: SSH
+IP: 192.168.1.129
+Usuario: josevicente
+Contraseña: TAME123$
+Utiliza FileZilla para transferir archivos desde tu ordenador a la máquina virtual de Ubuntu Server.
+Restricciones
+Solo puedes usar los comandos y herramientas que se listan en el contexto.
+No utilices librerías externas ni estructuras de programación complejas.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El estudiante debe explicar claramente el propósito de configurar SSH en un servidor Ubuntu Server.
+Desarrollo técnico correcto y preciso (25%)
+
+El estudiante debe mostrar los comandos utilizados correctamente para actualizar, instalar herramientas de red y el servidor SSH.
+Debe indicar cómo verificar la dirección IP asignada a su máquina.
+Aplicación práctica con ejemplo claro (25%)
+
+El estudiante debe describir los pasos seguidos en FileZilla para transferir archivos entre ordenadores.
+Debe mostrar cómo comprobar que los archivos se han transferido correctamente.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El estudiante debe reflejar cómo esta actividad contribuye a entender el funcionamiento de servidores remotos y la gestión de archivos en una red local.
+
+
+
+
+Respuesta:
+
+
+Configurar SSH en un servidor Ubuntu Server sirve para poder entrar y manejar el servidor desde otro ordenador sin tener que estar frente a él. Con SSH puedo ejecutar comandos, mover archivos o configurar cosas de manera remota y segura.
+
+Es muy útil porque me permite trabajar con el servidor desde cualquier ordenador de la red, y todo lo que hago está protegido y encriptado.
+
+1. Instalo paquetes de red:
+- sudo apt install net-tools
+2. Ahora quiero saber cual es mi IP:
+-ifconfig
+- mi IP es 172.20.10.12
+3. Ahora instalo Openssh server:
+- sudo apt install openssh-server
+- le digo s
+4. Ahora abro Firecilla en mi PC y pongo esto:
+Tipo: SSH
+IP: 192.168.1.130
+Usuario: serenaesteve
+Contraseña: Examen123
+5. Ahora una vez dentro mi Pc esta a la izquierda y el servidor a la derecha entonces, como yo queria subir los archivos de mi portafolio, directamente en el lador izquierdo he seleccionado los archivos y los he arrastrado al lado drecho.
+
+Esta actividad me a ayudado a entender cómo funcionan los servidores remotos, porque he aprendido a conectarme a Ubuntu Server desde otro ordenador usando SSH. También me a enseñado a mover y organizar archivos en una red local usando FileZilla.
+
+Con esto he aprendido mejor cómo se puede administrar un servidor sin estar frente a él y cómo compartir información de manera segura entre distintos equipos de la misma red.

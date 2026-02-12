@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <datospersonales>
+    <nombre>Jose Vicente</nombre>
+    <apellido1>Carratalá</apellido1>
+    <telefonos>
+      <movil>620891718</movil>
+      <fijo>963778757</fijo>
+    </telefonos>
+  </datospersonales>
+</persona>

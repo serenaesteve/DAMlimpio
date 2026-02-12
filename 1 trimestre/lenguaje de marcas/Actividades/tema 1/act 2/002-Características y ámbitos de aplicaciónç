@@ -1,0 +1,83 @@
+Crear un gráfico con SVG para representar un bosque
+En este ejercicio, aprenderás a crear un gráfico sencillo usando el lenguaje SVG (Scalable Vector Graphics). Imagina que estás en una misión de campo y quieres representar los árboles que has recorrido. Vamos a usar SVG para dibujar un bosque con varios círculos, donde cada círculo representa un árbol.
+
+Enunciado paso a paso
+Abrir tu editor de texto favorito y crea un nuevo archivo llamado bosque.svg.
+
+Escribir la estructura básica del SVG:
+
+<svg 
+  width="512" 
+  height="512" 
+  xmlns="http://www.w3.org/2000/svg"
+>
+</svg>
+Agregar círculos para representar los árboles:
+
+Coloca tres círculos en diferentes posiciones dentro del SVG.
+Cada círculo debe tener un radio de 50 y estar coloreado de verde (fill="green").
+Asegúrate de que los círculos no se superpongan entre sí.
+Guardar el archivo y abrilo en tu navegador para ver el resultado.
+
+Restricciones
+No uses librerías externas.
+No utilices input() ni lectura de teclado.
+Mantén todo dentro del contexto de SVG básico.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe entender el concepto de SVG y cómo se utiliza para crear gráficos simples.
+Desarrollo técnico correcto y preciso (25%): El SVG debe tener la estructura correcta y los círculos deben cumplir con las especificaciones dadas.
+Aplicación práctica con ejemplo claro (25%): El alumno debe crear un gráfico real de un bosque utilizando SVG, lo que demuestra su comprensión del tema.
+Cierre/Conclusión enlazando con la unidad (25%): El ejercicio debe terminar con una reflexión sobre cómo este tipo de representación gráfica podría ser útil en situaciones reales, como el seguimiento de un recorrido en campo.
+
+
+
+Respuesta:
+
+
+SVG es un tipo de dibujo que se hace con código en lugar de apps de dibujo.
+-Se usan fórmulas para dibujar figuras de círculos, cuadrados o líneas.
+-No se ve borroso aunque lo hagas grande o pequeño.
+
+A continuacion te pongo el codigo que he utilizado para dibujar los circulos que representan arboles:
+```
+<svg 
+  width="512" 
+  height="512" 
+  xmlns="http://www.w3.org/2000/svg"
+>
+<circle
+cx="128"
+cy="128"
+r="50"
+fill="green"
+/>
+<circle
+cx="256"
+cy="256"
+r="50"
+fill="green"
+/>
+<circle
+cx="384"
+cy="384"
+r="50"
+fill="green"
+/>
+</svg>
+```
+
+y a continuacion pondre el link para que puedas ver que hace el codigo:
+
+file:///C:/Users/Serena/Desktop/bosque.sv
+
+Conclusion con SGV podemos:
+
+-Dibujar mapas o bosques sin complicaciónes.
+-Hacer dibujos que se vean bien.
+-Usarlo en excursiones o trabajos de campo para enseñar rutas o sitios importantes.
+
+Esta actividad me ha servido para darme cuenta de que poco a poco voy aprendiendo y que de algo simple se puede hacer algo guay.
+Feedback de la evaluación:
+Para mejorar, asegúrate de integrar uno de los hobbies mencionados (juegos de mesa/videojuegos o naturaleza) en el contexto, nombres de variables y datos de ejemplo del enunciado. También podrías profundizar más en las características y funcionalidades del SVG para proporcionar una explicación más detallada.
+
+

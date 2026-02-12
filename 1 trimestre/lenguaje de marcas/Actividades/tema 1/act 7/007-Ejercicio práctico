@@ -1,0 +1,126 @@
+Contexto
+
+En este ejercicio práctico, vamos a trabajar con documentos XML que describen información sobre una persona, como su nombre, apellidos y contacto. Es importante entender cómo estructurar y manipular estos datos para su correcta representación y uso en aplicaciones web.
+
+El campo de la naturaleza nos ofrece muchos ejemplos de cómo estructurar y organizar información. Imagina que estás observando un bosque y deseas documentar los árboles que encuentras. Cada árbol tiene características como su especie, tamaño y ubicación. Podemos usar una estructura XML similar para describir a las personas en nuestro caso.
+
+Enunciado paso a paso
+
+Crea un archivo XML llamado persona.xml
+
+El archivo debe contener la información básica de una persona, como su nombre, apellidos y teléfono.
+Asegúrate de usar las etiquetas adecuadas y atributos para organizar esta información.
+Añade los siguientes datos a tu archivo XML:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre>Jose Vicente</nombre>
+  <apellido1>Carratalá</apellido1>
+  <telefono>620891718</telefono>
+</persona>
+Crea un archivo XML llamado telefonos.xml
+
+Este archivo debe contener la información de los teléfonos de una persona, tanto móviles como fijos.
+Utiliza etiquetas anidadas para agrupar estos datos.
+Añade los siguientes datos a tu archivo XML:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <datospersonales>
+    <nombre>Jose Vicente</nombre>
+    <apellido1>Carratalá</apellido1>
+    <telefonos>
+      <movil>620891718</movil>
+      <fijo>963778757</fijo>
+    </telefonos>
+  </datospersonales>
+</persona>
+Restricciones
+
+Solo puedes usar los elementos y atributos que se mencionan en el contexto.
+No utilices etiquetas o estructuras no vistas en la clase.
+Criterios de evaluación
+
+Introducción y contextualización (25%)
+
+El ejercicio debe comenzar con una breve explicación del propósito de trabajar con XML para describir información sobre personas.
+Desarrollo técnico correcto y preciso (25%)
+
+El alumno debe crear correctamente los archivos XML con las estructuras y datos solicitados.
+La sintaxis XML debe ser correcta y seguida de las reglas establecidas en la clase.
+Aplicación práctica con ejemplo claro (25%)
+
+El ejercicio debe incluir un ejemplo práctico de cómo organizar información sobre una persona utilizando estructuras XML anidadas.
+El alumno debe mostrar comprensión del uso de etiquetas y atributos para agrupar datos.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe terminar con un cierre que enfatice la importancia de la separación de estructura, presentación y datos en documentos XML.
+El alumno debe relacionar esta práctica con los conceptos aprendidos en la clase sobre lenguajes de marcas y sistemas de gestión de información.
+
+
+
+Respuesta:
+
+
+
+XML sirve para guardar datos de forma ordenada. 
+​
+***Ayuda a:***
+-Representar información de manera clara (por ejemplo, nombre, edad, dirección).
+-Compartir datos fácilmente entre diferentes programas.
+-Mantener una estructura que los pc pueden entender.
+​
+En este ejercicio usaremos XML para describir información básica de una persona.
+​
+***Persona.xml***
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre>Jose Vicente</nombre>
+  <apellido1>Carratalá</apellido1>
+  <telefono>620891718</telefono>
+</persona>
+```
+​
+***Telefono.xml***
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <datospersonales>
+    <nombre>Jose Vicente</nombre>
+    <apellido1>Carratalá</apellido1>
+    <telefonos>
+      <movil>620891718</movil>
+      <fijo>963778757</fijo>
+    </telefonos>
+  </datospersonales>
+</persona>
+```
+​
+Esto es un ejemplo claro de como organizar información sobre una persona utilizando estructuras XML anidadas:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- En este documento voy a describir a un ser humano -->
+<persona>
+  <nombre>Jose Vicente</nombre>
+  <apellido1>Carratalá</apellido1>
+  <apellido2>Sanchis</apellido2>
+  <telefonos>
+    <movil>620891718</movil>
+    <fijo>963778757</fijo>
+  </telefonos>
+  <emails>
+    <empresa>info@jocarsa.com</empresa>
+    <personal>info@josevicentecarratala.com</personal>
+  </emails>
+</persona>
+```
+​
+La importancia de usar ediquetas o atributos es evidente, sin ellas el codigo seria un desastre visualmente no nos aclarariamos y ademas creo (no lo se del todo) que el codigo no funcionaría.
+​
+Utilizar XML me enseña a separar la estructura, la presentación y los datos. La estructura (las etiquetas) organiza la información, los datos (el contenido) guardan el valor, y la presentación es aparte, en otros lenguajes(por ej html o CSS), por que es lo bonito. Esta separación es lo que hace que XML sea tan útil para compartir información entre diferentes sistemas.
+​
+- Los lenguajes de marcas (XML o HTML) sirven para estructurar y describir la información.
+- Los sistemas de gestión de información aprovechan estructura para almacenar, compartir y reutilizar los datos de forma eficiente.
+​
+Este tema de lenguaje de marcas me ha encantado y estoy deseando seguir aprendiendo cosas.

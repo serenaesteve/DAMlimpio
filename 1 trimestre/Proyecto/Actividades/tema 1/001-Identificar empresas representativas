@@ -1,0 +1,132 @@
+Título
+Análisis del mercado empresarial de IA en la Comunidad Valenciana
+
+Contexto
+En un mundo cada vez más digitalizado, la inteligencia artificial (IA) se está convirtiendo en una herramienta esencial para muchas empresas. Como valencianos apasionados por la naturaleza y los videojuegos, te proponemos explorar el mercado empresarial de IA en nuestra región. Investigaremos las empresas representativas y oportunidades locales que aún no están siendo plenamente cubiertas.
+
+Enunciado paso a paso
+Identifica las empresas representativas de IA en la Comunidad Valenciana:
+
+Crea una lista con los nombres de las empresas mencionadas en el contexto, como Maisa, Cinco Días, ActiMirror, Aitister, QUIBIM, MasLeads, BigBro.AI Sports, Voicemod SL, WonderBits y Highdatanet.
+Analiza la oferta local de servicios de IA:
+
+Para cada empresa, describe los servicios que ofrece en relación con la IA. ¿Se centran más en trazabilidad o en personalización? ¿Ofrecen soluciones para entornos regulados o para el campo?
+Evaluación del mercado:
+
+Basándote en la información recopilada, evalúa si hay oportunidades locales que los grandes actores de IA (como Deepseek y Copilot) pueden no estar cubriendo completamente.
+Planificación de tu proyecto:
+
+Considerando lo aprendido, propón un proyecto relacionado con la IA que pueda ser viable y realista para una empresa valenciana. ¿Te gustaría desarrollar un servicio que resuelva una necesidad específica local? ¿O tal vez quieres crear una herramienta personalizada para el campo?
+Restricciones
+No utilizar librerías externas ni estructuras no vistas en la asignatura actual.
+Evita repeticiones de contenidos externos y asegúrate de que todo lo utilizado esté dentro del contexto proporcionado.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Comprender el contexto del mercado empresarial de IA en la Comunidad Valenciana.
+Desarrollo técnico correcto y preciso (25%)
+
+Identificar correctamente las empresas representativas y analizar sus servicios con precisión.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporcionar un análisis detallado y una propuesta de proyecto basada en la información recopilada.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluir el análisis y enlazarlo con los conceptos aprendidos, como generalismo vs personalización, y cómo esta investigación puede ayudar a una empresa valenciana a desarrollar un proyecto relacionado con la IA.
+
+
+
+
+
+Respuesta:
+
+
+
+En los últimos años, la inteligencia artificial (IA) se ha vuelto muy importante para muchas empresas. Sirve para ayudar a tomar decisiones, crear contenido o analizar datos. Hoy en día, la IA está presente en casi todos los sectores.
+
+En la Comunidad Valenciana también hay empresas que están usando esta tecnología. En este trabajo voy a conocer algunas de ellas, ver qué hacen y qué servicios ofrecen, para descubrir si hay ideas o oportunidades que aún no se están aprovechando.
+
+Además, como valencianos a los que nos gusta la naturaleza y los videojuegos, también pensaré un posible proyecto de IA que se pueda hacer en nuestra región y que tenga relación con estos temas.
+
+Las empresas que he encontrado y que aparecen en el contexto son:
+
+-Maisa
+-ActiMirror
+-Aitister
+-QUIBIM
+-MasLeads
+-Voicemod SL
+
+Ahora, explico brevemente qué hace cada empresa y en qué tipo de IA se centra:
+
+***Maisa***
+Es una startup valenciana que crea agentes de IA para empresas. Su objetivo es que las acciones de la IA sean más transparentes y trazables, para poder controlar mejor lo que hacen.
+-Se centra más en la trazabilidad que en la personalización.
+-Trabaja con sectores regulados como el financiero o el energético.
+
+***ActiMirror***
+Se dedica a fabricar espejos inteligentes que usan tecnología para mejorar la experiencia del cliente, por ejemplo en tiendas o gimnasios.
+-Se centra en la personalización, porque adapta los contenidos según la persona.
+-No trabaja en entornos regulados.
+
+***Aitister***
+Es una empresa que utiliza IA para crear diseños y texturas únicas, por ejemplo para azulejos o interiores.
+-Su IA está enfocada en la personalización, ya que genera resultados diferentes para cada usuario.
+-Trabaja en el sector del diseño (No regulado).
+
+***QUIBIM***
+Empresa muy conocida en Valencia por aplicar IA al análisis de imágenes médicas. Ayuda a los médicos a detectar enfermedades como el cáncer.
+-Está muy centrada en la trazabilidad y precisión, ya que trabaja con datos sensibles.
+-Sí opera en un entorno regulado (salud).
+
+***MasLeads***
+MasLeads usa IA para ayudar a las empresas a buscar clientes potenciales y mejorar sus estrategias de marketing.
+-Está centrada en la personalización, ya que adapta la búsqueda según el tipo de negocio.
+-No trabaja en un entorno regulado.
+
+***Voicemod SL***
+Es una empresa valenciana bastante famosa. Usa IA para modificar voces en tiempo real y crear efectos de sonido, sobre todo para videojuegos o streamers.
+-Mezcla personalización (la voz de cada usuario) con algo de trazabilidad, ya que también trabaja en detectar “deepfakes”.
+-No está en un sector regulado.
+
+
+Después de ver estas empresas, se puede ver que en la Comunidad Valenciana hay bastante actividad en el uso de la IA. Aun así, la mayoría trabajan en áreas como la salud, el diseño o el marketing, pero casi ninguna está enfocada en el campo o la agricultura, que son muy importantes en nuestra región.
+
+También se nota que las grandes empresas de IA, como Deepseek o Copilot, hacen herramientas muy generales, pero no están pensadas para las necesidades concretas de la Comunidad Valenciana.
+
+Por eso, hay una buena oportunidad para crear proyectos de IA centrados en:
+-La agricultura y el medio ambiente.
+-El turismo y la personalización de experiencias.
+-La digitalización de pequeñas empresas valencianas.
+
+
+Nombre del proyecto: FarmAI
+Descripción:
+
+Es una aplicación que usa inteligencia artificial para ayudar a los agricultores valencianos. La idea es que puedan mejorar el riego, detectar plagas y cuidar el medio ambiente.
+
+La app recogería datos del clima, la humedad y el tipo de cultivo, y con eso la IA daría consejos personalizados para cada campo.
+
+Objetivos del proyecto:
+-Dar recomendaciones según el tipo de cultivo.
+-Ahorrar agua y fertilizantes.
+-Registrar las acciones del agricultor (para cumplir con normas agrícolas).
+-Cuidar la naturaleza y hacer la agricultura más sostenible.
+
+Tecnología necesaria (básico):
+-Sensores para medir la humedad y la temperatura.
+-Una base de datos para guardar la información.
+-Un modelo sencillo de IA que aprenda de los datos.
+-Una página web o aplicación móvil donde el agricultor vea los resultados.
+
+Mis intereses:
+A mí me gusta mucho la naturaleza y los videojuegos, así que me gustaría añadir una parte divertida al proyecto. Por ejemplo, que el agricultor pueda ver una simulación 3D del crecimiento de sus plantas, como si fuera un juego educativo.
+
+
+El mercado de la inteligencia artificial en la Comunidad Valenciana está creciendo mucho. Ya hay empresas que destacan por la trazabilidad (como Maisa o QUIBIM) y por la personalización (como Aitister o Voicemod).
+Aun así, hay sectores como la agricultura o el turismo que todavía no están aprovechando bien la IA.
+
+Mi proyecto, FarmAI, une la personalización, la trazabilidad y la sostenibilidad, adaptándose a las necesidades de nuestra región.
+Con este proyecto se demuestra que una empresa valenciana puede usar la IA para resolver problemas reales del entorno local.
+
+Basicamente, la IA no es solo para grandes empresas tecnológicas. También puede mejorar la vida y el trabajo de las personas si se usa con creatividad y pensando en las necesidades de nuestra comunidad.

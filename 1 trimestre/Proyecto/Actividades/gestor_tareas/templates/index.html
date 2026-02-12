@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Tareas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gestor de Tareas</h1>
+
+    <h2>Anadir nueva tarea</h2>
+    <form action="/anadir" method="post">
+        <input type="text" name="nombre" placeholder="Nombre de la tarea" required>
+        <input type="text" name="descripcion" placeholder="Descripcion">
+        <button type="submit">Anadir</button>
+    </form>
+
+    <h2>Tareas</h2>
+    <ul>
+        {% for tarea in tareas %}
+            <li>
+                {% if tarea.completada %}
+                    <s>{{ tarea.nombre }} - {{ tarea.descripcion }}</s>
+                {% else %}
+                    {{ tarea.nombre }} - {{ tarea.descripcion }}
+                {% endif %}
+                <a href="/completar/{{ loop.index0 }}">Completar</a> |
+                <a href="/eliminar/{{ loop.index0 }}">Eliminar</a>
+            </li>
+        {% else %}
+            <li>No hay tareas</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+

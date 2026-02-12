@@ -1,0 +1,65 @@
+Conversión explícita de datos y juego de mesa
+En este ejercicio, vamos a explorar cómo convertir explícitamente los tipos de datos en Python utilizando un ejemplo práctico relacionado con juegos de mesa.
+
+Contexto
+Imagina que estás desarrollando una aplicación para gestionar las partidas de un juego de mesa popular. El juego requiere almacenar información sobre los jugadores, como su nombre y la edad. Algunos datos pueden llegar a ti en formato incorrecto, por lo que es necesario realizar conversiones explícitas.
+
+Enunciado paso a paso
+Declaración de variables:
+
+Declara una variable llamada nombre_jugador con el valor "Juan".
+Declara una variable llamada edad_jugador con el valor "30" (como cadena).
+Mostrar tipos de datos iniciales:
+
+Muestra el tipo de dato de nombre_jugador.
+Muestra el tipo de dato de edad_jugador.
+Convertir explícitamente los datos:
+
+Convierte la variable edad_jugador a entero utilizando la función int(), y almacena el resultado en una nueva variable llamada edad_entera.
+Muestra el tipo de dato de edad_entera.
+Realizar operaciones con los datos convertidos:
+
+Suma 5 años a la edad del jugador y muestra el resultado.
+Restricciones
+No utilices funciones o métodos que no hayan sido explicados en clase.
+Evita utilizar variables globales o funciones adicionales.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente el contexto del ejercicio y cómo se relaciona con juegos de mesa.
+Desarrollo técnico correcto y preciso (25%): Muestra una comprensión correcta de la conversión explícita de datos en Python, utilizando los nombres de variables proporcionados.
+Aplicación práctica con ejemplo claro (25%): Realiza las conversiones correctamente y muestra el resultado de las operaciones realizadas.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye el ejercicio haciendo referencia a cómo esta técnica puede ser útil en un juego de mesa, como para calcular edades o puntos de experiencia.
+
+
+Respuesta:
+
+Por lo tanto Basicamente los juegos de mesa sirven como ejemplo porque también usan datos de jugadores, como nombre, edad o puntos. En Python, esos mismos datos pueden venir en formatos diferentes como texto o número. Si queremos sumar puntos o calcular la edad, tenemos que convertir los datos. Los ejercicios con juegos de mesa me ayudan a entender por qué es útil la conversión de datos.
+```
+nombre_jugador="juan"
+edad_jugador="30"
+
+
+print(type(nombre_jugador))
+print(type(edad_jugador))
+
+
+edad_entera=int(edad_jugador)
+print(type(edad_entera))
+
+edad_entera += 5
+print(edad_entera)
+```
+
+En el codigo que acabo de adjuntar muestro que declaro las variables, muestro los tipos de datos iniciales, muestro como convierto los datos y como realizo la operación.
+
+A continuación te pongo el resultado del codigo:
+
+```
+PS C:\Users\Serena\Documents\programacion> & "C:/Program Files/Python313/python.exe" c:/Users/Serena/Documents/programacion/variables2
+<class 'str'>
+<class 'str'>
+<class 'int'>
+35
+PS C:\Users\Serena\Documents\programacion> 
+```
+
+Cambiar los datos de texto a número en Python nos permite hacer cuentas sin problemas. En un juego de mesa, esto sirve para sumar años, puntos o experiencia de los jugadores. Por lo tanto el programa entiende los datos y el juego funciona bien.

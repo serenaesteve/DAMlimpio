@@ -1,0 +1,119 @@
+Ejercicio: Explorando la Estructura de Directorios
+Para esta actividad, vamos a utilizar algunos scripts en Python para explorar y visualizar la estructura de directorios en un sistema operativo Linux. Estos scripts te ayudarán a entender cómo organizar y gestionar los archivos y carpetas de tu sistema.
+
+Contexto
+Como amante del campo y un gran fanático de los juegos de mesa, imaginemos que estás explorando una extensa biblioteca de videojuegos en una carpeta llamada "Programación". Quieres crear un script que te muestre la estructura completa de esta carpeta, incluyendo todos los archivos y subcarpetas, así como su tamaño. Esto es similar a cómo un cazador de naturaleza recorre un bosque, explorando cada rincón para encontrar nuevos especímenes.
+
+Enunciado paso a paso
+Explorar la carpeta con os.walk:
+
+Abre el archivo libreria_os.py.
+Comprende cómo se utiliza la función os.walk para recorrer recursivamente una carpeta y obtener sus archivos y subcarpetas.
+Ejecuta el script y observa los resultados.
+Visualizar la estructura de directorios con print_tree:
+
+Abre el archivo imprimir_estilo.py.
+Modifica la función print_tree para que muestre un árbol visual de la carpeta "Programación", incluyendo los tamaños de los archivos y carpetas.
+Ejecuta el script y verifica que se muestra correctamente la estructura.
+Calcular el tamaño total de una carpeta:
+
+Abre el archivo con_suma_de_peso.py.
+Comprende cómo se calcula el tamaño total de una carpeta y cómo se formatea para mostrarlo de manera legible.
+Ejecuta el script y observa los resultados.
+Restricciones
+No uses funciones o módulos externos que no estén explicados en la clase.
+Asegúrate de manejar correctamente los errores de permiso al acceder a carpetas protegidas.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente el propósito del ejercicio y cómo se relaciona con la estructura de directorios en Linux.
+Desarrollo técnico correcto y preciso (25%): Muestra una comprensión profunda de cómo funcionan los scripts y cómo puedes modificarlos para cumplir con tus necesidades.
+Aplicación práctica con ejemplo claro (25%): Ejecuta los scripts y muestra los resultados, explicando cómo el código se relaciona con la estructura de directorios en tu sistema.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo esta actividad te ha ayudado a entender mejor la gestión de archivos y carpetas en sistemas operativos Linux, y cómo puedes aplicar estos conocimientos en el campo o en tus juegos de mesa.
+
+
+Respuesta:
+
+En esta actividad utilizo Python para aprender cómo se organizan las carpetas y los archivos en el ordenador. Trabajo con una carpeta donde tengo guardadas distintas actividades y, mediante varios programas, voy recorriendo su contenido para ver qué hay dentro.
+
+El objetivo de esta práctica es entender cómo se puede explorar una carpeta, ver sus subcarpetas y archivos, y conocer el espacio que ocupan. Con esta actividad empiezo a familiarizarme con el uso de Python para trabajar con el sistema de archivos.
+
+libreria_os.py:
+```
+import os
+
+carpeta = r"C:\Users\Serena\Documents\Sistemas\Actividades"
+
+for ruta, subdirs, archivos in os.walk(carpeta):
+    print("Ruta:", ruta)
+    print("Subcarpetas:", subdirs)
+    print("Archivos:", archivos)
+    print("-" * 40)
+```
+
+imprimir_estilo.py:
+```
+import os
+
+def obtener_tamano(ruta):
+    total = 0
+    try:
+        if os.path.isfile(ruta):
+            return os.path.getsize(ruta)
+
+        for root, dirs, files in os.walk(ruta):
+            for f in files:
+                archivo = os.path.join(root, f)
+                try:
+                    total += os.path.getsize(archivo)
+                except PermissionError:
+                    pass
+    except PermissionError:
+        pass
+    return total
+
+def print_tree(ruta, nivel=0):
+    prefijo = "│   " * nivel + "├── "
+    nombre = os.path.basename(ruta)
+    tamano = obtener_tamano(ruta)
+
+    print(f"{prefijo}{nombre} ({tamano} bytes)")
+
+    try:
+        if os.path.isdir(ruta):
+            for elemento in os.listdir(ruta):
+                print_tree(os.path.join(ruta, elemento), nivel + 1)
+    except PermissionError:
+        print(f"{prefijo}Acceso denegado")
+
+print_tree(r"C:\Users\Serena\Documents\Sistemas\Actividades")
+```
+
+Consola:
+```
+C:\Users\Serena> cd "C:\Users\Serena\Documents\Sistemas\Actividades\tema 3"
+
+C:\Users\Serena\Documents\Sistemas\Actividades\tema 3> python libreria_os.py
+Ruta: C:\Users\Serena\Documents\Sistemas\Actividades
+Subcarpetas: ['tema 3']
+Archivos: []
+----------------------------------------
+Ruta: C:\Users\Serena\Documents\Sistemas\Actividades\tema 3
+Subcarpetas: []
+Archivos: ['001-Gestión de sistemas de archivos mediante comandos y entornos gráficos', '003-Búsqueda de información del sistema mediante comandos y herramientas gráficas', '004-Identificación del software instalado mediante comandos y herramientas gráficas', 'buscararchivos.py', 'imprimir_estilo.py', 'libreria_os.py']
+----------------------------------------
+
+C:\Users\Serena\Documents\Sistemas\Actividades\tema 3> python imprimir_estilo.py
+├── Actividades (25992 bytes)
+│   ├── tema 3 (25992 bytes)
+│   │   ├── 001-Gestión de sistemas de archivos mediante comandos y entornos gráficos (3826 bytes)
+│   │   ├── 003-Búsqueda de información del sistema mediante comandos y herramientas gráficas (3318 bytes)
+│   │   ├── 004-Identificación del software instalado mediante comandos y herramientas gráficas (17085 bytes)
+│   │   ├── buscararchivos.py (582 bytes)
+│   │   ├── imprimir_estilo.py (946 bytes)
+│   │   ├── libreria_os.py (235 bytes)
+
+C:\Users\Serena\Documents\Sistemas\Actividades\tema 3>
+```
+
+Con esta actividad aprendo a recorrer carpetas y archivos utilizando Python de una forma sencilla. Ahora entiendo mejor cómo están organizados los archivos en el sistema y cómo puedo ver toda la estructura de una carpeta sin hacerlo manualmente.
+
+Esta práctica me ayuda a mejorar mis conocimientos básicos sobre sistemas operativos y programación, y me resulta útil para organizar mejor mis trabajos y comprender cómo funciona el ordenador por dentro.

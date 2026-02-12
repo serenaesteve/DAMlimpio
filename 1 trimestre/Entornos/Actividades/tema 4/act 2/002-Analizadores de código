@@ -1,0 +1,91 @@
+Enunciado paso a paso
+Introducción al validador JSON: Para asegurarte de que tus archivos JSON estén correctamente estructurados y sin errores, utiliza el validador JSON en línea. Prueba con un ejemplo sencillo como:
+
+{
+    "nombre": "MiJuego",
+    "version": "1.0"
+}
+Crea un repositorio en GitHub: Para publicar tus páginas web, primero necesitas crear un repositorio en tu cuenta de GitHub. Siguiendo los pasos:
+
+Entrar a Github
+Crear un nuevo repositorio llamado mi-juego-web
+Subir el archivo index.html a este repositorio
+Publica tus páginas en GitHub Pages:
+
+Ve a la configuración del repositorio (Settings)
+En la barra izquierda, selecciona GitHub Pages
+Elige publicar desde la rama main
+Espera unos minutos para que se complete el proceso
+Accede a tu sitio web en: https://[tu-usuario].github.io/mi-juego-web
+Documentación de tus páginas:
+
+Crea un archivo README.md en tu repositorio con una descripción breve de tu proyecto y cómo ejecutarlo.
+Asegúrate de usar comentarios en tu código HTML y CSS para explicar las partes importantes.
+Restricciones
+No uses herramientas o librerías externas adicionales.
+Solo utiliza el validador JSON en línea proporcionado.
+No copies ni pases códigos completos, solo muestra los ejemplos necesarios.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe entender cómo usar un validador JSON y cómo crear un repositorio en GitHub.
+Desarrollo técnico correcto y preciso (25%): El código HTML y CSS debe estar bien estructurado y sin errores, y el archivo README.md debe ser claro y conciso.
+Aplicación práctica con ejemplo claro (25%): El alumno debe probar su sitio web en GitHub Pages y asegurarse de que funcione correctamente.
+Cierre/Conclusión enlazando con la unidad (25%): El alumno debe explicar cómo usar el validador JSON para garantizar la calidad de sus archivos JSON y cómo publicar sus páginas web en GitHub Pages, lo cual es importante para compartir proyectos en línea.
+
+
+
+
+Respuesta:
+
+
+El formato JSON ( se usa para almacenar y transmitir datos de forma estructurada y legible.
+
+1. Este es mi codigo de mi archivo index.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Juego Web</title>
+  <style>
+    /* Esto es un comentario en CSS */
+    body {
+      background-color: lightblue;
+      text-align: center;
+      font-family: Arial;
+    }
+  </style>
+</head>
+<body>
+  <!-- Este es un comentario en HTML -->
+  <h1>Bienvenido a Mi Juego Web</h1>
+  <p>Esta es mi primera página en GitHub Pages </p>
+</body>
+</html>
+```
+
+2. Lo he validado con este validador de código JSON:
+https://jsonlint.com/
+
+3. He entrado a mi git hub , y no sabia que el archivo index.html tenia que estar en la carpete que se crea del repositorio en mi PC, entonces me ha costa averiguarlo.
+4. Cuando lo he conseguido el archivo ya me aparecia para poder darle a COMMIT y a PUSH.
+5. Una vezz el archivo subido me he ido a SETTINGS y a PAGES.
+6. En PAGES me he asegurado de que pusiera MAIN y ROOT. 
+7. He esperado 5 minutos (en realidad 1 hora y media)
+8. y poniendo esto   https://serenaesteve.github.io/mi-juego-web/ en el navegador ya aparecía.
+9. Mi README dice esto:
+
+# MiJuego Web
+Este proyecto muestra una página web sencilla para mi juego MiJuego.
+
+# Cómo ejecutarlo
+1. Abre el archivo index.html en tu navegador.
+2. O visita la versión en línea publicada en GitHub Pages: https://serenaesteve.github.io/mi-juego-web/
+# Estructura del proyecto
+index.html: Página principal del sitio.
+style.css: Estilos básicos del sitio.
+README.md: Documentación del proyecto.
+
+
+El validador JSON me permite garantizar que tus datos estén correctamente estructurados, evitando errores en mis proyectos web.
+Por otro lado, GitHub Pages facilita la publicación gratuita de mis sitios web, permitiendo compartir mis proyectos con otros fácilmente.
+Dominar ambas herramientas me ayuda a mantener la calidad de tu código y difundir mis trabajos en línea, habilidades esenciales en el desarrollo web moderno.

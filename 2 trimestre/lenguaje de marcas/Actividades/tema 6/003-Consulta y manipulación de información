@@ -1,0 +1,444 @@
+Para desarrollar y perfeccionar tu carrito de compras, debes seguir los siguientes pasos:
+
+Primero, crea una página web con las funciones básicas que necesitará un carrito de compras, como agregar productos, eliminar productos, calcular el total de la compra y realizar el pago. Esta página debe contener los siguientes componentes: un formulario para ingresar los datos del usuario (nombre y dirección), un sistema de categorías para organizar los productos y un sistema de productos para mostrar sus detalles.
+
+Después, crea una base de datos para almacenar información sobre los productos, usuarios y pedidos realizados. Debes utilizar una tecnología de backend como PHP o Ruby para interactuar con la base de datos y manejar las solicitudes del usuario.
+
+Una vez creada la página web y la base de datos, debes agregar funcionalidades avanzadas como el seguimiento de pedidos, el envío de confirmaciones de pago y el manejo de descuentos y promociones.
+
+Para que tu carrito sea más realista, puedes incluir características como la capacidad de agregar y eliminar productos del carrito, el cálculo del total de la compra, el pago y el seguimiento del pedido.
+
+
+
+Respuesta:
+
+En este ejercicio creo un carrito de compras para una tienda online. En él puedo ver los productos, añadirlos al carrito, quitar los que no quiero y ver el total de la compra. También hay un formulario para poner mi nombre, dirección y correo, y así poder hacer el pedido.
+​
+Para hacerlo uso HTML y CSS para la página y el diseño, JavaScript para que el carrito funcione, y PHP y MySQL para guardar los productos y los pedidos en la base de datos. Este proyecto me ayuda a entender cómo funciona una tienda online de forma práctica.
+​
+1. Hago la base de datos:
+```
+CREATE DATABASE tienda;
+```
+​
+2. Hago las tablas:
+```
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    direccion VARCHAR(255),
+    correo VARCHAR(100)
+);
+​
+CREATE TABLE productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10,2),
+    categoria VARCHAR(50),
+    imagen VARCHAR(255)
+);
+​
+CREATE TABLE pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10,2),
+    estado VARCHAR(50) DEFAULT 'Pendiente',
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+​
+CREATE TABLE detalle_pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT,
+    id_producto INT,
+    cantidad INT,
+    precio DECIMAL(10,2),
+    FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
+    FOREIGN KEY (id_producto) REFERENCES productos(id)
+);
+```
+​
+3. Inserto datos:
+```
+INSERT INTO productos (nombre, descripcion, precio, categoria, imagen) VALUES
+('Telefono', 'Smartphone Android', 250, 'Electrónica', 'telefono.jpg'),
+('Portatil', 'Laptop 8GB RAM', 800, 'Electrónica', 'portatil.jpg'),
+('Camiseta', 'Camiseta de algodón', 20, 'Ropa', 'camiseta.jpg');
+```
+​
+add_order.php:
+```
+<?php
+include 'db.php';
+​
+$data = json_decode(file_get_contents("php://input"), true);
+​
+$nombre = $data['nombre'];
+$direccion = $data['direccion'];
+$correo = $data['correo'];
+$cart = $data['cart']; 
+​
+​
+$conn->query("INSERT INTO usuarios (nombre, direccion, correo) VALUES ('$nombre','$direccion','$correo')");
+$id_usuario = $conn->insert_id;
+​
+​
+$total = 0;
+foreach($cart as $item) {
+    $total += $item['precio'] * $item['cantidad'];
+}
+​
+​
+$conn->query("INSERT INTO pedidos (id_usuario, total) VALUES ($id_usuario, $total)");
+$id_pedido = $conn->insert_id;
+​
+​
+foreach($cart as $item) {
+    $id_producto = $item['id'];
+    $cantidad = $item['cantidad'];
+    $precio = $item['precio'];
+    $conn->query("INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio) VALUES ($id_pedido, $id_producto, $cantidad, $precio)");
+}
+​
+echo json_encode(["success" => true, "pedido_id" => $id_pedido]);
+?>
+```
+​
+db.php:
+```
+<?php
+$host = "localhost";
+$user = "root"; 
+$pass = "";     
+$db   = "tienda";
+​
+$conn = new mysqli($host, $user, $pass, $db);
+​
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+?>
+```
+​
+get_products.php:
+```
+<?php
+include 'db.php';
+​
+$sql = "SELECT * FROM productos";
+$result = $conn->query($sql);
+​
+$productos = array();
+while($row = $result->fetch_assoc()){
+    $productos[] = $row;
+}
+​
+echo json_encode($productos);
+?>
+```
+​
+index.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Mi Tienda</h1>
+​
+    <div id="categories">
+        <button onclick="filterCategory('')">Todos</button>
+        <button onclick="filterCategory('Electrónica')">Electrónica</button>
+        <button onclick="filterCategory('Ropa')">Ropa</button>
+    </div>
+​
+    <div id="products"></div>
+​
+    <div id="cart">
+        <h2>Carrito</h2>
+        <ul id="cartItems"></ul>
+        <p>Total: $<span id="total">0</span></p>
+        <form id="userForm">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="direccion" placeholder="Dirección" required>
+            <input type="email" id="correo" placeholder="Correo" required>
+            <button type="submit">Pagar</button>
+        </form>
+    </div>
+​
+    <script src="script.js"></script>
+</body>
+</html>
+```
+​
+script.js:
+```
+let products = [];
+let cart = [];
+​
+window.onload = () => {
+    fetch('get_products.php')
+    .then(res => res.json())
+    .then(data => {
+        products = data;
+        showProducts(products);
+    });
+};
+​
+function showProducts(items) {
+    const container = document.getElementById('products');
+    container.innerHTML = '';
+    items.forEach(p => {
+        container.innerHTML += `
+            <div class="product">
+                <img src="images/${p.imagen}" width="180" height="120">
+                <h3>${p.nombre}</h3>
+                <p>${p.descripcion}</p>
+                <p>$${p.precio}</p>
+                <button onclick='addToCart(${JSON.stringify(p)})'>Agregar</button>
+            </div>`;
+    });
+}
+​
+function filterCategory(cat) {
+    if(cat === '') showProducts(products);
+    else showProducts(products.filter(p => p.categoria === cat));
+}
+​
+function addToCart(product) {
+    let item = cart.find(i => i.id === product.id);
+    if(item) item.cantidad++;
+    else cart.push({...product, cantidad: 1});
+    updateCart();
+}
+​
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+​
+function updateCart() {
+    const cartItems = document.getElementById('cartItems');
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+        total += item.precio * item.cantidad;
+        cartItems.innerHTML += `<li>${item.nombre} x${item.cantidad} - $${item.precio*item.cantidad} 
+            <button onclick="removeFromCart(${index})">Eliminar</button></li>`;
+    });
+    document.getElementById('total').innerText = total;
+}
+​
+​
+document.getElementById('userForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value;
+    const direccion = document.getElementById('direccion').value;
+    const correo = document.getElementById('correo').value;
+​
+    fetch('add_order.php', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({nombre, direccion, correo, cart})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            alert('Pedido realizado! ID: '+data.pedido_id);
+            cart = [];
+            updateCart();
+        }
+    });
+});
+```
+​
+style.css:
+```
+:root {
+    --primary: #2563eb;
+    --secondary: #f1f5f9;
+    --dark: #0f172a;
+    --light: #ffffff;
+    --gray: #64748b;
+}
+​
+* {
+    box-sizing: border-box;
+}
+​
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f8fafc;
+    color: var(--dark);
+}
+​
+​
+h1 {
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+}
+​
+​
+#categories {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    justify-content: center;
+    background: var(--secondary);
+}
+​
+#categories button {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+}
+​
+#categories button:hover {
+    background: var(--primary);
+    color: white;
+}
+​
+​
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+​
+​
+.product {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s;
+}
+​
+.product:hover {
+    transform: translateY(-5px);
+}
+​
+.product img {
+    border-radius: 10px;
+    object-fit: cover;
+    height: 150px;
+}
+​
+.product h3 {
+    margin: 10px 0 5px;
+}
+​
+.product p {
+    color: var(--gray);
+    font-size: 14px;
+}
+​
+.product button {
+    margin-top: auto;
+    border: none;
+    background: var(--primary);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+​
+​
+#cart {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 320px;
+    height: 100vh;
+    background: white;
+    box-shadow: -10px 0 25px rgba(0,0,0,.1);
+    padding: 20px;
+    overflow-y: auto;
+}
+​
+#cart h2 {
+    margin-top: 0;
+}
+​
+#cart ul {
+    padding: 0;
+    list-style: none;
+}
+​
+#cart li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+​
+#cart button {
+    background: #ef4444;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+​
+​
+form {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+​
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5f5;
+}
+​
+form button {
+    background: #16a34a;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+```
+​
+proyectocarrito/
+│
+├── index.php
+├── style.css
+├── script.js
+├── db.php
+├── get_products.php
+├── add_order.php
+│
+└── images/
+    ├── telefono.jpg
+    ├── portatil.jpg
+    └── camiseta.jpg
+​
+He puesto la carpeta del proyecto en C:\xampp2\htdocs y en el navegador http://localhost/proyectocarrito/
+He hecho un medido y en la base de datos ha quedado reflejado.
+​
+Con este proyecto consigo que el carrito funcione de forma básica pero completa. Puedo agregar productos, ver el total, eliminar cosas y enviar un pedido que se guarda en la base de datos.
+​
+Aprendo a combinar la parte visual con la parte de datos, y veo cómo se comunica la página con la base de datos. Me sirve para entender mejor cómo se hacen las tiendas online y cómo se puede mejorar con más cosas como descuentos, seguimiento de pedidos o usuarios registrados.

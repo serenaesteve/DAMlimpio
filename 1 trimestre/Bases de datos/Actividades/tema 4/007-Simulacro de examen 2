@@ -1,0 +1,143 @@
+Contexto
+En un proyecto personal para gestionar tu biblioteca de libros y artículos científicos, has decidido crear una base de datos que incluya información detallada sobre ambos elementos. Para organizar mejor esta información, te has decantado por utilizar vistas cruzadas y la creación de usuarios con permisos específicos.
+
+Enunciado paso a paso
+Crea las tablas necesarias:
+
+Una tabla para los autores (autores).
+Una tabla para las piezas del portafolio (piezas).
+Inserta datos en las tablas:
+
+Agrega al menos un autor a la tabla autores.
+Agrega al menos una pieza del portafolio a la tabla piezas, relacionándola con el autor.
+Crea una vista cruzada:
+
+Utiliza una consulta SQL para crear una vista que combine información de ambas tablas (piezas y autores) mediante un LEFT JOIN.
+Altera las tablas:
+
+Añade una nueva columna a la tabla piezas para almacenar la imagen de la pieza.
+Crea un usuario con permisos específicos:
+
+Crea un nuevo usuario (portafolio) con privilegios limitados en tu base de datos.
+Asigna al usuario los permisos necesarios para interactuar solo con la base de datos portafolio.
+Restricciones
+Utiliza solamente los conceptos y tecnologías aprendidos en el tema actual (Bases de Datos).
+No utilices funciones o estructuras que no hayan sido presentadas hasta ahora.
+Criterios de evaluación
+Introducción y contextualización:
+
+El alumno debe explicar claramente los pasos realizados y cómo se relaciona esta actividad con el proyecto personal de gestión de biblioteca.
+Desarrollo técnico correcto y preciso:
+
+El código SQL debe ser correcto y funcional, siguiendo las reglas de sintaxis y estructura aprendidas en clase.
+Aplicación práctica con ejemplo claro:
+
+El alumno debe proporcionar ejemplos claros de cómo se insertan datos en las tablas y cómo se utiliza la vista cruzada para combinar información de ambas tablas.
+Cierre/Conclusión enlazando con la unidad:
+
+El alumno debe discutir cómo esta actividad contribuye a su proyecto final y cómo puede aplicar los conceptos aprendidos en el manejo de bases de datos.
+
+
+
+
+Respuesta:
+
+
+
+Dentro de mi proyecto personal de creación de un portafolio digital, estoy desarrollando una base de datos que me permitirá gestionar y organizar los proyectos y piezas que conforman mi trabajo.
+
+Este sistema tiene como propósito centralizar toda la información de mi portafolio —por ejemplo, proyectos, autores o colaboradores— en una estructura relacional que facilite consultas, mantenimiento y seguridad.
+
+En esta práctica, aplico los conocimientos adquiridos en la unidad de Bases de Datos, creando tablas, vistas cruzadas y usuarios con permisos específicos, elementos fundamentales en el diseño de un sistema de gestión profesional.
+
+1. Creo mi base de datos:
+```
+CREATE DATABASE portafolio;
+USE portafolio;
+```
+
+2. Creo las tablas de autores y piezas:
+```
+CREATE TABLE autores (
+    id_autor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    nacionalidad VARCHAR(50),
+    fecha_nacimiento DATE
+);
+```
+```
+CREATE TABLE piezas (
+    id_pieza INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    tipo VARCHAR(50),  -- Ejemplo: libro, artículo, ensayo
+    anio_publicacion INT,
+    id_autor INT,
+    FOREIGN KEY (id_autor) REFERENCES autores(id_autor)
+);
+```
+
+3. Inserto datos en las tablas:
+```
+INSERT INTO autores (nombre, nacionalidad, fecha_nacimiento)
+VALUES ('Serena Sania Esteve', 'Española', '2003-06-05');
+```
+```
+INSERT INTO piezas (titulo, tipo, anio_publicacion, id_autor)
+VALUES ('Curriculum', 'HTML/CSS/JS', 2025, 1);
+```
+
+4. Creo la vista:
+```
+CREATE VIEW vista_piezas_autores AS
+SELECT 
+    piezas.id_pieza,
+    piezas.titulo,
+    piezas.tipo,
+    piezas.anio_publicacion,
+    autores.nombre AS autor,
+    autores.nacionalidad
+FROM piezas
+LEFT JOIN autores ON piezas.id_autor = autores.id_autor;
+```
+
+5. Para verlo:
+```
+SELECT * FROM vista_piezas_autores;
+```
+
+6. Altero la tabla para insertar imagen:
+```
+ALTER TABLE piezas
+ADD COLUMN imagen VARCHAR(255);
+```
+
+7. Creo el usuario:
+```
+CREATE USER 'portafolio'@'localhost' IDENTIFIED BY 'biblioteca123';
+```
+
+8. Le concedo permisos limitados:
+```
+GRANT SELECT, INSERT, UPDATE ON portafolio.* TO 'portafolio'@'localhost';
+```
+
+9. Aplico los cambios:
+```
+FLUSH PRIVILEGES;
+```
+
+
+El usuario puede  ejecutar consultas útiles como:
+```
+SELECT titulo, autor FROM vista_piezas_autores;
+```
+
+Y tambien pude añadir datos en la tabla de piezas.
+
+Esta práctica ha sido clave para fortalecer mi portafolio digital, ya que:
+-Permite organizar mis proyectos de forma estructurada y relacional.
+-Facilita consultas y reportes mediante vistas.
+Aplica buenas prácticas de seguridad y control de accesos con usuarios específicos.
+
+Sienta las bases para integrar esta base de datos con una futura página web o aplicación que muestre automáticamente mi trabajo.
+Con esta implementación, mi portafolio se vuelve más profesional, escalable y fácil de mantener, reflejando mis habilidades en diseño y administración de bases de datos.

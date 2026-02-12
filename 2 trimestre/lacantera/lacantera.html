@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Cantera Streamers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: radial-gradient(circle at top left, #0e0b16, #140f24);
+      color: #ffffff;
+      position: relative;
+    }
+
+    /* Fondo animado */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top left, #9146FF, #6441a5, #0e0b16);
+      opacity: 0.15;
+      z-index: -1;
+      animation: gradientMove 12s ease-in-out infinite alternate;
+      background-size: 400% 400%;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Header: imagen entera y centrada */
+    header {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    header img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* NAV modo neón */
+    nav {
+      background: #0b0712;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    nav a {
+      color: #c4b5fd;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 10px 25px;
+      border-radius: 12px;
+      position: relative;
+      text-shadow: 0 0 5px #9146FF, 0 0 10px #7b2cff;
+      transition: all 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: rgba(145,70,255,0.2);
+      opacity: 0;
+      box-shadow: 0 0 15px rgba(145,70,255,0.5), 0 0 30px rgba(123,44,255,0.3);
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 15px #9146FF, 0 0 25px #7b2cff, 0 0 40px #7b2cff, 0 0 60px #7b2cff;
+      transform: scale(1.1);
+      animation: buttonGlow 2s infinite alternate;
+    }
+
+    nav a:hover::after {
+      opacity: 1;
+    }
+
+    @keyframes buttonGlow {
+      0% { box-shadow: 0 0 20px rgba(145,70,255,0.7), 0 0 40px rgba(123,44,255,0.5); }
+      100% { box-shadow: 0 0 35px rgba(145,70,255,0.9), 0 0 60px rgba(123,44,255,0.7); }
+    }
+
+    /* Container y secciones */
+    .container {
+      background: rgba(20,15,36,0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 60px 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.4rem;
+      background: linear-gradient(90deg, #9146FF, #7b2cff, #6441a5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Cards con fondo morado y efecto neón */
+    .streamers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      height: 380px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      border: 2px solid rgba(145, 70, 255, 0.7);
+      color: #ffffff;
+      background: linear-gradient(135deg, #6441a5, #9146FF);
+      box-shadow: 0 0 20px rgba(145, 70, 255, 0.5);
+      animation: cardGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardGlow {
+      0% {
+        box-shadow: 0 0 20px rgba(145, 70, 255, 0.5);
+        border-color: rgba(145, 70, 255, 0.7);
+      }
+      100% {
+        box-shadow: 0 0 40px rgba(145, 70, 255, 0.9), 0 0 60px rgba(123, 44, 255, 0.7);
+        border-color: rgba(123, 44, 255, 0.9);
+      }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(145, 70, 255, 0.1);
+      z-index: -1;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      transform: translateY(20px);
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .card-content {
+      transform: translateY(0);
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      margin: 0;
+      background: linear-gradient(90deg, #ffffff, #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(145, 70, 255, 0.7);
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      margin: 15px 0;
+      color: #e0e7ff;
+      text-shadow: 0 0 5px rgba(145, 70, 255, 0.5);
+    }
+
+    .card a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 15px;
+      padding: 12px 24px;
+      background: linear-gradient(90deg, #9146FF, #6441a5);
+      color: #ffffff;
+      border-radius: 15px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(145,70,255,0.6);
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(145,70,255,0.9);
+      background: linear-gradient(90deg, #7b2cff, #9146FF);
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 0 40px rgba(145,70,255,0.9), 0 25px 60px rgba(0,0,0,0.7);
+    }
+
+    footer {
+      background: #0b0712;
+      border-top: 1px solid rgba(145,70,255,0.3);
+      color: #ffffff;
+      text-align: center;
+      padding: 25px 15px;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      header img { max-height: 250px; }
+      .card { height: 300px; }
+      nav { gap: 15px; }
+      .card h3 { font-size: 1.5rem; }
+      .card p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header: imagen entera -->
+  <header>
+    <img src="cantera.jpg" alt="La Cantera Streamers">
+  </header>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#streamers">Streamers</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section class="container" id="inicio">
+    <h2>Sobre La Cantera</h2>
+    <p style="text-align:center; max-width:800px; margin:auto; color:#ffffff; font-size:1.05rem;">
+      <strong>La Cantera Streamers</strong> es un portafolio profesional de creadores de contenido de Fortnite en Twitch.
+      Aquí se muestran nuestros perfiles, estilos de juego y presencia en directo, pensado para marcas,
+      organizaciones y colaboradores.
+    </p>
+  </section>
+
+  <section id="streamers" class="container">
+    <h2>Streamers Destacados</h2>
+    <div class="streamers" id="streamersContainer"></div>
+  </section>
+
+  <footer id="contacto">
+    <p>© 2025 La Cantera Streamers - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // Cargar datos desde streamers.json
+    fetch('streamers.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('No se pudo cargar el archivo JSON');
+        }
+        return response.json();
+      })
+      .then(streamers => {
+        const container = document.getElementById('streamersContainer');
+        streamers.forEach(streamer => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-content">
+              <h3>${streamer.nombre}</h3>
+              <p>${streamer.descripcion}</p>
+              <a href="${streamer.link}" target="_blank">Ver Canal</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error('Error al cargar los streamers:', error);
+        // Datos de respaldo en caso de error
+        const container = document.getElementById('streamersContainer');
+        const backupStreamers = [
+          {
+            "nombre": "xrushitox",
+            "descripcion": "",
+            "link": "https://www.twitch.tv/xrushitox"
+          },
+          {
+            "nombre": "D4NIVERSE",
+            "descripcion": "",
+            "link": "https://www.twitch.tv/d4niverse"
+          },
+          {
+            "nombre": "dsvc23rd",
+            "descripcion": "",
+            "link": "https://www.tiktok.com/@dsvc23rd"
+          }
+        ];
+        backupStreamers.forEach(streamer => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-content">
+              <h3>${streamer.nombre}</h3>
+              <p>${streamer.descripcion}</p>
+              <a href="${streamer.link}" target="_blank">Ver Canal</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
+

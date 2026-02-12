@@ -1,0 +1,134 @@
+Contexto
+Jose Vicente es un amante de los juegos de mesa y la naturaleza, lo que le lleva a disfrutar mucho tiempo explorando senderos en su campo y jugando partidas con sus amigos. Recientemente, Jose ha decidido crear un blog para compartir sus experiencias y conocimientos sobre estos dos pasatiempos.
+
+Enunciado paso a paso
+Conectar a la base de datos: Jose necesita conectarse a su base de datos llamada "blog.db" para poder acceder a los artículos que ha escrito sobre juegos de mesa y naturaleza.
+
+Seleccionar todos los artículos: Después de conectar, Jose debe seleccionar todos los artículos de la tabla "articulos".
+
+Imprimir el título de cada artículo: Para compartir su conocimiento, Jose quiere imprimir el título de cada artículo en su blog.
+
+Desplegar los artículos en HTML: Finalmente, Jose desea desplegar los títulos y detalles de sus artículos en una página web simple usando HTML y CSS.
+
+Restricciones
+No usar librerías externas.
+Limitarse a conocimientos y estructuras vistas hasta el momento del curso.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del ejercicio, relacionado con los hobbies de Jose Vicente y cómo estos pasatiempos le ayudan a crear su blog.
+
+Desarrollo técnico correcto y preciso (25%): El estudiante debe escribir correctamente la conexión a la base de datos, la consulta SQL para seleccionar todos los artículos y el código HTML/CSS para desplegarlos.
+
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar un ejemplo claro de cómo implementa cada paso del ejercicio, asegurándose de que funcione correctamente.
+
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe concluir el ejercicio mostrando cómo su blog puede ayudar a otros amantes de juegos de mesa y naturaleza a aprender de sus experiencias e intereses.
+
+
+
+
+Respuesta:
+
+
+A Jose Vicente le encantan los juegos de mesa y la naturaleza. En su tiempo libre le gusta salir a caminar por el campo y también pasar tardes jugando con sus amigos.
+Como disfruta mucho de estas actividades, decidió crear un blog para compartir sus experiencias, consejos y artículos sobre sus dos aficiones favoritas.
+
+Con este proyecto, Jose Vicente puede unir lo que más le gusta con la tecnología. Gracias al blog, puede guardar sus artículos en una base de datos y mostrarlos en una página web para que otras personas que también disfrutan de la naturaleza y los juegos de mesa puedan leerlos y aprender de sus experiencias.
+
+1. Me he descargado sqlite en este sitio https://www.sqlite.org/download.html
+2. Al descargarlo era un Zip y lo he descomprimido y digamos que he instalado sqlite3.exe.
+3. Me he ido a mi terminal y he comprobado pyton
+PS C:\Users\Serena> python --version
+Python 3.13.7
+4. Me he ido a gedit y he creado el archivo 2 crear_blog.py:
+```
+import sqlite3, os
+
+db_path = "blog.db"
+html_path = "index.html"
+
+# Conectar a la base de datos
+conn = sqlite3.connect(db_path)
+cur = conn.cursor()
+
+# Crear la tabla si no existe
+cur.execute("""
+CREATE TABLE IF NOT EXISTS articulos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo TEXT NOT NULL,
+    contenido TEXT NOT NULL
+)
+""")
+
+# Insertar ejemplos si la tabla está vacía
+cur.execute("SELECT COUNT(*) FROM articulos")
+if cur.fetchone()[0] == 0:
+    ejemplos = [
+        ("Explorando el Bosque de la Vida", "Hoy recorrí un sendero lleno de robles y flores silvestres."),
+        ("Estrategias para Catan", "Consejos para ganar más partidas en Catan."),
+        ("Rutas fáciles para caminatas", "Tres senderos perfectos para principiantes.")
+    ]
+    cur.executemany("INSERT INTO articulos (titulo, contenido) VALUES (?, ?)", ejemplos)
+    conn.commit()
+
+# Consultar artículos
+cur.execute("SELECT titulo, contenido FROM articulos")
+articulos = cur.fetchall()
+
+# Mostrar títulos por consola
+print("Títulos de los artículos:")
+for a in articulos:
+    print(" -", a[0])
+
+# Crear HTML
+html = """<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Blog de Jose Vicente</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #eef3f0; margin: 40px; }
+h1 { color: #2b6b4f; text-align: center; }
+.articulo { background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.titulo { color: #1a4d2e; font-size: 1.4em; margin-bottom: 10px; }
+.contenido { color: #333; }
+</style>
+</head>
+<body>
+<h1>Blog de Jose Vicente</h1>
+"""
+
+for titulo, contenido in articulos:
+    html += f'<div class="articulo"><div class="titulo">{titulo}</div><div class="contenido">{contenido}</div></div>\n'
+
+html += "</body></html>"
+
+# Guardar HTML
+with open(html_path, "w", encoding="utf-8") as f:
+    f.write(html)
+
+conn.close()
+
+print("\nSe ha creado el archivo:", os.path.abspath(html_path))
+```
+5. Al guardarlo he vuelto a la terminal y:
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents"
+PS C:\Users\Serena\Documents> python crear_blog.py
+Títulos de los artículos:
+ - Explorando el Bosque de la Vida
+ - Estrategias para Catan
+ - Rutas fáciles para caminatas
+
+Se ha creado el archivo: C:\Users\Serena\Documents\index.html
+PS C:\Users\Serena\Documents>
+
+6. He vuelto a la carpeta de documentos en mi ordenador y estaban los 3 archivos.
+- La base 
+- El HTML 
+- Y el PY
+
+
+Con este ejercicio, he podido crear un blog donde comparto mis artículos sobre juegos de mesa y la naturaleza. Creo que este blog puede ayudar a otras personas que tengan los mismos intereses porque:
+-Pueden aprender de mis experiencias en senderismo y juegos de mesa.
+-Pueden inspirarse a probar nuevas actividades y compartir sus propias experiencias.
+-Es fácil de leer y navegar, así que la información llega de manera clara.
+
+Basicamente, este blog me permite compartir lo que me gusta y, al mismo tiempo, ayudar a otros a disfrutar y aprender sobre estos hobbies.

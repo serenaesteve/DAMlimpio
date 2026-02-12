@@ -1,0 +1,74 @@
+Contexto
+En nuestra clase de Bases de Datos Relacionales hemos estudiado las restricciones de validación, que son fundamentales para garantizar la integridad y consistencia de los datos en una base de datos. En este ejercicio práctico, vamos a aplicar lo aprendido creando restricciones de validación en una tabla de clientes.
+
+Enunciado paso a paso
+Crear la tabla clientes: Primero, debes crear una tabla llamada clientes con las siguientes columnas:
+
+id_cliente (número entero, clave primaria)
+nombre (cadena de texto)
+telefono (cadena de texto)
+email (cadena de texto)
+Agregar restricción de validación para el teléfono: Crea una restricción que asegure que el campo telefono tenga exactamente 9 caracteres. Esta restricción se llamará chk_telefono_length.
+
+Agregar restricción de validación para el email: Añade otra restricción que valide el formato del campo email. La restricción debe permitir solo direcciones de correo electrónico válidas y se llamará chk_email_format.
+
+Restricciones
+No puedes utilizar librerías externas ni funciones complejas.
+Solo puedes usar los conceptos y herramientas vistos en clase, específicamente las restricciones de validación.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El estudiante debe entender el contexto del ejercicio y cómo aplicar las restricciones de validación.
+Desarrollo técnico correcto y preciso (25%)
+
+El código SQL generado debe ser correcto, sin errores sintácticos o lógicos.
+Aplicación práctica con ejemplo claro (25%)
+
+El estudiante debe mostrar un ejemplo práctico de cómo crear la tabla y las restricciones correctamente.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe terminar con una conclusión que refuerce el concepto aprendido y su relevancia en el contexto de las bases de datos relacionales.
+
+
+
+Respuesta:
+
+En las bases de datos relacionales, las restricciones de validación sirven para asegurar que los datos sean correctos antes de guardarlos. Gracias a ellas, evitamos errores como teléfonos con menos dígitos o correos mal escritos.
+
+En este ejercicio crearemos una tabla llamada clientes con dos reglas:
+-El teléfono debe tener exactamente 9 caracteres.
+-El email debe tener un formato válido.
+
+Código SQL para la validación de los teléfonos:
+
+ALTER TABLE clientes
+  ADD CONSTRAINT chk_telefono_length
+  CHECK (CHAR_LENGTH(telefono) = 9);
+	
+Código de validación de los correos:
+
+ALTER TABLE clientes
+  ADD CONSTRAINT chk_email_format
+  CHECK (email REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$');
+	
+Crear la tabla y las validaciónes correctamente:
+1. En el inicio e la base de datos te vas a la pestaña de SQL y pones lo siguiente:
+CREATE TABLE clientes (
+  Identificador INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  telefono VARCHAR(50),
+  email VARCHAR(100),
+  PRIMARY KEY (Identificador)
+);
+2. Una vez ya creada la tabla de clientes, nos metemos dentro y nos volvemos a ir a la etiqueta de SQL y ahi dentro escribimos (de forma independiente):
+
+ ADD CONSTRAINT chk_telefono_length
+  CHECK (CHAR_LENGTH(telefono) = 9);
+	
+	ADD CONSTRAINT chk_email_format
+  CHECK (email REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$');
+	
+Luego pruebas a poner mal cos caracteres y no te deja guardar.
+
+Las restricciones de validación ayudan a que los datos guardados en la base de datos sean correctos. Gracias a ellas evitamos errores como teléfonos mal escritos o correos inválidos. Esto hace que la información sea más clara, confiable y fácil de usar.

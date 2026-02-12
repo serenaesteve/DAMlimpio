@@ -1,0 +1,52 @@
+Título
+Configuración y rendimiento de adaptadores de red
+
+Contexto
+Como programador/a, conocer los componentes técnicos de una red informática es fundamental. Los adaptadores de red son dispositivos cruciales que permiten a las computadoras conectarse físicamente a una red. Cada adaptador tiene características específicas que influyen en su rendimiento y capacidad.
+
+Enunciado paso a paso
+Identificar el tipo de adaptador: Determina qué tipo de adaptador de red tienes en tu sistema (por ejemplo, Cat5, Cat6). Guarda este dato en una variable llamada tipo_adaptador.
+Calcular la velocidad máxima: Basándote en el tipo de adaptador identificado, calcula la velocidad máxima de transmisión que puede ofrecer. Almacena el resultado en una variable llamada velocidad_maxima.
+Evaluar el impacto en el rendimiento: Reflexiona sobre cómo esta velocidad afectará el rendimiento de las aplicaciones que ejecutas en tu sistema. Guarda tus observaciones en un comentario.
+Restricciones
+No usar librerías externas.
+Solo utilizar los conocimientos y terminología presentados en la unidad actual.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente qué es un adaptador de red y cómo su tipo afecta a la velocidad de transmisión.
+Desarrollo técnico correcto y preciso (25%): Calcula correctamente la velocidad máxima del adaptador y explica el impacto en el rendimiento.
+Aplicación práctica con ejemplo claro (25%): Identifica el tipo de adaptador y realiza los cálculos necesarios.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este conocimiento se aplica en la realidad laboral como programador/a.
+El alumnado debe completar este apartado.
+
+
+Respuesta:
+
+Un adaptador de red es la parte del PC que le permite conectarse a Internet o a otras redes.
+
+Según su tipo:
+-Si es por cable (Ethernet), la conexión suele ser más rápida y estable.
+-Si es inalámbrico (Wi-Fi), es más cómodo, pero es mas lento.
+```
+tipo_adaptador = "Cat6"
+
+velocidad_maxima = 0
+
+if tipo_adaptador == "Cat5":
+    velocidad_maxima = 100
+elif tipo_adaptador == "Cat5e":
+    velocidad_maxima= 1000
+elif tipo_adaptador == "Cat6":
+    velocidad_maxima= 1000
+elif tipo_adaptador == "Cat7":
+    velocidad_maxima = 10000
+    
+print(velocidad_maxima)
+```
+
+Salida del código:
+python -u "c:\Users\Serena\Documents\Sistemas\Actividades\tempCodeRunnerFile.py"
+1000
+
+Trabajando como programador, saber sobre los adaptadores de red ayuda porque una buena conexión permite trabajar más rápido, subir y bajar archivos sin fallos y comunicarse mejor con el equipo.
+
+Basicamente una red rápida y estable mejora el rendimiento y la productividad al programar.

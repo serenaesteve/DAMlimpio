@@ -1,0 +1,144 @@
+Para practicar el concepto impartido sobre generalización y especialización en diagramas de entidad-relación (ER), sigue estos pasos:
+
+Entendiendo la Generalización:
+
+Comienza con un ejemplo sencillo como el de las personas, alumnos y profesores.
+Identifica la entidad abstracta "Persona" que no se instancia directamente, sino que sirve para derivar otras entidades.
+Añade propiedades comunes a la entidad abstracta. Por ejemplo, id, nombre, apellidos y dni-nie.
+Especialización:
+
+Desarrolla las entidades especializadas basadas en la entidad abstracta "Persona". Por ejemplo:
+"Alumno" con propiedades adicionales como NIA.
+"Profesor" con propiedades adicionales como correo_corporativo.
+Asegúrate de que cada entidad especializada herede las propiedades comunes de "Persona".
+Diagrama ER:
+
+Dibuja el diagrama ER correspondiente, mostrando la generalización y la especialización.
+Utiliza flechas para indicar la relación entre la entidad abstracta y sus entidades especializadas.
+Ejemplo Práctico:
+
+Analiza un ejemplo práctico como el de los empleados. Identifica la entidad abstracta "Persona" y las entidades especializadas como "Alumno", "Profesor" y "EmpleadoPAS".
+Añade propiedades específicas a cada una de estas entidades.
+Aplicación en Contexto:
+
+Aplica estos conceptos en un contexto real, por ejemplo, en una institución educativa.
+Identifica todas las posibles entidades y relaciones que podrían existir en ese contexto.
+Cierre y Conclusión:
+
+Enlaza tu práctica con el concepto de generalización y especialización en diagramas ER.
+Reflexiona sobre cómo estos conceptos pueden ser útiles en el diseño de bases de datos y sistemas informáticos.
+Siguiendo estos pasos, podrás practicar eficazmente los conceptos de generalización y especialización en diagramas ER. Recuerda que la práctica es clave para entender y aplicar estos conceptos con éxito.
+
+
+Respuesta:
+
+En este ejercicio practico la generalización y la especialización en los diagramas entidad-relación usando MySQL. Para ello creo una base de datos de un centro educativo donde empiezo con una entidad general llamada Persona, que contiene los datos comunes. A partir de esta entidad creo otras más concretas como Alumno, Profesor y EmpleadoPAS, aplicando lo aprendido en clase.
+
+1. Primero creo la base de datos:
+```
+CREATE DATABASE instituto;
+```
+
+2. Creo las tablas
+```
+CREATE TABLE Persona (
+    id_persona INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    dni_nie VARCHAR(15) UNIQUE NOT NULL
+);
+
+CREATE TABLE Alumno (
+    id_persona INT PRIMARY KEY,
+    nia VARCHAR(20) UNIQUE NOT NULL,
+    curso VARCHAR(20),
+    FOREIGN KEY (id_persona) REFERENCES Persona(id_persona)
+);
+
+CREATE TABLE Profesor (
+    id_persona INT PRIMARY KEY,
+    correo_corporativo VARCHAR(100) UNIQUE NOT NULL,
+    departamento VARCHAR(50),
+    FOREIGN KEY (id_persona) REFERENCES Persona(id_persona)
+);
+
+CREATE TABLE EmpleadoPAS (
+    id_persona INT PRIMARY KEY,
+    num_empleado VARCHAR(20) UNIQUE NOT NULL,
+    puesto VARCHAR(50),
+    turno VARCHAR(20),
+    FOREIGN KEY (id_persona) REFERENCES Persona(id_persona)
+);
+```
+
+3. Ahora inserto datos:
+```
+INSERT INTO Persona (nombre, apellidos, dni_nie)
+VALUES ('Serena', 'Sania Esteve', '53753034X');
+
+INSERT INTO Alumno (id_persona, nia, curso)
+VALUES (LAST_INSERT_ID(), 'NIA001', '1º DAM');
+
+INSERT INTO Persona (nombre, apellidos, dni_nie)
+VALUES ('Hector', 'Lopez', '87654321B');
+
+INSERT INTO Profesor (id_persona, correo_corporativo, departamento)
+VALUES (LAST_INSERT_ID(), 'lmartinez@instituto.edu', 'Informática');
+
+INSERT INTO Persona (nombre, apellidos, dni_nie)
+VALUES ('Thais', 'Esteve Sania', '11223344C');
+
+INSERT INTO EmpleadoPAS (id_persona, num_empleado, puesto, turno)
+VALUES (LAST_INSERT_ID(), 'PAS001', 'Secretaría', 'Mañana');
+```
+
+4. Ahora compruebo a los alumnos con sus datos:
+```
+SELECT p.id_persona, p.nombre, p.apellidos, p.dni_nie,
+       a.nia, a.curso
+FROM Persona p
+JOIN Alumno a ON p.id_persona = a.id_persona;
+```
+
+1
+Serena
+Sania Esteve
+53753034X
+NIA001
+1º DAM
+
+5. Ver todos los profesores:
+```
+SELECT p.nombre, p.apellidos, pr.correo_corporativo, pr.departamento
+FROM Persona p
+JOIN Profesor pr ON p.id_persona = pr.id_persona;
+```
+
+Hector
+Lopez
+lmartinez@instituto.edu
+Informática
+
+6. Ver a todas las personas:
+```
+SELECT * FROM Persona;
+```
+1
+Serena
+Sania Esteve
+53753034X
+
+2
+Hector
+Lopez
+87654321B
+
+3
+Thais
+Esteve Sania
+11223344C
+
+La generalización se implementa mediante la tabla Persona, que contiene los atributos comunes.
+La especialización se implementa con las tablas Alumno, Profesor y EmpleadoPAS, que usan la misma clave primaria como clave foránea, representando la herencia en MySQL.
+
+Con este ejercicio entiendo mejor cómo usar la generalización y la especialización en una base de datos. Aunque MySQL no tiene herencia como tal, puedo organizar la información usando varias tablas relacionadas. Esto me ayuda a no repetir datos y a tener la base de datos mejor organizada. En conclusión, este tipo de diseño es útil y facilita el trabajo con bases de datos.

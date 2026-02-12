@@ -1,0 +1,40 @@
+En nuestro campo de trabajo como profesionales del informática, conocer cómo instalar y configurar servidores web es una habilidad fundamental. Hoy, vamos a practicar la instalación de Apache2 en un servidor Linux utilizando Ubuntu Server. Además, aprovecharemos el tiempo para explorar un poco más nuestra naturaleza cercana, tal vez disfrutando de un paseo en el parque.
+
+Enunciado paso a paso
+Preparación del entorno:
+
+Asegúrate de tener una máquina virtual o servidor Linux encendido y accesible desde tu ordenador.
+Inicia sesión en la máquina virtual utilizando SSH, como hemos visto en clase.
+Instalación de Apache2:
+
+Abre un terminal en tu ordenador cliente.
+Escribe el siguiente comando para instalar Apache2:
+sudo apt install apache2
+Acepta las configuraciones por defecto y espera a que la instalación termine.
+Verificación de la instalación:
+
+Una vez instalado, puedes verificar si Apache2 está funcionando correctamente accediendo a tu servidor desde un navegador web.
+En la barra de direcciones del navegador, escribe la dirección IP de tu servidor (por ejemplo: http://192.168.1.114).
+Si todo ha salido bien, deberías ver la página de inicio predeterminada de Apache2.
+Restricciones
+No utilizar herramientas gráficas para la instalación.
+Solo usar comandos de terminal en el servidor Linux.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del ejercicio y cómo este se relaciona con sus hobbies, como explorar la naturaleza.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe ejecutar correctamente los comandos de instalación y verificar la configuración del servidor web.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar evidencia de que ha completado el ejercicio, como una captura de pantalla del navegador mostrando la página de inicio de Apache2.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe reflexionar sobre cómo esta práctica puede aplicarse en situaciones reales y cómo ha disfrutado de la conexión con la naturaleza durante el proceso.
+
+
+Respuesta:
+
+En informática, instalar y configurar un servidor web es una habilidad muy importante para programadores y administradores de sistemas.
+En esta práctica he aprendido a instalar Apache HTTP Server (Apache2) en Ubuntu Server usando solo la terminal.
+​
+Mi IP es: 10.0.2.15 y para averiguarlo me he puesto en la consola de mi maquina virtual y he puesto esto "hostname -I"
+​
+Por aqui muestro la captura de pantalla para demostrar que he hecho bien el ejercicio:
+​
+https://files.fm/u/q5wyefy6ru
+​
+Esta práctica me a ayudado a aprender cómo instalar y usar un servidor web. Esto es útil en la vida real para publicar páginas o administrar sistemas. Después de hacerlo, he salido a caminar y me he sentido bien. Me a gustado combinar la tecnología con un momento en la naturaleza.

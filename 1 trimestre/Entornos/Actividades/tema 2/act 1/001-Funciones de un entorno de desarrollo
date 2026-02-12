@@ -1,0 +1,147 @@
+Enunciado paso a paso
+Configuración del entorno de desarrollo:
+
+Elige un sistema operativo (SSOO) como Windows, Mac o Linux.
+Instala un editor de código como Visual Studio Code.
+Personalización del entorno:
+
+Cambia el tema del editor para que sea más agradable visualmente.
+Configura atajos de teclado personalizados que faciliten tu flujo de trabajo.
+Primer proyecto:
+
+Crea un nuevo proyecto llamado ProyectoCampo.
+Dentro del proyecto, crea una carpeta llamada JuegosMesa y otra llamada Naturaleza.
+Desarrollo en la carpeta JuegosMesa:
+
+Crea un archivo Python llamado partida.py.
+Escribe una clase Partida que tenga atributos como jugadores, estado y puntos_total.
+Implementa métodos para iniciar, finalizar y mostrar el estado de la partida.
+Desarrollo en la carpeta Naturaleza:
+
+Crea un archivo Python llamado exploracion.py.
+Escribe una clase Explorador que tenga atributos como ubicacion, objetos_encontrados y energia_restante.
+Implementa métodos para moverse, recolectar objetos y mostrar el progreso de la exploración.
+Restricciones
+No uses librerías externas.
+El código debe ser escrito en Python 3.x.
+Asegúrate de que todos los archivos estén correctamente organizados dentro del proyecto ProyectoCampo.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica por qué es importante elegir un buen sistema operativo y editor de código para el desarrollo.
+Describe cómo el entorno de desarrollo facilita la codificación, depuración y ejecución del software.
+Desarrollo técnico correcto y preciso (25%)
+
+Verifica que la clase Partida tenga los atributos y métodos correctamente definidos.
+Confirma que la clase Explorador implemente las funcionalidades requeridas para el proyecto de campo.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona un ejemplo claro de cómo instalar Visual Studio Code en tu sistema operativo.
+Describe cómo crear y estructurar los archivos dentro del proyecto ProyectoCampo.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluye explicando cómo el desarrollo de software es un proceso iterativo que requiere práctica y experimentación.
+Enlace este ejercicio con las habilidades adquiridas en el tema de instalación y uso de entornos de desarrollo.
+
+
+Respuesta:
+
+-El sistema operativo hace que el PC funcione bien y seguro.
+-El editor de código es donde escribes programas/proyectos ayuda a leer mejor y a encontrar errores.
+​
+El entorno de desarrollo:
+-Ayuda a escribir el código más rápido.
+-Ayuda a ver y arreglar errores fácilmente.
+-Permite probar tu programa/proyecto sin abrir otros programas.
+​
+Código partida:
+```
+class Partida:
+    def __init__(self, jugadores):
+        self.jugadores = jugadores       
+        self.estado = "No iniciada"      
+        self.puntos_total = 0            
+​
+    def iniciar(self):
+        self.estado = "En curso"         
+​
+    def finalizar(self):
+        self.estado = "Finalizada"      
+​
+    def mostrar_estado(self):
+        print("Jugadores:", self.jugadores)
+        print("Estado:", self.estado)
+        print("Puntos totales:", self.puntos_total)
+​
+if __name__ == "__main__":
+    partida = Partida(["serena", "obdulia"])
+    partida.mostrar_estado()
+    partida.iniciar()
+    partida.puntos_total = 100
+    partida.mostrar_estado()
+    partida.finalizar()
+    partida.mostrar_estado()
+```
+​
+Resultado código:
+​
+Jugadores: ['serena', 'obdulia']
+Estado: No iniciada
+Puntos totales: 0
+Jugadores: ['serena', 'obdulia']
+Estado: En curso
+Puntos totales: 100
+Jugadores: ['serena', 'obdulia']
+Estado: Finalizada
+Puntos totales: 100
+PS C:\Users\Serena\Documents\Entornos\Actividades\proyectocampo.py> 
+​
+​
+Código naturaleza:
+​
+```
+class Explorador:
+    def __init__(self, ubicacion):
+        self.ubicacion = ubicacion
+        self.objetos_encontrados = []
+        self.energia_restante = 100
+​
+    def moverse(self, nueva_ubicacion):
+        print(f"Moviéndose de {self.ubicacion} a {nueva_ubicacion}...")
+        self.ubicacion = nueva_ubicacion
+        self.energia_restante -= 10
+​
+    def recolectar(self, objeto):
+        print(f"Recolectando {objeto}...")
+        self.objetos_encontrados.append(objeto)
+        self.energia_restante -= 3
+​
+    def mostrar_progreso(self):
+        print("Ubicación actual:", self.ubicacion)
+        print("Objetos encontrados:", self.objetos_encontrados)
+        print("Energía restante:", self.energia_restante)
+​
+if __name__ == "__main__":
+    explorador = Explorador("Bosque")
+    explorador.mostrar_progreso()
+    explorador.moverse("Montaña")
+    explorador.recolectar("planta")
+    explorador.mostrar_progreso()
+```
+​
+Resultado código:
+​
+Ubicación actual: Bosque
+Objetos encontrados: []
+Energía restante: 100
+Moviéndose de Bosque a Montaña...
+Recolectando planta...
+Ubicación actual: Montaña
+Objetos encontrados: ['planta']
+Energía restante: 87
+PS C:\Users\Serena\Documents\Entornos\Actividades\proyectocampo.py>
+​
+Hacer software no siempre sale bien a la primera.
+Se escribe código, se prueba, se corrige y se vuelve a probar.
+Este ejercicio me a ayudado a instalar un entorno de desarrolllo y a organizar mi proyecto, lo que hace más fácil practicar y aprender a programar.
+A programar se aprende programando ( como dice jose vicente jajajaj), y un buen entorno de desarrollo ayuda mucho.

@@ -1,0 +1,1413 @@
+En este proyecto he creado un programa en Python que descarga imágenes de la página web Zooasis, concretamente de los animales que están en adopción.
+
+La idea del trabajo es aplicar lo que hemos visto en clase sobre cómo conectarnos a una página web, leer su contenido y sacar información de ella automáticamente. En vez de usar el ejemplo de Google que vimos en clase, he decidido trabajar con una página real para hacerlo más práctico y diferente.
+
+
+
+zooasis_downloader.py:
+
+
+Este archivo es un programa en Python que sirve para descargar automáticamente imágenes de la página web Zooasis, concretamente de la sección de animales en adopción.
+
+El programa entra en la web, busca las fichas de los animales (por ejemplo, perros o cachorros) y después accede a cada ficha para obtener sus imágenes. Una vez obtiene las imágenes, las descarga y las guarda en carpetas organizadas dentro del proyecto.
+
+Las imágenes se guardan separadas por sección y por cada animal, para que todo quede bien ordenado.
+
+Además, el programa crea un archivo de reporte en formato JSON donde se guarda información sobre las imágenes descargadas y si ha habido algún error.
+
+
+```
+import argparse
+import hashlib
+import json
+import os
+import random
+import re
+import time
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List, Set, Tuple
+from urllib.parse import urljoin, urlparse
+
+import requests
+from bs4 import BeautifulSoup
+
+
+BASE_URL = "https://zooasis.org/"
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "es-ES,es;q=0.9,en;q=0.7",
+    "Connection": "keep-alive",
+}
+
+SECTION_URLS = {
+    "perros": urljoin(BASE_URL, "adoptar-perro/"),
+    "cachorros": urljoin(BASE_URL, "adopta-cachorro/"),
+
+}
+
+
+BLOCKLIST_PATHS = {
+    "/adoptar-perro/", "/adopta-cachorro/", "/adoptar-gato/",
+    "/politica-de-privacidad/", "/politica-de-cookies/", "/aviso-legal/",
+    "/formulario-de-abandono/", "/donar/", "/apadrinar/",
+}
+
+IMG_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".gif")
+
+
+@dataclass
+class Config:
+    section: str
+    output_dir: Path
+    limit_animals: int
+    limit_images_per_animal: int
+    timeout: int
+    max_pages: int
+    min_delay: float
+    max_delay: float
+
+
+
+def make_session() -> requests.Session:
+    s = requests.Session()
+    s.headers.update(HEADERS)
+    return s
+
+
+def sleep_random(cfg: Config) -> None:
+    time.sleep(random.uniform(cfg.min_delay, cfg.max_delay))
+
+
+
+def get_soup(session: requests.Session, url: str, cfg: Config) -> BeautifulSoup:
+    r = session.get(url, timeout=cfg.timeout)
+    r.raise_for_status()
+    return BeautifulSoup(r.text, "html.parser")
+
+
+def is_candidate_animal_url(href: str) -> bool:
+    if not href:
+        return False
+    if not href.startswith(BASE_URL):
+        return False
+
+    p = urlparse(href).path
+    if not p or p == "/":
+        return False
+    if any(p.startswith(bp) for bp in BLOCKLIST_PATHS):
+        return False
+
+    # suele ser /nombre/ (una sola “carpeta”)
+    parts = [x for x in p.split("/") if x]
+    if len(parts) != 1:
+        return False
+
+    return True
+
+
+def extract_animal_links(listing_soup: BeautifulSoup) -> List[str]:
+    links: Set[str] = set()
+    for a in listing_soup.find_all("a", href=True):
+        href = a["href"].strip()
+        if is_candidate_animal_url(href):
+            links.add(href)
+    return sorted(links)
+
+
+def extract_pagination_links(listing_soup: BeautifulSoup) -> List[str]:
+    """
+    Busca links de paginación típicos de WordPress (page/2, page-numbers, etc.)
+    """
+    pages: Set[str] = set()
+    for a in listing_soup.find_all("a", href=True):
+        href = a["href"].strip()
+        if href.startswith(BASE_URL) and ("/page/" in href or "page-numbers" in (a.get("class") or [])):
+            pages.add(href)
+    return sorted(pages)
+
+
+
+def collect_animal_pages(session: requests.Session, start_url: str, cfg: Config) -> List[str]:
+    to_visit = [start_url]
+    visited: Set[str] = set()
+    animal_pages: List[str] = []
+
+    while to_visit and len(visited) < cfg.max_pages and len(animal_pages) < cfg.limit_animals:
+        url = to_visit.pop(0)
+        if url in visited:
+            continue
+
+        visited.add(url)
+        print(f"📄 Leyendo listado: {url}")
+
+        soup = get_soup(session, url, cfg)
+        new_animals = extract_animal_links(soup)
+
+        for u in new_animals:
+            if u not in animal_pages:
+                animal_pages.append(u)
+                if len(animal_pages) >= cfg.limit_animals:
+                    break
+
+        # añadir paginación
+        for p in extract_pagination_links(soup):
+            if p not in visited and p not in to_visit:
+                to_visit.append(p)
+
+        sleep_random(cfg)
+
+    return animal_pages[:cfg.limit_animals]
+
+
+
+def pick_best_src(img_tag) -> str:
+    # prioridad: data-src, src, srcset (primer srcset)
+    for attr in ("data-src", "data-lazy-src", "src"):
+        v = img_tag.get(attr)
+        if v:
+            return v.strip()
+
+    srcset = img_tag.get("srcset")
+    if srcset:
+        
+        first = srcset.split(",")[0].strip().split(" ")[0]
+        return first.strip()
+
+    return ""
+
+
+def extract_image_urls_from_animal_page(soup: BeautifulSoup) -> List[str]:
+    urls: Set[str] = set()
+
+    for img in soup.find_all("img"):
+        src = pick_best_src(img)
+        if not src:
+            continue
+
+        if src.startswith("/"):
+            src = urljoin(BASE_URL, src)
+
+        if not src.startswith("http"):
+            continue
+
+        path = urlparse(src).path.lower()
+        if any(path.endswith(ext) for ext in IMG_EXTS):
+            urls.add(src)
+
+    return sorted(urls)
+
+
+
+def safe_filename(url: str) -> str:
+    h = hashlib.sha256(url.encode("utf-8")).hexdigest()[:16]
+    path = urlparse(url).path
+    ext = os.path.splitext(path)[1].lower()
+    if ext == ".jpeg":
+        ext = ".jpg"
+    if ext not in IMG_EXTS:
+        ext = ".jpg"
+    return f"img_{h}{ext}"
+
+
+def download_image(session: requests.Session, url: str, out_path: Path, cfg: Config) -> Tuple[bool, int, str]:
+    try:
+        with session.get(url, stream=True, timeout=cfg.timeout) as r:
+            r.raise_for_status()
+            ct = r.headers.get("Content-Type", "")
+
+            if ct and not ct.lower().startswith("image/"):
+                return False, 0, f"no-image-content-type:{ct}"
+
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(out_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+
+            size = out_path.stat().st_size
+            if size < 1024:
+                out_path.unlink(missing_ok=True)
+                return False, 0, "too-small"
+
+            return True, size, "ok"
+
+    except Exception as e:
+        return False, 0, f"error:{e}"
+
+
+
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="Descargador de imágenes desde Zooasis (sección Adoptar).")
+    p.add_argument("--section", default="perros", choices=["perros", "cachorros"],
+                   help="Sección a scrapear")
+    p.add_argument("--out", default="zooasis_images", help="Directorio de salida")
+    p.add_argument("--limit-animals", type=int, default=30, help="Máx. fichas de animales")
+    p.add_argument("--limit-images", type=int, default=5, help="Máx. imágenes por animal")
+    p.add_argument("--timeout", type=int, default=15, help="Timeout HTTP")
+    p.add_argument("--max-pages", type=int, default=10, help="Máx. páginas de listado a recorrer")
+    return p.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    cfg = Config(
+        section=args.section,
+        output_dir=Path(args.out),
+        limit_animals=args.limit_animals,
+        limit_images_per_animal=args.limit_images,
+        timeout=args.timeout,
+        max_pages=args.max_pages,
+        min_delay=0.8,
+        max_delay=2.2,
+    )
+
+    start_url = SECTION_URLS[cfg.section]
+
+    session = make_session()
+
+    print(f"🔎 Sección: {cfg.section} | Inicio: {start_url}")
+    animal_pages = collect_animal_pages(session, start_url, cfg)
+    print(f"✅ Fichas encontradas: {len(animal_pages)}")
+
+    report: Dict = {
+        "base_url": BASE_URL,
+        "section": cfg.section,
+        "start_url": start_url,
+        "animals_found": len(animal_pages),
+        "items": [],
+    }
+
+    for idx, animal_url in enumerate(animal_pages, start=1):
+        print(f"\n🐾 [{idx}/{len(animal_pages)}] Ficha: {animal_url}")
+        soup = get_soup(session, animal_url, cfg)
+        img_urls = extract_image_urls_from_animal_page(soup)[: cfg.limit_images_per_animal]
+
+        animal_slug = [x for x in urlparse(animal_url).path.split("/") if x][0]
+        animal_dir = cfg.output_dir / cfg.section / animal_slug
+
+        downloaded = 0
+        images_info = []
+
+        for img_i, img_url in enumerate(img_urls, start=1):
+            filename = safe_filename(img_url)
+            out_path = animal_dir / filename
+
+            ok, size, status = download_image(session, img_url, out_path, cfg)
+            images_info.append({
+                "img_url": img_url,
+                "file": str(out_path),
+                "ok": ok,
+                "bytes": size,
+                "status": status,
+            })
+
+            if ok:
+                downloaded += 1
+                print(f"  ✔ ({img_i}/{len(img_urls)}) {filename} ({size} bytes)")
+            else:
+                print(f"  ✘ ({img_i}/{len(img_urls)}) {img_url} -> {status}")
+
+            sleep_random(cfg)
+
+        report["items"].append({
+            "animal_url": animal_url,
+            "slug": animal_slug,
+            "images_found": len(img_urls),
+            "images_downloaded": downloaded,
+            "images": images_info,
+        })
+
+        sleep_random(cfg)
+
+    cfg.output_dir.mkdir(parents=True, exist_ok=True)
+    report_path = cfg.output_dir / f"report_{cfg.section}.json"
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
+    print(f"\n📦 Reporte guardado en: {report_path}")
+    print(f"🏁 Fin. Carpeta: {cfg.output_dir}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
+
+Terminal:
+
+(venv) serena@serena-portatil:/var/www/html/DAM/proyectosfinaldeunidad/proyecto$ python zooasis_downloader.py
+🔎 Sección: perros | Inicio: https://zooasis.org/adoptar-perro/
+📄 Leyendo listado: https://zooasis.org/adoptar-perro/
+📄 Leyendo listado: https://zooasis.org/adoptar-perro/2/
+✅ Fichas encontradas: 30
+
+🐾 [1/30] Ficha: https://zooasis.org/adopcion-a-ciegas/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_f151776399f46daf.webp (15076 bytes)
+
+🐾 [2/30] Ficha: https://zooasis.org/apadrina/
+  ✔ (1/5) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/5) img_673dde493ec92765.jpg (164196 bytes)
+  ✔ (3/5) img_81758236abce87a8.jpg (76972 bytes)
+  ✔ (4/5) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (5/5) img_0d9bdd1c3d467a4e.jpg (113067 bytes)
+
+🐾 [3/30] Ficha: https://zooasis.org/aviso-legal
+  ✔ (1/2) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/2) img_5786987a578584d6.webp (7706 bytes)
+
+🐾 [4/30] Ficha: https://zooasis.org/chula/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_e99f547e82975fed.webp (151394 bytes)
+
+🐾 [5/30] Ficha: https://zooasis.org/cocote/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_f36b22647860a583.webp (139826 bytes)
+
+🐾 [6/30] Ficha: https://zooasis.org/dobita/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_f00356d2fc0e4c6e.webp (84654 bytes)
+
+🐾 [7/30] Ficha: https://zooasis.org/hanna/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_dcfb69f6011473a3.webp (188836 bytes)
+
+🐾 [8/30] Ficha: https://zooasis.org/mami/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_8f105db266bb88a2.webp (65902 bytes)
+
+🐾 [9/30] Ficha: https://zooasis.org/mulan-2/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_4e7635d7c9f8b182.webp (225994 bytes)
+
+🐾 [10/30] Ficha: https://zooasis.org/mulan/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_4e7635d7c9f8b182.webp (225994 bytes)
+
+🐾 [11/30] Ficha: https://zooasis.org/pepe/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_6739dc8fcb1e679e.webp (56770 bytes)
+
+🐾 [12/30] Ficha: https://zooasis.org/pepita/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_1cfed4e8d349a9a7.webp (58096 bytes)
+
+🐾 [13/30] Ficha: https://zooasis.org/perilla/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_14c1e32f4c7c322f.webp (88164 bytes)
+
+🐾 [14/30] Ficha: https://zooasis.org/pipi/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_ef74bf3a718a227b.jpg (160559 bytes)
+
+🐾 [15/30] Ficha: https://zooasis.org/poco/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_fbc5f5703b25bb55.webp (71400 bytes)
+
+🐾 [16/30] Ficha: https://zooasis.org/politica-de-cookies-ue/
+  ✔ (1/2) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/2) img_5786987a578584d6.webp (7706 bytes)
+
+🐾 [17/30] Ficha: https://zooasis.org/que-hacemos/
+  ✔ (1/5) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/5) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/5) img_7c7eb0b4c1dc319b.png (11917 bytes)
+  ✔ (4/5) img_765cb93fe351824c.png (16121 bytes)
+  ✔ (5/5) img_7a3650ef50bd2261.png (10489 bytes)
+
+🐾 [18/30] Ficha: https://zooasis.org/servicio-tecnico/
+  ✔ (1/2) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/2) img_5786987a578584d6.webp (7706 bytes)
+
+🐾 [19/30] Ficha: https://zooasis.org/barba/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_a9fbb40d41e3a74f.webp (68112 bytes)
+
+🐾 [20/30] Ficha: https://zooasis.org/erra/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_d78b94da6b6df011.webp (194768 bytes)
+
+🐾 [21/30] Ficha: https://zooasis.org/lila/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_f0647612dbb174bb.webp (129434 bytes)
+
+🐾 [22/30] Ficha: https://zooasis.org/loco/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_b04aac63fb8968ee.webp (137854 bytes)
+
+🐾 [23/30] Ficha: https://zooasis.org/papi/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_39b3c90e76220270.jpg (234650 bytes)
+
+🐾 [24/30] Ficha: https://zooasis.org/pastor/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_4be8ec8e71bae9e5.webp (126130 bytes)
+
+🐾 [25/30] Ficha: https://zooasis.org/rafa/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_621c1066c009df93.webp (135394 bytes)
+
+🐾 [26/30] Ficha: https://zooasis.org/regi/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_9e6bc1d1ad0a95b6.webp (95648 bytes)
+
+🐾 [27/30] Ficha: https://zooasis.org/rhiannon/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_14e4729932222f14.webp (102936 bytes)
+
+🐾 [28/30] Ficha: https://zooasis.org/russell/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_504a13b50342e4f2.webp (54022 bytes)
+
+🐾 [29/30] Ficha: https://zooasis.org/truco/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_55275602c8968ac4.webp (108384 bytes)
+
+🐾 [30/30] Ficha: https://zooasis.org/vesta/
+  ✔ (1/3) img_a5861d40259dc5f5.png (28985 bytes)
+  ✔ (2/3) img_5786987a578584d6.webp (7706 bytes)
+  ✔ (3/3) img_647e6621c13ef76a.webp (144332 bytes)
+
+📦 Reporte guardado en: zooasis_images/report_perros.json
+🏁 Fin. Carpeta: zooasis_images
+(venv) serena@serena-portatil:/var/www/html/DAM/proyectosfinaldeunidad/proyecto$ 
+
+
+
+**MEJORAS**
+El código que vimos en clase descargaba imágenes desde Google Images de forma general.
+
+Yo lo he mejorado y adaptado de la siguiente manera:
+-He cambiado la fuente de las imágenes para trabajar con una web real (Zooasis).
+-He organizado mejor las carpetas, creando subcarpetas por cada animal.
+-He añadido límites para controlar cuántos animales e imágenes se descargan.
+-He añadido pequeños tiempos de espera entre peticiones para que el scraping sea más correcto.
+-He generado un archivo de reporte con información de las descargas.
+
+Basicamente, he hecho el programa más organizado, más específico y más profesional que el ejemplo trabajado en clase.
+
+
+
+report_perros.json:
+```
+{
+  "base_url": "https://zooasis.org/",
+  "section": "perros",
+  "start_url": "https://zooasis.org/adoptar-perro/",
+  "animals_found": 30,
+  "items": [
+    {
+      "animal_url": "https://zooasis.org/adopcion-a-ciegas/",
+      "slug": "adopcion-a-ciegas",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/adopcion-a-ciegas/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/adopcion-a-ciegas/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/09/a-ciegas.webp",
+          "file": "zooasis_images/perros/adopcion-a-ciegas/img_f151776399f46daf.webp",
+          "ok": true,
+          "bytes": 15076,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/apadrina/",
+      "slug": "apadrina",
+      "images_found": 5,
+      "images_downloaded": 5,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/apadrina/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/pardo.jpg",
+          "file": "zooasis_images/perros/apadrina/img_673dde493ec92765.jpg",
+          "ok": true,
+          "bytes": 164196,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/vini.jpg",
+          "file": "zooasis_images/perros/apadrina/img_81758236abce87a8.jpg",
+          "ok": true,
+          "bytes": 76972,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/apadrina/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/Adoptar-gato-en-albacete.jpg",
+          "file": "zooasis_images/perros/apadrina/img_0d9bdd1c3d467a4e.jpg",
+          "ok": true,
+          "bytes": 113067,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/aviso-legal",
+      "slug": "aviso-legal",
+      "images_found": 2,
+      "images_downloaded": 2,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/aviso-legal/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/aviso-legal/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/chula/",
+      "slug": "chula",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/chula/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/chula/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Chula-1024x683.webp",
+          "file": "zooasis_images/perros/chula/img_e99f547e82975fed.webp",
+          "ok": true,
+          "bytes": 151394,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/cocote/",
+      "slug": "cocote",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/cocote/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/cocote/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/cocote-1024x683.webp",
+          "file": "zooasis_images/perros/cocote/img_f36b22647860a583.webp",
+          "ok": true,
+          "bytes": 139826,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/dobita/",
+      "slug": "dobita",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/dobita/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/dobita/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/Dobita-1024x683.webp",
+          "file": "zooasis_images/perros/dobita/img_f00356d2fc0e4c6e.webp",
+          "ok": true,
+          "bytes": 84654,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/hanna/",
+      "slug": "hanna",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/hanna/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/hanna/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/Hanna-1024x683.webp",
+          "file": "zooasis_images/perros/hanna/img_dcfb69f6011473a3.webp",
+          "ok": true,
+          "bytes": 188836,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/mami/",
+      "slug": "mami",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/mami/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/mami/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/Mami-1024x683.webp",
+          "file": "zooasis_images/perros/mami/img_8f105db266bb88a2.webp",
+          "ok": true,
+          "bytes": 65902,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/mulan-2/",
+      "slug": "mulan-2",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/mulan-2/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/mulan-2/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Mulan-1024x683.webp",
+          "file": "zooasis_images/perros/mulan-2/img_4e7635d7c9f8b182.webp",
+          "ok": true,
+          "bytes": 225994,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/mulan/",
+      "slug": "mulan",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/mulan/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/mulan/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Mulan-1024x683.webp",
+          "file": "zooasis_images/perros/mulan/img_4e7635d7c9f8b182.webp",
+          "ok": true,
+          "bytes": 225994,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pepe/",
+      "slug": "pepe",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pepe/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pepe/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Pepe-1024x683.webp",
+          "file": "zooasis_images/perros/pepe/img_6739dc8fcb1e679e.webp",
+          "ok": true,
+          "bytes": 56770,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pepita/",
+      "slug": "pepita",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pepita/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pepita/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Pepita-1024x683.webp",
+          "file": "zooasis_images/perros/pepita/img_1cfed4e8d349a9a7.webp",
+          "ok": true,
+          "bytes": 58096,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/perilla/",
+      "slug": "perilla",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/perilla/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/perilla/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Perilla-1024x683.webp",
+          "file": "zooasis_images/perros/perilla/img_14c1e32f4c7c322f.webp",
+          "ok": true,
+          "bytes": 88164,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pipi/",
+      "slug": "pipi",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pipi/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pipi/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/PHOTO-2026-02-08-13-33-45-1024x768.jpeg",
+          "file": "zooasis_images/perros/pipi/img_ef74bf3a718a227b.jpg",
+          "ok": true,
+          "bytes": 160559,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/poco/",
+      "slug": "poco",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/poco/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/poco/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Poco-1024x683.webp",
+          "file": "zooasis_images/perros/poco/img_fbc5f5703b25bb55.webp",
+          "ok": true,
+          "bytes": 71400,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/politica-de-cookies-ue/",
+      "slug": "politica-de-cookies-ue",
+      "images_found": 2,
+      "images_downloaded": 2,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/politica-de-cookies-ue/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/politica-de-cookies-ue/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/que-hacemos/",
+      "slug": "que-hacemos",
+      "images_found": 5,
+      "images_downloaded": 5,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/que-hacemos/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/que-hacemos/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/Hogar-para-perros.png",
+          "file": "zooasis_images/perros/que-hacemos/img_7c7eb0b4c1dc319b.png",
+          "ok": true,
+          "bytes": 11917,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/Rescate-de-animales-en-albacete.png",
+          "file": "zooasis_images/perros/que-hacemos/img_765cb93fe351824c.png",
+          "ok": true,
+          "bytes": 16121,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/educacion-y-adiestramiento-de-perros.png",
+          "file": "zooasis_images/perros/que-hacemos/img_7a3650ef50bd2261.png",
+          "ok": true,
+          "bytes": 10489,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/servicio-tecnico/",
+      "slug": "servicio-tecnico",
+      "images_found": 2,
+      "images_downloaded": 2,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/servicio-tecnico/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/servicio-tecnico/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/barba/",
+      "slug": "barba",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/barba/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/barba/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Barba-1024x683.webp",
+          "file": "zooasis_images/perros/barba/img_a9fbb40d41e3a74f.webp",
+          "ok": true,
+          "bytes": 68112,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/erra/",
+      "slug": "erra",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/erra/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/erra/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/01/Malta-1024x683.webp",
+          "file": "zooasis_images/perros/erra/img_d78b94da6b6df011.webp",
+          "ok": true,
+          "bytes": 194768,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/lila/",
+      "slug": "lila",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/lila/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/lila/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Lila-1024x683.webp",
+          "file": "zooasis_images/perros/lila/img_f0647612dbb174bb.webp",
+          "ok": true,
+          "bytes": 129434,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/loco/",
+      "slug": "loco",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/loco/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/loco/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Loco-1024x683.webp",
+          "file": "zooasis_images/perros/loco/img_b04aac63fb8968ee.webp",
+          "ok": true,
+          "bytes": 137854,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/papi/",
+      "slug": "papi",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/papi/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/papi/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/PHOTO-2025-12-22-19-00-29-1024x768.jpeg",
+          "file": "zooasis_images/perros/papi/img_39b3c90e76220270.jpg",
+          "ok": true,
+          "bytes": 234650,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pastor/",
+      "slug": "pastor",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pastor/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pastor/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Pastor-1024x683.webp",
+          "file": "zooasis_images/perros/pastor/img_4be8ec8e71bae9e5.webp",
+          "ok": true,
+          "bytes": 126130,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/rafa/",
+      "slug": "rafa",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/rafa/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/rafa/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/10/Rafa-1024x683.webp",
+          "file": "zooasis_images/perros/rafa/img_621c1066c009df93.webp",
+          "ok": true,
+          "bytes": 135394,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/regi/",
+      "slug": "regi",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/regi/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/regi/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Regi-1024x683.webp",
+          "file": "zooasis_images/perros/regi/img_9e6bc1d1ad0a95b6.webp",
+          "ok": true,
+          "bytes": 95648,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/rhiannon/",
+      "slug": "rhiannon",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/rhiannon/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/rhiannon/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Rhiannon-2-1024x683.webp",
+          "file": "zooasis_images/perros/rhiannon/img_14e4729932222f14.webp",
+          "ok": true,
+          "bytes": 102936,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/russell/",
+      "slug": "russell",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/russell/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/russell/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Russell-1024x683.webp",
+          "file": "zooasis_images/perros/russell/img_504a13b50342e4f2.webp",
+          "ok": true,
+          "bytes": 54022,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/truco/",
+      "slug": "truco",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/truco/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/truco/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Chato-1024x683.webp",
+          "file": "zooasis_images/perros/truco/img_55275602c8968ac4.webp",
+          "ok": true,
+          "bytes": 108384,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/vesta/",
+      "slug": "vesta",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/vesta/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/vesta/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2024/08/Vesta-1024x683.webp",
+          "file": "zooasis_images/perros/vesta/img_647e6621c13ef76a.webp",
+          "ok": true,
+          "bytes": 144332,
+          "status": "ok"
+        }
+      ]
+    }
+  ]
+}
+```
+
+En conclusión, este proyecto me ha ayudado a entender mejor cómo funciona el web scraping y cómo se pueden descargar datos de una página web usando Python.
+
+También he aprendido a organizar mejor el código y las carpetas para que el programa esté más ordenado. Aunque al principio me resultó un poco complicado entender la estructura de la página web, al final conseguí que el programa funcionara correctamente.
+
+Con este trabajo he practicado programación en Python y he mejorado mi comprensión sobre cómo automatizar tareas en internet.

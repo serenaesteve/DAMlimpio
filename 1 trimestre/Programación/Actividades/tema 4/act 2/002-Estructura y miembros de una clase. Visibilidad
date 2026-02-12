@@ -1,0 +1,74 @@
+Enunciado paso a paso
+Introducción y contexto (25%)
+
+El campo es un lugar donde los gatos pueden libremente explorar su entorno natural.
+Imagina que tienes un gato llamado "Pelusa" que vive en el campo.
+Desarrollo técnico correcto y preciso (25%)
+
+Crea una clase Gato que tenga las siguientes propiedades:
+color: Color del gato.
+edad: Edad del gato.
+raza: Raza del gato.
+Asegúrate de que la propiedad color sea privada para evitar cambios no deseados desde fuera de la clase.
+Aplicación práctica con ejemplo claro (25%)
+
+Crea una instancia de la clase Gato llamada pelusa.
+Establece los valores iniciales de las propiedades del gato.
+Imprime el color del gato utilizando un método adecuado.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Reflexiona sobre cómo este ejercicio te ha ayudado a entender mejor cómo manejar las propiedades privadas en una clase.
+Considera cómo podrías aplicar estos conocimientos en un juego de mesa donde los jugadores tienen perros como mascotas.
+Restricciones
+No uses librerías externas ni estructuras no vistas hasta ahora.
+Asegúrate de seguir las reglas de visibilidad de los miembros de la clase y manejar correctamente las propiedades privadas.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El contexto debe ser claro y relacionado con el campo.
+Desarrollo técnico correcto y preciso (25%)
+
+La clase Gato debe tener las propiedades indicadas, siendo color privada.
+La instancia del gato y la modificación de sus propiedades deben estar correctamente implementados.
+Aplicación práctica con ejemplo claro (25%)
+
+El código debe imprimir el color del gato utilizando un método adecuado.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+La reflexión sobre los conocimientos adquiridos y su aplicación práctica deben ser coherentes y relacionadas con el tema de las clases y objetos en programación orientada a objetos.
+
+
+
+Respuesta:
+
+El campo es un sitio donde los gatos pueden explorar libremente su entorno natural, disfrutando del aire fresco y el espacio para jugar. Tengo un gato llamado Pelusa que vive en ese campo y quiero guardar información sobre él usando programación orientada a objetos.
+
+
+
+```
+class Gato:
+    def __init__(self, color, edad, raza):
+        self.__color = color      
+        self.edad = edad         
+        self.raza = raza          
+
+   
+    def obtener_color(self):
+        return self.__color
+
+
+pelusa = Gato("Blanco y negro", 3, "persa")
+
+
+print("El color de Pelusa es:", pelusa.obtener_color())
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Programacion\gato.py"
+El color de Pelusa es: Blanco y negro
+
+
+Este ejercicio me a ayudado a entender cómo usar propiedades privadas en una clase para proteger datos importantes, como el color del gato, evitando que se modifiquen directamente desde fuera. Aprendí que para acceder a esas propiedades privadas es necesario usar métodos públicos, lo que mejora el control sobre la información.
+
+Este conocimiento es útil no solo para gatos, sino también para otros programas, como un juego de mesa donde los jugadores tienen perros como mascotas. Podríamos usar clases similares para manejar características privadas de los perros, como su energía o salud, garantizando que solo se modifiquen con reglas específicas, haciendo el programa más seguro y ordenado.

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Completa</title>
+  <style>
+    /* Diseño de la calculadora */
+    #calculadora {
+      background: grey;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      font-family: sans-serif;
+      padding: 10px;
+      border-radius: 5px;
+      gap: 10px;
+      margin: 50px auto;
+    }
+
+    input, select, button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #ff9800;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e68900;
+    }
+
+    #resultado {
+      background: #444;
+      padding: 10px;
+      border-radius: 5px;
+      min-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="calculadora">
+    <h2>Calculadora</h2>
+
+    <!-- Entrada de números -->
+    <input type="number" id="operando1" placeholder="Primer número">
+    <input type="number" id="operando2" placeholder="Segundo número">
+
+    <!-- Selección de operación -->
+    <select id="operacion">
+      <option value="suma">Suma (+)</option>
+      <option value="resta">Resta (-)</option>
+      <option value="multiplicacion">Multiplicación (×)</option>
+      <option value="division">División (÷)</option>
+    </select>
+
+    <!-- Botón para calcular -->
+    <button>Calcular</button>
+
+    <!-- Resultado -->
+    <div id="resultado">Resultado aparecerá aquí</div>
+  </div>
+
+  <script>
+    
+    var boton = document.querySelector("button");
+
+    boton.onclick = function() {
+      
+      var operando1 = parseFloat(document.getElementById("operando1").value);
+      var operando2 = parseFloat(document.getElementById("operando2").value);
+      var operacion = document.getElementById("operacion").value;
+      var resultado;
+
+      
+      if (isNaN(operando1) || isNaN(operando2)) {
+        resultado = "Error: Ingresa números válidos";
+      } else {
+        
+        switch (operacion) {
+          case "suma":
+            resultado = operando1 + operando2;
+            break;
+          case "resta":
+            resultado = operando1 - operando2;
+            break;
+          case "multiplicacion":
+            resultado = operando1 * operando2;
+            break;
+          case "division":
+            if (operando2 !== 0) {
+              resultado = operando1 / operando2;
+            } else {
+              resultado = "Error: División por cero";
+            }
+            break;
+          default:
+            resultado = "Operación no válida";
+        }
+      }
+
+      
+      document.getElementById("resultado").textContent = resultado;
+    };
+  </script>
+
+</body>
+</html>

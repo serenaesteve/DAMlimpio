@@ -1,0 +1,70 @@
+Título
+Explorando el mundo del juego de mesa: Creación y uso de objetos
+
+Contexto
+Imagina que eres un experto en juegos de mesa, y has decidido crear una aplicación para gestionar tus partidas favoritas. Para ello, utilizarás objetos predefinidos del lenguaje de programación para representar los diferentes elementos de tu juego. Por ejemplo, podrías tener un objeto Jugador con propiedades como nombre, puntos y métodos como sumar_puntos.
+
+Enunciado paso a paso
+Definir el objeto Jugador:
+
+Crea un objeto llamado Jugador que tenga las siguientes propiedades:
+nombre: Un string que almacene el nombre del jugador.
+puntos: Un número entero que almacene la puntuación actual del jugador.
+Implementar métodos en el objeto Jugador:
+
+Crea un método llamado sumar_puntos que acepte un número como parámetro y lo sume a la propiedad puntos.
+Crea otro método llamado restar_puntos que acepte un número como parámetro y lo reste de la propiedad puntos.
+Crear instancias del objeto Jugador:
+
+Crea dos instancias del objeto Jugador, por ejemplo, jugador1 con el nombre "Juan" y jugador2 con el nombre "Ana".
+Utilizar los métodos del objeto Jugador:
+
+Utiliza el método sumar_puntos para aumentar la puntuación de jugador1 en 5 puntos.
+Utiliza el método restar_puntos para disminuir la puntuación de jugador2 en 3 puntos.
+Restricciones
+No se permite crear clases personalizadas.
+Solo utilizar objetos predefinidos del lenguaje de programación.
+El código debe estar estructurado correctamente con propiedades y métodos como se describió.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante muestra una comprensión adecuada del contexto del juego de mesa y cómo los objetos predefinidos pueden ser utilizados para gestionar sus elementos.
+Desarrollo técnico correcto y preciso (25%): El estudiante crea correctamente el objeto Jugador con las propiedades y métodos especificados, y utiliza estos métodos para modificar la puntuación de los jugadores.
+Aplicación práctica con ejemplo claro (25%): El estudiante muestra un ejemplo claro de cómo utilizar los objetos predefinidos para gestionar los elementos del juego, aplicando conceptos como propiedades y métodos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante concluye el ejercicio explicando cómo esta actividad se relaciona con la subunidad sobre la utilización de objetos en programación orientada a objetos.
+
+
+
+Respuesta:
+
+Entiendo que en un juego de mesa cada jugador tiene información como su nombre y sus puntos.
+Con los objetos en Python, puedo guardar esos datos y modificarlos cuando el jugador gana o pierde puntos.
+Así puedo organizar y manejar mejor los elementos del juego, como los jugadores y sus puntuaciones.
+
+```
+class jugador:
+    def __init__(self, nombre, puntos):
+        self.nombre = nombre
+        self.puntos = puntos
+
+    def sumar_puntos(self, puntos):
+        self.puntos += puntos
+    def restar_puntos(self,puntos):
+        self.puntos -= puntos
+
+
+jugador1 = jugador("juan", 0)
+jugador2 = jugador("ana", 0)
+
+jugador1.sumar_puntos(5)
+jugador2.restar_puntos(3)
+print(jugador1.nombre,jugador1.puntos)
+print(jugador2.nombre,jugador2.puntos)
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c\tempCodeRunnerFile.python"
+juan 5
+ana -3
+
+Con este ejercicio he entendido que los objetos pueden tener propiedades (como nombre y puntos) y métodos (como sumar o restar puntos).
+Sirven para organizar la información y representar cosas reales, como los jugadores de un juego de mesa, dentro de un programa.

@@ -1,0 +1,185 @@
+Enunciado paso a paso
+Contexto: Imagina que eres un programador web que trabaja para una empresa que quiere ofrecer su sitio web en múltiples idiomas para llegar a un público global. Para lograr esto, necesitas implementar una función que cambie el idioma del sitio web según la elección del usuario.
+
+Desarrolla la funcionalidad:
+
+Crea una página HTML con un menú desplegable (<select>) que incluya al menos 5 idiomas (español, inglés, francés, alemán y italiano).
+Utiliza PHP para manejar la selección del usuario y cambiar el idioma de la página según la opción seleccionada.
+Asegúrate de que la página actualice su contenido en tiempo real cuando el usuario cambia el idioma.
+Aplica prácticas:
+
+Implementa una función PHP que reciba el idioma como parámetro y devuelva un array asociativo con los textos traducidos.
+Utiliza esta función para mostrar el título de la página, un texto descriptivo y un mensaje en diferentes idiomas.
+Restricciones
+Solo puedes usar los archivos proporcionados en la carpeta /var/www/html/dam2526/Primero/Lenguajes de marcas y sistemas de gestión de información/007-Sistemas de gestión empresarial/005-Mecanismos de acceso seguro a la información. Roles y privilegios/101-Ejercicios.
+No puedes usar librerías externas ni estructuras que no hayan sido vistas en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del problema y cómo implementar la funcionalidad.
+Desarrollo técnico correcto y preciso (25%): El código PHP debe ser limpio, bien estructurado y funcione correctamente para cambiar el idioma de la página según la selección del usuario.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe aplicar prácticas reales utilizando los archivos proporcionados y mostrar cómo manejar la selección del idioma en una página web.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio relacionándolo con la unidad de estudio sobre sistemas de gestión empresarial y cómo implementar funcionalidades seguras y prácticas en proyectos web.
+
+
+
+Respuesta:
+
+
+En este ejercicio realizo una página web que permite cambiar el idioma del contenido. La mision es que la web pueda verse en varios idiomas para adaptarse a distintos usuarios. Para ello utilizo HTML y PHP, y creo un selector de idiomas que permite elegir el idioma de forma facil.
+
+motoridioma.php:
+```
+<?php
+session_start();
+
+
+$languages = [
+    "es" => "Español 🇪🇸",
+    "en" => "English 🇬🇧",
+    "fr" => "Français 🇫🇷",
+    "de" => "Deutsch 🇩🇪",
+    "it" => "Italiano 🇮🇹",
+    "pt" => "Português 🇵🇹",
+    "nl" => "Nederlands 🇳🇱",
+    "sv" => "Svenska 🇸🇪",
+    "da" => "Dansk 🇩🇰",
+    "fi" => "Suomi 🇫🇮",
+    "no" => "Norsk 🇳🇴",
+    "pl" => "Polski 🇵🇱",
+    "cs" => "Čeština 🇨🇿",
+    "sk" => "Slovenčina 🇸🇰",
+    "hu" => "Magyar 🇭🇺",
+    "ro" => "Română 🇷🇴",
+    "bg" => "Български 🇧🇬",
+    "el" => "Ελληνικά 🇬🇷",
+    "hr" => "Hrvatski 🇭🇷",
+    "sl" => "Slovenščina 🇸🇮",
+    "et" => "Eesti 🇪🇪",
+    "lv" => "Latviešu 🇱🇻",
+    "lt" => "Lietuvių 🇱🇹",
+    "mt" => "Malti 🇲🇹",
+    "ga" => "Gaeilge 🇮🇪"
+];
+
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = "es";
+}
+
+
+if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $languages)) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+
+$currentLang = $_SESSION['lang'];
+
+
+$lang = [];
+
+$csvPath = __DIR__ . "/idiomas.csv";
+$fh = fopen($csvPath, "r");
+if ($fh === false) {
+    http_response_code(500);
+    die("Cannot open translation file: " . htmlspecialchars($csvPath));
+}
+
+
+$headers = fgetcsv($fh);
+if ($headers === false) {
+    fclose($fh);
+    http_response_code(500);
+    die("Translation CSV is empty or invalid.");
+}
+
+
+$headers[0] = preg_replace('/^\xEF\xBB\xBF/', '', $headers[0]);
+
+$baseIndex = array_search("es", $headers, true);
+$currentIndex = array_search($currentLang, $headers, true);
+
+if ($baseIndex === false) {
+    fclose($fh);
+    http_response_code(500);
+    die('Translation CSV must include an "es" column header.');
+}
+
+
+if ($currentIndex === false) {
+    $currentIndex = $baseIndex;
+}
+
+while (($row = fgetcsv($fh)) !== false) {
+    if (!isset($row[$baseIndex])) {
+        continue;
+    }
+
+    $key = $row[$baseIndex];
+
+   
+    $value = $row[$currentIndex] ?? ($row[$baseIndex] ?? $key);
+
+    $lang[$key] = $value;
+}
+
+fclose($fh);
+
+
+function selectorIdioma(){
+    global $languages, $currentLang;
+
+    echo '<select id="idioma">';
+    foreach ($languages as $code => $label){
+        echo '<option value="'.htmlspecialchars($code).'"';
+        if ($code === $currentLang) {
+            echo ' selected';
+        }
+        echo '>'.htmlspecialchars($label).'</option>';
+    }
+    echo '</select>';
+}
+```
+
+index.php:
+```
+<?php include "motoridioma.php"; ?>
+<!doctype html>
+<html lang="<?= htmlspecialchars($currentLang) ?>">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><?= htmlspecialchars($lang['Titulo de mi web'] ?? 'Mi web') ?></title>
+</head>
+<body>
+
+<?php selectorIdioma(); ?>
+
+<h1><?= htmlspecialchars($lang['Titulo de mi web'] ?? 'Titulo de mi web') ?></h1>
+<p><?= htmlspecialchars($lang['Texto de mi web'] ?? 'Texto de mi web') ?></p>
+<p><?= htmlspecialchars($lang['Este es el texto que va a contener mi web'] ?? 'Este es el texto que va a contener mi web') ?></p>
+
+<script>
+document.getElementById("idioma").addEventListener("change", function () {
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", this.value);
+    window.location.href = url.toString();
+});
+</script>
+
+</body>
+</html>
+```
+
+idiomas.csv:
+```
+es,en,fr,de,it
+Titulo de mi web,My website title,Titre de mon site,Titel meiner Webseite,Titolo del mio sito
+Texto de mi web,Website text,Texte du site,Webseitentext,Testo del sito
+Este es el texto que va a contener mi web,This is the content of my website,Ceci est le contenu de mon site,Dies ist der Inhalt meiner Webseite,Questo è il contenuto del mio sito
+```
+
+En este ejercicio creo una página web que puede verse en varios idiomas. En la página hay un menú desplegable donde el usuario elige el idioma que quiere usar. Cuando se cambia el idioma, el texto de la web cambia automáticamente.
+
+Para hacerlo, uso PHP y sesiones. El idioma que selecciona el usuario se guarda en una sesión para que no se pierda cuando se recarga la página. También compruebo que el idioma elegido sea uno de los permitidos para evitar errores.
+
+Los textos de la web están guardados en un archivo CSV. PHP lee este archivo y enseña los textos en el idioma seleccionado. Así no tengo que repetir código y es más fácil añadir nuevos idiomas o cambiar los textos.
+
+Con este ejercicio practico cómo personalizar una web según el usuario y cómo controlar el acceso a la información de forma sencilla y segura, algo importante en los sistemas de gestión empresarial.

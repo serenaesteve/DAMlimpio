@@ -1,0 +1,127 @@
+Copia de seguridad y eliminación de registros en una base de datos
+
+En este ejercicio práctico, aprenderás cómo realizar copias de seguridad de bases de datos y eliminar registros utilizando SQL. Estos son dos operaciones fundamentales en el manejo de datos que puedes aplicar en tu día a día como programador/a.
+
+Primero, vamos a crear un directorio para almacenar nuestra copia de seguridad:
+
+josevicente@josevicenteportatil:~$ cd Escritorio/
+josevicente@josevicenteportatil:~/Escritorio$ mkdir micopiadeseguridad
+josevicente@josevicenteportatil:~/Escritorio$ cd micopiadeseguridad
+Luego, realiza una copia de seguridad de la base de datos empresarial utilizando el comando mysqldump. Recuerda reemplazar usuarioempresarial con tu nombre de usuario y proporciona la contraseña cuando se te solicite:
+
+josevicente@josevicenteportatil:~/Escritorio/micopiadeseguridad$ mysqldump -u usuarioempresarial -p empresarial > copia_de_seguridad_empresarial.sql
+Después de crear la copia de seguridad, es importante saber cómo eliminar registros. Vamos a eliminar todos los clientes de la base de datos clientes. Ten en cuenta que esta operación es irreversible y afectará a todos los registros:
+
+DELETE FROM clientes;
+Nota: Nunca ejecutes este comando sin estar seguro de lo que estás haciendo, ya que puede vaciar completamente una tabla.
+
+En el caso de querer eliminar un solo registro basado en ciertas condiciones, puedes utilizar la cláusula WHERE:
+
+DELETE FROM clientes WHERE telefono = '620891718';
+Este ejercicio te permite entender cómo proteger tus datos con copias de seguridad y cómo gestionar los registros de manera segura. Recuerda que el manejo correcto de la información es crucial en cualquier proyecto basado en bases de datos.
+
+
+Respuesta:
+
+En este ejercicio realizo una copia de seguridad de una base de datos y aprendo a eliminar registros utilizando SQL. Trabajo con MariaDB a través de XAMPP en Windows. Al principio cometo algunos errores, como usar comandos que no funcionan en Windows o no saber dónde está instalado MySQL, pero poco a poco los voy corrigiendo. También compruebo que la tabla clientes está vacía, por lo que inserto algunos datos para poder practicar. Con este ejercicio aprendo la importancia de hacer copias de seguridad antes de modificar los datos.
+​
+​
+Microsoft Windows [Versión 10.0.26100.7462]
+(c) Microsoft Corporation. Todos los derechos reservados.
+​
+C:\Users\Serena> cd ~/Escritorio
+El sistema no puede encontrar la ruta especificada.
+​
+C:\Users\Serena> cd "C:\Users\Serena\Desktop"
+​
+C:\Users\Serena\Desktop> cd Desktop
+El sistema no puede encontrar la ruta especificada.
+​
+C:\Users\Serena\Desktop> mkdir micopiadeseguridad
+​
+C:\Users\Serena\Desktop>cd micopiadeseguridad
+​
+C:\Users\Serena\Desktop\micopiadeseguridad> mysqldump -u root empresarial > copia_de_seguridad_empresarial.sql
+"mysqldump" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+​
+C:\Users\Serena\Desktop\micopiadeseguridad>"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe" -u root empresarial > copia_de_seguridad_empresarial.sql
+El sistema no puede encontrar la ruta especificada.
+​
+C:\Users\Serena\Desktop\micopiadeseguridad> "C:\xampp2\mysql\bin\mysqldump.exe" -u root empresarial > copia_de_seguridad_empresarial.sql
+​
+C:\Users\Serena\Desktop\micopiadeseguridad> dir
+ El volumen de la unidad C no tiene etiqueta.
+ El número de serie del volumen es: 1A0F-9157
+​
+ Directorio de C:\Users\Serena\Desktop\micopiadeseguridad
+​
+07/01/2026  14:14    <DIR>          .
+07/01/2026  14:14    <DIR>          ..
+07/01/2026  14:18             2.108 copia_de_seguridad_empresarial.sql
+               1 archivos          2.108 bytes
+               2 dirs  310.349.463.552 bytes libres
+​
+C:\Users\Serena\Desktop\micopiadeseguridad> "C:\xampp2\mysql\bin\mysql.exe" -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 33
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+​
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+​
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+​
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| campo_reservas     |
+| empresarial        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| tienda             |
+| training_center    |
++--------------------+
+9 rows in set (0.001 sec)
+​
+MariaDB [(none)]> USE empresarial;
+Database changed
+MariaDB [empresarial]> SHOW TABLES;
++-----------------------+
+| Tables_in_empresarial |
++-----------------------+
+| clientes              |
++-----------------------+
+1 row in set (0.001 sec)
+​
+MariaDB [empresarial]> SELECT COUNT(*) FROM clientes;
++----------+
+| COUNT(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.001 sec)
+​
+MariaDB [empresarial]> INSERT INTO clientes (nombre, telefono) VALUES
+    -> ('Ana', '620891718'),
+    -> ('Luis', '611223344'),
+    -> ('María', '699887766');
+Query OK, 3 rows affected (0.005 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+​
+MariaDB [empresarial]> DELETE FROM clientes WHERE telefono = '620891718';
+Query OK, 1 row affected (0.005 sec)
+​
+MariaDB [empresarial]> DELETE FROM clientes;
+Query OK, 2 rows affected (0.002 sec)
+​
+MariaDB [empresarial]> exit;
+Bye
+​
+C:\Users\Serena\Desktop\micopiadeseguridad>
+  
+Al finalizar el ejercicio consigo hacer correctamente una copia de seguridad de la base de datos y eliminar registros de una tabla usando sentencias DELETE. Los errores que aparecen al principio me ayudan a entender mejor cómo funciona el entorno y la importancia de comprobar los datos antes de borrarlos. Gracias a esta práctica aprendo a trabajar con más cuidado con las bases de datos y a seguir los pasos correctos para evitar problemas o pérdidas de información.
+

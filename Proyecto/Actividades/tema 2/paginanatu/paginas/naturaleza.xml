@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pagina>
+
+  <meta>
+    <title>Naturaleza y Animales</title>
+  </meta>
+
+  <hero>
+    <title>Naturaleza y Animales</title>
+    <subtitle>
+      Información básica sobre el cuidado de los animales y el respeto por el entorno natural.
+    </subtitle>
+
+    <media>
+      <image src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" alt="Bosque"/>
+    </media>
+
+    <badges>
+      <badge>Naturaleza</badge>
+      <badge>Animales</badge>
+      <badge>Medio ambiente</badge>
+    </badges>
+
+    <actions>
+      <action type="primary" href="#introduccion">Empezar</action>
+      <action href="#faq">Preguntas frecuentes</action>
+      <action href="#contacto">Contacto</action>
+    </actions>
+  </hero>
+
+  <sections>
+
+    <section id="introduccion" layout="text">
+      <title>Introducción</title>
+      <subtitle>La importancia de cuidar el planeta</subtitle>
+      <text>
+        La naturaleza y los animales forman parte fundamental de nuestro entorno.
+        Cuidarlos es importante para mantener el equilibrio del planeta y asegurar
+        un futuro mejor para las próximas generaciones.
+      </text>
+
+      <media>
+        <image src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Montañas"/>
+      </media>
+    </section>
+
+    <section id="naturaleza" layout="list">
+      <title>Acciones para cuidar la naturaleza</title>
+      <subtitle>Pequeños gestos que ayudan al medio ambiente</subtitle>
+      <text>
+        Estas son algunas acciones sencillas que cualquier persona puede hacer en su día a día.
+      </text>
+
+      <items>
+        <item>Reducir el uso de plásticos</item>
+        <item>No tirar basura en espacios naturales</item>
+        <item>Ahorrar agua y energía</item>
+        <item>Respetar la flora y la fauna</item>
+      </items>
+
+      <media>
+        <image src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" alt="Sendero natural"/>
+      </media>
+    </section>
+
+    <section id="animales" layout="cards">
+      <title>Animales que necesitan protección</title>
+      <subtitle>Ejemplos de especies que debemos cuidar</subtitle>
+      <text>
+        Algunos animales necesitan especial atención debido a la pérdida de su hábitat
+        o al abandono.
+      </text>
+
+      <cards>
+        <card>
+          <title>Erizo</title>
+          <text>
+            Animal nocturno que suele verse afectado por el tráfico y la destrucción
+            de su hábitat natural.
+          </text>
+        </card>
+
+        <card>
+          <title>Zorro</title>
+          <text>
+            Mamífero muy adaptable, pero que necesita espacios naturales para sobrevivir.
+          </text>
+        </card>
+
+        <card>
+          <title>Gato doméstico</title>
+          <text>
+            Aunque es una mascota común, requiere cuidados, alimentación adecuada y
+            esterilización responsable.
+          </text>
+        </card>
+
+        <card>
+          <title>Aves</title>
+          <text>
+            Muchas aves dependen de bosques y zonas verdes que deben ser protegidas.
+          </text>
+        </card>
+      </cards>
+
+      <media>
+        <image src="https://images.unsplash.com/photo-1474511320723-9a56873867b5" alt="Zorro"/>
+      </media>
+    </section>
+
+    <section id="faq" layout="faq">
+      <title>Preguntas frecuentes</title>
+      <subtitle>Dudas comunes sobre naturaleza y animales</subtitle>
+      <text>
+        En esta sección se responden algunas preguntas habituales relacionadas con el cuidado
+        de los animales y el respeto por el entorno natural.
+      </text>
+
+      <faq>
+        <qa>
+          <q>¿Por qué es importante cuidar la naturaleza?</q>
+          <a>
+            Porque de ella dependen los ecosistemas y los seres vivos. Cuidar la naturaleza
+            ayuda a mantener el equilibrio del planeta.
+          </a>
+        </qa>
+
+        <qa>
+          <q>¿Qué se debe tener en cuenta antes de adoptar un animal?</q>
+          <a>
+            Hay que pensar en el tiempo, el espacio y la responsabilidad que supone cuidar
+            de un animal durante toda su vida.
+          </a>
+        </qa>
+
+        <qa>
+          <q>¿Cómo se puede ayudar a los animales sin tener mascota?</q>
+          <a>
+            Respetando su hábitat, no abandonando animales y colaborando con protectoras
+            o asociaciones.
+          </a>
+        </qa>
+
+        <qa>
+          <q>¿Por qué es importante respetar los espacios naturales?</q>
+          <a>
+            Porque son el hogar de muchas especies y su conservación es clave para
+            la biodiversidad.
+          </a>
+        </qa>
+      </faq>
+    </section>
+
+ 
+    <section id="contacto" layout="cards">
+      <title>Contacto</title>
+      <subtitle>Si quieres saber más, aquí tienes opciones</subtitle>
+      <text>
+        Este apartado sirve para navegar desde los botones del hero y tener un lugar final
+        con información básica de contacto.
+      </text>
+
+      <cards>
+        <card>
+          <title>Email</title>
+          <text>serenaestevee@gmail.com</text>
+        </card>
+        <card>
+          <title>instagram</title>
+          <text>@serenaestevee</text>
+        </card>
+      </cards>
+
+    </section>
+
+  </sections>
+
+</pagina>
+
+

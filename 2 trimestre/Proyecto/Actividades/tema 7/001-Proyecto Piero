@@ -1,0 +1,111 @@
+Descarga imágenes de un sitio web específico
+
+A continuación te propongo una actividad que combina tus pasatiempos favoritos: los juegos de mesa y la naturaleza.
+
+Contexto
+Recuerda, cada vez que descargues imágenes de Internet, es importante hacerlo con responsabilidad. Imagina que estás explorando un campo lleno de árboles y rocas, recopilando muestras de flora y fauna para tu colección virtual. Cada imagen que descargas es como una especie diferente que has encontrado en el campo.
+
+Enunciado paso a paso
+Configura la URL del sitio web: Abre el archivo 002-pido mi propia web.py y cambia la variable url por la dirección de un sitio web que te interese, como "https://www.jocarsa.com". Es como elegir un campo específico para explorar.
+
+Descarga las imágenes: Ejecuta el script. Este código hará lo siguiente:
+
+Descargará el HTML del sitio web.
+Extraerá todas las imágenes que encuentre, tanto en etiquetas <img src="..."> como en estilos CSS con background-image.
+Guardará estas imágenes en una carpeta llamada "imagenes".
+Explora tus descargas: Una vez terminado, mira la carpeta "imagenes" y observa las imágenes que has descargado. Es como recoger todas las muestras de tu campo virtual.
+
+Restricciones
+No uses librerías externas.
+Mantén el código dentro del archivo 002-pido mi propia web.py.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica brevemente cómo has elegido un sitio web para tu campo virtual y qué tipo de imágenes esperas encontrar.
+Desarrollo técnico correcto y preciso (25%): Comprueba que el código se ejecuta sin errores y que las imágenes se descargan correctamente.
+Aplicación práctica con ejemplo claro (25%): Muestra cómo has explorado las imágenes descargadas y qué tipo de información puedes obtener de ellas.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre el proceso de descarga de imágenes y cómo esto se relaciona con tus hobbies del campo y los juegos de mesa, donde a menudo necesitas recopilar recursos o información para completar un objetivo.
+
+
+
+Respuesta:
+
+
+Para este ejercicio elegí la página web de Jocarsa. Quería ver qué imágenes hay en la web y aprender a descargarlas con Python. He pensado como si estuviera paseando por un campo y haciendo fotos como si fueran plantas o animales para mi colección. Mi objetivo era guardar todas las imágenes en una carpeta para poder verlas después.
+
+pidomipropiaweb.py:
+```
+import os
+import re
+import requests
+
+url = "https://jocarsa.com"
+carpeta_imagenes = "imagenes"
+
+if not os.path.exists(carpeta_imagenes):
+    os.makedirs(carpeta_imagenes)
+
+try:
+    response = requests.get(url)
+    print("Status:", response.status_code)
+    html = response.text
+    with open("pagina.html", "w", encoding="utf-8") as f:
+        f.write(html)
+    print("HTML guardado en pagina.html")
+except Exception as e:
+    print("Error al descargar la pagina:", e)
+    html = ""
+
+img_urls = re.findall(r'<img [^>]*src="([^"]+)"', html)
+bg_urls = re.findall(r'background-image\s*:\s*url\(([^)]+)\)', html)
+img_urls = [u.strip('"').strip("'").replace("&#039;", "") for u in img_urls + bg_urls]
+
+def completar_url(u):
+    if u.startswith("http"):
+        return u
+    elif u.startswith("/"):
+        return url.rstrip("/") + u
+    else:
+        return url.rstrip("/") + "/" + u
+
+img_urls = list(set([completar_url(u) for u in img_urls]))
+
+print(f"Se encontraron {len(img_urls)} imagenes.")
+
+for i, img_url in enumerate(img_urls):
+    try:
+        ext = os.path.splitext(img_url)[1]
+        if ext.lower() not in [".jpg", ".jpeg", ".png", ".gif", ".svg"]:
+            ext = ".jpg"
+
+        nombre_archivo = os.path.join(carpeta_imagenes, f"imagen_{i+1}{ext}")
+        img_data = requests.get(img_url).content
+        with open(nombre_archivo, "wb") as f:
+            f.write(img_data)
+
+        print(f"Descargada: {img_url}")
+    except Exception as e:
+        print(f"No se pudo descargar {img_url}: {e}")
+
+print("Descarga completa! Revisa la carpeta 'imagenes'.")
+```
+
+
+Consola:
+
+PS C:\Users\Serena\Documents\Proyecto\Actividades> python pidomipropiaweb.py
+Status: 200
+HTML guardado en pagina.html
+Se encontraron 10 imagenes.
+Descargada: https://jocarsa.com/img/negrotrans.png
+Descargada: https://jocarsa.com/logos/home.png
+Descargada: https://jocarsa.com/logos/facebook.png
+Descargada: https://jocarsa.com/logos/linkedin.png
+Descargada: https://jocarsa.com/logos/email.png
+Descargada: https://jocarsa.com/logos/instagram.png
+Descargada: https://static.jocarsa.com/logos/jocarsa%20%7C%20Indigo.svg
+Descargada: https://jocarsa.com/logos/github.png
+Descargada: https://jocarsa.com/logos/whatsapp.png
+Descargada: https://jocarsa.com/logos/youtube.png
+Descarga completa! Revisa la carpeta 'imagenes'.
+PS C:\Users\Serena\Documents\Proyecto\Actividades>
+
+He conseguido descargar todas las imágenes y guardarlas en la carpeta “imagenes”. Me ha gustado porque me enseñó cómo sacar cosas de una web con Python. Me a recordado a mis hobbies: explorar y recoger cosas, como en la naturaleza o en los juegos de mesa. He aprendido a seguir los pasos con cuidado para conseguir el objetivo.

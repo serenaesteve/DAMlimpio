@@ -1,0 +1,75 @@
+Recopilar información sobre un viaje al campo
+Contexto
+¡Hola exploradores! Hoy vamos a recoger datos interesantes durante un emocionante viaje en el campo. Imagina que estás recolectando muestras de rocas, midiendo la humedad del suelo y registrando los diferentes tipos de árboles que encuentras. Es como si estuvieras jugando a un juego interactivo de exploración.
+
+Enunciado paso a paso
+Recopilar información sobre rocas
+
+Crea una lista llamada rocas_encontradas para almacenar los tipos de rocas que encuentres durante tu viaje.
+Añade al menos 5 diferentes tipos de rocas a la lista.
+Medir la humedad del suelo
+
+Define una variable llamada humedad_suelo y asigna un valor entre 0 (muy seco) y 100 (muy húmedo).
+Registrar árboles encontrados
+
+Crea un diccionario llamado arboles_contados para almacenar el número de cada tipo de árbol que encuentres.
+Añade al menos 3 tipos de árboles y sus respectivos conteos a la lista.
+Calcular el promedio de humedad del suelo
+
+Define una función llamada calcular_promedio_humedad que reciba una lista de humedades y devuelva el promedio.
+Llama a esta función con los valores de humedad que hayas recolectado.
+Restricciones
+Solo puedes usar las estructuras de almacenamiento vistas hasta ahora: listas y diccionarios.
+No uses bucles for ni métodos como append() o push().
+Utiliza solo los conceptos permitidos en la lista blanca.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica claramente el contexto del ejercicio, cómo se relaciona con tu experiencia en el campo.
+Desarrollo técnico correcto y preciso (25%)
+
+Muestra la creación de listas y diccionarios correctamente.
+Asegúrate de que los valores asignados sean precisos y relevantes para el contexto del ejercicio.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona ejemplos claros de cómo se añaden elementos a las listas y diccionarios.
+Muestra cómo calcular el promedio de una lista de valores usando una función.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluye el ejercicio relacionándolo con el tema de estructuras de almacenamiento vistas en clase y cómo se aplican en situaciones prácticas como este viaje al campo.
+
+
+Respuesta:
+
+Este ejercicio trata sobre un viaje al campo donde recojo información del entorno. Mientras camino, voy escribiendo:
+- Las rocas que encuentro.
+- La humedad del suelo en diferentes puntos.
+-Los árboles y cuántos hay de cada tipo.
+Con esto aprendo a usar listas para guardar cosas parecidas, como las rocas y las mediciones de humedad, y diccionarios para contar cuántos árboles hay de cada tipo. Es una forma sencilla de organizar los datos que recojo en la naturaleza y entender mejor lo que observo.
+
+```
+rocas_encontradas = ["granito", "basalto", "caliza", "arenisca", "marmol"]
+humedad_suelo = 65
+arboles_contados = {"roble": 5, "pino": 8, "abedul": 3}
+
+def calcular_promedio_humedad(lista_humedades):
+    total = lista_humedades[0] + lista_humedades[1] + lista_humedades[2]
+    return total / len(lista_humedades)
+
+humedades = [65, 70, 60]
+promedio_humedad = calcular_promedio_humedad(humedades)
+
+print("Rocas encontradas:", rocas_encontradas)
+print("Humedad del suelo:", humedad_suelo)
+print("Arboles contados:", arboles_contados)
+print("Promedio de humedad recolectada:", promedio_humedad)
+```
+
+Salida del código:
+[Running] python -u "c:\Users\Serena\Desktop\humedad.py"
+Rocas encontradas: ['granito', 'basalto', 'caliza', 'arenisca', 'marmol']
+Humedad del suelo: 65
+Arboles contados: {'roble': 5, 'pino': 8, 'abedul': 3}
+Promedio de humedad recolectada: 65.0
+
+En este ejercicio veo cómo las estructuras de almacenamiento que aprendemos en clase, como listas y diccionarios, se aplican en la vida real. Las listas me permiten guardar elementos parecidos, como las rocas o las mediciones de humedad, mientras que los diccionarios me ayudan a asociar un nombre con un valor, como los tipos de árboles y su cantidad. Así puedo organizar y analizar los datos que recojo en el campo de forma ordenada y práctica.

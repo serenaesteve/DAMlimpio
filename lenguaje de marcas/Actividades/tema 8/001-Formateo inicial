@@ -1,0 +1,67 @@
+En esta actividad, debes seguir los pasos para formatear una tabla en HTML, utilizando las etiquetas adecuadas y los atributos necesarios.
+
+Primero, crea una estructura básica con una tabla. Esto incluye establecer la etiqueta <table> y especificar el border para que sea visible.
+
+<table border="1">
+A continuación, dentro de esta tabla, debes crear filas (<tr>) y celdas (<td>) donde colocar los datos. Asegúrate de utilizar las etiquetas correspondientes y especificar el width si deseas ajustar el ancho de la celda.
+
+<table border="1">
+  <tr>
+    <td width="50%">Izquierda</td>
+    <td>Centro</td>
+    <td>Derecha</td>
+  </tr>
+</table>
+Para hacer que tu tabla sea más interesante y práctica, puedes agregar algunos ejemplos. Por ejemplo, puedes crear una fila con datos de diferentes colores o en negrita utilizando la etiqueta <b>.
+
+<table border="1">
+  <tr>
+    <td width="50%" style="background-color: #f0f0f0;">Izquierda</td>
+    <td>Centro</td>
+    <td>Derecha</td>
+  </tr>
+  <tr>
+    <td width="50%" style="font-weight: bold;">Esto es texto en negrita</td>
+    <td>Centro, pero más abajo</td>
+    <td>Derecha con un color diferente</td>
+  </tr>
+</table>
+Para completar la actividad, debes escribir una breve introducción explicando el propósito de tu tabla y cómo se ha utilizado. Puedes mencionar los elementos HTML utilizados, como <table>, <tr>, <td> y style. Sin embargo, recuerda que este paso no es obligatorio para esta actividad específica.
+
+¡Eso es todo! Sigue estos pasos y ajusta tu tabla con tus propios datos. Recuerda verificar la consistencia del código y asegurarte de que sea visualmente atractiva.
+
+
+Respuesta:
+
+
+En esta actividad hago una tabla en HTML para aprender a colocar información en filas y columnas. Uso las etiquetas <table>, <tr> y <td> para crear la tabla y enseñar los datos de forma ordenada. También pongo algunos estilos sencillos para que la tabla se vea mejor.
+
+index.html:
+```
+	<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de Tabla HTML</title>
+</head>
+<body>
+
+  <h2>Ejemplo de tabla formateada</h2>
+
+  <table border="1" width="100%">
+    <tr>
+      <td width="50%" style="background-color: #f0f0f0;">Izquierda</td>
+      <td>Centro</td>
+      <td>Derecha</td>
+    </tr>
+    <tr>
+      <td width="50%" style="font-weight: bold;">Esto es texto en negrita</td>
+      <td>Centro, pero más abajo</td>
+      <td style="background-color: #d0e8ff;">Derecha con un color diferente</td>
+    </tr>
+  </table>
+
+</body>
+</html>
+```
+Con esta actividad aprendo a crear tablas en HTML y a organizar la información correctamente. Entiendo mejor cómo usar las etiquetas básicas y cómo cambiar un poco el aspecto de la tabla. Esta práctica me ayuda a seguir aprendiendo a hacer páginas web.

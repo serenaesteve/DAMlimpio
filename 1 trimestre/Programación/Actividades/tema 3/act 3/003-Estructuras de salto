@@ -1,0 +1,97 @@
+Ejercicio: Control de Flujo y Funciones
+Contexto
+Imagine que eres un jugador de videojuegos que está explorando un campo mágico lleno de diferentes paisajes. Cada día descubre un nuevo lugar, y tu objetivo es mantener un registro de tus avances. Para ello, necesitas aprender a controlar el flujo de tu programa utilizando estructuras como while y break, así como cómo usar funciones para organizar mejor tu código.
+
+Enunciado paso a paso
+Escribir una función que imprima los días del mes:
+
+Crea una función llamada imprimir_dias que no reciba ningún parámetro.
+Dentro de la función, utiliza un bucle while True para imprimir los días del mes (del 1 al 31).
+Usa la palabra clave break cuando el día sea mayor a 31.
+Escribir una función que retorne una frase personalizada:
+
+Crea una función llamada saludar que reciba dos parámetros: nombre y edad.
+La función debe retornar una cadena de texto que incluya el nombre del usuario y su edad.
+Imprime la frase retornada por la función para los siguientes usuarios:
+Nombre: "Juan", Edad: 25
+Nombre: "María", Edad: 30
+Restricciones
+No puedes usar estructuras de control como for.
+Debes utilizar la palabra clave break para salir del bucle cuando el día sea mayor a 31.
+La función saludar debe retornar una cadena de texto, no imprimir directamente.
+Criterios de evaluación
+Introducción y contextualización: El estudiante explica cómo utilizar estructuras de control para manejar los días del mes y cómo organizar el código con funciones.
+Desarrollo técnico correcto y preciso: El estudiante escribe correctamente la función imprimir_dias utilizando un bucle while True y el break. La función saludar recibe dos parámetros y retorna una cadena de texto.
+Aplicación práctica con ejemplo claro: El estudiante imprime las frases retornadas por la función saludar para diferentes usuarios, demostrando que comprende cómo usar funciones y estructuras de control.
+Cierre/Conclusión enlazando con la unidad: El estudiante reflexiona sobre cómo este ejercicio puede ayudar a organizar el código y mejorar su legibilidad, similar a cómo los jugadores organizan sus juegos o exploran nuevos terrenos en un videojuego.
+
+
+
+Respuesta:
+
+
+En programación, uso estructuras como el bucle while para repetir acciones, por ejemplo, contar los días de un mes. También uso funciones para ordenar el código y poder reutilizarlo fácilmente. Es como en un videojuego, donde el jugador organiza sus objetos o pasos para avanzar mejor.
+
+En este ejercicio, imagino que somos jugadores explorando un mundo mágico. Queremos llevar un registro de los días que exploramos y también saludar a otros jugadores de forma personalizada.
+
+
+```
+def imprimir_dias():
+    dia = 1
+    while True:
+        print(f"Dia {dia} explorado.")
+        dia += 1
+        if dia > 31:
+            break
+
+def saludar(nombre, edad):
+    return f"Hola {nombre}! Tienes {edad} anos y estas listo para una nueva aventura."
+
+imprimir_dias()
+
+frase_juan = saludar("Juan", 25)
+frase_maria = saludar("Maria", 30)
+
+print(frase_juan)
+print(frase_maria)
+```
+
+***Salida del código:***
+ python -u "C:\Users\Serena\AppData\Local\Temp\tempCodeRunnerFile.python"
+Dia 1 explorado.
+Dia 2 explorado.
+Dia 3 explorado.
+Dia 4 explorado.
+Dia 5 explorado.
+Dia 6 explorado.
+Dia 7 explorado.
+Dia 8 explorado.
+Dia 9 explorado.
+Dia 10 explorado.
+Dia 11 explorado.
+Dia 12 explorado.
+Dia 13 explorado.
+Dia 14 explorado.
+Dia 15 explorado.
+Dia 16 explorado.
+Dia 17 explorado.
+Dia 18 explorado.
+Dia 19 explorado.
+Dia 20 explorado.
+Dia 21 explorado.
+Dia 22 explorado.
+Dia 23 explorado.
+Dia 24 explorado.
+Dia 25 explorado.
+Dia 26 explorado.
+Dia 27 explorado.
+Dia 28 explorado.
+Dia 29 explorado.
+Dia 30 explorado.
+Dia 31 explorado.
+Hola Juan! Tienes 25 anos y estas listo para una nueva aventura.
+Hola Maria! Tienes 30 anos y estas listo para una nueva aventura.
+
+Este ejercicio muestra cómo el uso de while y break me ayuda a controlar lo que hace el programa, como contar los días de un mes. También aprendo que las funciones sirven para organizar mejor el código y hacer tareas específicas, como saludar a otros jugadores.
+
+Usar funciones es como tener un mapa en un videojuego: me ayuda a no perderme y saber qué hace cada parte del código. Así, el programa es más claro, fácil de usar y de entender.

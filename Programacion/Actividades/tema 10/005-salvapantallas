@@ -1,0 +1,97 @@
+Ejercicio: Gestión de una expedición en el campo
+Contexto:
+Imagine que eres un guía de campo experimentado y estás organizando tu próxima expedición en el parque natural local. Necesitas crear un programa para gestionar los jugadores (miembros de tu equipo) y sus actividades durante la expedición.
+
+Enunciado paso a paso:
+Declaración de variables:
+
+Declara las siguientes variables:
+nombre_jugador: Para almacenar el nombre del jugador.
+edad_jugador: Para almacenar la edad del jugador.
+actividad_jugador: Para almacenar la actividad que realiza el jugador durante la expedición (por ejemplo, "camping", "picnique", "exploración").
+Ingreso de datos:
+
+Solicita al usuario ingresar los siguientes datos:
+El nombre del jugador.
+La edad del jugador.
+La actividad que realizará el jugador durante la expedición.
+Validación de datos:
+
+Asegúrate de que la edad ingresada sea un número y que no sea negativa.
+Valida que la actividad ingresada sea una de las siguientes opciones: "camping", "picnique", o "exploración".
+Mostrar información:
+
+Muestra por pantalla la siguiente información:
+Nombre del jugador: [nombre_jugador]
+Edad del jugador: [edad_jugador] años
+Actividad durante la expedición: [actividad_jugador]
+Restricciones:
+No utilices funciones o métodos adicionales que no se hayan visto en clase.
+No utilices librerías externas.
+Asegúrate de que el código sea claro y bien estructurado.
+Criterios de evaluación:
+Introducción y contextualización (25%): El estudiante debe entender la necesidad del programa para gestionar jugadores en una expedición y cómo se relaciona con su hobby de la naturaleza.
+Desarrollo técnico correcto y preciso (25%): El código debe ser correcto, bien estructurado y seguir las reglas de sintaxis de Python.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe mostrar cómo utilizar los datos ingresados para mostrar la información del jugador de manera clara.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe explicar cómo este ejercicio se relaciona con el tema de gestión de objetos y cómo puede aplicarse en situaciones reales, como la organización de eventos o expediciones en el campo.
+
+
+Respuesta:
+
+En esta actividad estoy haciendo un programa en Python para gestionar una expedición en el campo. La idea es poder guardar información de un jugador, como su nombre, su edad y la actividad que va a realizar durante la expedición (por ejemplo camping, picnique o exploración). Me parece útil porque así puedo organizar mejor a las personas que participan y saber qué va a hacer cada una. Además, con este ejercicio practico cómo pedir datos por teclado y cómo comprobar que los datos sean correctos.
+
+```
+nombre_jugador = ""
+edad_jugador = 0
+actividad_jugador = ""
+
+
+nombre_jugador = input("Ingrese el nombre del jugador: ")
+
+
+edad_valida = False
+while edad_valida == False:
+    edad_texto = input("Ingrese la edad del jugador: ")
+
+    if edad_texto.isdigit():
+        edad_jugador = int(edad_texto)
+        edad_valida = True
+    else:
+        print("Error: la edad debe ser un número y no puede ser negativa.")
+
+
+actividad_valida = False
+while actividad_valida == False:
+    actividad_jugador = input("Ingrese la actividad (camping, picnique, exploración): ")
+
+    if actividad_jugador == "camping" or actividad_jugador == "picnique" or actividad_jugador == "exploración":
+        actividad_valida = True
+    else:
+        print("Error: actividad no válida. Debe ser camping, picnique o exploración.")
+
+
+print("\n--- Información del jugador en la expedición ---")
+print("Nombre del jugador:", nombre_jugador)
+print("Edad del jugador:", edad_jugador, "anos")
+print("Actividad durante la expedición:", actividad_jugador)
+```
+
+Consola:
+
+```
+serena@serena-portatil:/var/www/html/DAM/DAM1/Programacion/Actividades$ python3 picnique.py
+Ingrese el nombre del jugador: Serena Sania 
+Ingrese la edad del jugador: 22
+Ingrese la actividad (camping, picnique, exploración): Exploración
+Error: actividad no válida. Debe ser camping, picnique o exploración.
+Ingrese la actividad (camping, picnique, exploración): exploración
+
+--- Información del jugador en la expedición ---
+Nombre del jugador: Serena Sania 
+Edad del jugador: 22 anos
+Actividad durante la expedición: exploración
+serena@serena-portatil:/var/www/html/DAM/DAM1/Programacion/Actividades$ ^C
+serena@serena-portatil:/var/www/html/DAM/DAM1/Programacion/Actividades$ 
+```
+
+Con este ejercicio aprendo a manejar datos de una persona usando variables, como el nombre, la edad y la actividad. También practico la validación de datos, por ejemplo asegurándome de que la edad sea un número y que la actividad esté dentro de las opciones permitidas. Esto se relaciona con la unidad porque me ayuda a entender cómo se pueden gestionar y controlar datos en un programa, algo que es muy importante para hacer aplicaciones más completas. Este tipo de programa se puede usar en situaciones reales como organizar excursiones, campamentos o cualquier evento donde haya que registrar participantes.

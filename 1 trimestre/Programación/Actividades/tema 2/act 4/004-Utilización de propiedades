@@ -1,0 +1,61 @@
+Contexto
+Ayer, después de una larga jornada en la naturaleza, decidiste descubrir un nuevo juego de mesa llamado "Rutas Secretas". Este juego combina elementos de estrategia y exploración, lo que te llevó a pensar en cómo podrías modelar este juego en tu programa. Para ello, necesitas utilizar objetos predeterminados existentes en el lenguaje de programación.
+
+Enunciado paso a paso
+Entendimiento del problema: Imagina que tienes un mapa de una región natural con varios senderos y puntos de interés. Cada punto de interés tiene un nombre y una descripción.
+
+Definición de objetos: Necesitas crear un objeto para representar cada punto de interés en el mapa.
+
+Propiedades del objeto: El objeto debe tener propiedades que almacenen:
+
+nombre: Nombre del punto de interés.
+descripcion: Descripción detallada del punto de interés.
+Métodos del objeto: No necesitas métodos adicionales para este ejercicio, solo las propiedades.
+
+Restricciones
+No puedes crear nuevas clases personalizadas.
+Solo debes utilizar objetos predeterminados existentes en el lenguaje de programación.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente qué es un objeto y cómo se utiliza para modelar entidades del mundo real, como los puntos de interés en el mapa.
+
+Desarrollo técnico correcto y preciso (25%): Muestra cómo crear un objeto con propiedades y cómo acceder a estas propiedades.
+
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo práctico de cómo utilizar el objeto creado para representar un punto de interés en el mapa.
+
+Cierre/Conclusión enlazando con la unidad (25%): Concluye explicando cómo esta actividad se relaciona con los conceptos aprendidos en la subunidad sobre la utilización de propiedades en objetos.
+
+
+
+Respuesta:
+
+
+Los objetos nos ayudan a representar cosas reales de manera fácil en un programa.
+Un punto de interés en un mapa:
+-nombre: "Cueva Escondida"
+-descripcion: "Una cueva secreta en el bosque."
+El objeto guarda esta información para usarla en el juego.
+​
+```
+class PuntoDeInteres:
+    def __init__(self, nombre, descripcion):
+        self.nombre = nombre
+        self.descripcion = descripcion
+​
+cueva = PuntoDeInteres(
+    "Cueva Escondida", 
+    "Una cueva secreta rodeada de un bosque denso y misterioso."
+)
+​
+print("Nombre:", cueva.nombre)
+print("Descripción:",cueva.descripcion)
+````
+​
+Salida del código:
+​
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\mapa.py"
+Nombre: Cueva Escondida
+Descripci�n: Una cueva secreta rodeada de un bosque denso y misterioso.
+​
+Esta actividad muestra cómo usar propiedades en objetos.
+​
+Al crear un punto de interés con nombre y descripcion, puedo guardar y usar información fácilmente. Esto me enseña cómo los objetos me ayudan a organizar datos del mundo real en un programa.

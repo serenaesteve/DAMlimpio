@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Recuperar un objeto complejo</title>
+  </head>
+  <body>
+    <script>
+      
+      var datosTexto = localStorage.getItem("mis_datos");
+
+      var mis_datos = JSON.parse(datosTexto);
+
+      console.log(mis_datos.nombre);
+      console.log(mis_datos.apellidos);
+      console.log(mis_datos.email);
+    </script>
+  </body>
+</html>
+

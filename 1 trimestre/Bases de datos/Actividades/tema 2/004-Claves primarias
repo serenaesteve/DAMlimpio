@@ -1,0 +1,85 @@
+Actividad: Introducción a las Claves Primarias
+En este ejercicio práctico, aprenderás cómo establecer una clave primaria en una tabla de base de datos relacional. Esta clave primaria será un identificador único y no nulo que permitirá distinguir cada fila de la tabla.
+
+Contexto
+Imagina que eres el dueño de una tienda de juguetes llamada "Juguetes del Campo". Para mantener un registro de todos los juguetes en stock, necesitas crear una base de datos. Cada juguete tendrá un identificador único que te ayudará a gestionarlo de manera eficiente.
+
+Enunciado paso a paso
+Crear la tabla:
+
+Primero, crea una tabla llamada juguetes con las siguientes columnas: id, nombre, precio, y stock.
+Definir la clave primaria:
+
+Selecciona la columna id como clave primaria para la tabla juguetes. Asegúrate de que esta columna sea única y no nula.
+Modificar la columna:
+
+Modifica la columna id para que sea del tipo INT y autoincremental, lo que asegurará que cada nuevo juguete tenga un identificador único y sin repetir.
+Restricciones
+No utilices funciones o estructuras que no hayas visto en clase.
+Asegúrate de seguir la sintaxis correcta del lenguaje SQL para alterar tablas.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Comprueba si has comprendido el contexto del ejercicio, relacionándolo con tu hobby de manejar una tienda de juguetes.
+Desarrollo técnico correcto y preciso (25%):
+
+Verifica que la tabla juguetes se ha creado correctamente y que la columna id es la clave primaria.
+Aplicación práctica con ejemplo claro (25%):
+
+Asegúrate de haber modificado la columna id para que sea del tipo INT y autoincremental, lo que garantice la unicidad y no nulidad del identificador.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Comprueba si has cerrado el ejercicio relacionándolo con tu hobby de manejar una tienda de juguetes, enfatizando cómo esta conocida estructura te ayudará a mantener un registro eficiente.
+
+Respuesta:
+
+Imagina que tiengo mi tienda “Juguetes del Campo”.
+Tengo muchos juguetes: pelotas, muñecos, carritos…
+Para no confundirme, le doy a cada juguete un número único llamado ID.
+Este número:
+-No se repite.
+-No se queda en blanco.
+-Se pone automáticamente cuando agrego un juguete nuevo.
+Y así siempre sabré exactamente cuál juguete es cuál.
+
+
+1. Crear la base de datos y la tabla:
+```
+CREATE DATABASE tienda_juguetes;
+USE tienda_juguetes;
+
+CREATE TABLE juguetes (
+    id INT,
+    nombre VARCHAR(100),
+    precio DECIMAL(10,2),
+    stock INT
+);
+```
+2. Crear una clave primaria en la tabla de juguetes apara que me deje modificar la columna id:
+```
+ALTER TABLE juguetes
+ADD PRIMARY KEY (id);
+```
+
+3. Ahora si modifico la columna id:
+```
+ALTER TABLE juguetes
+MODIFY id INT AUTO_INCREMENT;
+```
+
+4. Ahora inserto juguetes:
+```
+INSERT INTO juguetes (nombre, precio, stock)
+VALUES ('Pelota', 5.50, 20),
+       ('Muñeca', 12.00, 15),
+       ('Carrito', 8.75, 10);
+```
+5. Finalmente consulto la tabla:
+```
+SELECT * FROM juguetes;
+```
+Y observo cómo la columna id se incrementa automáticamente para cada juguete.
+
+Al usar una clave primaria en mi base de datos, puedo llevar un control claro y ordenado de todos los juguetes de mi tienda “Juguetes del Campo”.
+Cada juguete tiene su propio número, así no se confunde con otro.
+Esto me ayuda a saber cuántos tengo, cuáles se venden más y a organizar mejor mi inventario.

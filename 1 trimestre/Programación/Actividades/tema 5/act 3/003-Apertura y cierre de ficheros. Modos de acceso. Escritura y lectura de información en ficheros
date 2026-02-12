@@ -1,0 +1,86 @@
+Contexto
+En tus vacaciones en el campo, has estado jugando a juegos de mesa con amigos y explorando la naturaleza. Hoy te gustaría guardar información sobre los clientes que visitan tu tienda local de juegos de mesa y libros para organizar mejor tus ventas.
+
+Enunciado paso a paso
+Abrir un archivo en modo lectura binaria:
+
+Utiliza el método open() con el modo "rb" para abrir un archivo llamado "clientes.txt".
+Almacena este archivo en una variable llamada archivo_binario.
+Leer una línea del archivo:
+
+Usa el método readline() sobre la variable archivo_binario y almacena lo leído en una variable llamada primer_linea.
+Decodificar la línea para mostrarla:
+
+Decodifica la cadena de bytes leída con decode("utf-8").
+Imprime el contenido decodificado.
+Cerrar el archivo:
+
+Cierra el archivo utilizando el método close() sobre la variable archivo_binario.
+Restricciones
+No puedes usar librerías externas.
+Solo puedes usar métodos y clases que se hayan visto hasta ahora en clase.
+No puedes utilizar estructuras de datos complejas como listas o diccionarios.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Explica claramente el contexto del ejercicio, relacionándolo con tus actividades en el campo y tu juego de mesa.
+Desarrollo técnico correcto y preciso (25%):
+
+Asegúrate de que el código sigue las instrucciones paso a paso sin errores.
+Aplicación práctica con ejemplo claro (25%):
+
+Proporciona un ejemplo claro de cómo se debería ver el contenido del archivo "clientes.txt" y cómo debería ejecutarse el programa.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Concluye explicando cómo esta actividad te ayuda a entender mejor los conceptos de lectura y escritura de información en archivos binarios, aplicándolos en un contexto práctico relacionado con tu hobby del campo.
+
+
+
+
+Respuesta:
+
+
+
+Durante mis vacaciones en el campo, he pasado mucho tiempo disfrutando de la naturaleza y jugando a juegos de mesa con mis amigos.
+Esto me hizo pensar en cómo podría organizar mejor la información de los clientes de una pequeña tienda local que vende juegos y libros.
+
+Para practicar lo que hemos aprendido en clase sobre archivos en Python, voy a crear un pequeño programa que abra un archivo en modo binario, lea una línea y la decode para poder mostrarla por pantalla.
+Este ejercicio me ayuda a entender cómo los datos se almacenan y se leen de forma más “técnica”, es decir, en formato binario.
+
+1. He creado mi archivo CLIENTES.TXT en gedit.
+2. Desde la terminal he ejecutado esto:
+```
+Suggestion [3,General]: No se encontró el comando clientes.txt, pero existe en la ubicación actual. Windows PowerShell no carga comandos de la ubicación actual de forma predeterminada. Si confía en este comando, escriba ".\clientes.txt". Vea "get-help about_Command_Precedence" para obtener información más detallada.
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> "Juan Pérez - Juegos de Estrategia" > clientes.txt
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> "María López - Libros de Fantasía" >> clientes.txt
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> "Carlos Ruiz - Juegos de Cartas" >> clientes.txt
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> type clientes.txt
+Juan Pérez - Juegos de Estrategia
+María López - Libros de Fantasía
+Carlos Ruiz - Juegos de Cartas
+```
+3. He creado mi archivo leer_clientes.py y al darle a guardar como he tenido que cambiar el UTF por que se me guardaba comon 16 y yo lo he cambiado a UTF 8, he puesto este código:
+```
+archivo_binario = open("clientes.txt", "rb")
+
+
+primer_linea = archivo_binario.readline()
+
+
+print(primer_linea.decode("utf-8"))
+
+
+archivo_binario.close()
+```
+
+Y esto ha sido la salida de consola:
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\tema 5\leer_clientes.py"
+Juan P�rez - Juegos de Estrategia
+
+
+Con esta práctica he aprendido a abrir, leer, decodificar y cerrar archivos en modo binario usando Python.
+También entendí la diferencia entre trabajar con texto normal y con bytes, que es cómo el ordenador realmente almacena los datos.
+
+Me pareció interesante ver cómo algo tan técnico puede aplicarse a un ejemplo real como una tienda de juegos o libros, conectando mis aficiones con lo que aprendo en clase.
+
+Gracias a este ejercicio, comprendo mejor cómo los programas manejan información real, algo que me será muy útil en el desarrollo de aplicaciones futuras.

@@ -1,0 +1,111 @@
+Enunciado de la actividad:
+
+En base a la máquina virtual que has creado en la unidad anterior:
+
+1.-Descarga Ubuntu Server 24.04 2.-Instala esa versión de Linux en la máquina virtual 3.-Una vez instala la máquina: 3.1.-Instala openssh server y conectate desde fuera (atención al adaptador puente) 3.2.-Instala Apache2 3.3.-Instala y asegura MySQL Server 3.4.-Asegurate de que está Python3 instalado 3.5.-Instala PIP 3.6.-Instala Flask 3.7.- Asegura hola mundo en Apache, MySQL, Python/Flask
+
+Recuerda realizar el examen siguiendo la rúbrica
+
+
+
+
+Respuesta:
+
+
+En esta actividad he trabajado con una máquina virtual para instalar y configurar Ubuntu Server 24.04. El objetivo principal fue poner en marcha varios servicios importantes como OpenSSH, Apache2, MySQL, Python3, PIP y Flask, asegurándome de que todos funcionaran correctamente. Con esto, busco aprender cómo preparar un servidor desde cero y comprobar que todo esté bien configurado mostrando un “Hola Mundo” en los distintos servicios.
+
+
+1. Antes de entrar a virtual box me descargo la iso aqui: https://ubuntu.com/download/server
+2. Me voy a virtual box y le doy a nueva.
+3. Le ponemos nombre "UbuntuserverSerena"
+4. Ponemos la ISO que hemos descargado antes.
+5. Desmarcamos la pestaña de instalación destendida
+6. Ajustamos la memoria baje a 4194 MB , la CPU a 4  y el disco duro a 125 GB
+7. Le damos a terminar y esperamos a que arranque
+8. Seleccionamos idioma (Español)
+9. Identificamos el teclado a español
+10. Elijo ubuntu server
+11. Acepto la configuración de red
+12. Le doy a hecho por que no quiero proxy address
+13. Le doy a hecho aundo compruebo los mirrors
+14. Le doy a echo por que quiero particionar el disco entero
+15. Acepto la propuesta de puntos de montaje
+16. Le damos a continuar
+17. Ahora añado los datos para la maquina:
+-Nombre: Serena Sania Esteve 
+- Nombre servidor: ubuntuserverserena
+- Nombre de usuario : serenaesteve
+- Contraseña: Examen123
+- Repita contraseña: Examen123
+18. Como no quiero ubuntu pro lo quito marcando "Skip for now"
+19. No marco openssh por que luego lo instalare a mano
+20. No marco ninguno por que no quiero entornos preconfigurados
+21. Ahora se pone a instalar.
+22. Le damos a reiniciar
+23. Le damos enter
+24. Ahora ponemos usuario y contraseña
+25. Ahora me pongo a actualizar paquetes:
+- sudo apt update
+- pongo mi contraseña
+26. Instalo paquetes de red:
+- sudo apt install net-tools
+27. Ahora quiero saber cual es mi IP:
+-ifconfig
+- mi IP es 192.168.1.130
+28. Ahora instalo Openssh server:
+- sudo apt install openssh-server
+- le digo s
+29. Ahora me voy a la terminal de mi PC
+30. Me conecto a mi maquina virtual:
+-  ssh serenaesteve@192.168.1.130
+- yes
+31. Ahora instalo apache2:
+- sudo apt install apache2
+- contraseña
+- s
+32. Escribo cd /var/www/html
+33. Escribo ls (me saldra index.html)
+34. Escribo sudo mv index.html index_old.html
+35. Escribo sudo nano index.htmL
+- Dentro escribo HOLA MUNDO y guardamos (contl o , enter contl x)
+
+Me voy al nevegador y pongo:
+
+http://192.168.1.130
+
+http://192.168.1.130/index.htmL
+
+36. Ahora instalo mysql:
+- sudo apt install mysql-server
+- contraseña
+- s
+-  sudo mysql_secure_installation
+-  y
+-  0 y enter
+-  y
+-  y
+-  y
+-  y
+
+37. Ahora inicio seseion para ver si puedo entrar en mysql:
+- sudo mysql -u root -p
+- contraseña
+- enter
+38. Creo una base de datos para comprobar:
+- CREATE DATABASE holamundo;
+- SHOW DATABASES;
+- exit;
+
+39. Voy a instalar python y pip:
+Como python ya esta instalado:
+- python3
+Demostración:
+-print("Hola mundo")
+- exit()
+
+40. Instalo PIP:
+- sudo apt install python3-pip
+- clear
+- pip3 install flask --break-system-packages
+
+Al terminar la práctica, pude entender mejor cómo se instala y configura un servidor Linux con diferentes herramientas y servicios. Aprendí a conectarme de forma remota con SSH, a usar Apache2 como servidor web, a configurar MySQL de manera segura y a ejecutar aplicaciones con Python y Flask. En general, esta actividad me ayudó a reforzar mis conocimientos sobre servidores y a comprender mejor cómo se integran los distintos componentes en un entorno real.

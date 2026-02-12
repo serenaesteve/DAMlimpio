@@ -1,0 +1,264 @@
+Para practicar los conceptos impartidos en clase sobre inferencia y diagnóstico con modelos de lenguaje, sigue estos pasos:
+
+Entendimiento inicial: Lee cuidadosamente los ejercicios infer.py y 010-diagnostico.py. Identifica cómo se construyen prompts para preguntas y respuestas, y cómo se evalúa la calidad de las respuestas generadas.
+
+Práctica con ejemplos: Ejecuta el script infer.py y proporciona diferentes preguntas como argumentos. Observa cómo se genera una respuesta basada en el entrenamiento del modelo. Intenta entender por qué ciertas respuestas son más precisas que otras.
+
+Diagnóstico de rendimiento: Utiliza el script 010-diagnostico.py para evaluar el rendimiento del modelo en preguntas específicas. Modifica los ejemplos proporcionados y observa cómo cambia la respuesta generada. Aprende a interpretar las métricas de negativa log-likelihood (NLL) para determinar si el modelo está preferiendo respuestas correctas o incorrectas.
+
+Refinamiento del entrenamiento: Si encuentras que el modelo no está respondiendo como esperabas, considera ajustar los hiperparámetros en 010-diagnostico.py o agregar más ejemplos de entrenamiento para mejorar el rendimiento del modelo.
+
+Aplicación práctica: Intenta aplicar lo aprendido a un conjunto de preguntas reales o a problemas que te interesen. Puedes crear tus propias preguntas y respuestas para practicar la inferencia y el diagnóstico continuo.
+
+Revisión y reflexión: Después de cada práctica, toma un momento para revisar lo hecho. Reflexiona sobre qué funcionó bien y qué necesitaba mejoras. Ajusta tus enfoques según sea necesario.
+
+Siguiendo estos pasos, podrás mejorar significativamente tu comprensión y habilidades en la inferencia y diagnóstico con modelos de lenguaje. ¡Buena suerte!
+
+
+Respuesta:
+
+En esta práctica he trabajado con modelos de lenguaje para entender cómo generan respuestas y cómo se puede evaluar si esas respuestas son correctas. El objetivo ha sido poner en práctica los conceptos de inferencia y diagnóstico vistos en clase utilizando los archivos infer.py y 010-diagnostico.py. De esta forma he podido comprobar cómo responde el modelo ante distintas preguntas y cómo se puede analizar su rendimiento.
+
+
+infer.py:
+```
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+MODEL_PATH = "Qwen/Qwen2.5-0.5B-Instruct"
+
+FALLBACK_EXACT = "No lo sé basándome en mi entrenamiento."
+
+_TOKENIZER = None
+_MODEL = None
+
+
+def build_prompt_qa(user_question: str) -> str:
+    instruction = (
+        "Responde de forma clara y breve.\n"
+        "Si no sabes la respuesta, di exactamente:\n"
+        f"{FALLBACK_EXACT}\n\n"
+    )
+    return f"{instruction}Pregunta: {user_question}\nRespuesta:"
+
+
+def clean_answer(text: str) -> str:
+    if not text:
+        return FALLBACK_EXACT
+
+    t = text.strip()
+
+    if FALLBACK_EXACT in t:
+        return FALLBACK_EXACT
+
+    for line in t.splitlines():
+        line = line.strip()
+        if line:
+            return line
+
+    return FALLBACK_EXACT
+
+
+def load_model():
+    global _TOKENIZER, _MODEL
+    if _TOKENIZER is not None and _MODEL is not None:
+        return _TOKENIZER, _MODEL
+
+    _TOKENIZER = AutoTokenizer.from_pretrained(MODEL_PATH)
+
+    use_cuda = torch.cuda.is_available()
+    _MODEL = AutoModelForCausalLM.from_pretrained(
+        MODEL_PATH,
+        device_map="auto" if use_cuda else None,
+        torch_dtype=torch.float16 if use_cuda else torch.float32
+    )
+
+    if not use_cuda:
+        _MODEL.to("cpu")
+
+    _MODEL.eval()
+    return _TOKENIZER, _MODEL
+
+
+def infer(question: str, max_new_tokens: int = 80) -> str:
+    tokenizer, model = load_model()
+
+    prompt_text = build_prompt_qa(question)
+    inputs = tokenizer(prompt_text, return_tensors="pt")
+    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    input_len = inputs["input_ids"].shape[-1]
+
+    with torch.no_grad():
+        output_ids = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+            num_beams=1,
+            repetition_penalty=1.05,
+            eos_token_id=tokenizer.eos_token_id,
+            pad_token_id=tokenizer.eos_token_id,
+        )
+
+    gen_ids = output_ids[0, input_len:]
+    raw = tokenizer.decode(gen_ids, skip_special_tokens=True)
+    return clean_answer(raw)
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("No prompt provided")
+        sys.exit(1)
+
+    question = " ".join(sys.argv[1:])
+    print(infer(question))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
+diagnostico.py:
+```
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+MODEL_PATH = "Qwen/Qwen2.5-0.5B-Instruct"
+
+QUESTION = "¿Qué es MongoDB?"
+ANSWER_OK = "MongoDB es una base de datos no relacional orientada a documentos."
+ANSWER_BAD = "MongoDB es un sistema operativo."
+
+def load():
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+
+    use_cuda = torch.cuda.is_available()
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_PATH,
+        device_map="auto" if use_cuda else None,
+        torch_dtype=torch.float16 if use_cuda else torch.float32
+    )
+
+    if not use_cuda:
+        model.to("cpu")
+
+    model.eval()
+    return tokenizer, model
+
+
+@torch.no_grad()
+def generate(model, tokenizer, prompt, max_new_tokens=80):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    input_len = inputs["input_ids"].shape[-1]
+
+    out = model.generate(
+        **inputs,
+        do_sample=False,
+        num_beams=1,
+        max_new_tokens=max_new_tokens,
+        repetition_penalty=1.05,
+        eos_token_id=tokenizer.eos_token_id,
+        pad_token_id=tokenizer.eos_token_id,
+    )
+
+    gen_ids = out[0, input_len:]
+    return tokenizer.decode(gen_ids, skip_special_tokens=True).strip()
+
+
+@torch.no_grad()
+def neg_loglik_of_continuation(model, tokenizer, prompt, continuation):
+    full = prompt + continuation
+
+    full_ids = tokenizer(full, return_tensors="pt")["input_ids"].to(model.device)
+    prompt_ids = tokenizer(prompt, return_tensors="pt")["input_ids"].to(model.device)
+
+    labels = full_ids.clone()
+    labels[:, :prompt_ids.shape[1]] = -100
+
+    outputs = model(full_ids, labels=labels)
+    loss = outputs.loss
+
+    cont_len = full_ids.shape[1] - prompt_ids.shape[1]
+    total_nll = float(loss) * cont_len
+
+    return total_nll, cont_len, float(loss)
+
+
+def main():
+    tokenizer, model = load()
+
+    print("\n=== GENERATION TEST ===")
+    prompt = f"Pregunta: {QUESTION}\nRespuesta:"
+    gen = generate(model, tokenizer, prompt)
+    print("Generated answer:\n", gen, "\n")
+
+    print("=== NLL SCORING ===")
+    score_prompt = f"Pregunta: {QUESTION}\nRespuesta: "
+
+    nll_ok, len_ok, mean_ok = neg_loglik_of_continuation(
+        model, tokenizer, score_prompt, ANSWER_OK
+    )
+
+    nll_bad, len_bad, mean_bad = neg_loglik_of_continuation(
+        model, tokenizer, score_prompt, ANSWER_BAD
+    )
+
+    print(f"OK  tokens={len_ok} mean_loss={mean_ok:.4f} total_nll={nll_ok:.2f}")
+    print(f"BAD tokens={len_bad} mean_loss={mean_bad:.4f} total_nll={nll_bad:.2f}")
+
+    if nll_ok < nll_bad:
+        print("\nRESULT: El modelo prefiere la respuesta correcta.")
+    else:
+        print("\nRESULT: El modelo prefiere la respuesta incorrecta.")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Terminal:
+
+(venv) serena@serena-portatil:/var/www/html/DAM/Programacion/Actividades$ python infer.py "¿Qué es CSS Grid?"
+python 010-diagnostico.py
+config.json: 100%|█████████████████████████████| 659/659 [00:00<00:00, 3.35MB/s]
+tokenizer_config.json: 7.30kB [00:00, 23.2MB/s]
+vocab.json: 2.78MB [00:01, 2.04MB/s]
+merges.txt: 1.67MB [00:00, 2.16MB/s]
+tokenizer.json: 7.03MB [00:01, 4.90MB/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+model.safetensors: 100%|█████████████████████| 988M/988M [02:47<00:00, 5.89MB/s]
+Loading weights: 100%|█| 290/290 [00:00<00:00, 1704.86it/s, Materializing param=
+generation_config.json: 100%|███████████████████| 242/242 [00:00<00:00, 914kB/s]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+No lo sé basándome en mi entrenamiento.
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights: 100%|█| 290/290 [00:00<00:00, 1716.66it/s, Materializing param=
+
+=== GENERATION TEST ===
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Generated answer:
+ MongoDB es un software de base de datos que se utiliza para almacenar y gestionar datos en una base de datos. Es conocido por su facilidad de uso y por su capacidad para manejar grandes cantidades de datos. MongoDB también ofrece una gran variedad de funciones, como la creación de bases de datos, la gestión de datos, la búsqueda de datos, la creación de documentos 
+
+=== NLL SCORING ===
+OK  tokens=13 mean_loss=1.6255 total_nll=21.13
+BAD tokens=6 mean_loss=2.5959 total_nll=15.58
+
+RESULT: El modelo prefiere la respuesta incorrecta.
+(venv) serena@serena-portatil:/var/www/html/DAM/Programacion/Actividades$ 
+
+
+En esta práctica he utilizado los archivos infer.py y 010-diagnostico.py para trabajar con un modelo de lenguaje.
+
+Primero he probado la inferencia con infer.py, haciendo diferentes preguntas al modelo. El script genera una respuesta automáticamente a partir del prompt. En algunos casos el modelo respondió correctamente y en otros devolvió la frase “No lo sé basándome en mi entrenamiento”, lo que sirve para evitar que invente información.
+
+Después he usado 010-diagnostico.py para comparar una respuesta correcta y una incorrecta a la misma pregunta. El programa calcula una métrica llamada NLL para ver cuál de las dos respuestas es más probable según el modelo. En mi caso, la respuesta correcta tenía menor pérdida media, lo que significa que el modelo la prefería.
+
+Con este ejercicio he entendido mejor cómo funciona la generación de respuestas y cómo se puede evaluar si el modelo está respondiendo bien o no.

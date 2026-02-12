@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background: DarkSlateGray;
+        color: LightGray;
+        font-family: sans-serif;
+      }
+      header, footer, main {
+        width: 800px;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+      }
+      main {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: 20px;
+      }
+      main img {
+        width: 100%;
+        border: 2px solid white;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+      #contienemodal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      #modal {
+        width: 400px;
+        background: white;
+        border-radius: 15px;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+        box-shadow: 0px 10px 20px black;
+      }
+      #modal img {
+        width: 100%;
+        border-radius: 10px;
+      }
+      #cerrar {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: crimson;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      #cerrar:hover {
+        background: darkred;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Jose Vicente Carratala</h1>
+      <h2>Portafolio</h2>
+    </header>
+
+    <main>
+      <article><img src="images.jpeg" class="modal-imagen"></article>
+      <article><img src="images.jpeg"></article>
+      <article><img src="images.jpeg" class="modal-imagen"></article>
+      <article><img src="images.jpeg"></article>
+      <article><img src="images.jpeg"></article>
+      <article><img src="images.jpeg" class="modal-imagen"></article>
+      <article><img src="images.jpeg"></article>
+      <article><img src="images.jpeg"></article>
+    </main>
+
+    <footer></footer>
+
+    <div id="contienemodal">
+      <div id="modal">
+        <button id="cerrar">×</button>
+        <img src="images.jpeg" alt="imagen ampliada">
+      </div>
+    </div>
+
+    <script>
+      const imagenes = document.querySelectorAll(".modal-imagen");
+      const modalContenedor = document.querySelector("#contienemodal");
+      const modalImagen = document.querySelector("#modal img");
+      const botonCerrar = document.querySelector("#cerrar");
+
+      if (imagenes.length > 0) {
+        imagenes.forEach(imagen => {
+          imagen.onclick = function () {
+            modalContenedor.style.display = "flex";
+            modalImagen.src = this.src;
+          };
+        });
+
+        botonCerrar.onclick = function () {
+          modalContenedor.style.display = "none";
+        };
+
+        modalContenedor.onclick = function (e) {
+          if (e.target === modalContenedor) {
+            modalContenedor.style.display = "none";
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
+

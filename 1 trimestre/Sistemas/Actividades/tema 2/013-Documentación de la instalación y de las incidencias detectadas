@@ -1,0 +1,125 @@
+Actividad: Documentación de la Instalación y Auditoría de Servidor Ubuntu
+Contexto: A continuación, te presentamos un enfoque práctico sobre cómo documentar la instalación y auditoría de un servidor Ubuntu utilizando registros del sistema operativo.
+
+Enunciado paso a paso:
+
+Obtén los registros globales del sistema:
+
+Utiliza el comando sudo less /var/log/syslog para ver los registros globales del sistema.
+Esto te permitirá tener una visión general de lo que ha ocurrido en el servidor desde su inicio.
+Genera un log completo de instalación:
+
+Ejecuta el script raw_log_dump.py para crear un archivo con un dump concatenado de los registros comunes de Ubuntu.
+Utiliza el comando sudo python3 raw_log_dump.py > /home/josevicente/registros.txt.
+Analiza los logs generados:
+
+Abre el archivo registros.txt y analiza su contenido para identificar eventos importantes o incidencias detectadas durante la instalación.
+Busca información relevante como aplicaciones instaladas, actualizaciones realizadas, y cualquier error o advertencia.
+Crea un informe de estado:
+
+Basándote en los registros analizados, crea un informe de estado detallado que incluya la fecha de instalación, hora de inicio, equipo utilizado, sistema operativo instalado, y una lista de aplicaciones e instancias importantes.
+Documenta las incidencias detectadas:
+
+Identifica cualquier incidencia o problema detectado durante el análisis de los logs.
+Documenta estas incidencias en tu informe junto con la fecha y hora de ocurrencia, así como cualquier acción correctiva que se haya llevado a cabo.
+Conclusión:
+
+Concluye tu actividad reflexionando sobre cómo esta documentación puede ayudar a mantener el servidor seguro y eficiente.
+Considera cómo podrías automatizar partes del proceso de recolección y análisis de logs para facilitar futuras auditorías.
+Restricciones:
+
+No utilices herramientas o scripts externos que no hayan sido mencionados en la clase.
+Asegúrate de realizar todas las acciones con privilegios de administrador (sudo).
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El estudiante demuestra comprensión del contexto y relevancia de la documentación de instalación y auditoría.
+Desarrollo técnico correcto y preciso (25%): El estudiante realiza correctamente los pasos para obtener, analizar y documentar los logs del sistema.
+Aplicación práctica con ejemplo claro (25%): El informe de estado es detallado y relevante, incluyendo eventos importantes y incidencias detectadas.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante reflexiona sobre el valor de esta documentación para el mantenimiento del servidor y considera cómo podría automatizar partes del proceso.
+
+
+
+
+Respuesta:
+
+
+
+En esta actividad aprendí la importancia de documentar la instalación y auditoría de un servidor Ubuntu. Gracias a esta documentación se puede saber qué ha pasado en el sistema, qué programas se instalaron y si hubo algún error o advertencia.
+​
+También entendí que analizar los registros (logs) es útil para mantener el servidor seguro y funcionando correctamente. Para hacerlo utilicé comandos con sudo y un script llamado raw_log_dump.py, que me permitió guardar toda la información del sistema en un archivo.
+​
+Este proceso me ayudó a ver cómo se puede controlar mejor un servidor y a tener una base para futuras revisiones o auditorías.
+​
+​
+​
+1. Me voy a mi maquina virtual y abro mi ubuntu server.
+2. Ejecuto esto:
+-sudo less /var/log/syslog
+Y me sale todo lo que he hecho.
+3. Ahora entro en mi carpeta personal:
+-cd /home/serenaesteve
+Y para comprobar que estoy:
+-pwd
+​
+4. Abro el editor para escrivier el archivo .py:
+-sudo nano raw_log_dump.py
+​
+Y escribo esto:
+```
+"""
+raw_log_dump.py
+Script para generar un volcado completo de los registros comunes de Ubuntu.
+"""
+​
+import os
+​
+log_files = [
+    "/var/log/syslog",
+    "/var/log/auth.log",
+    "/var/log/dpkg.log",
+    "/var/log/apt/history.log",
+    "/var/log/apt/term.log",
+    "/var/log/kern.log",
+    "/var/log/faillog",
+    "/var/log/bootstrap.log"
+]
+​
+print("=== DUMP COMPLETO DE REGISTROS DEL SISTEMA UBUNTU ===\n")
+​
+for log in log_files:
+    if os.path.exists(log):
+        print(f"\n===== {log} =====\n")
+        try:
+            with open(log, "r", errors="ignore") as f:
+                print(f.read())
+        except PermissionError:
+            print(f"[ERROR] No se pudo leer {log} (permiso denegado).")
+    else:
+        print(f"[AVISO] El archivo {log} no existe en este sistema.")
+​
+print("\n=== FIN DEL DUMP DE REGISTROS ===")
+```
+ (Contrl O , enter, Contrl X)
+ 
+ 5. Verifico que se creo correctamente:
+ - sudo ls -l /home/serenaesteve/raw_log_dump.py
+ 
+ 6. Ejecuto el script para generar el archivo de registros:
+ - sudo python3 /home/serenaesteve/raw_log_dump.py > /home/serenaesteve/registros.txt
+ Y compruebo que se ha creado correctamente:
+ - sudo ls -lh /home/serenaesteve/registros.txt
+​
+7. Por ultimo reviso su contenido:
+- sudo less /home/serenaesteve/registros.txt
+​
+Esta actividad me sirvió para entender lo importante que es documentar todo lo que pasa en un servidor. Gracias a los registros del sistema se pueden detectar errores, fallos o accesos no autorizados, lo que ayuda a mantener el servidor más seguro y funcionando correctamente.
+​
+Además, tener esta información guardada facilita mucho las auditorías y el mantenimiento, porque permite revisar qué se hizo y cuándo.
+​
+En el futuro, se podrían automatizar algunas partes del proceso, como la recolección de logs y su análisis, usando scripts o tareas programadas que generen informes automáticamente. Así se ahorraría tiempo y se tendría un control más constante del estado del servidor.
+​
+Esta actividad me ayudó a comprender la importancia de documentar todo lo que ocurre en un servidor. Gracias a los registros del sistema se pueden detectar errores, fallos o accesos no autorizados, lo que permite mantener el servidor más seguro y funcionando correctamente.
+​
+Además, la documentación facilita las auditorías y el mantenimiento, ya que deja constancia de las acciones realizadas y de los cambios en el sistema.
+​
+También considero que se podrían automatizar partes del proceso, como la recolección y el análisis de logs, usando scripts que generen informes de forma automática. De esta manera, se ahorra tiempo y se tiene un control más continuo y actualizado del estado del servidor.

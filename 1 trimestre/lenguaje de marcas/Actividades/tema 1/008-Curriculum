@@ -1,0 +1,110 @@
+Contexto
+Jose Vicente Carratalá Sanchis es un profesional dedicado a su trabajo y pasión por la naturaleza. Como parte de su formación en Diseño Industrial, ha desarrollado habilidades técnicas y una gran capacidad para aprender nuevas tecnologías. En su tiempo libre, disfruta jugando videojuegos de estrategia como "Settlers of Catan" y recorre los campos cercanos a su casa, donde practica el jardinería.
+
+Enunciado paso a paso
+Introducción
+
+Jose Vicente ha estado trabajando en una empresa especializada en tecnología desde hace varios años.
+Su formación académica incluye un título en Diseño Industrial y ha adquirido conocimientos en diversos lenguajes de marcas, como HTML, CSS y Javascript.
+Desarrollo
+
+Jose Vicente ha decidido actualizar su perfil profesional para incorporar sus nuevas habilidades técnicas.
+El objetivo es destacar su experiencia laboral y formación académica en su currículum.
+Aplicación práctica
+
+Utiliza un archivo JSON llamado datos.json para almacenar sus datos personales, incluyendo su nombre, apellidos, correo electrónico y teléfono.
+Actualiza el archivo formacion.json para incorporar información sobre su formación académica.
+Restricciones
+Solo puedes utilizar los archivos JSON proporcionados en el contexto.
+No se permite usar librerías o herramientas externas.
+Debes mantener la estructura y sintaxis de los archivos JSON originalmente proporcionados.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El estudiante debe mostrar una comprensión adecuada del contexto y el objetivo del ejercicio.
+Desarrollo técnico correcto y preciso (25%)
+
+El estudiante debe actualizar correctamente los archivos JSON utilizando la estructura proporcionada.
+Aplicación práctica con ejemplo claro (25%)
+
+El estudiante debe mostrar cómo ha aplicado los conocimientos adquiridos en su currículum profesional.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El estudiante debe explicar cómo este ejercicio se relaciona con el tema de lenguajes de marcas y sistemas de gestión de información.
+
+
+
+Respuesta:
+
+
+En este ejercicio he trabajado con el formato JSON, que sirve para guardar y organizar información de una forma sencilla y estructurada.
+El objetivo es actualizar los archivos datos.json y formacion.json con los datos reales de Jose Vicente Carratalá Sanchis.
+
+JSON es un lenguaje de marcas ligero, muy utilizado en el desarrollo de aplicaciones, especialmente en entornos web, ya que permite intercambiar datos entre el servidor y el cliente de forma rápida y clara.
+
+Primero he revisado los archivos JSON que me dieron y luego los he actualizado con la información correcta.
+He tenido cuidado de no cambiar la estructura ni la sintaxis (llaves, corchetes, comillas y comas), porque si hay algún error, el archivo deja de funcionar bien.
+
+Este archivo guarda los datos personales y profesionales más importantes de Jose Vicente:
+```
+{
+  "nombre": "Jose Vicente",
+  "apellidos": "Carratalá Sanchis",
+  "email": "info@josevicentecarratala.com",
+  "teléfono": "620891718",
+  "titulacion": "Ingeniero Técnico en Diseño Industrial",
+  "experiencia": "Profesor en TAME, con conocimientos en HTML, CSS y JavaScript aplicados al desarrollo de proyectos tecnológicos y de diseño."
+}
+```
+
+Aquí se guarda toda su formación académica. Lo he organizado con un array ([ ]) porque puede tener varios estudios o cursos:
+
+```
+{
+  "formacion": [
+    {
+      "titulo": "Grado en Ingeniería Técnica en Diseño Industrial",
+      "centro": "Universidad Politécnica de Valencia",
+      "anio_finalizacion": 2018
+    },
+    {
+      "titulo": "Curso de Desarrollo Web con HTML, CSS y JavaScript",
+      "centro": "Plataforma Udemy",
+      "anio_finalizacion": 2022
+    }
+  ]
+}
+````
+
+Una posible forma de usar estos archivos sería en una página web o aplicación donde se muestre el currículum de Jose Vicente.
+Por ej, con un pequeño código en JavaScript se pueden leer los datos desde los archivos JSON:
+```
+fetch('datos.json')
+  .then(response => response.json())
+  .then(datos => {
+    console.log("Nombre completo:", datos.nombre + " " + datos.apellidos);
+    console.log("Título:", datos.titulacion);
+    console.log("Experiencia:", datos.experiencia);
+  });
+```
+
+```
+fetch('formacion.json')
+  .then(response => response.json())
+  .then(formacion => {
+    formacion.formacion.forEach(f => {
+      console.log(`${f.titulo} - ${f.centro} (${f.anio_finalizacion})`);
+    });
+  });
+```
+
+Este ejemplo muestra cómo JavaScript puede trabajar con archivos JSON, algo muy común en el desarrollo de aplicaciones web y móviles.
+
+Con este ejercicio he aprendido a:
+-Entender cómo funciona la estructura JSON (objetos, arrays, claves y valores).
+-Guardar información personal y académica de manera ordenada.
+-Ver cómo los archivos JSON pueden conectarse con un programa o página web para mostrar información real.
+
+El uso de JSON está muy relacionado con el tema de los lenguajes de marcas, ya que permite organizar los datos igual que lo hacen XML o HTML, pero de forma más ligera y moderna.
+
+Basicamente, este ejercicio me ha ayudado a comprender mejor cómo se manejan los datos en el desarrollo de aplicaciones, algo fundamental para mi formación.

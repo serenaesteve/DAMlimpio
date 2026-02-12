@@ -1,0 +1,102 @@
+Contexto
+En un mundo digital cada vez más complejo, aprender a estructurar y manipular información es crucial. Imagina que estás en un campo de juegos de mesa donde cada jugador necesita organizar sus cartas de manera eficiente para tener una ventaja estratégica. Similarmente, en el mundo del desarrollo web, los lenguajes de marcas como XML son fundamentales para almacenar y estructurar información de manera organizada.
+
+Enunciado paso a paso
+Introducción a los atributos
+
+Abre un archivo XML llamado persona.xml con el siguiente contenido:
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre id="propio">Jose Vicente</nombre>
+  <nombre id="mote">JV</nombre>
+  <edad medida="años">47</edad>
+  <profesion>Programador</profesion>
+</persona>
+Explora el contenido del archivo. Observa cómo cada elemento (<nombre>, <edad>, <profesion>) tiene atributos que proporcionan información adicional sobre los mismos.
+Creación de un nuevo XML
+
+Crea un nuevo archivo XML llamado nuevaPersona.xml y escribe la estructura básica:
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <!-- Aquí irán los elementos -->
+</persona>
+Agrega al menos dos elementos con atributos, por ejemplo:
+<nombre id="propio">Ana</nombre>
+<edad medida="años">35</edad>
+Manipulación de atributos
+
+Abre el archivo persona.xml y modifica el atributo medida del elemento <edad> para que indique "meses" en lugar de "años":
+<edad medida="meses">564</edad>
+Guarda los cambios y verifica que el archivo se actualice correctamente.
+Restricciones
+No uses funciones o métodos que no hayas visto en clase.
+Solo manipula archivos XML de manera manual, sin usar herramientas avanzadas de edición.
+Asegúrate de guardar todos los cambios en los archivos correspondientes.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El alumno debe entender el concepto básico de atributos en XML y cómo se usan para estructurar información.
+Desarrollo técnico correcto y preciso (25%)
+
+El alumno debe crear correctamente un nuevo archivo XML con elementos y atributos.
+Modificar los atributos de manera precisa según las instrucciones.
+Aplicación práctica con ejemplo claro (25%)
+
+El ejercicio debe mostrar una comprensión práctica del uso de atributos en XML a través de la creación y modificación de un archivo.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El alumno debe conectar el ejercicio con los conceptos aprendidos sobre estructura y sintaxis de XML, relacionándolo con la organización de información en el mundo digital.
+
+
+
+Respuesta:
+
+
+
+XML es un formato en cual podemos guardar datos de una forma estructurada para utilizarlos más adelante en nuestros sistemas informáticos.
+
+En un sistema informático, la transferencia de información es clave, y el formato XML es una gran ayuda para realizar dicha transferencia de una forma predecible y ordenada.
+
+Para formatear un archivo XML, deberemos tener en primer lugar una etiqueta raiz:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+```
+
+Luego, a continuación, introduciremos una etiqueta raiz:
+
+
+```
+	<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+
+</persona>
+```
+
+Y por ultimo, dentro de la etiqueta raiz, introduciremos tantos elementos como sea necesario:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre id="propio">Jose Vicente</nombre>
+  <nombre id="mote">JV</nombre>
+  <edad medida="meses">564</edad>
+  <profesion>Programador</profesion>
+</persona>
+```
+
+Para ilustrar el concepto que se está mostrando, vamos a presentar un ejemplo concreto aplicado a juegos de mesa, en el que podemos crear  un archivo XML con los datos de cada jugador.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre id="propio">Ana</nombre>
+  <edad medida="años">35</edad>
+  <puntos>100</puntos>
+  <nivel>3</nivel>
+</persona>
+```
+
+El formato XML constituye una forma clara y cristalina de transmitir datos y de guardar información en un sistema informático.
+
+Más adelante este formato nos servirá para almacenar y transportar información en nuestros programas informáticos.

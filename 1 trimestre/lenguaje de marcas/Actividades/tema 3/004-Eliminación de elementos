@@ -1,0 +1,152 @@
+Contexto
+Hoy vamos a explorar cómo eliminar elementos de una página web utilizando JavaScript. Imagina que estás jugando un juego de mesa donde tienes diferentes áreas para organizar tus piezas. Cada área representa un contenedor en HTML, y tu objetivo es aprender cómo mover o eliminar estas áreas según sea necesario.
+
+Enunciado paso a paso
+Crea un documento HTML básico: Comienza con un documento HTML estático que incluya tres contenedores (div) identificados por id como contenedor1, contenedor2, y contenedor3. Añade estos elementos dentro del cuerpo de tu página.
+
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body> 
+    <div id="contenedor1">Yo soy el contenedor 1</div>
+    <div id="contenedor2">Yo soy el contenedor 2</div>
+    <div id="contenedor3">Yo soy el contenedor 3</div>
+  </body>
+</html>
+Elimina un elemento: Añade un script que seleccione el primer contenedor (#contenedor1) y lo elimine de la página.
+
+<script>
+  let eliminar = document.querySelector("#contenedor1");
+  eliminar.remove();
+</script>
+Mueve el elemento eliminado: Añade un script adicional que mueva el contenedor eliminado a otra parte del documento, por ejemplo, dentro de una div con id="papelera".
+
+<div id="papelera"></div>
+<script>
+  let eliminar = document.querySelector("#contenedor1");
+  eliminar.remove();
+  let papelera = document.querySelector("#papelera");
+  papelera.appendChild(eliminar);
+</script>
+Elimina el elemento de verdad: Añade un script que elimine completamente el contenedor eliminado y lo establezca en null para asegurarte de que no ocupe memoria.
+
+<div id="papelera"></div>
+<script>
+  let eliminar = document.querySelector("#contenedor1");
+  eliminar.remove();
+  let papelera = document.querySelector("#papelera");
+  papelera.appendChild(eliminar);
+  eliminar = null;
+</script>
+Restricciones
+No uses librerías externas.
+Mantén el código dentro de las restricciones del tema actual.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente qué es eliminar elementos en una página web y cómo puedes usar JavaScript para lograrlo.
+Desarrollo técnico correcto y preciso (25%): Asegúrate de que el código esté escrito correctamente y funcione según lo esperado.
+Aplicación práctica con ejemplo claro (25%): Proporciona ejemplos claros de cómo eliminar y mover elementos en una página web.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye el ejercicio explicando cómo estos conceptos se aplican en un contexto real, como organizar áreas en un juego de mesa o gestionar espacios en un campo natural.
+
+
+
+Respuesta:
+
+
+Imagina que tu página web es como una mesa llena de papeles. Cada papel es un pedazo de contenido: un título, una imagen, un botón, un texto, etc.
+A veces, quiero quitar uno de esos papeles. Por ejemplo, cuando hago clic en "cerrar" o "borrar", ese papel debe desaparecer de la mesa.
+Con JavaScript, puedo hacer eso: quitar cosas de la pantalla. Es como si tuviera una mano invisible que agarra un papel y lo tira a la basura.
+
+```
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Eliminar y mover elementos</title>
+    <style>
+      #papelera {
+        border: 1px solid red;
+        padding: 10px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body> 
+    <div id="contenedor1">Yo soy el contenedor 1</div>
+    <div id="contenedor2">Yo soy el contenedor 2</div>
+    <div id="contenedor3">Yo soy el contenedor 3</div>
+    <div id="papelera">Papelera</div>
+ <script>
+    let eliminar = document.querySelector("#contenedor1");
+    eliminar.remove();
+    let papelera = document.querySelector("#papelera");
+    papelera.appendChild(eliminar);  
+    eliminar.remove();
+    eliminar = null;
+    </script>
+  </body>
+</html>
+```
+
+Este ej enseña cómo quitar un elemento de la página cuando haces clic en un boton:
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eliminar un elemento</title>
+</head>
+<body>
+
+  <div id="mensaje">Este mensaje se eliminará</div>
+  <button onclick="eliminarElemento()">Eliminar</button>
+
+  <script>
+    function eliminarElemento() {
+      let mensaje = document.getElementById("mensaje");
+      mensaje.remove(); 
+    }
+  </script>
+
+</body>
+</html>
+```
+
+Este ej enseña cómo mover un elemento desde una "zona principal" a una "papelera":
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mover un elemento</title>
+</head>
+<body>
+
+  <div id="zonaPrincipal">
+    <div id="carta">Soy una carta</div>
+  </div>
+
+  <div id="papelera" style="margin-top:20px; border:1px solid red; padding:10px;">
+    Papelera
+  </div>
+
+  <button onclick="moverElemento()">Mover a la papelera</button>
+
+  <script>
+    function moverElemento() {
+      let carta = document.getElementById("carta");
+      let papelera = document.getElementById("papelera");
+      papelera.appendChild(carta); 
+    }
+  </script>
+
+</body>
+</html>
+```
+
+Aprender a eliminar y mover elementos en una página web con JavaScript es muy útil porque me permite controlar lo que se ve en la pantalla.
+
+Por ej, en un juego de mesa, puedo mover una ficha de una zona a otra, o quitarla del tablero si ya no se usa. En una página web, puedo hacer lo mismo con los elementos: moverlos o eliminarlos según lo que pase en el juego.
+
+También se parece a organizar un campo natural. Si tengo animales en diferentes zonas y uno se va, lo saco del sitio. Si lo cambio de zona, lo muevo. En la web, eso se hace con código.
+
+Basicamente, estos conceptos me ayudan a organizar mejor la información, a que mi página sea más ordenada y a que el usuario vea solo lo que necesita.

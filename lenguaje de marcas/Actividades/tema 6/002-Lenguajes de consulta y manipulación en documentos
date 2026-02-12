@@ -1,0 +1,489 @@
+Práctica con Campos de Tipo Documento
+
+El objetivo de este ejercicio es crear un formulario dinámico que recopile datos de usuarios y los almacene en una base de datos MySQL. El formulario se generará automáticamente a partir de las columnas de una tabla existente.
+
+Conexión a la Base de Datos:
+
+Utiliza el usuario training_center con la contraseña correspondiente para conectarte a la base de datos training_center.
+Asegúrate de tener instaladas las librerías necesarias para interactuar con MySQL desde PHP.
+Generación del Formulario:
+
+El archivo campos_de_tipo_documento.php contiene un formulario que se genera dinámicamente a partir de la tabla inscripciones.
+Utiliza la sentencia SQL SHOW COLUMNS FROM inscripciones; para obtener las columnas de la tabla.
+Para cada columna, el script generará un campo de entrada correspondiente:
+Campos de texto (varchar) se representarán con <input type="text">.
+Campos de fecha (date) con <input type="date">.
+Campos numéricos (int, decimal) con <input type="number">.
+Campos booleanos (tinyint) con <input type="checkbox">.
+Campos enumerados (enum) con <select>.
+Campos de texto largo (text) con <textarea>.
+Campos binarios (blob) se representarán con <input type="file">.
+Almacenamiento de Datos:
+
+Cuando el formulario sea enviado, los datos ingresados por el usuario serán almacenados en la tabla inscripciones.
+Asegúrate de validar y limpiar los datos antes de su almacenamiento para evitar inyecciones SQL.
+Prueba del Formulario:
+
+Llena el formulario con diferentes tipos de datos.
+Verifica que los datos sean correctamente almacenados en la base de datos.
+Prueba los campos enumerados y binarios para asegurarte de que funcionen como se espera.
+Diagrama ER:
+
+El archivo diagrama.html muestra un diagrama entidad-relación que representa la relación entre las tablas inscripciones y otras entidades.
+Asegúrate de entender cómo se relacionan las diferentes partes del formulario con la base de datos.
+Panel de Administración:
+
+El archivo panel_de_administracion.php muestra un panel básico para administrar los registros en la tabla inscripciones.
+Añade funcionalidades adicionales si es necesario, como eliminación y edición de registros.
+Recuerda que este ejercicio te ayudará a entender cómo crear formularios dinámicos y almacenar datos en una base de datos MySQL. Asegúrate de seguir las mejores prácticas de seguridad al interactuar con bases de datos.
+
+
+
+Respuesta:
+
+En esta práctica aprendo a crear un formulario dinámico con PHP y MySQL. El formulario se genera solo según los campos de la tabla inscripciones y puedo introducir diferentes tipos de datos como texto, números, fechas, listas o archivos. También aprendo a conectar el formulario con la base de datos y guardar los datos de forma segura. Además, veo cómo funciona un panel de administración para ver y borrar los registros y entiendo un poco mejor cómo se relacionan los datos en la base de datos gracias al diagrama.
+
+1. Creo la base de datos y las tablas:
+```
+CREATE DATABASE IF NOT EXISTS training_center
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_general_ci;
+
+USE training_center;
+
+CREATE TABLE inscripciones (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100),
+  apellidos VARCHAR(150),
+  email VARCHAR(150),
+  direccion TEXT,
+  codigo_postal INT,
+  precio DECIMAL(10,2),
+  fecha_inscripcion DATE,
+  activo TINYINT(1),
+  estado ENUM('pendiente','aceptada','rechazada'),
+  documento BLOB
+);
+```
+
+2. Creo usuario:
+```
+CREATE USER 'training_center'@'localhost' IDENTIFIED BY 'training_center';
+```
+ Le doy privilegios:
+ ```
+ GRANT ALL PRIVILEGES ON training_center.* TO 'training_center'@'localhost';
+ 
+ FLUSH PRIVILEGES;
+ ```
+ 
+3.  campos de tipo documento.php:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Formulario dinámico</title>
+  <style>
+    body{font-family:sans-serif;background:#eee;}
+    form{background:white;width:600px;margin:20px auto;padding:20px;}
+    .control{display:flex;gap:10px;margin-bottom:15px;}
+    label{width:180px;}
+    input,select,textarea{flex:1;padding:8px;}
+  </style>
+</head>
+<body>
+
+<form method="POST" enctype="multipart/form-data">
+<h2>Formulario de Inscripción</h2>
+
+<?php
+$c = new mysqli("localhost","training_center","training_center","training_center");
+$r = $c->query("SHOW COLUMNS FROM inscripciones");
+
+$campos = [];
+
+while($f = $r->fetch_assoc()){
+
+  if($f['Key'] == "PRI") continue;
+
+  $campo = $f['Field'];
+  $tipo  = $f['Type'];
+  $campos[] = $campo;
+
+  echo "<div class='control'><label>$campo</label>";
+
+  if(str_contains($tipo,"varchar")){
+    echo "<input type='text' name='$campo'>";
+  }elseif(str_contains($tipo,"int") && !str_contains($tipo,"tinyint")){
+    echo "<input type='number' name='$campo'>";
+  }elseif(str_contains($tipo,"decimal")){
+    echo "<input type='number' step='0.01' name='$campo'>";
+  }elseif(str_contains($tipo,"date")){
+    echo "<input type='date' name='$campo'>";
+  }elseif(str_contains($tipo,"tinyint")){
+    echo "<input type='checkbox' value='1' name='$campo'>";
+  }elseif(str_contains($tipo,"enum")){
+    echo "<select name='$campo'>";
+    preg_match_all("/'([^']+)'/", $tipo, $m);
+    foreach($m[1] as $v){
+      echo "<option value='$v'>$v</option>";
+    }
+    echo "</select>";
+  }elseif(str_contains($tipo,"text")){
+    echo "<textarea name='$campo'></textarea>";
+  }elseif(str_contains($tipo,"blob")){
+    echo "<input type='file' name='$campo'>";
+  }
+
+  echo "</div>";
+}
+?>
+
+<input type="submit" value="Guardar">
+</form>
+
+<?php
+
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+  $cols = [];
+  $vals = [];
+
+  foreach($campos as $campo){
+    $cols[] = $campo;
+
+    if(isset($_FILES[$campo]) && $_FILES[$campo]['size']>0){
+      $vals[] = "'".$c->real_escape_string(file_get_contents($_FILES[$campo]['tmp_name']))."'";
+    }elseif(isset($_POST[$campo])){
+      $vals[] = "'".$c->real_escape_string($_POST[$campo])."'";
+    }else{
+      $vals[] = "0";
+    }
+  }
+
+  $sql = "INSERT INTO inscripciones (".implode(",",$cols).")
+          VALUES (".implode(",",$vals).")";
+  $c->query($sql);
+
+  echo "<p>Registro guardado</p>";
+}
+?>
+
+</body>
+</html>
+```
+
+
+4. panel de administracion.php:
+```
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Panel administración</title>
+<style>
+body{display:flex;height:100vh;margin:0;font-family:sans-serif;}
+nav{background:crimson;padding:15px;flex:1;}
+main{flex:5;padding:15px;}
+table{width:100%;border-collapse:collapse;}
+td,th{border:1px solid crimson;padding:8px;}
+tr:nth-child(odd){background:#ffdcdc;}
+th{background:crimson;color:white;}
+a{color:black;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="campos_de_tipo_documento.php">Nuevo registro</a>
+</nav>
+
+<main>
+
+<?php
+$c = new mysqli("localhost","training_center","training_center","training_center");
+
+if(isset($_GET['eliminar'])){
+  $id = (int)$_GET['eliminar'];
+  $c->query("DELETE FROM inscripciones WHERE id=$id");
+}
+
+$r = $c->query("SELECT * FROM inscripciones");
+
+if($r->num_rows==0){
+  echo "No hay registros";
+  exit;
+}
+
+echo "<table><tr>";
+$campos=[];
+while($f=$r->fetch_field()){
+  $campos[]=$f->name;
+  echo "<th>".$f->name."</th>";
+}
+echo "<th>Acciones</th></tr>";
+
+$r->data_seek(0);
+while($fila=$r->fetch_assoc()){
+  echo "<tr>";
+  foreach($campos as $campo){
+    if(is_string($fila[$campo]) && strlen($fila[$campo])>50){
+      echo "<td>[Documento]</td>";
+    }else{
+      echo "<td>".$fila[$campo]."</td>";
+    }
+  }
+  echo "<td>
+        <a href='?eliminar=".$fila['id']."' 
+           onclick=\"return confirm('¿Eliminar?')\">Eliminar</a>
+        </td>";
+  echo "</tr>";
+}
+echo "</table>";
+?>
+
+</main>
+</body>
+</html>
+```
+
+5. diagrama.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Diagrama exportado</title>
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  background: #f3f3f7;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.page {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  width: 397.66253303079037px;
+  height: 302.9499996409696px;
+  overflow: visible;
+}
+
+/* formas básicas */
+.shape {
+  position: absolute;
+  min-width: 120px;
+  min-height: 40px;
+  padding: 6px 10px;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #9ca3af;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.shape.rectangle {
+  border-radius: 4px;
+}
+
+.shape.pill {
+  border-radius: 999px;
+}
+
+.shape.circle {
+  border-radius: 999px;
+  width: 80px;
+  height: 80px;
+  padding: 0;
+  justify-content: center;
+}
+
+/* base de datos */
+.shape.db {
+  min-width: 120px;
+  min-height: 60px;
+  padding-top: 20px;
+  border-radius: 60px / 16px;
+  background: linear-gradient(180deg, #e5e7eb 0%, #ffffff 40%, #e5e7eb 100%);
+  position: absolute;
+  overflow: hidden;
+  text-align: center;
+}
+.shape.db::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8px;
+  right: 8px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid #9ca3af;
+  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #e5e7eb 70%);
+}
+.shape.db::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(156, 163, 175, 0.6);
+  border-top: none;
+  background: radial-gradient(circle at 50% 70%, #e5e7eb 0%, #d1d5db 70%);
+}
+
+/* entidades ER */
+.shape.entity {
+  width: 220px;
+  min-height: 80px;
+  background: #ffffff;
+  border: 2px solid #111827;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  overflow: hidden;
+  padding: 0;
+}
+.entity-header {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+.entity-properties {
+  flex: 1;
+  padding: 4px 4px 0 4px;
+}
+.entity-property {
+  display: grid;
+  grid-template-columns: 14px 1fr 14px;
+  align-items: center;
+  column-gap: 4px;
+  padding: 2px 0;
+}
+.entity-property .property-name {
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* puertos */
+.port {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid #111827;
+  background: #ffffff;
+}
+.port-left { justify-self: start; }
+.port-right { justify-self: end; }
+
+/* flechas rectas */
+.arrow {
+  position: absolute;
+  height: 2px;
+  background: #111827;
+  transform-origin: 0 50%;
+}
+.arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #111827;
+}
+.arrow-double::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #111827;
+}
+
+/* flechas ortogonales */
+.ortho-arrow {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.ortho-arrow .ortho-seg {
+  position: absolute;
+  background: #111827;
+}
+.ortho-seg.seg-horizontal { height: 2px; }
+.ortho-seg.seg-vertical { width: 2px; }
+.ortho-arrowhead {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.ortho-arrowhead.dir-right {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #111827;
+}
+.ortho-arrowhead.dir-left {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 8px solid #111827;
+}
+.ortho-arrowhead.dir-down {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid #111827;
+}
+.ortho-arrowhead.dir-up {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #111827;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="shape rectangle" style="left:40.02498851102939px;top:79.42498599781706px;width:119.99999999999996px;height:45.60001148897057px;">Formulario HTML</div>
+<div class="shape rectangle" style="left:40px;top:40px;width:119.99999999999996px;height:39.99998653636258px;">CSS</div>
+<div class="shape rectangle" style="left:40.01247630399814px;top:125.29999676872697px;width:119.99999999999996px;height:39.999999999999986px;">PHP</div>
+<div class="shape rectangle" style="left:147.66253303079043px;top:222.9499996409696px;width:119.99999999999996px;height:39.999999999999986px;">MySQL</div>
+<div class="shape rectangle" style="left:237.07501579733452px;top:122.94999964096965px;width:119.99999999999996px;height:39.999999999999986px;">PHP</div>
+<div class="shape rectangle" style="left:237.66253303079037px;top:81.77500107709096px;width:119.99999999999996px;height:39.999999999999986px;">HTML</div>
+<div class="shape rectangle" style="left:237.07501579733452px;top:41.77500107709099px;width:119.99999999999996px;height:39.999999999999986px;">CSS</div>
+<div class="arrow" style="left:122.06061835426163px;top:165.29999676872697px;width:85.80562246263705px;transform:rotate(0.7367271772908089rad);"></div>
+<div class="arrow arrow-double" style="left:225.5450295840992px;top:222.9499996409696px;width:80.48635379250275px;transform:rotate(-0.8412366754385971rad);"></div>
+</div>
+</body>
+</html>
+```
+
+
+He guardado mis documentos en la carpeta de xamp y me he ido al navegador:  http://localhost/training_center/camposdetipodocumento.php , he rellenado el formulario y me he ido a la base de datos a comprobar que se haya guardado y si:
+1
+Serena
+Sania Esteve
+serenaestevee@gmail.com
+Castellon 25
+46920
+10.00
+2025-12-31
+1
+aceptada
+[BLOB - 1 B]
+
+Luego he ejecutado el archivo del panel de administracion y se ve mi registro y he podido eliminarlo, he vuelto a la base de datos y se habia eliminado.
+
+Con esta práctica entiendo cómo funciona un formulario dinámico y cómo se guardan los datos en MySQL. Aprendo a manejar diferentes tipos de campos y a mostrar los registros en un panel de administración. También veo la importancia de organizar bien la base de datos y los permisos de usuario. En general, esta práctica me ayuda a comprender cómo se crea un flujo de información completo en un proyecto web.

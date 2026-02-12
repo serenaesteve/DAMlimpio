@@ -1,0 +1,70 @@
+Contexto
+En nuestro mundo digital cada vez más conectado, las bases de datos son fundamentales para almacenar y gestionar toda la información que circunda a nosotros. Ya sea en los juegos de mesa donde cada jugador necesita llevar un registro de sus progresos, o en el campo donde se recopilan datos meteorológicos, el manejo eficiente de estos datos es crucial. En esta actividad, exploraremos los tipos básicos de datos utilizados en las bases de datos relacionales, como INT para números enteros y VARCHAR para cadenas de caracteres, integrándolos con un ejemplo práctico relacionado con la naturaleza.
+
+Enunciado paso a paso
+Introducción al tipo de dato VARCHAR:
+
+El tipo de dato VARCHAR se utiliza para almacenar cadenas de caracteres.
+Ejemplo: Supongamos que estamos recopilando datos sobre los nombres de las especies de plantas en un bosque.
+Definición y uso del tipo de dato VARCHAR:
+
+Declaración de una variable para el nombre de la planta:
+DECLARE nombre_planta VARCHAR(100);
+Asignación de un valor a la variable:
+SET nombre_planta = 'Abeto';
+Ejemplo práctico: Recopilación de datos meteorológicos:
+
+Crear una tabla para almacenar los datos meteorológicos diarios.
+Declaración de variables para el tipo de dato VARCHAR:
+DECLARE nombre_ciudad VARCHAR(50);
+DECLARE temperatura_maxima VARCHAR(10);
+DECLARE temperatura_minima VARCHAR(10);
+Asignación de valores a las variables:
+
+Asignación de datos meteorológicos para una ciudad específica:
+SET nombre_ciudad = 'Madrid';
+SET temperatura_maxima = '25°C';
+SET temperatura_minima = '10°C';
+Restricciones
+Solo se pueden utilizar los tipos de datos básicos mencionados en la clase.
+No se deben usar funciones o estructuras más avanzadas que no hayan sido vistas.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe presentar una introducción clara sobre el tipo de dato VARCHAR y su uso en la recopilación de datos meteorológicos.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe escribir correctamente las declaraciones SQL para variables del tipo VARCHAR y asignarles valores apropiados.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar un ejemplo práctico de cómo utilizar el tipo de dato VARCHAR en una situación real, como recopilar datos meteorológicos.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe concluir su actividad explicando cómo los tipos de datos son fundamentales para la gestión de información en las bases de datos relacionales y cómo pueden aplicarse a situaciones cotidianas como el seguimiento del clima.
+
+
+Respuesta:
+
+En el mundo digital de hoy, es muy importante organizar bien la información. Para eso usamos bases de datos, y dentro de ellas usamos variables para guardar diferentes tipos de datos. Una de esas variables es del tipo VARCHAR, que sirve para guardar texto.
+Por ej, si estamos guardando datos del tiempo, podemos crear variables para almacenar el nombre de una ciudad o su temperatura. Como estos datos son texto (por ejemplo, "Madrid" o "25°C"), usamos el tipo de variable VARCHAR para poder guardarlos correctamente.
+
+1.Primero creamos una variable que puede guardar texto (hasta 100 letras):
+```
+DECLARE nombre_planta VARCHAR(100);
+```
+2. Asigno el valor 'Abeto' a la variable nombre_planta, que es un nombre de planta que estamos registrando en nuestra base de datos:
+ ```
+SET nombre_planta = 'Abeto';
+```
+Dentro de mi base de datos "CLIMAS", quiero guardar los datos de las ciudades y sus temperaturas, primero tendré que crear una tabla en SQL. En este caso, solo necesitaremos el tipo VARCHAR para los nombres de las ciudades y las temperaturas, ya que las temperaturas se presentarán en formato texto (por ejemplo, "25°C"):
+```
+DECLARE nombre_ciudad VARCHAR(50);
+DECLARE temperatura_maxima VARCHAR(10);
+DECLARE temperatura_minima VARCHAR(10);
+```
+Y ahora vamos a meterle datos meteorológicos para una ciudad específica:
+```
+SET nombre_ciudad = 'Madrid';
+SET temperatura_maxima = '25°C';
+SET temperatura_minima = '10°C';
+```
+
+Los tipos de datos son muy importantes para guardar la información bien en las bases de datos. Nos ayudan a poner cada dato en el sitio correcto.
+
+Por ej, cuando guardamos nombres de ciudades o temperaturas como texto (como "Madrid" o "25°C"), usamos el tipo VARCHAR porque es para palabras y letras.
+
+Esto es útil en cosas de todos los días, como cuando queremos registrar el clima de diferentes sitios. Gracias a los tipos de datos, podemos organizar y usar esa información fácilmente.
+
+En resumen, elegir el tipo de dato correcto, como VARCHAR para texto, nos ayuda a que la base de datos funcione mejor y que podamos usarla para muchas cosas, como el clima o los nombres de plantas.

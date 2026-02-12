@@ -1,0 +1,67 @@
+Contexto
+Nuestro alumnado se ha estado centrando en aplicaciones prácticas de estructuras de almacenamiento, especialmente conjuntos y listas. Para profundizar esta comprensión, vamos a crear un juego interactivo que combine los conceptos aprendidos con un poco de la naturaleza, nuestro segundo hobby. Este juego será una versión simplificada del famoso Sudoku.
+
+Enunciado paso a paso
+Generar una muestra inicial: Comenzaremos creando una muestra inicial de números únicos del 1 al 9. Esto se representa como un conjunto en Python.
+
+muestra = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+Crear una serie aleatoria: Luego, generaremos una serie de números aleatorios del 1 al 9 y la almacenaremos en una lista.
+
+serie = []
+for i in range(0, 9):
+  numero = random.randint(1, 9)
+  serie.append(numero)
+Filtrar la serie: Convertiremos esta lista de números aleatorios en un conjunto para eliminar cualquier número duplicado.
+
+filtrado = set(serie)
+Comparar y mostrar resultados: Finalmente, compararemos el conjunto filtrado con la muestra inicial y mostraremos los resultados.
+
+if filtrado == muestra:
+  print("Es igual")
+else:
+  print("No es igual")
+Restricciones
+No usar librerías externas.
+Mantener todo en Python puro, sin recurrir a frameworks como Flask o libraries gráficas.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica brevemente el juego que vas a crear y cómo combina los conceptos de conjuntos y listas con la naturaleza.
+
+Desarrollo técnico correcto y preciso (25%): Asegúrate de que tu código genere correctamente una muestra, una serie aleatoria, un conjunto filtrado y compare los resultados.
+
+Aplicación práctica con ejemplo claro (25%): Proporciona ejemplos claros en tu código para mostrar cómo funciona cada paso del juego.
+
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio te ha ayudado a entender mejor los conjuntos y cómo podrías aplicar estos conceptos en situaciones más complejas, como el desarrollo de juegos o aplicaciones que manejan datos únicos.
+
+
+Respuesta:
+
+En este trabajo hago un pequeño juego parecido al Sudoku para aprender a usar listas y conjuntos en Python. Genero numeros al azar y los guardo en una lista. Despues uso un conjunto para quitar los numeros repetidos. Asi practico de una forma facil y entiendo mejor como funcionan estas estructuras, relacionandolo con la idea de que cada elemento debe ser unico.
+```
+import random
+
+muestra = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+serie = []
+for i in range(9):
+    numero = random.randint(1, 9)
+    serie.append(numero)
+
+filtrado = set(serie)
+
+print(serie)
+print(filtrado)
+
+if filtrado == muestra:
+    print("Es igual")
+else:
+    print("No es igual")
+```
+
+Salida del código:
+
+[Running] python -u "c:\Users\Serena\Documents\Programacion\Actividades\tema 6\operacion.py"
+[9, 2, 8, 5, 7, 6, 3, 7, 5]
+{2, 3, 5, 6, 7, 8, 9}
+No es igual
+
+Con este ejercicio aprendo mejor la diferencia entre listas y conjuntos. Veo que las listas pueden tener numeros repetidos y que los conjuntos sirven para dejar solo los numeros unicos. Esto me ayuda a entender mejor Python y a ver que estos conceptos se pueden usar en juegos y en programas mas grandes en el futuro.

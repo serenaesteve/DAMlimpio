@@ -1,0 +1,35 @@
+Actividad final de unidad:
+
+Indica cual el entorno de desarrollo integrado (editor) que estás utilizando para realizar los ejercicios del ciclo.
+
+Describe paso a paso cual ha sido el proceso de instalación del entorno o los entornos de desarrollo que utilices
+
+Describe igualmente las operaciones de adaptación, personalización, instalación de complementos, que hayas realizado.
+
+
+
+
+Respuesta:
+
+
+En esta actividad explico el entorno de desarrollo que estoy utilizando para los ejercicios del ciclo, que es Visual Studio Code (VSC). Este editor me permite escribir código, organizar archivos y trabajar con bases de datos de manera sencilla. También he enseñado a instalarlo, personalizarlo y añadir extensiones que facilitan mi trabajo diario.
+
+***Entorno de desarrollo que utilizo:***
+El entorno de desarrollo que estoy utilizando para realizar los ejercicios del ciclo es Visual Studio Code (VSC). Es un editor ligero y muy completo que permite programar en varios lenguajes y trabajar con bases de datos mediante extensiones. Me resulta fácil de usar y me ayuda a organizar el código de manera clara.
+
+***Proceso de instalación paso a paso:***
+-Entré en la página oficial de Visual Studio Code y descargué el instalador para Windows.
+-Abrí el instalador y seguí los pasos: aceptar los términos, elegir la carpeta de instalación y crear accesos directos.
+-Una vez finalizada la instalación, abrí VSC para comprobar que todo funcionaba correctamente.
+
+***Adaptación y personalización:***
+-Cambié el tema a oscuro porque me resulta más cómodo para trabajar.
+
+Instalé extensiones importantes:
+-SQL Server (mssql) para poder escribir y ejecutar consultas SQL.
+-Python y su extensión para trabajar con scripts de Python si es necesario.
+
+Visual Studio Code me permite escribir código y gestionar bases de datos de forma organizada. Gracias a su personalización y extensiones, puedo trabajar más cómodo y eficiente en todos los ejercicios del ciclo.
+
+Con esta actividad he contado cómo instalé y personalicé Visual Studio Code, incluyendo la configuración del tema, los atajos de teclado y las extensiones que añadí. De esta manera, queda registrado cómo he preparado mi entorno de trabajo para poder realizar los ejercicios del ciclo de forma organizada y cómoda.
+

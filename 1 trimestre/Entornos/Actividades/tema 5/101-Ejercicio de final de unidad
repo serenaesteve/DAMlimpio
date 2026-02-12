@@ -1,0 +1,38 @@
+Actividad final de unidad:
+
+Sobre el programa que estamos haciendo en la asignatura de programacion
+
+Crea una cuenta en GitHub Crea un repositorio para este proyecto Clona el repositorio en tu equipo con GitHub Desktop Pon el código del proyecto en la carpeta clonada Realiza un commit y push Comprueba que el código se ha subido correctamente a GitHub
+
+Realiza una modificación en el código Realiza un nuevo commit y push Comprueba el histórico de versiones en GitHub
+
+
+
+
+Respuesta:
+
+En esta actividad final de la unidad pongo en práctica todo lo que aprendo sobre el uso de Git y GitHub para gestionar proyectos de programación. El objetivo es crear un repositorio, subir mi proyecto, realizar cambios y comprobar cómo se guarda el historial de versiones. A través de estos pasos aprendo a manejar GitHub Desktop, hacer commits, realizar “push” de los cambios y visualizar cómo se actualiza el repositorio en la nube. Esta práctica me ayuda a entender mejor el flujo de trabajo que utilizan los desarrolladores para colaborar y mantener el control de sus proyectos.
+ 
+ 
+ Abro github (google) y creo un nuevo repositorio:
+ * Repositories
+ *New
+ *examenentornosdedesarrollo
+ *Enciendo el README
+ *Creating repository
+- Ahora abro github de mi PC:
+  * Le doy arriba a la izquierda
+  *File
+  *Clone a repository
+  *examenentornosdedesarrollo
+-Ahora copio mis archivos dentro de la carpeta del repositorio (Archivo de programación)
+- En github desktop
+ * En summary pongo Primera version
+ *le doy commit y push
+- Me voy a github (google) y compruebo que los archivos han llegado
+- Ahora hago una modificación:
+ * Abro el archivo examenentornos.py y modifico de v0.1 a v0.2 y guardo
+ * Abro github desktop y compruebo que sale la modificación y en summary pongo segunda version y le doy a commit y push.
+ - Por ultimo en el github (Google) me voy a history y compruebo que estan las diferentes versiones
+
+Con esta actividad comprendo la importancia de usar GitHub como herramienta para organizar y respaldar el código de un proyecto. Aprendo a crear repositorios, clonar, hacer commits y mantener un control de versiones de forma sencilla. También observo cómo cada cambio queda registrado y documentado, lo que facilita mucho el trabajo en equipo y la mejora continua del código. En general, considero que esta experiencia es muy útil para aplicar conocimientos prácticos de programación y control de versiones que son fundamentales en futuros proyectos.

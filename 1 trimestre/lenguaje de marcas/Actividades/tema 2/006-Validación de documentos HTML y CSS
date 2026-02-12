@@ -1,0 +1,27 @@
+Enunciado paso a paso
+Introducción y contextualización: Comienza por abrir un navegador web y navega hasta el sitio web https://validator.w3.org/. Este recurso es crucial para validar los documentos HTML y CSS, asegurándote de que tu código cumpla con las mejores prácticas y está libre de errores.
+
+Desarrollo técnico correcto y preciso: Abre un editor de texto o un IDE como Visual Studio Code y crea un nuevo archivo llamado mi_pagina.html. En este archivo, escribe el siguiente código HTML:
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Mi página web</title>
+  </head>
+  <body>
+    <h1>Bienvenido a mi sitio web</h1>
+    <p>Este es un párrafo de texto.</p>
+    <img src="ruta/a/imagen.jpg" alt="Texto alternativo">
+  </body>
+</html>
+Aplicación práctica con ejemplo claro: Valida el archivo mi_pagina.html utilizando la herramienta de validación en el sitio web de W3C (World Wide Web Consortium). Asegúrate de que todos los elementos HTML estén correctamente cerrados y que cada etiqueta tenga sus atributos adecuados. En particular, verifica que la imagen tenga un atributo alt con texto alternativo.
+
+Cierre/Conclusión enlazando con la unidad: Una vez validado el documento, guarda los cambios y cierra el editor de texto. Reflexiona sobre cómo esta práctica es relevante para tu carrera como profesor, desarrollador o diseñador web. ¿Qué beneficios puedes obtener al validar regularmente tus documentos HTML?
+
+
+
+Respuesta:
+
+
+Este validador es una herramienta muy importante y super válida porque aunque tengas muchos años de experiencia programano siempre te puedes equivocar dejándote un punto o una coma. Son tonterías pero ya no funcionaría el código, así que teniendo esta herramienta que nos puede ayudar yo la utilizaré siempre para cercionarme de que el código este bien.

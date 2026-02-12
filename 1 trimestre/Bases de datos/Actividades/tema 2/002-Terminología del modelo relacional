@@ -1,0 +1,132 @@
+Actividad breve: Creación y Consulta de Tablas Relacionales
+Contexto
+En este ejercicio, vamos a crear dos tablas relacionadas en una base de datos relacional: productos y clientes. Esto nos ayudará a entender cómo organizar y gestionar información estructurada. Además, haremos algunas consultas básicas para manipular esta data.
+
+Enunciado paso a paso
+Crea la Base de Datos
+
+Crea una base de datos llamada tienda_online.
+Usa el siguiente comando SQL:
+CREATE DATABASE tienda_online;
+USE tienda_online;
+Crea la Tabla productos
+
+Crea una tabla llamada productos con los siguientes campos:
+Identificador: Entero, clave primaria.
+nombre: Cadena de texto (50 caracteres), no nula.
+descripcion: Texto largo, no nula.
+precio: Número doble (10 dígitos, 2 decimales), no nula.
+peso: Número doble (10 dígitos, 2 decimales).
+Usa el siguiente comando SQL:
+CREATE TABLE productos (
+  Identificador INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  descripcion TEXT NOT NULL,
+  precio DOUBLE(10,2) NOT NULL,
+  peso DOUBLE(10,2),
+  PRIMARY KEY (Identificador)
+);
+Crea la Tabla clientes
+
+Crea una tabla llamada clientes con los siguientes campos:
+Identificador: Entero, clave primaria.
+nombre: Cadena de texto (50 caracteres), no nula.
+apellidos: Cadena de texto (100 caracteres), no nula.
+telefono: Cadena de texto (50 caracteres).
+email: Cadena de texto (100 caracteres).
+Usa el siguiente comando SQL:
+CREATE TABLE clientes (
+  Identificador INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  telefono VARCHAR(50),
+  email VARCHAR(100),
+  PRIMARY KEY (Identificador)
+);
+Inserta Datos en productos
+
+Inserta al menos 3 productos en la tabla productos.
+Ejemplo:
+INSERT INTO productos (nombre, descripcion, precio, peso) VALUES ('Laptop', 'Portátil de última generación', 999.99, 2.5);
+Inserta Datos en clientes
+
+Inserta al menos 3 clientes en la tabla clientes.
+Ejemplo:
+INSERT INTO clientes (nombre, apellidos, email) VALUES ('Juan', 'Pérez', 'juan.perez@example.com');
+Realiza una Consulta Básica
+
+Realiza una consulta que muestre el nombre y el precio de todos los productos.
+Usa el siguiente comando SQL:
+SELECT nombre, precio FROM productos;
+Restricciones
+No uses librerías externas.
+No utilices input()/lectura de teclado.
+No utilices estructuras no vistas en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe entender el contexto del ejercicio y cómo se relacionan los conceptos con la creación de tablas y consultas en una base de datos relacional.
+Desarrollo técnico correcto y preciso (25%): El alumnado debe mostrar habilidad técnica para crear las tablas y realizar consultas SQL precisas.
+Aplicación práctica con ejemplo claro (25%): El alumno debe aplicar los conceptos aprendidos mediante la inserción de datos y realización de consultas prácticas.
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe cerrar el ejercicio enlazándolo con los conocimientos previos sobre bases de datos relacionales y mostrando cómo se aplican estos conceptos en una práctica real.
+
+
+
+Respuesta:
+
+En una base de datos relacional, la información se guarda en tablas que se pueden conectar entre sí.
+En este ejercicio he creado dos tablas:
+-productos: para guardar información de los productos de la tienda.
+-clientes: para guardar información de los clientes.
+El contexto de este ejercicio es hacerme saber como se empieza a crear una base de datos , con clientes y productos.
+
+Para crear la base de datos lo primero que he echo es:
+-Abrir localhost en mi navegador
+- Me he metido en la pestaña SQL y he puesto esto:
+CREATE DATABASE tienda_online;
+USE tienda_online;
+
+Para crear productos he hecho:
+-Una vez creada la base de datos y dentro de ella , me he vuelto a ir a la pestaña de SQL y he puesto esto:
+CREATE TABLE productos (
+  Identificador INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  descripcion TEXT NOT NULL,
+  precio DOUBLE(10,2) NOT NULL,
+  peso DOUBLE(10,2),
+  PRIMARY KEY (Identificador)
+);
+
+Para crear clientes he hecho:
+- Una vez creado productos he vuelto a la pestaña inicial de la base de datos y he vuelto a la pestaña de SQL poniendo el siguente código:
+CREATE TABLE clientes (
+  Identificador INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  telefono VARCHAR(50),
+  email VARCHAR(100),
+  PRIMARY KEY (Identificador)
+);
+
+Para añadir productos y clientes lo primero que he echo en los dos apartados es irme a la estructura de cada uno, dentro del identificador le he dado al boton de "cambiar" y he marcado la pestaña de A_I para que cada producto tenga su propio numero de identificar (por orden 1,2,3...).
+
+Para añadir productos_
+-Dentro de la pestaña productos me he ido a el apartado SQL y he puesto esto (cada uno de manera independiente):
+INSERT INTO productos (nombre, descripcion, precio, peso) VALUES ('Laptop', 'Portátil de última generación', 999.99, 2.5);
+INSERT INTO productos (nombre, descripcion, precio, peso) VALUES ('Phone', 'Smartphone de última generación', 700, 0.5);
+INSERT INTO productos (nombre, descripcion, precio, peso) VALUES ('Tablet', 'Tablet de última generación', 500, 2);
+
+
+Para añadir clientes:
+-Dentro de la pestaña clientes me he ido a el apartado SQL y he puesto esto (cada uno de manera independiente):
+INSERT INTO clientes (nombre, apellidos, email) VALUES ('Juan', 'Pérez', 'juan.perez@example.com');
+INSERT INTO clientes (nombre, apellidos, email) VALUES ('Serena', 'Sania', 'serenaesteve@example.com');
+INSERT INTO clientes (nombre, apellidos, email) VALUES ('Obdulia', 'Griñan', 'Obdulia@example.com');
+
+Para hacer la consulta:
+-Me he puesto en el inicio de la base de datos me he metido en la pestaña de SQL y he puesto esto: 
+SELECT nombre, precio FROM productos;
+Y me ha salido todos los productos de mi base de datos (laptop, phone y tablet)
+
+
+En este ejercicio usamos conceptos básicos de bases de datos relacionales.
+Creamos tablas, guardamos datos y realizamos consultas.
+Esto sirve como base para sistemas reales, como una tienda online.

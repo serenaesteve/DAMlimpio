@@ -1,0 +1,729 @@
+Para practicar el concepto impartido sobre aplicaciones informáticas y sus características, sigue estos pasos:
+
+Analiza el Diagrama: Abre el archivo diagrama.html (que muestra un diagrama interactivo en SVG) y el archivo diagrama.json. Identifica las formas principales (como HTML, CSS, JS, etc.) y las flechas que indican relaciones entre ellas.
+
+Descripción del Diagrama: En tu cuaderno o documento de trabajo, describe brevemente lo que representa cada forma y cómo se relacionan entre sí. Por ejemplo:
+
+"HTML es la estructura principal."
+"CSS es el estilo que da formato a HTML."
+"JS permite interactuar con el usuario."
+Desarrolla un Ejemplo Práctico: Crea una pequeña aplicación web utilizando las tecnologías descritas en el diagrama. Por ejemplo:
+
+Utiliza HTML para estructurar la página.
+CSS para dar estilo a los elementos.
+JavaScript para agregar interactividad.
+Exportación de Informes y Documentación: Asegúrate de que tu aplicación tenga una interfaz pública (front-end) que permita leer información, así como un panel de administración (back-end) donde se puedan realizar operaciones CRUD. Documenta cómo funciona cada parte de la aplicación.
+
+Aplica las Características del Software: Asegúrate de que tu aplicación cumpla con las características generales descritas en el archivo características.md. Por ejemplo:
+
+Tenga un panel de administración separado.
+Ofrezca opciones para leer, escribir y eliminar datos.
+Permita la exportación e importación de información.
+Exportar tu Proyecto: Cuando hayas terminado, guarda tu proyecto en una carpeta comprimida (como ZIP) y compártela con el profesor o almacénala para futuras referencias.
+
+Siguiendo estos pasos, podrás aplicar los conceptos teóricos aprendidos en un contexto práctico y desarrollar habilidades importantes en el desarrollo de aplicaciones informáticas.
+
+
+
+Respuesta:
+
+
+En esta práctica aprendo cómo funciona una aplicación web usando un diagrama. Primero miro el diagrama y veo qué significa cada parte: HTML, CSS, JavaScript, PHP/Python y SQL. Después hago una aplicación pequeña para practicarlo. La aplicación tiene una parte pública para los usuarios (Front) y otra parte para administrar datos (Admin). También añado opciones para poder guardar y cambiar información.
+​
+​
+​
+Abro el archivo diagrama.html y también el diagrama.json para entender qué representa cada parte.
+​
+Veo que el diagrama está dividido en dos partes principales:
+​
+***Parte Front***
+​
+En la parte izquierda aparece la zona Front, que es la parte de la aplicación que ve cualquier usuario.
+​
+En esta parte aparecen estas tecnologías:
+-HTML: representa la estructura de la página web.
+-CSS: representa el estilo visual (diseño).
+-JS? (JavaScript): representa la parte interactiva (botones, búsquedas, interacción con el usuario).
+​
+También aparecen palabras de apoyo como:
+-Front
+-READ
+-INSERT
+​
+Esto me indica que en el front normalmente se hace sobre todo lectura de información (Read), aunque a veces se puede permitir insertar información (Insert).
+​
+***Parte Admin (panel de administración)***
+En la parte derecha aparece la zona Admin, que representa el panel de administración del sistema (parte privada).
+​
+Aquí aparecen estas tecnologías:
+-CSS
+-HTML
+-JS
+-PHP/Python
+​
+Y aparecen las operaciones del CRUD, con:
+-CREATE
+-READ
+-UPDATE
+-DELETE
+​
+Esto significa que desde el panel de administración se gestionan los datos completamente.
+​
+***Back-end y Base de datos***
+​
+En el diagrama también aparece:
+-PHP/Python, que sería el servidor o la lógica del back-end.
+-xSQL, que representa una base de datos SQL (por ejemplo MySQL, SQLite, PostgreSQL, etc.)
+​
+Las flechas muestran que:
+-El back-end (PHP/Python) se comunica con la base de datos (xSQL).
+-En el admin hay comunicación en ambos sentidos (CRUD) porque se leen y se modifican datos.
+-En el front se consume información, sobre todo para lectura (READ).
+​
+***Descripción del diagrama (explicación con mis palabras)***
+​
+En este diagrama se representa una aplicación web típica:
+-HTML es la estructura principal de la web.
+-CSS es el estilo que da formato y diseño a la web.
+-JavaScript (JS) permite que la aplicación sea interactiva, por ejemplo buscar información o actualizar contenido sin recargar.
+-PHP/Python representa el back-end, que es donde está la lógica del servidor.
+-xSQL representa la base de datos, donde se guardan los datos.
+​
+Además, se diferencia claramente:
+-Una parte pública (Front) para el usuario
+Y una parte privada (Admin) para administrar la información
+​
+***Características generales del software***
+​
+En mi aplicación aplico varias características típicas del software:
+-Tiene una parte frontal pública, que es la que ve el usuario.
+-Tiene un panel de administración separado, para gestionar los datos.
+​
+En el panel admin se pueden hacer operaciones CRUD:
+-crear
+-leer
+-actualizar
+-borrar
+-Se puede exportar información (CSV).
+-Se puede importar información (CSV).
+-Incluye documentación para explicar el funcionamiento.
+​
+app.py
+```
+from __future__ import annotations
+import csv
+import io
+import os
+import sqlite3
+from datetime import datetime
+from flask import Flask, jsonify, render_template, request, send_file, abort
+​
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(APP_DIR, "data.sqlite3")
+​
+app = Flask(__name__)
+​
+def get_db() -> sqlite3.Connection:
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+​
+def init_db() -> None:
+    with get_db() as conn:
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS books (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            author TEXT NOT NULL,
+            year INTEGER,
+            created_at TEXT NOT NULL
+        )
+        """)
+        cur = conn.execute("SELECT COUNT(*) AS c FROM books")
+        if cur.fetchone()["c"] == 0:
+            now = datetime.utcnow().isoformat()
+            conn.executemany(
+                "INSERT INTO books (title, author, year, created_at) VALUES (?,?,?,?)",
+                [
+                    ("El Quijote", "Miguel de Cervantes", 1605, now),
+                    ("Cien años de soledad", "Gabriel García Márquez", 1967, now),
+                    ("La sombra del viento", "Carlos Ruiz Zafón", 2001, now),
+                ],
+            )
+​
+@app.before_request
+def _ensure_db():
+    init_db()
+​
+# ---------- FRONT ----------
+@app.get("/")
+def front():
+    return render_template("front.html")
+​
+@app.get("/api/books")
+def api_list_books():
+    q = request.args.get("q", "").strip()
+    with get_db() as conn:
+        if q:
+            cur = conn.execute(
+                "SELECT * FROM books WHERE title LIKE ? OR author LIKE ? ORDER BY id DESC",
+                (f"%{q}%", f"%{q}%"),
+            )
+        else:
+            cur = conn.execute("SELECT * FROM books ORDER BY id DESC")
+        data = [dict(row) for row in cur.fetchall()]
+    return jsonify(data)
+​
+@app.get("/api/books/<int:book_id>")
+def api_get_book(book_id: int):
+    with get_db() as conn:
+        cur = conn.execute("SELECT * FROM books WHERE id = ?", (book_id,))
+        row = cur.fetchone()
+    if not row:
+        abort(404)
+    return jsonify(dict(row))
+​
+# ---------- ADMIN ----------
+@app.get("/admin")
+def admin():
+    return render_template("admin.html")
+​
+@app.post("/api/admin/books")
+def api_create_book():
+    payload = request.get_json(force=True) or {}
+    title = (payload.get("title") or "").strip()
+    author = (payload.get("author") or "").strip()
+    year = payload.get("year")
+​
+    if not title or not author:
+        return jsonify({"error": "title y author son obligatorios"}), 400
+​
+    try:
+        year_int = int(year) if year not in (None, "") else None
+    except Exception:
+        return jsonify({"error": "year debe ser numérico"}), 400
+​
+    with get_db() as conn:
+        now = datetime.utcnow().isoformat()
+        cur = conn.execute(
+            "INSERT INTO books (title, author, year, created_at) VALUES (?,?,?,?)",
+            (title, author, year_int, now),
+        )
+        conn.commit()
+        return jsonify({"ok": True, "id": cur.lastrowid}), 201
+​
+@app.put("/api/admin/books/<int:book_id>")
+def api_update_book(book_id: int):
+    payload = request.get_json(force=True) or {}
+    title = (payload.get("title") or "").strip()
+    author = (payload.get("author") or "").strip()
+    year = payload.get("year")
+​
+    if not title or not author:
+        return jsonify({"error": "title y author son obligatorios"}), 400
+​
+    try:
+        year_int = int(year) if year not in (None, "") else None
+    except Exception:
+        return jsonify({"error": "year debe ser numérico"}), 400
+​
+    with get_db() as conn:
+        cur = conn.execute("SELECT id FROM books WHERE id = ?", (book_id,))
+        if not cur.fetchone():
+            return jsonify({"error": "no existe"}), 404
+​
+        conn.execute(
+            "UPDATE books SET title=?, author=?, year=? WHERE id=?",
+            (title, author, year_int, book_id),
+        )
+        conn.commit()
+    return jsonify({"ok": True})
+​
+@app.delete("/api/admin/books/<int:book_id>")
+def api_delete_book(book_id: int):
+    with get_db() as conn:
+        cur = conn.execute("SELECT id FROM books WHERE id = ?", (book_id,))
+        if not cur.fetchone():
+            return jsonify({"error": "no existe"}), 404
+        conn.execute("DELETE FROM books WHERE id = ?", (book_id,))
+        conn.commit()
+    return jsonify({"ok": True})
+​
+# ---------- EXPORT / IMPORT ----------
+@app.get("/api/admin/export")
+def api_export_csv():
+    with get_db() as conn:
+        cur = conn.execute("SELECT id,title,author,year,created_at FROM books ORDER BY id ASC")
+        rows = cur.fetchall()
+​
+    output = io.StringIO()
+    w = csv.writer(output)
+    w.writerow(["id", "title", "author", "year", "created_at"])
+    for r in rows:
+        w.writerow([r["id"], r["title"], r["author"], r["year"], r["created_at"]])
+​
+    mem = io.BytesIO(output.getvalue().encode("utf-8"))
+    mem.seek(0)
+    return send_file(mem, as_attachment=True, download_name="books_export.csv",
+                     mimetype="text/csv; charset=utf-8")
+​
+@app.post("/api/admin/import")
+def api_import_csv():
+    if "file" not in request.files:
+        return jsonify({"error": "Falta archivo en campo 'file'"}), 400
+    f = request.files["file"]
+    if not f.filename.lower().endswith(".csv"):
+        return jsonify({"error": "Solo CSV"}), 400
+​
+    stream = io.StringIO(f.stream.read().decode("utf-8"))
+    reader = csv.DictReader(stream)
+​
+    if not {"title", "author"}.issubset(set(reader.fieldnames or [])):
+        return jsonify({"error": "El CSV debe contener: title, author (y opcional year)"}), 400
+​
+    now = datetime.utcnow().isoformat()
+    to_insert = []
+    for row in reader:
+        title = (row.get("title") or "").strip()
+        author = (row.get("author") or "").strip()
+        year = (row.get("year") or "").strip()
+        if not title or not author:
+            continue
+        try:
+            year_int = int(year) if year else None
+        except Exception:
+            year_int = None
+        to_insert.append((title, author, year_int, now))
+​
+    with get_db() as conn:
+        conn.executemany(
+            "INSERT INTO books (title, author, year, created_at) VALUES (?,?,?,?)",
+            to_insert,
+        )
+        conn.commit()
+​
+    return jsonify({"ok": True, "imported": len(to_insert)})
+​
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+​
+front.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Front - Catálogo</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Catálogo público</h1>
+    <nav><a class="btn" href="/admin">Ir a Admin</a></nav>
+  </header>
+​
+  <main class="container">
+    <section class="card">
+      <h2>Buscar</h2>
+      <div class="row">
+        <input id="q" class="input" placeholder="Buscar por título o autor..." />
+        <button class="btn" id="btnBuscar">Buscar</button>
+        <button class="btn secondary" id="btnReset">Reset</button>
+      </div>
+    </section>
+​
+    <section class="card">
+      <h2>Libros</h2>
+      <div id="list" class="grid"></div>
+    </section>
+  </main>
+​
+  <script src="/static/app.js"></script>
+</body>
+</html>
+```
+​
+​
+app.js:
+```
+async function fetchJSON(url){
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("HTTP " + res.status);
+  return await res.json();
+}
+​
+function escapeHTML(str){
+  return (str||"").replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+​
+function card(book){
+  const year = book.year ? ` (${book.year})` : "";
+  return `<div class="item">
+    <h3>${escapeHTML(book.title)}${year}</h3>
+    <p><strong>Autor:</strong> ${escapeHTML(book.author)}</p>
+    <p class="hint">ID: ${book.id}</p>
+  </div>`;
+}
+​
+async function load(){
+  const q = document.querySelector("#q").value.trim();
+  const url = q ? `/api/books?q=${encodeURIComponent(q)}` : "/api/books";
+  const books = await fetchJSON(url);
+  document.querySelector("#list").innerHTML =
+    books.map(card).join("") || "<p class='hint'>Sin datos</p>";
+}
+​
+document.querySelector("#btnBuscar").addEventListener("click", load);
+document.querySelector("#btnReset").addEventListener("click", ()=>{
+  document.querySelector("#q").value = "";
+  load();
+});
+​
+load();
+```
+​
+admin.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - CRUD</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🛠️ Panel de administración (CRUD)</h1>
+    <nav>
+      <a class="btn secondary" href="/">Volver al Front</a>
+      <a class="btn" href="/api/admin/export">Exportar CSV</a>
+    </nav>
+  </header>
+​
+  <main class="container">
+    <section class="card">
+      <h2>Crear / Editar</h2>
+      <form id="form" class="form">
+        <input type="hidden" id="id" />
+        <label>Título <input class="input" id="title" required /></label>
+        <label>Autor <input class="input" id="author" required /></label>
+        <label>Año <input class="input" id="year" type="number" min="0" /></label>
+​
+        <div class="row">
+          <button class="btn" type="submit">Guardar</button>
+          <button class="btn secondary" type="button" id="btnCancel">Cancelar</button>
+        </div>
+      </form>
+    </section>
+​
+    <section class="card">
+      <h2>Importar CSV</h2>
+      <form id="importForm" class="row">
+        <input class="input" type="file" id="csvFile" accept=".csv" />
+        <button class="btn" type="submit">Importar</button>
+      </form>
+      <p class="hint">CSV con columnas: <code>title,author,year</code></p>
+    </section>
+​
+    <section class="card">
+      <h2>Listado</h2>
+      <div id="adminList" class="grid"></div>
+    </section>
+  </main>
+​
+  <script src="/static/admin.js"></script>
+</body>
+</html>
+```
+​
+admin.js:
+```
+async function fetchJSON(url, opts={}){
+  const res = await fetch(url, opts);
+  let data = null;
+  try{ data = await res.json(); }catch(e){}
+  if(!res.ok){
+    const msg = (data && data.error) ? data.error : ("HTTP " + res.status);
+    throw new Error(msg);
+  }
+  return data;
+}
+​
+function escapeHTML(str){
+  return (str||"").replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+​
+function adminCard(book){
+  const year = book.year ? ` (${book.year})` : "";
+  return `<div class="item">
+    <h3>${escapeHTML(book.title)}${year}</h3>
+    <p><strong>Autor:</strong> ${escapeHTML(book.author)}</p>
+    <div class="actions">
+      <button class="btn secondary" onclick="editBook(${book.id})">Editar</button>
+      <button class="btn danger" onclick="deleteBook(${book.id})">Eliminar</button>
+    </div>
+  </div>`;
+}
+​
+async function loadList(){
+  const books = await fetchJSON("/api/books");
+  document.querySelector("#adminList").innerHTML =
+    books.map(adminCard).join("") || "<p class='hint'>Sin datos</p>";
+}
+​
+window.editBook = async function(id){
+  const b = await fetchJSON(`/api/books/${id}`);
+  document.querySelector("#id").value = b.id;
+  document.querySelector("#title").value = b.title;
+  document.querySelector("#author").value = b.author;
+  document.querySelector("#year").value = b.year ?? "";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+​
+window.deleteBook = async function(id){
+  if(!confirm("¿Eliminar este registro?")) return;
+  await fetchJSON(`/api/admin/books/${id}`, {method:"DELETE"});
+  loadList();
+}
+​
+document.querySelector("#btnCancel").addEventListener("click", ()=>{
+  document.querySelector("#form").reset();
+  document.querySelector("#id").value = "";
+});
+​
+document.querySelector("#form").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const id = document.querySelector("#id").value.trim();
+  const payload = {
+    title: document.querySelector("#title").value.trim(),
+    author: document.querySelector("#author").value.trim(),
+    year: document.querySelector("#year").value.trim()
+  };
+​
+  if(id){
+    await fetchJSON(`/api/admin/books/${id}`, {
+      method:"PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+  }else{
+    await fetchJSON("/api/admin/books", {
+      method:"POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+  }
+​
+  document.querySelector("#form").reset();
+  document.querySelector("#id").value = "";
+  loadList();
+});
+​
+document.querySelector("#importForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const f = document.querySelector("#csvFile").files[0];
+  if(!f){ alert("Selecciona un CSV"); return; }
+  const fd = new FormData();
+  fd.append("file", f);
+  await fetchJSON("/api/admin/import", {method:"POST", body: fd});
+  document.querySelector("#csvFile").value = "";
+  loadList();
+  alert("Importación completada");
+});
+​
+loadList();
+```
+​
+styles.css:
+```
+:root{
+  --bg:#f3f3f7;
+  --card:#fff;
+  --text:#111827;
+  --muted:#6b7280;
+  --border:#d1d5db;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui, -apple-system, Segoe UI, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 18px;
+  border-bottom:1px solid var(--border);
+  background:#fff;
+}
+.container{
+  max-width: 980px;
+  margin: 18px auto;
+  padding: 0 14px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:14px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05);
+}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.item{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  background:#fff;
+}
+.item h3{margin:0 0 6px 0; font-size: 16px;}
+.item p{margin:0; color:var(--muted); font-size: 13px;}
+.row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.form{
+  display:grid;
+  grid-template-columns: 1fr 1fr 140px;
+  gap:10px;
+}
+.form label{
+  font-size: 13px;
+  color: var(--muted);
+  display:grid;
+  gap:6px;
+}
+.input{
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  outline:none;
+}
+.btn{
+  display:inline-block;
+  border:1px solid #111827;
+  background:#111827;
+  color:#fff;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  text-decoration:none;
+}
+.btn.secondary{ background:#fff; color:#111827; }
+.btn.danger{ border-color:#b91c1c; background:#b91c1c; }
+.hint{ font-size:12px; color:var(--muted) }
+.actions{ display:flex; gap:8px; margin-top:10px; }
+```
+​
+requeriments.txt:
+```
+flask==3.0.3
+```
+​
+readme.md:
+```
+# Mini aplicación web: Front + Admin + CRUD
+​
+## 1. Descripción general
+En esta práctica desarrollo una mini aplicación web para poner en práctica el concepto de **aplicación informática** y sus partes principales, siguiendo el diagrama entregado (Front + Admin + Back-end + Base de datos).
+​
+La aplicación funciona como un **catálogo de libros** y está dividida en dos partes:
+- **Front (público):** permite ver y buscar libros (principalmente READ).
+- **Admin (administración):** permite gestionar los libros realizando operaciones CRUD.
+​
+---
+​
+## 2. Tecnologías utilizadas
+- **HTML:** estructura de las páginas.
+- **CSS:** diseño y estilo visual.
+- **JavaScript:** interactividad (carga dinámica de datos, botones, formularios).
+- **Python (Flask):** back-end / servidor.
+- **SQLite (xSQL):** base de datos SQL para guardar los datos de forma persistente.
+​
+---
+​
+## 3. Funcionalidades principales
+​
+### Front (público) `/`
+- Lista de libros disponibles.
+- Buscador por título o autor.
+- Principalmente realiza **READ**.
+​
+### Admin (panel de administración) `/admin`
+Incluye **CRUD completo**:
+- **CREATE:** añadir libros.
+- **READ:** ver listado.
+- **UPDATE:** editar libros.
+- **DELETE:** eliminar libros.
+​
+### Exportación e importación
+- **Exportar CSV:** permite descargar un fichero CSV con los datos.
+- **Importar CSV:** permite subir un CSV e insertar registros automáticamente en la base de datos.
+​
+---
+```
+​
+​
+​
+Terminal:
+```
+serena@serena-portatil:/var/www/html/DAM/lenguaje de marcas/Actividades/mini_app_web_crud$ python3 app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 302-396-815
+/var/www/html/DAM/lenguaje de marcas/Actividades/mini_app_web_crud/app.py:32: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+127.0.0.1 - - [04/Feb/2026 11:54:36] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:36] "GET /static/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:36] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:36] "GET /api/books HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:36] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [04/Feb/2026 11:54:38] "GET /api/books HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:39] "GET /api/books HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:40] "GET /admin HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:40] "GET /static/styles.css HTTP/1.1" 304 -
+127.0.0.1 - - [04/Feb/2026 11:54:40] "GET /static/admin.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:40] "GET /api/books HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:43] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 11:54:43] "GET /static/styles.css HTTP/1.1" 304 -
+127.0.0.1 - - [04/Feb/2026 11:54:43] "GET /static/app.js HTTP/1.1" 304 -
+127.0.0.1 - - [04/Feb/2026 11:54:43] "GET /api/books HTTP/1.1" 200 -
+```
+​
+Estructura de las carpetas:
+​
+mini_app_web_crud/
+├── app.py
+├── requirements.txt
+├── README.md
+├── data.sqlite3
+├── templates/
+│   ├── front.html
+│   └── admin.html
+└── static/
+    ├── styles.css
+    ├── app.js
+    └── admin.js
+​
+Con esta práctica entiendo mejor cómo se divide una aplicación web. Veo que el Front es lo que ve el usuario y sirve sobre todo para leer información. También veo que el Admin sirve para gestionar los datos y hacer CRUD (crear, leer, actualizar y borrar). Me ayuda a juntar la teoría con la práctica y a aprender cómo se organiza un programa real.

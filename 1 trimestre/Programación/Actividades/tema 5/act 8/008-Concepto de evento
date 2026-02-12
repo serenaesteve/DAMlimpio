@@ -1,0 +1,103 @@
+Contexto
+
+En nuestro último tema sobre lectura y escritura de información en Python, hemos explorado cómo utilizar interfaces gráficas para interactuar con los usuarios. Hoy, vamos a combinar lo aprendido con nuestra pasión por la naturaleza y los juegos de mesa / videojuegos. Imagina que estás realizando un proyecto de indexación de archivos en una carpeta de tu campo favorito. Quieres crear una aplicación gráfica que te permita seleccionar la carpeta y el nombre del disco para almacenar la información de los archivos.
+
+Enunciado paso a paso
+
+Crea la interfaz gráfica: Utiliza tkinter para crear una ventana con dos etiquetas, dos cajas de texto y un botón. La primera etiqueta y caja de texto serán para el nombre de la carpeta, y la segunda etiqueta y caja de texto para el nombre del disco.
+
+Implementa la función procesar: Esta función será llamada cuando se haga clic en el botón. Deberá:
+
+Obtener los valores de las cajas de texto.
+Verificar que la carpeta existe y es válida.
+Conectar a una base de datos SQLite llamada "discos.db".
+Recorrer todos los archivos dentro de la carpeta seleccionada utilizando os.walk.
+Para cada archivo, insertar su información en la tabla "archivos" de la base de datos.
+Integra la función con el botón: Asocia la función procesar al evento de clic del botón para que se ejecute cuando se presione el botón.
+
+Restricciones
+
+No uses librerías externas como ttkbootstrap.
+Asegúrate de manejar excepciones para evitar errores si algún archivo no se puede leer.
+Utiliza solo los conceptos y funciones aprendidos en la clase, como tkinter, sqlite3, y os.
+Criterios de evaluación
+
+Introducción y contextualización (25%): El estudiante debe entender cómo combinar interfaces gráficas con operaciones de base de datos.
+Desarrollo técnico correcto y preciso (25%): La solución debe implementar correctamente la interfaz gráfica, la función procesar, y el manejo de la base de datos.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe probar su aplicación con una carpeta real en su campo favorito para verificar que funciona correctamente.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe explicar cómo esta actividad relaciona lo aprendido con los juegos de mesa / videojuegos y la naturaleza, y cómo se puede aplicar en proyectos reales de indexación de archivos.
+
+
+
+Respuesta:
+
+En este proyecto aprendi a combinar una interfaz grafica con operaciones de base de datos. La ventana creada con Tkinter me permite ingresar el nombre de la carpeta y del disco, y al presionar el boton se ejecuta la funcion que procesa la informacion. Esta funcion lee los datos que escribi en la ventana, verifica que la carpeta exista y luego se conecta a la base de datos SQLite. Finalmente, recorre los archivos de la carpeta y guarda sus datos en la tabla de la base de datos.
+
+Con esto entiendo que la GUI no solo sirve para mostrar informacion, sino que tambien puede interactuar con la base de datos y ejecutar operaciones segun lo que haga el usuario.
+
+```
+import tkinter as tk
+from tkinter import messagebox
+import os
+import sqlite3
+
+def procesar():
+    carpeta = entry_carpeta.get().strip()
+    disco = entry_disco.get().strip()
+    
+    if not carpeta or not disco:
+        messagebox.showwarning("Advertencia", "Por favor completa ambos campos")
+        return
+
+    if not os.path.isdir(carpeta):
+        messagebox.showerror("Error", "La carpeta no existe o no es valida")
+        return
+
+    conn = sqlite3.connect("discos.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS archivos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            disco TEXT,
+            ruta TEXT,
+            nombre_archivo TEXT,
+            tamano INTEGER
+        )
+    """)
+
+    for root, dirs, files in os.walk(carpeta):
+        for file in files:
+            ruta_completa = os.path.join(root, file)
+            try:
+                tamano = os.path.getsize(ruta_completa)
+                cursor.execute(
+                    "INSERT INTO archivos (disco, ruta, nombre_archivo, tamano) VALUES (?, ?, ?, ?)",
+                    (disco, root, file, tamano)
+                )
+            except Exception as e:
+                print(f"No se pudo leer el archivo {ruta_completa}: {e}")
+
+    conn.commit()
+    conn.close()
+    messagebox.showinfo("Exito", f"Se ha indexado la carpeta '{carpeta}' en el disco '{disco}'")
+
+ventana = tk.Tk()
+ventana.title("Indexador de Archivos")
+ventana.geometry("400x200")
+
+tk.Label(ventana, text="Nombre de la carpeta:").pack(pady=(20,0))
+entry_carpeta = tk.Entry(ventana, width=50)
+entry_carpeta.pack()
+
+tk.Label(ventana, text="Nombre del disco:").pack(pady=(10,0))
+entry_disco = tk.Entry(ventana, width=50)
+entry_disco.pack()
+
+btn_procesar = tk.Button(ventana, text="Procesar", command=procesar)
+btn_procesar.pack(pady=20)
+
+ventana.mainloop()
+```
+
+Esta actividad me ayudo a ver como lo que aprendi en clase se puede aplicar a mis intereses, como los juegos de mesa, los videojuegos o la naturaleza. Por ejemplo, puedo usar esta aplicacion para organizar mis colecciones de juegos, guardar informacion de mis partidas o registrar fotos y archivos relacionados con la naturaleza. De esta forma, aprendi a crear una herramienta que indexa archivos de manera automatica y los almacena en una base de datos, lo que es muy util para proyectos reales donde se necesita organizar y buscar informacion rapidamente.

@@ -1,0 +1,60 @@
+Contexto
+En nuestra clase sobre el desarrollo de software, hemos aprendido que un procesador es un componente físico que procesa los procesos. Cada proceso es una tarea que se le encomienda a un procesador para que la compute. Un programa informático, como un juego de mesa o una aplicación de naturaleza, genera un proceso que luego se ejecuta contra el procesador.
+
+Enunciado paso a paso
+Definición del problema: Imagina que estás desarrollando un juego de mesa digital basado en la exploración del campo. Este juego necesita generar y ejecutar procesos para simular diferentes actividades en el campo, como recolectar recursos o luchar contra enemigos.
+
+Variable para almacenar los procesos: Crea una variable llamada procesos_generados que almacenará todos los procesos asociados con tu juego de mesa digital.
+
+Función para generar procesos: Escribe una función llamada generar_proceso que reciba como parámetro el tipo de proceso (por ejemplo, "recolección", "combate") y lo agregue a la lista procesos_generados.
+
+Ejecutar un proceso: Crea una función llamada ejecutar_proceso que reciba un índice de proceso y lo ejecute contra el procesador.
+
+Mostrar todos los procesos: Escribe una función llamada mostrar_procesos que imprima en pantalla todos los procesos generados hasta ahora.
+
+Restricciones
+No uses librerías externas ni funciones como input()/lectura de teclado.
+Solo puedes usar estructuras vistas en la clase (por ejemplo, listas y bucles for).
+Criterios de evaluación
+Introducción y contextualización: El estudiante debe entender el contexto del problema y cómo los procesos se relacionan con su juego de mesa digital.
+Desarrollo técnico correcto y preciso: El estudiante debe implementar correctamente las funciones generar_proceso, ejecutar_proceso y mostrar_procesos.
+Aplicación práctica con ejemplo claro: El estudiante debe probar la funcionalidad de sus funciones utilizando procesos diferentes para el juego de mesa.
+Cierre/Conclusión enlazando con la unidad: El estudiante debe explicar cómo su juego de mesa digital podría utilizar estos procesos generados y ejecutados por un procesador.
+Ejemplo de datos de ejemplo:
+
+Procesos generados: ["recolección", "combate"]
+Índice del proceso a ejecutar: 0
+
+
+Respuesta:
+
+En un juego digital, cada acción del jugador, como pelear o recoger cosas, es un proceso. El juego crea estos procesos y el PC los ejecuta para que pasen cosas en el juego.
+
+```
+procesos_generados = []
+
+def generar_proceso(proceso):
+    procesos_generados.append(proceso)
+
+def ejecutar_proceso(indice):
+    print("Ejecutando proceso:", procesos_generados[indice])
+
+def mostrar_procesos():
+    for i in range(len(procesos_generados)):
+        print(i, ":", procesos_generados[i])
+
+
+generar_proceso("combate")
+generar_proceso("recolección")
+
+mostrar_procesos()
+ejecutar_proceso(0)
+```
+
+Resultado del codigo:
+0 : combate
+1 : recolección
+Ejecutando proceso: combate
+PS C:\Users\Serena> 
+
+Un programa, como un juego, crea una tarea llamada proceso. El procesador hace esa tarea para que el juego funcione.

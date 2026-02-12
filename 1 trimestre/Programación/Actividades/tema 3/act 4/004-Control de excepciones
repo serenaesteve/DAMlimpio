@@ -1,0 +1,66 @@
+Título
+Manejo de excepciones en operaciones matemáticas
+
+Contexto
+Imagina que estás desarrollando un juego de mesa donde los jugadores deben resolver cálculos para avanzar en diferentes niveles. Para asegurar que el juego funcione correctamente, es importante manejar cualquier error que pueda surgir durante las operaciones matemáticas.
+
+Enunciado paso a paso
+Crea una función llamada dividir_numeros:
+
+La función debe tomar dos parámetros: numerador y denominador.
+Dentro de la función, intenta dividir el numerador por el denominador.
+Si ocurre un error durante la división (por ejemplo, si el denominador es cero), captura la excepción y muestra un mensaje de error.
+Si no ocurre ningún error, devuelve el resultado de la división.
+Escribe dos ejemplos de uso de la función dividir_numeros:
+
+El primer ejemplo debe mostrar cómo se maneja una división legal (donde el denominador es diferente de cero).
+El segundo ejemplo debe mostrar cómo se maneja una división por cero.
+Restricciones
+No uses estructuras de control complejas como bucles for o while.
+Solo puedes usar las excepciones básicas proporcionadas en Python (try, except, print).
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender el contexto del juego de mesa y cómo la gestión de excepciones es crucial para su funcionamiento.
+Desarrollo técnico correcto y preciso (25%): La función dividir_numeros debe implementarse correctamente, capturando y manejando las excepciones de manera adecuada.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar ejemplos claros que demuestren cómo la función se usa en situaciones diferentes.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe reflexionar sobre cómo esta técnica de manejo de excepciones puede ser útil en otros proyectos o juegos similares.
+
+
+
+Respuesta:
+
+
+Imagino que estoy creando un juego de mesa interactivo, donde los jugadores deben hacer operaciones matemáticas para avanzar por diferentes niveles.
+
+A veces, los jugadores podrían cometer errores, como intentar dividir un número entre cero. Si no controlo ese tipo de errores, el juego podría fallar o detenerse.
+
+Para evitarlo, uso el manejo de excepciones, una técnica que me ayuda a detectar errores y hacer que el programa siga funcionando sin problemas.
+
+
+
+```
+def dividir_numeros(numerador, denominador):
+    try:
+        resultado = numerador / denominador
+        return resultado
+    except ZeroDivisionError:
+        print("Error: No se puede dividir entre cero.")
+        return None
+    
+resultado1 = dividir_numeros(20, 2)
+if resultado1 is not None:
+    print("Resultado de la division:", resultado1)   
+
+resultado2 = dividir_numeros(8, 0)
+if resultado2 is not None:
+    print("Resultado de la división:", resultado2)
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\tema 3\divisiones.py"
+Resultado de la division: 10.0
+Error: No se puede dividir entre cero.
+
+El uso de manejo de excepciones en proyectos como este juego de mesa no solo mejora la estabilidad del programa, sino que también ofrece una mejor experiencia para el usuario, evitando errores críticos.
+
+Esta técnica puede aplicarse a muchos otros escenarios: desde aplicaciones educativas hasta videojuegos complejos donde los cálculos y entradas de usuario son frecuentes. Aprender a prever errores y controlarlos es una habilidad clave para cualquier desarrollador de software.

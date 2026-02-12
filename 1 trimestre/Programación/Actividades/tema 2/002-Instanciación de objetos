@@ -1,0 +1,97 @@
+Juegos de mesa / videojuegos: Unión con la naturaleza
+Contexto
+Imagine que estás explorando un vasto bosque en tu videojuego favorito cuando te encuentras con una serie de desafíos relacionados con los árboles. Cada árbol tiene propiedades únicas, como su altura y el tipo de hojas. Tu misión es clasificar estos árboles utilizando un sistema de objetos en Python.
+
+Enunciado paso a paso
+Definir la clase Arbol:
+
+Añade un método para calcular la edad del árbol basada en su altura y la velocidad de crecimiento anual.
+Incluye un método que devuelva una descripción detallada del árbol.
+Crear instancias de objetos:
+
+Crea varios objetos Arbol con diferentes atributos (altura, tipo de hojas).
+Añade estos árboles a una lista.
+Iterar y mostrar información:
+
+Recorre la lista de árboles e imprime su descripción utilizando el método correspondiente.
+Calcula y muestra la edad promedio de los árboles en la lista.
+Restricciones
+No se permite crear clases personalizadas.
+Solo puedes utilizar objetos predeterminados existentes en Python.
+Evita usar estructuras no vistas hasta ahora, como listas dinámicas o colecciones avanzadas.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El alumno debe entender el contexto del problema y cómo los conceptos de la clase y sus instancias pueden aplicarse a un escenario real.
+Desarrollo técnico correcto y preciso (25%)
+
+El código debe ser claro, bien estructurado y seguir las convenciones de Python.
+Los métodos deben funcionar correctamente para calcular la edad del árbol y generar una descripción detallada.
+Aplicación práctica con ejemplo claro (25%)
+
+El alumno debe crear instancias de objetos y utilizar un bucle para iterar sobre ellos, mostrando información relevante.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe contextualizarse dentro del tema de la programación orientada a objetos y cómo se pueden aplicar estas técnicas en situaciones prácticas.
+
+
+
+Respuesta:
+
+
+Una clase es como un molde que define cómo será un objeto.
+Una instancia es un objeto real hecho con ese molde.
+En este caso:
+La clase Arbol dice que cada árbol tiene altura, tipo de hojas y velocidad de crecimiento.
+Las instancias son árboles reales con valores diferentes (por ej, uno mide 12 m y otro 8 m).
+En un videojuego, esto sirve para crear muchos árboles fácilmente, cada uno con sus propias características y comportamientos, sin tener que repetir código. 
+
+```
+class Arbol:
+    def __init__(self, altura, tipo_hojas, crecimiento_anual):
+        self.altura = altura
+        self.tipo_hojas = tipo_hojas
+        self.crecimiento_anual = crecimiento_anual
+
+    def calcular_edad(self):
+        return self.altura / self.crecimiento_anual
+
+    def descripcion(self):
+        edad = self.calcular_edad()
+        return f"Tipo: {self.tipo_hojas} | Altura: {self.altura} m | Edad: {edad:.1f} anios"
+
+arbol1 = Arbol(12, "perenne", 0.4)
+arbol2 = Arbol(8, "caduca", 0.3)
+arbol3 = Arbol(20, "mixta", 0.5)
+
+bosque = [arbol1, arbol2, arbol3]
+print("Arboles en el bosque:")
+for arbol in bosque:
+    print(arbol.descripcion())
+
+suma_edades = 0
+for arbol in bosque:
+    suma_edades += arbol.calcular_edad()
+
+edad_promedio = suma_edades / len(bosque)
+print(f"\n Edad promedio: {edad_promedio:.1f} anios")
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c\tempCodeRunnerFile.python"
+Arboles en el bosque:
+Tipo: perenne | Altura: 12 m | Edad: 30.0 anios
+Tipo: caduca | Altura: 8 m | Edad: 26.7 anios
+Tipo: mixta | Altura: 20 m | Edad: 40.0 anios
+
+ Edad promedio: 32.2 anios
+ 
+ La programación orientada a objetos sirve para organizar mejor el código.
+En este ejercicio:
+-La clase Arbol representa un árbol.
+-Cada objeto es un árbol real con sus propios datos.
+-Los métodos permiten que cada árbol haga cosas, como enseñar su edad.
+-Esto se puede usar en juegos, simulaciones o programas que trabajan con muchos objetos parecidos.
+Feedback de la evaluación:
+El alumno ha hecho un buen trabajo explicando la instanciación de objetos y cómo se aplica en la práctica. Ha incluido definiciones correctas, un ejemplo detallado y una conclusión precisa. Sin embargo, para mejorar, el alumno debe integrar uno de los hobbies mencionados en el contexto, las restricciones y la conclusión. Además, se recomienda usar terminología técnica apropiada al temario y explicar los pasos del proceso.

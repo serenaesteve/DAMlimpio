@@ -1,0 +1,68 @@
+Contexto
+En un mundo lleno de juegos de mesa y aventuras en la naturaleza, es importante saber cómo gestionar los archivos y carpetas de nuestro ordenador. Imagina que estás explorando un campo con tu familia, y cada vez que encuentras una nueva especie de planta o animal, quieres tomar una foto para recordarlo. Además, tienes varios juegos de mesa que te gustaría organizar en diferentes carpetas.
+
+Enunciado paso a paso
+Crea una carpeta para tus fotos del campo:
+
+Usa el comando mkdir para crear una nueva carpeta llamada "fotos_campo".
+Guarda tu primera foto:
+
+Crea un archivo de texto llamado "foto1.txt" en la carpeta que acabas de crear.
+Guarda esta foto con el nombre "flor_roja.jpg" dentro de la carpeta "fotos_campo".
+Organiza tus juegos de mesa:
+
+Crea una nueva carpeta llamada "juegos_de_mesa".
+Mueve todos los archivos relacionados con tus juegos de mesa a esta nueva carpeta.
+Restricciones
+No puedes usar comandos gráficos para crear carpetas o mover archivos.
+Solo puedes usar los comandos y funciones que se han aprendido en clase (mkdir, touch, cp, mv).
+Criterios de evaluación
+Introducción y contextualización:
+
+Comprueba si el estudiante ha creado correctamente las carpetas "fotos_campo" y "juegos_de_mesa".
+Verifica que los archivos se han movido y copiado según lo indicado.
+Desarrollo técnico correcto y preciso:
+
+Evalúa la precisión de los comandos utilizados.
+Comprueba si el estudiante ha comprendido cómo mover y copiar archivos entre carpetas.
+Aplicación práctica con ejemplo claro:
+
+Revisa si el estudiante ha aplicado correctamente los conceptos aprendidos en clase para organizar sus archivos.
+Verifica que la organización de los archivos sea lógica y coherente.
+Cierre/Conclusión enlazando con la unidad:
+
+Comprueba si el estudiante ha entendido cómo aplicar estos conceptos en un contexto práctico, relacionado con su vida diaria (exploración del campo y juegos de mesa).
+
+
+
+Respuesta:
+
+Hoy aprendo a organizar mis archivos en el ordenador mientras simulo que estoy explorando la naturaleza y jugando a mis juegos de mesa. Creo carpetas para guardar las fotos que tomo del campo y para almacenar mis archivos relacionados con los juegos. Con este ejercicio entiendo cómo se gestionan los archivos y carpetas usando únicamente comandos de la terminal, sin recurrir a herramientas gráficas, lo que me permite mantener mi ordenador más ordenado y fácil de usar.
+
+1. Primero busco la ruta donde quiero que este mi carpeta:
+ cd "C:\Users\Serena\Documents\Sistemas"
+ 
+ 2. Creo la carpeta "fotos_campo":
+ mkdir fotos_campo
+ 
+ 3. Creo el archivo de .txt:
+ echo Esta es la primera foto del campo > fotos_campo\foto1.txt
+ 
+ 4. Me descarfo la imagen en internet y la pongo fuera de la carpeta.
+ 5. Meto la foto en la carpeta:
+ C:\Users\Serena\Documents\Sistemas> copy flor_roja.jpg fotos_campo\
+        1 archivo(s) copiado(s).
+	
+6. Ahora creo la carpeta juegos_de_mesa:
+
+C:\Users\Serena\Documents\Sistemas> mkdir juegos_de_mesa
+
+7. Ahora creo el archivo ajedrez.txt:
+C:\Users\Serena\Documents\Sistemas> echo Este es un archivo sobre ajedrez > juegos_de_mesa\ajedrez.txt
+
+8. Ahora paso el archivo ajedrez.txt que esta dentro de la carpeta juegos_de_mesa a la carpeta fotos_campo:
+
+C:\Users\Serena\Documents\Sistemas> move juegos_de_mesa\ajedrez.txt fotos_campo\
+Se han movido         1 archivos.
+
+Al hacer este ejercicio, veo lo útil que es organizar mis archivos correctamente. He creado carpetas para mis fotos y para mis juegos de mesa, y he aprendido a crear, copiar y mover archivos entre ellas usando comandos de Windows CMD. Esto me ayuda a aplicar lo aprendido en clase a situaciones de la vida real, como guardar recuerdos de mis aventuras en el campo o tener mis juegos de mesa bien organizados, y me da seguridad al manejar archivos de forma práctica y eficiente.

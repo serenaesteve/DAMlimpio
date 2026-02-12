@@ -1,0 +1,15 @@
+Una base de datos es un conjunto de archivos o recursos que almacenan información de una forma estructurada y cordenada 
+
+Pero en ocasiones, se necesita controlar mehor el acceso a esa base de datos
+
+Para ellos están los sistemas de gestores de bases de datos.
+
+- Oritegen el acceso
+- Crean consolas de ususarios para asegurar que no se accede a la información de forma simultanea
+- Proporcionan medidas de seguridad adicionales, por ejemplo mediante usuarios y contraseñas
+- Proporcional multitud de opciones para el almacenamiento
+- Suelen proporcionar un lenguaje unificado de consulta de la información ( suele ser SQL)
+
+SQLite es un formato de bases de datos (con gestor) pequeño pero potente
+
+Proporcionan una cobertura, una protección que aseguran la salud y la integridad de los datos contenidos.

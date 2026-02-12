@@ -1,0 +1,137 @@
+Enunciado paso a paso
+Introducción y contextualización
+
+El alumno deberá crear una página web que muestre los nombres de las tablas existentes en una base de datos MySQL utilizando PHP.
+Para ello, utilizará funciones de conexión a la base de datos (mysqli) y consultas SQL para recuperar los nombres de las tablas.
+Desarrollo técnico correcto y preciso
+
+El alumno deberá conectar a la base de datos usando mysqli.
+Luego, ejecutar una consulta SQL que devuelva el nombre de todas las tablas en la base de datos.
+Debe iterar sobre los resultados de la consulta y generar un botón para cada tabla.
+Aplicación práctica con ejemplo claro
+
+El alumno deberá crear tres archivos PHP: uno para conectar a la base de datos, otro para mostrar los nombres de las tablas como botones, y otro para aplicar estilos CSS.
+Debe asegurarse de que el código sea limpio y bien organizado.
+Cierre/Conclusión enlazando con la unidad
+
+El alumno deberá integrar su trabajo con los conocimientos adquiridos en la unidad sobre programación en entorno servidor, especialmente en cómo conectar a una base de datos y ejecutar consultas SQL desde PHP.
+Debe reflexionar sobre cómo este ejercicio puede ser útil para gestionar bases de datos y cómo se pueden aplicar conceptos aprendidos en otros proyectos futuros.
+Restricciones
+El alumno no debe usar librerías externas ni estructuras que no hayan sido vistas en la clase.
+Solo puede utilizar los conceptos y funciones permitidos en la lista blanca de contenidos.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El alumno debe explicar correctamente el contexto del ejercicio y cómo se relaciona con el contenido impartido.
+Desarrollo técnico correcto y preciso (25%)
+
+El código PHP debe ser correcto y funcional, mostrando la conexión a la base de datos y la generación de botones para las tablas.
+Aplicación práctica con ejemplo claro (25%)
+
+El alumno debe presentar los tres archivos PHP completos y asegurarse de que funcionen correctamente juntos.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe cerrar con una reflexión sobre el valor del ejercicio y cómo se puede aplicar a proyectos futuros.
+Nota: El alumnado debe completar este apartado.
+
+
+Respuesta:
+
+
+En este ejercicio he aprendido a usar PHP y MySQL.
+He hecho una página que muestra los nombres de las tablas de la base de datos tame.
+Cada tabla se ve como un botón.
+He usado tres archivos: uno para la conexión, otro para enseñar las tablas y otro para los estilos.
+
+1. Creo mi base de datos:
+Nuevo-Tame
+
+2. Añado tablas:
+```
+CREATE TABLE alumnos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    curso VARCHAR(20)
+);
+
+CREATE TABLE profesores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    asignatura VARCHAR(50)
+);
+
+CREATE TABLE asignaturas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    horas INT
+);
+```
+
+3. Conexion.php:
+```
+<?php
+$servidor = "localhost";
+$usuario = "root";
+$password = "";
+$basedatos = "tame";
+
+$conexion = mysqli_connect($servidor, $usuario, $password, $basedatos);
+
+if (!$conexion) {
+    die("Error de conexión");
+}
+?>
+```
+
+4. Tablas.php:
+```
+<?php
+include("conexion.php");
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tablas de la base de datos</title>
+    <link rel="stylesheet" href="estilos.php">
+</head>
+<body>
+
+<h1>Tablas de la base de datos tame</h1>
+
+<?php
+$consulta = "SHOW TABLES";
+$resultado = mysqli_query($conexion, $consulta);
+
+while ($fila = mysqli_fetch_array($resultado)) {
+    echo "<button>" . $fila[0] . "</button><br>";
+}
+
+mysqli_close($conexion);
+?>
+
+</body>
+</html>
+```
+
+5. estilos.php:
+```
+<?php
+header("Content-type: text/css");
+?>
+
+button {
+    padding: 10px;
+    margin: 5px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+}
+```
+
+6. He puesto estos 3 archivos en esta ruta C:\xampp\htdocs\tame y luego en el navegador esto http://localhost/tame/tablas.php 
+
+Con este ejercicio he aprendido a conectar PHP con la base de datos.
+También he aprendido a enseñar información en la página y a organizar el código en varios archivos.
+Me sirve para hacer páginas web más grandes en el futuro.

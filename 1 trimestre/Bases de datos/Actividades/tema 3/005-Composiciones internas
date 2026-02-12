@@ -1,0 +1,89 @@
+Título
+Realizando Consultas Complejas en Bases de Datos Relacionales
+
+Contexto
+En nuestro proyecto de gestión empresarial, hemos estado trabajando con diferentes tablas y relaciones para mantener un seguimiento preciso de los pedidos y ventas. Como parte de este proceso, necesitamos realizar consultas complejas que nos permitan obtener información detallada sobre cada pedido, incluyendo el cliente, el producto, las unidades compradas, el precio unitario, el subtotal, el IVA y el total final del pedido.
+
+Enunciado paso a paso
+Contextualización: Antes de comenzar, es importante entender la estructura de nuestras tablas y cómo se relacionan entre sí. Tienes acceso a las siguientes tablas:
+
+pedidosconlineas: Almacena los detalles de cada pedido.
+clientes: Contiene información sobre todos los clientes.
+lineaspedido: Guarda los detalles de cada línea de pedido, incluyendo el producto y la cantidad comprada.
+productos: Tiene información sobre todos los productos disponibles.
+Objetivo: El objetivo es crear una consulta que nos permita obtener un listado detallado de todos los pedidos, incluyendo el nombre del cliente, las unidades compradas, el nombre del producto y el precio total del pedido (incluyendo IVA).
+
+Consulta Compleja: Utiliza las tablas mencionadas para realizar una consulta que devuelva la siguiente información:
+
+Fecha del pedido.
+Nombre y apellidos del cliente.
+Unidades compradas de cada producto.
+Nombre del producto.
+Precio unitario del producto.
+Subtotal del pedido (precio unitario * unidades).
+IVA del pedido (subtotal * 0.16).
+Total final del pedido (subtotal + IVA).
+Restricciones
+Solo puedes usar las tablas y relaciones mencionadas en el contexto.
+No se permite el uso de funciones complejas o agregaciones que no sean necesarias para resolver el problema.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe mostrar una comprensión clara del contexto y las tablas involucradas.
+Desarrollo técnico correcto y preciso (25%): La consulta debe ser técnicamente correcta y producir los resultados esperados sin errores.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar un ejemplo claro de cómo se ejecutaría la consulta y qué resultado debería obtenerse.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe discutir cómo esta consulta puede ser útil en el contexto del proyecto empresarial y cómo contribuye a la gestión eficiente de los pedidos y ventas.
+Recuerda integrar tus hobbies favoritos, como jugar videojuegos o disfrutar de la naturaleza, para mantener tu interés y motivación mientras practicas este concepto. ¡Buena suerte!
+
+
+
+
+Respuesta:
+
+
+
+En este proyecto de gestión empresarial trabajo con una base de datos relacional que guarda información sobre los pedidos y ventas.
+Las tablas están relacionadas entre sí para poder obtener datos completos sobre cada pedido, el cliente que lo realizó y los productos comprados.
+
+Estas son las tablas principales:
+-clientes: almacena los datos de los clientes (nombre, apellidos, dirección, etc.).
+-pedidosconlineas: guarda la información general de cada pedido (id del pedido, fecha y cliente que lo hizo).
+-lineaspedido: contiene los detalles de cada producto incluido en un pedido (producto, cantidad, precio, etc.).
+-productos: registra los productos disponibles (nombre, precio unitario, stock, etc.).
+
+Relaciones entre tablas:
+-Cada cliente puede tener varios pedidos.
+-Cada pedido puede tener varias líneas de pedido.
+-Cada línea de pedido está asociada a un producto.
+
+
+```
+SELECT 
+    p.fecha_pedido AS "Fecha del Pedido",
+    c.nombre || ' ' || c.apellidos AS "Cliente",
+    lp.unidades AS "Unidades Compradas",
+    pr.nombre_producto AS "Producto",
+    pr.precio_unitario AS "Precio Unitario",
+    (pr.precio_unitario * lp.unidades) AS "Subtotal",
+    (pr.precio_unitario * lp.unidades * 0.16) AS "IVA (16%)",
+    (pr.precio_unitario * lp.unidades * 1.16) AS "Total Final"
+FROM 
+    pedidosconlineas p
+    INNER JOIN clientes c ON p.id_cliente = c.id_cliente
+    INNER JOIN lineaspedido lp ON p.id_pedido = lp.id_pedido
+    INNER JOIN productos pr ON lp.id_producto = pr.id_producto
+ORDER BY 
+    p.fecha_pedido;
+```
+
+
+Resultado:
+
+https://files.fm/u/gjfqzdyuju
+
+
+Imagina que tengo una tienda y quiero saber qué compró cada cliente, cuándo y cuánto pagó. Tengo varias listas de información: una con los clientes, otra con los pedidos, otra con los productos y otra que dice cuántos productos pidió cada persona.
+
+La consulta que he hecho une todas esas listas y me da un resumen completo de cada pedido: la fecha, el nombre del cliente, los productos, las unidades, el precio, el subtotal, el IVA y el total final.
+
+Con eso, la empresa puede ver qué se vendió, hacer facturas automáticamente, mantener el inventario al día y ahorrar tiempo, porque no tiene que revisar cada lista por separado.
+
+Basicamente, la consulta me muestra toda la información de los pedidos de manera clara y rápida, como si pusiera todas las piezas de un rompecabezas en su lugar y pudieras ver la imagen completa.

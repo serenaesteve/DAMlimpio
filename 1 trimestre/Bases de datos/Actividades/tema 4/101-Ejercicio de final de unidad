@@ -1,0 +1,33 @@
+Actividad de final de unidad:
+
+Sobre la base de datos creada en la unidad anterior (portafolio/blog):
+
+Asegura que puedes realizar operaciones de actualización sobre los datos de la tabla
+
+Asegura que puedes realizar operaciones de eliminación sobre los datos de la tabla
+
+
+
+
+Respuesta:
+
+
+
+En esta actividad he trabajado con la base de datos de mi blog/portafolio, centrada en la tabla de artículos de Serena Sania. He aprendido a realizar operaciones de actualización para modificar títulos o descripciones de los artículos y a eliminar artículos que ya no son necesarios. Estas operaciones son importantes para mantener la información correcta y organizada dentro de la base de datos, y me ayudan a practicar cómo gestionar los datos de manera segura usando SQL.
+
+1. Quiero cambiar el título y la descripción de un artículo específico. Por ej, el artículo con id_pieza = 2:
+ ```
+ UPDATE piezas
+SET titulo = 'Tutorial de HTML actualizado', 
+    descripcion = 'Guía básica de HTML con ejemplos nuevos'
+WHERE id_pieza = 2;
+```
+
+2. Ahora quiero eliminar datos en la tabla:
+Quiero eliminar el artículo con id_pieza = 3:
+```
+DELETE FROM piezas
+WHERE id_pieza = 3;
+```
+
+Con esta actividad he aprendido a actualizar y eliminar registros en la tabla de artículos. Entendí la importancia de usar la cláusula WHERE para modificar o borrar solo los registros que quiero y no afectar todos los datos. Estas operaciones me permiten mantener la base de datos de mi blog/portafolio siempre actualizada y ordenada, y me dan más confianza para trabajar con bases de datos en proyectos reales.

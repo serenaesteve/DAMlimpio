@@ -1,0 +1,92 @@
+Ejercicio: Creando un gato virtual
+En tu jardín de juegos de mesa, has creado un juego donde los jugadores deben criar y cuidar a diferentes mascotas. Para este proyecto, necesitas crear una clase Gato que represente a cada gatito virtual en el juego.
+
+Enunciado paso a paso:
+Definir la clase Gato:
+
+Crea una clase llamada Gato.
+El constructor de esta clase debe inicializar las siguientes propiedades:
+color (string): Color del gatito.
+edad (int): Edad del gatito.
+raza (string): Raza del gatito.
+nombre (string): Nombre del gatito.
+color_ojos (string): Color de los ojos del gatito.
+Implementar el método maulla:
+
+Este método debe devolver la cadena "miau".
+Implementar el método setEdad:
+
+Este método recibe un parámetro nuevaedad (int).
+Si la edad actual del gatito es una unidad menor que la nueva edad, actualiza la edad.
+En caso contrario, imprime "operación no permitida".
+Implementar el método getEdad:
+
+Este método debe devolver la edad actual del gatito.
+Restricciones:
+Solo puedes usar los conceptos de clases y constructores que se han presentado en clase.
+No debes utilizar funciones adicionales o métodos fuera de lo explicado.
+Criterios de evaluación:
+Introducción y contextualización (25%)
+
+Explica brevemente el contexto del juego y por qué es importante crear la clase Gato.
+Desarrollo técnico correcto y preciso (25%)
+
+Asegúrate de que todos los métodos estén correctamente definidos y funcionen según lo descrito.
+Aplicación práctica con ejemplo claro (25%)
+
+Crea un ejemplo práctico donde se instancie un objeto Gato y se utilicen sus métodos.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Reflexiona sobre cómo esta clase podría ser útil en el juego de mesa que estás desarrollando y cómo puedes extenderla en el futuro.
+Recuerda, el objetivo principal es entender cómo crear y usar constructores para inicializar objetos correctamente. ¡Buena suerte con tu proyecto!
+
+
+
+Respuesta:
+
+
+
+En mi juego de mesa, los jugadores deben cuidar, alimentar y entrenar a diferentes animales virtuales.
+Cada mascota tiene sus propias características y comportamientos.
+Para comenzar a construir este mundo interactivo, necesito crear una clase que represente a un gatito virtual, con atributos como su nombre, color, edad, raza y color de ojos.
+
+Esta clase será la base para permitir a los jugadores interactuar con sus gatos: escucharlos maullar, ver su edad y controlar su crecimiento.
+
+```
+class Gato:
+    def __init__(self, color, edad, raza, nombre, color_ojos):
+        self.color = color
+        self.edad = edad
+        self.raza = raza
+        self.nombre = nombre
+        self.color_ojos = color_ojos
+
+    def maulla(self):
+        return "miau"
+
+    def setEdad(self, nuevaedad):
+        if self.edad + 1 == nuevaedad:
+            self.edad = nuevaedad
+        else:
+            print("operacion no permitida")
+
+    def getEdad(self):
+        return self.edad
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\tema 4\edadgato.py"
+alita dice: miau
+Edad actual: 5
+Nueva edad: 6
+operacion no permitida
+
+La clase Gato me permite representar un gato dentro del juego de mesa de forma estructurada, utilizando los conceptos de clases y constructores para inicializar sus atributos y controlar su comportamiento.
+
+Este juego se puede extender fácilmente en el futuro, por ej:
+-Añadiendo métodos como comer(), jugar() o dormir().
+-Creando un sistema de puntos de felicidad o salud.
+-Conectando la clase con otras mascotas del juego (perros, conejos, caballos, etc.).
+
+Así, el uso de clases en Python no solo organiza mejor mi código, sino que también me permite crear mundos virtuales más chulos, donde cada objeto tiene su propia identidad y comportamiento.

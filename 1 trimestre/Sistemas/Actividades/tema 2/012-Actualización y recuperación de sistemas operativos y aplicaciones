@@ -1,0 +1,94 @@
+Contexto
+En nuestro mundo digital y tecnológico actual, la gestión de recursos en una red informática es un tema fundamental para cualquier administrador de sistemas. Imagina que estás encargado del mantenimiento de una pequeña red local en tu casa o oficina. Esta red está compuesta por varios dispositivos como ordenadores, impresoras y servidores. Como parte de tu tarea diaria, necesitas asegurarte de que todos los recursos compartidos estén accesibles y seguros para todos los usuarios.
+
+Enunciado paso a paso
+Identificación de recursos compartidos: Comienza por identificar qué recursos están disponibles en la red. Esto podría incluir carpetas compartidas, impresoras o servidores de aplicaciones.
+Configuración de permisos de acceso: Para cada recurso identificado, configura los permisos de acceso adecuados. Asegúrate de que solo los usuarios autorizados puedan acceder a ciertos recursos.
+Monitoreo del uso de recursos: Implementa un sistema para monitorear el uso de los recursos compartidos. Esto te ayudará a identificar cualquier actividad sospechosa o inusual.
+Restauración en caso de fallas: Planifica y prueba un plan de recuperación en caso de que algún recurso falle. Asegúrate de tener copias de seguridad regulares.
+Restricciones
+No utilizar librerías externas ni estructuras no vistas en el tema actual.
+Solo usar los conceptos y herramientas aprendidos en clase.
+Evitar la introducción de temas o contenidos que no estén en la lista blanca.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe mostrar comprensión del contexto y el problema planteado.
+Desarrollo técnico correcto y preciso (25%): El plan de acción debe estar bien estructurado y detallado, siguiendo los pasos indicados.
+Aplicación práctica con ejemplo claro (25%): El alumno debe proporcionar ejemplos claros de cómo aplicaría cada paso en una situación real.
+Cierre/Conclusión enlazando con la unidad (25%): El plan final debe estar bien cerrado y relacionado con el tema general de gestión de recursos en una red.
+El alumnado debe completar este apartado.
+
+
+Respuesta:
+
+A día de hoy, en este mundo lleno de tecnología, muchas casas y oficinas tienen redes que conectan varios dispositivos como ordenadores, impresoras y servidores.
+Un administrador de sistemas debe asegurarse de que todos estos dispositivos puedan compartir recursos de forma segura y ordenada.
+
+En este ejercicio, simularé que soy la encargada de una pequeña red local en casa o en una oficina pequeña, y aplicaré lo aprendido para gestionar correctamente los recursos compartidos.
+
+1. Identificación de recursos compartidos.
+
+Primero debo saber qué recursos están disponibles en la red.
+En una red local, algunos ejemplos pueden ser:
+-Una carpeta compartida donde todos los usuarios guardan archivos.
+-Una impresora conectada a la red que todos pueden usar.
+-Un servidor de archivos o aplicaciones donde se guardan programas o datos importantes.
+
+2. Configuración de permisos de acceso.
+Despues, hay que decidir quién puede acceder a qué. Esto es muy importante para mantener la seguridad.
+
+Por ej:
+-Las carpetas personales solo pueden ser vistas por su dueño.
+-La carpeta compartida de proyectos puede ser usada por todo el equipo.
+-La impresora puede usarse por todos, pero solo el jefe puede cancelar trabajos de impresión.
+Esto se hace asignando permisos de lectura, escritura o administración según cada usuario.
+
+3. Monitoreo del uso de recursos
+Después, es necesario observar cómo se están usando los recursos.
+Esto nos ayuda a detectar:
+-Si alguien está ocupando mucho espacio en la carpeta compartida.
+-Si alguien está imprimiendo demasiadas hojas.
+-Si un recurso no está funcionando correctamente.
+Esto se puede hacer con registros simples o notas donde se anote el uso de cada recurso diariamente.
+
+4. Restauración en caso de errores
+Por último, debemos estar preparados si algo da error.
+Por ej
+-Hacer copias de seguridad de las carpetas importantes cada semana.
+-Tener una impresora de repuesto o saber cómo reiniciar la actual.
+-Guardar los datos más importantes también en una memoria USB o disco externo.
+
+Así, si algo deja de funcionar, podemos recuperar la información y seguir trabajando sin perder tiempo.
+
+
+***Supongamos que en mi casa tengo esta red local:***
+-Dos ordenadores (uno de trabajo y otro de casa).
+-Una impresora en red.
+-Una carpeta compartida llamada “Documentos Comunes”.
+
+Yo aplicaría lo siguiente:
+
+Identifico los recursos: impresora + carpeta compartida.
+
+Configuro permisos:
+-El ordenador de trabajo puede leer y escribir en la carpeta.
+-El ordenador de casa solo puede leer los archivos.
+-Ambos pueden imprimir, pero solo yo puedo borrar trabajos de impresión.
+
+Monitoreo:
+-Miro cada semana si la carpeta se está llenando demasiado.
+-Verifico el uso de la impresora con una hoja de control.
+
+Restauración:
+-Hago una copia de seguridad de la carpeta en un disco externo cada viernes.
+-Si la impresora falla, sé cómo reinstalarla o usar una de respaldo por USB.
+
+
+Aprender a gestionar recursos en una red local es muy útil para que todo funcione bien y sin problemas.
+En este ejercicio he visto que debo:
+-Saber qué recursos hay en la red (como carpetas o impresoras).
+-Dar permisos para que solo las personas correctas los usen.
+-Revisar cómo se usan esos recursos.
+-Estar preparada por si algo se rompe o falla.
+
+Estas tareas son parte del trabajo de una persona que cuida y organiza la red.
+Aunque parezcan cosas sencillas, ayudan a que todo esté seguro, ordenado y funcione bien, ya sea en casa o en el trabajo.

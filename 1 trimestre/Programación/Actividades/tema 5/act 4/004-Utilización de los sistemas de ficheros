@@ -1,0 +1,104 @@
+Gestión de Archivos en un Juego de Mesa
+Contexto
+En nuestro juego de mesa favorito, "Explorador de Bosques", los jugadores deben gestionar diferentes tipos de ficheros para avanzar y recolectar recursos. Cada fichero tiene metadatos importantes como su nombre, tamaño y tipo. En este ejercicio, aprenderás a crear, leer y escribir archivos en un sistema de almacenamiento simple.
+
+Enunciado paso a paso
+Definir Variables:
+
+nombre_archivo: Nombre del fichero (String)
+tamaño_archivo: Tamaño del fichero en bytes (int)
+tipo_archivo: Tipo de archivo (String, como "Texto", "Imagen", "Audio")
+Crear un Archivo:
+
+Crea una función llamada crear_archivo(nombre_archivo, tamaño_archivo, tipo_archivo) que reciba los parámetros mencionados y retorne un diccionario con la información del archivo.
+Leer un Archivo:
+
+Implementa una función llamada leer_archivo(archivo) que reciba un diccionario de archivo y muestre su contenido en pantalla.
+Modificar un Archivo:
+
+Crea una función llamada modificar_archivo(archivo, nuevo_tamaño, nuevo_tipo) que reciba el diccionario del archivo original y actualice sus valores con los nuevos proporcionados.
+Eliminar un Archivo:
+
+Implementa una función llamada eliminar_archivo(archivo) que reciba el diccionario del archivo y lo "elimine" (simulando su borrado) devolviendo None.
+Restricciones
+No se permiten librerías externas.
+Solo puedes usar estructuras vistas en la carpeta actual.
+Criterios de evaluación
+Introducción y contextualización:
+
+El estudiante debe explicar cómo los ficheros son relevantes en el juego "Explorador de Bosques" (5 puntos).
+Desarrollo técnico correcto y preciso:
+
+Las funciones deben implementarse correctamente según las especificaciones dadas (10 puntos).
+Aplicación práctica con ejemplo claro:
+
+El estudiante debe probar sus funciones con un ejemplo práctico, mostrando la creación, lectura, modificación y eliminación de un archivo (5 puntos).
+Cierre/Conclusión enlazando con la unidad:
+
+El estudiante debe explicar cómo este ejercicio se relaciona con el manejo de ficheros en sistemas operativos (5 puntos).
+
+
+
+
+
+Respuesta:
+
+
+En mi juego de mesa favorito, "Explorador de Bosques", los jugadores deben recolectar recursos y gestionar distintos tipos de ficheros que representan objetos o mapas dentro del juego. Cada archivo tiene metadatos importantes como su nombre, tamaño y tipo, que determinan cómo se pueden usar para avanzar en la partida. Este ejercicio me ayuda a comprender cómo manejar información almacenada de manera organizada, al igual que un sistema de archivos en la vida real.
+
+```
+nombre_archivo = "mapa_bosque.txt"
+tamano_archivo = 1024
+tipo_archivo = "Texto"
+
+def crear_archivo(nombre, tamano, tipo):
+    archivo = {
+        "nombre": nombre,
+        "tamano": tamano,
+        "tipo": tipo
+    }
+    return archivo
+
+def leer_archivo(archivo):
+    print(f"Nombre: {archivo['nombre']}")
+    print(f"Tamano: {archivo['tamano']} bytes")
+    print(f"Tipo: {archivo['tipo']}")
+
+def modificar_archivo(archivo, nuevo_tamano, nuevo_tipo):
+    archivo['tamano'] = nuevo_tamano
+    archivo['tipo'] = nuevo_tipo
+
+def eliminar_archivo(archivo):
+    archivo = None
+    return archivo
+
+archivo1 = crear_archivo(nombre_archivo, tamano_archivo, tipo_archivo)
+print("Archivo creado:")
+leer_archivo(archivo1)
+
+modificar_archivo(archivo1, 2048, "Texto y Datos")
+print("\nArchivo modificado:")
+leer_archivo(archivo1)
+
+archivo1 = eliminar_archivo(archivo1)
+print("\nArchivo eliminado:", archivo1)
+```
+
+
+Salida del código:
+
+ python -u "C:\Users\Serena\AppData\Local\Temp\tempCodeRunnerFile.python"
+Archivo creado:
+Nombre: mapa_bosque.txt
+Tamano: 1024 bytes
+Tipo: Texto
+
+Archivo modificado:
+Nombre: mapa_bosque.txt
+Tamano: 2048 bytes
+Tipo: Texto y Datos
+
+Archivo eliminado: None
+
+
+Este ejercicio se relaciona con el manejo de ficheros en sistemas operativos porque simula las operaciones básicas que se realizan con archivos en la vida real: crear, leer, modificar y eliminar. Al trabajar con diccionarios que representan archivos, comprendo cómo se almacena y organiza la información, cómo se accede a ella y cómo se puede actualizar o borrar de manera controlada. Estas habilidades son fundamentales para entender cómo los sistemas operativos gestionan los archivos en el almacenamiento, asegurando que los datos estén disponibles, organizados y seguros.

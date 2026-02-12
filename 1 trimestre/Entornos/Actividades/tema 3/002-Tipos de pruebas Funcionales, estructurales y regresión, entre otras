@@ -1,0 +1,88 @@
+Desarrollo de un programa matemático interactivo
+En este ejercicio práctico, vamos a crear un programa que realice operaciones matemáticas básicas como suma, resta y multiplicación. Este tipo de programa puede ser muy útil en diversos juegos de mesa o para realizar cálculos rápidos mientras se está en el campo.
+
+Enunciado paso a paso
+Definición de la función operacionMatematica:
+
+La función debe aceptar dos operandos y un parámetro opcional operacion.
+Dependiendo del valor de operacion, la función realizará una operación matemática diferente.
+Si operacion es "suma", devolverá la suma de los dos operandos.
+Si operacion es "resta", devolverá la resta de los dos operandos.
+Si operacion es "multiplicacion", devolverá la multiplicación de los dos operandos.
+Implementación del código:
+
+Implementa la función operacionMatematica según las instrucciones anteriores.
+Asegúrate de que la función maneje todos los casos posibles y devuelva 0 si la operación no es válida.
+Pruebas del programa:
+
+Prueba el programa con diferentes valores para operacion.
+Verifica que la función devuelva los resultados correctos para cada caso.
+Restricciones
+No uses librerías externas ni estructuras no vistas en la clase.
+Asegúrate de que el código sea claro y preciso.
+Evita usar variables globales y mantén el alcance estricto del tema actual.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El ejercicio debe estar contextualizado en el contexto de la vida diaria, como en juegos de mesa o mientras se está en el campo.
+Desarrollo técnico correcto y preciso (25%)
+
+La implementación de la función debe ser técnicamente correcta y sin errores.
+El código debe ser preciso y fácil de entender.
+Aplicación práctica con ejemplo claro (25%)
+
+El ejercicio debe incluir ejemplos claros de cómo usar la función operacionMatematica.
+Debe haber pruebas que demuestren el funcionamiento correcto del programa.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El cierre debe enlazar el ejercicio con la unidad y explicar cómo este tipo de programas pueden ser útiles en contextos prácticos como juegos de mesa o cálculos rápidos mientras se está en el campo.
+
+
+
+
+Respuesta:
+
+
+En muchas situaciones de la vida diaria, como al jugar un juego de mesa o cuando se está en el campo haciendo actividades prácticas, es útil contar con una herramienta que permita hacer operaciones matemáticas de manera rápida y sencilla.
+
+Por eso, he desarrollado un pequeño programa que permite realizar sumas, restas o multiplicaciones entre dos números. Este tipo de programa puede facilitar cálculos rápidos sin necesidad de usar calculadora o papel.
+
+
+```
+def operacionMatematica(num1, num2, operacion="suma"):
+    if operacion == "suma":
+        return num1 + num2
+    elif operacion == "resta":
+        return num1 - num2
+    elif operacion == "multiplicacion":
+        return num1 * num2
+    else:
+        return 0 
+    
+resultado1 = operacionMatematica(5, 3, "suma")
+print("Resultado de la suma:", resultado1)  
+
+
+resultado2 = operacionMatematica(10, 4, "resta")
+print("Resultado de la resta:", resultado2)  
+
+
+resultado3 = operacionMatematica(6, 7, "multiplicacion")
+print("Resultado de la multiplicacion:", resultado3)  
+
+
+resultado4 = operacionMatematica(2, 2, "division")
+print("Resultado de operacion no valida:", resultado4) 
+```
+
+Resultado del código:
+
+python -u "c:\Users\Serena\Documents\Entornos\Actividades\operaciones.py"
+Resultado de la suma: 8
+Resultado de la resta: 6
+Resultado de la multiplicacion: 42
+Resultado de operacion no valida: 0
+
+Este ejercicio me a ayudado a practicar el uso de funciones, parámetros y condiciones, que son temas importantes de esta unidad. También me ha enseñado cómo la programación puede ser útil en situaciones del día a día, como hacer calculos rápidos mientras jugamos o estamos fuera de casa.
+
+Este tipo de programa es útil para resolver problemas sencillos de forma rápida y seguir mejorando en lógica y matemáticas.

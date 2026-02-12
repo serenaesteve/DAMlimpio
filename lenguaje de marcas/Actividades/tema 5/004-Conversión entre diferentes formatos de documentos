@@ -1,0 +1,50 @@
+El ejercicio implica convertir un archivo JSON en un archivo XML. Para ello, siga estos pasos:
+
+Abra el archivo persona.json que contiene información sobre una persona.
+Cargue el contenido del archivo JSON usando la función json.load(f).
+Suponiendo que el archivo JSON tiene un solo elemento principal (como "persona"), extraiga ese elemento y conviértalo en un diccionario.
+Defina una función llamada dict_to_xml que tome dos parámetros: el nombre de la etiqueta raíz (tag) y el diccionario a convertir (d). Esta función debe crear un elemento XML utilizando la biblioteca xml.etree.ElementTree, donde cada clave del diccionario se convierte en una subetiqueta.
+Utilice la función dict_to_xml para convertir el diccionario extraído del archivo JSON en un elemento XML.
+Guarde el elemento XML resultante en un archivo llamado persona.xml utilizando tree.write("persona.xml", encoding="utf-8", xml_declaration=True).
+Asegúrese de probar su código con el archivo persona.json proporcionado para verificar que se genera correctamente el archivo persona.xml.
+
+
+Respuesta:
+
+En este ejercicio he aprendido a convertir un archivo JSON en un archivo XML usando Python. He visto como se puede leer un archivo JSON, sacar los datos que contiene y pasarlos a un archivo XML con la misma información.
+
+persona.json:
+```
+{
+    "persona": {
+        "nombre": "Serena",
+        "edad": 22,
+        "email": "serena@example.com",
+        "direccion": {
+            "calle": "Calle Falsa 123",
+            "ciudad": "valencia"
+        },
+        "telefonos": ["654789023", "965734267"]
+    }
+}
+```
+
+importjson.py:
+```
+import json
+
+with open("persona.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+print(data)
+```
+
+Consola:
+
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\lenguaje de marcas\Actividades"
+PS C:\Users\Serena\Documents\lenguaje de marcas\Actividades> python importjson.py
+{'persona': {'nombre': 'Serena', 'edad': 22, 'email': 'serena@example.com', 'direccion': {'calle': 'Calle Falsa 123', 'ciudad': 'valencia'}, 'telefonos': ['654789023', '965734267']}}
+PS C:\Users\Serena\Documents\lenguaje de marcas\Actividades>
+
+He conseguido crear un archivo XML a partir del JSON y que los datos se mantengan igual. Con este ejercicio he aprendido a trabajar con diccionarios, listas y a generar archivos XML en Python.

@@ -1,0 +1,227 @@
+Desarrolla un documento HTML utilizando estilos CSS externos y aplicando los conceptos aprendidos en la clase.
+Crea un archivo HTML llamado mi_pagina.html:
+
+Utiliza la estructura básica de una página HTML con <head> y <body>.
+Incluye el archivo CSS externo que contiene estilos predefinidos (004-externo.css).
+Aplica los estilos en tu página:
+
+En el <header> de tu página, crea un título principal usando una etiqueta <h1>.
+Añade un subtítulo utilizando una etiqueta <h2>.
+Crea una sección (<section>) con la clase w-800 y agrega contenido a tu elección.
+Utiliza una estructura de cuadrícula para organizar dos artículos en una fila y tres artículos en otra fila, cada uno con su propio título y texto.
+Crea un archivo PHP llamado mi_pagina.php:
+
+Incluye el archivo CSS externo igual que en tu HTML.
+Utiliza la etiqueta <div> para crear un elemento que tenga una clase de fondo rojo (b-red) y el texto en azul (c-blue). Asegúrate de que este div ocupe 400 píxeles de ancho (w-400) y tenga un relleno de 20 píxeles (p-20).
+Crea otro archivo PHP llamado mi_pagina_ancho.php:
+
+Similar a mi_pagina.php, pero añade una clase adicional que aumente el ancho del div a 800 píxeles (w-800).
+Crea un archivo HTML llamado mi_pagina_abreviada.html:
+
+Utiliza las mismas clases CSS que en los ejemplos anteriores pero abrevia las clases para mantener el código limpio y legible.
+Crea un archivo PHP llamado mi_pagina_varios_parametros.php:
+
+Incluye el archivo CSS externo.
+Añade una clase adicional que aumenta el margen del div a 30 píxeles (m-30).
+Recuerda aplicar los estilos correctamente y asegurarte de que todos los elementos HTML y CSS se integren adecuadamente en tu página. Practica la manipulación de clases y atributos para mejorar tus habilidades en el uso de lenguajes de marcas y sistemas de gestión de información.
+
+
+
+Respuesta:
+
+
+En esta actividad realizo varios archivos usando HTML, PHP y un CSS externo. El objetivo es practicar la estructura básica de una página web y aprender a aplicar estilos con clases ya creadas. Para ello creo los archivos mi_pagina.html, mi_pagina.php, mi_pagina_ancho.php, mi_pagina_abreviada.html y mi_pagina_varios_parametros.php.
+
+En todos los archivos utilizo la estructura básica con <head> y <body> e incluyo el archivo de estilos 004-externo.css con la etiqueta <link>, para que se apliquen los estilos de forma externa.
+
+En el archivo mi_pagina.html se ve un título principal (h1) y un subtítulo (h2) dentro de un <header>. Debajo aparece una sección con ancho 800px usando la clase w-800. Dentro de esa sección se ve una cuadrícula con dos artículos en una fila y tres artículos en otra fila, y cada artículo tiene su propio título y un texto.
+
+En mi_pagina.php se ve un div con fondo rojo, texto azul, ancho 400px y relleno de 20px, usando las clases b-red, c-blue, w-400 y p-20.
+
+En mi_pagina_ancho.php se ve lo mismo, pero el div es más grande porque añado la clase w-800, por lo tanto el ancho pasa a 800px.
+
+En el archivo mi_pagina_abreviada.html se ve la misma estructura que en mi_pagina.html (títulos y artículos), pero con el código más corto y más limpio, usando el mínimo de contenido y manteniendo las mismas clases.
+
+Por último, en mi_pagina_varios_parametros.php se ve el mismo div rojo con texto azul y padding, pero además se añade la clase m-30, así que el div tiene margen de 30px y se separa de los bordes de la página.
+
+004.externo.css:	
+```
+.b-red { background: red; }
+.c-blue { color: blue; }
+
+.w-400 { width: 400px; }
+.w-800 { width: 800px; }
+
+.p-20 { padding: 20px; }
+.m-30 { margin: 30px; }
+
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+```
+	
+mi_pagina.html:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Página</title>
+
+  <link rel="stylesheet" href="004-externo.css">
+</head>
+<body>
+
+  <header>
+    <h1>Mi Página Web</h1>
+    <h2>Aplicando estilos con CSS externo</h2>
+  </header>
+
+  <section class="w-800">
+    <p>
+      Bienvenido/a a mi página. Esta sección utiliza la clase <strong>w-800</strong>.
+    </p>
+
+    
+    <div class="grid-2">
+      <article>
+        <h3>Artículo 1</h3>
+        <p>Este es el contenido del primer artículo.</p>
+      </article>
+
+      <article>
+        <h3>Artículo 2</h3>
+        <p>Este es el contenido del segundo artículo.</p>
+      </article>
+    </div>
+
+    <div class="grid-3">
+      <article>
+        <h3>Artículo 3</h3>
+        <p>Este es el contenido del tercer artículo.</p>
+      </article>
+
+      <article>
+        <h3>Artículo 4</h3>
+        <p>Este es el contenido del cuarto artículo.</p>
+      </article>
+
+      <article>
+        <h3>Artículo 5</h3>
+        <p>Este es el contenido del quinto artículo.</p>
+      </article>
+    </div>
+  </section>
+
+</body>
+</html>
+```
+mi_pagina.php:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Página PHP</title>
+
+  <link rel="stylesheet" href="004-externo.css">
+</head>
+<body>
+
+  <div class="b-red c-blue w-400 p-20">
+    Soy un DIV con fondo rojo, texto azul, ancho 400px y padding 20px.
+  </div>
+
+</body>
+</html>
+```
+	
+mi_pagina_abreviada.html:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página Abreviada</title>
+  <link rel="stylesheet" href="004-externo.css">
+</head>
+<body>
+
+  <header>
+    <h1>Mi Página</h1>
+    <h2>Versión abreviada</h2>
+  </header>
+
+  <section class="w-800">
+    <div class="grid-2">
+      <article><h3>A1</h3><p>Texto 1.</p></article>
+      <article><h3>A2</h3><p>Texto 2.</p></article>
+    </div>
+
+    <div class="grid-3">
+      <article><h3>A3</h3><p>Texto 3.</p></article>
+      <article><h3>A4</h3><p>Texto 4.</p></article>
+      <article><h3>A5</h3><p>Texto 5.</p></article>
+    </div>
+  </section>
+
+</body>
+</html>
+```
+mi_pagina_ancho.html
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Página PHP Ancho</title>
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="004-externo.css">
+</head>
+<body>
+
+  <div class="b-red c-blue w-400 w-800 p-20">
+    Soy un DIV con fondo rojo, texto azul, padding 20px y ancho 800px (w-800).
+  </div>
+
+</body>
+</html>
+```
+mi_pagina_varios_parametros.php:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PHP Varios Parámetros</title>
+
+  <link rel="stylesheet" href="004-externo.css">
+</head>
+<body>
+
+  <div class="b-red c-blue w-400 p-20 m-30">
+    Soy un DIV con fondo rojo, texto azul, ancho 400px, padding 20px y margen 30px.
+  </div>
+
+</body>
+</html>
+```
+	
+Con esta práctica he aprendido a trabajar mejor con CSS externo, ya que separo el diseño del contenido y reutilizo las mismas clases en distintos archivos. Además practico el uso de etiquetas básicas de HTML como header, section y article, y también aprendo a organizar el contenido con una cuadrícula para que quede más ordenado.
+
+Por último, compruebo cómo los archivos PHP se ven correctamente desde el servidor, y entiendo la importancia de usar rutas correctas y tener los archivos bien colocados en las carpetas. Basicamente, esta actividad me ayuda a mejorar mi manejo de clases CSS, estructura HTML y visualización en el navegador.

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - CRUD</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🛠️ Panel de administración (CRUD)</h1>
+    <nav>
+      <a class="btn secondary" href="/">Volver al Front</a>
+      <a class="btn" href="/api/admin/export">Exportar CSV</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Crear / Editar</h2>
+      <form id="form" class="form">
+        <input type="hidden" id="id" />
+        <label>Título <input class="input" id="title" required /></label>
+        <label>Autor <input class="input" id="author" required /></label>
+        <label>Año <input class="input" id="year" type="number" min="0" /></label>
+
+        <div class="row">
+          <button class="btn" type="submit">Guardar</button>
+          <button class="btn secondary" type="button" id="btnCancel">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Importar CSV</h2>
+      <form id="importForm" class="row">
+        <input class="input" type="file" id="csvFile" accept=".csv" />
+        <button class="btn" type="submit">Importar</button>
+      </form>
+      <p class="hint">CSV con columnas: <code>title,author,year</code></p>
+    </section>
+
+    <section class="card">
+      <h2>Listado</h2>
+      <div id="adminList" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="/static/admin.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,204 @@
+Actividad: Gestión de una Agenda de Clientes
+
+Continúa desarrollando tu programa para gestionar una agenda de clientes utilizando los conocimientos adquiridos en clase. A partir del código proporcionado, crea un bucle infinito que permita al usuario interactuar con el programa hasta que decida salir.
+
+Enunciado paso a paso:
+
+Introducción y contexto: Imagina que eres un dueño de una pequeña tienda y necesitas un sistema para gestionar tus clientes. Crea un bucle infinito que permita al usuario insertar, listar, actualizar o eliminar clientes. Utiliza las funciones que ya tienes implementadas y añade los métodos necesarios para manejar la entrada del usuario.
+
+Desarrollo técnico correcto y preciso: Implementa el bucle infinito en tu programa. Asegúrate de que cada opción disponible en el menú funcione correctamente y actualice la lista de clientes según las acciones del usuario.
+
+Aplicación práctica con ejemplo claro: Prueba tu programa para asegurarte de que funciona como se espera. Intenta insertar varios clientes, listarlos, actualizar algunos datos y eliminar uno o dos clientes. Verifica que los cambios se reflejen correctamente en la lista de clientes.
+
+Cierre/Conclusión enlazando con la unidad: Reflexiona sobre cómo este ejercicio te ha ayudado a entender mejor el manejo de bucles infinitos y las interacciones del usuario con un programa. Piensa en cómo podrías mejorar tu programa para que sea más funcional y fácil de usar.
+
+Restricciones:
+
+No uses funciones externas o estructuras no vistas en clase.
+Utiliza solo los conocimientos y materiales proporcionados en la carpeta actual.
+Criterios de evaluación:
+
+Introducción y contextualización (25%)
+Desarrollo técnico correcto y preciso (25%)
+Aplicación práctica con ejemplo claro (25%)
+Cierre/Conclusión enlazando con la unidad (25%)
+
+
+
+
+
+Respuesta:
+
+
+
+Tengo una pequeña tienda y quiero llevar un registro ordenado de mis clientes. Cada cliente tiene datos importantes como su nombre, teléfono y correo electrónico. Para no perder esta información ni tener que apuntarla en papel, he decidido crear un programa en Python que funcione como una agenda digital.
+
+El programa mostrará un menú con opciones que el usuario puede elegir para gestionar su lista de clientes.
+Las opciones serán:
+ 1. Insertar nuevos clientes
+ 2. Listar todos los clientes
+ 3. Actualizar los datos de un cliente
+ 4. Eliminar clientes
+ 5. Salir del programa
+
+El programa usa un bucle while True:, lo que significa que el menú se repite una y otra vez.
+Solo se detiene cuando el usuario elige la opción “Salir”.
+Así, puedo hacer varias operaciones seguidas (agregar, listar, eliminar, etc.) sin tener que reiniciar el programa cada vez.
+
+
+
+```
+clientes = []  
+
+while True:
+    print("===== MENU DE AGENDA DE CLIENTES =====")
+    print("1. Insertar cliente")
+    print("2. Listar clientes")
+    print("3. Actualizar cliente")
+    print("4. Eliminar cliente")
+    print("5. Salir")
+
+    opcion = input("Elija una opcion: ")
+
+    if opcion == "1":
+      
+        nombre = input("Nombre: ")
+        telefono = input("Telefono: ")
+        correo = input("Correo: ")
+        cliente = {"nombre": nombre, "telefono": telefono, "correo": correo}
+        clientes.append(cliente)
+        print("Cliente agregado correctamente.\n")
+
+    elif opcion == "2":
+        
+        if len(clientes) == 0:
+            print("No hay clientes registrados.\n")
+        else:
+            print("Lista de clientes:")
+            for i, cliente in enumerate(clientes, start=1):
+                print(i, cliente["nombre"], "-", cliente["telefono"], "-", cliente["correo"])
+            print()
+
+    elif opcion == "3":
+        
+        if len(clientes) == 0:
+            print("No hay clientes para actualizar.\n")
+        else:
+            for i, cliente in enumerate(clientes, start=1):
+                print(i, cliente["nombre"])
+            num = int(input("Numero del cliente a actualizar: ")) - 1
+            if 0 <= num < len(clientes):
+                nombre = input("Nuevo nombre (dejar vacio para mantener): ")
+                telefono = input("Nuevo telefono (dejar vacio para mantener): ")
+                correo = input("Nuevo correo (dejar vacio para mantener): ")
+
+                if nombre != "":
+                    clientes[num]["nombre"] = nombre
+                if telefono != "":
+                    clientes[num]["telefono"] = telefono
+                if correo != "":
+                    clientes[num]["correo"] = correo
+
+                print("Cliente actualizado correctamente.\n")
+            else:
+                print("Numero invalido.\n")
+
+    elif opcion == "4":
+       
+        if len(clientes) == 0:
+            print("No hay clientes para eliminar.\n")
+        else:
+            for i, cliente in enumerate(clientes, start=1):
+                print(i, cliente["nombre"])
+            num = int(input("Numero del cliente a eliminar: ")) - 1
+            if 0 <= num < len(clientes):
+                eliminado = clientes.pop(num)
+                print("Cliente", eliminado["nombre"], "eliminado correctamente.\n")
+            else:
+                print("Numero invalido.\n")
+
+    elif opcion == "5":
+        print("Saliendo del programa. Gracias por usar la agenda.")
+        break
+
+    else:
+        print("Opcion no valida. Intente de nuevo.\n")
+```
+
+
+
+Salida del código:
+
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5> python clientes.py
+===== MENU DE AGENDA DE CLIENTES =====
+1. Insertar cliente
+2. Listar clientes
+3. Actualizar cliente
+4. Eliminar cliente
+5. Salir
+Elija una opcion: 3
+No hay clientes para actualizar.
+
+===== MENU DE AGENDA DE CLIENTES =====
+1. Insertar cliente
+2. Listar clientes
+3. Actualizar cliente
+4. Eliminar cliente
+5. Salir
+Elija una opcion: 1
+Nombre: serena
+Telefono: 637383762
+Correo: serena@gmail.com
+Cliente agregado correctamente.
+
+===== MENU DE AGENDA DE CLIENTES =====
+1. Insertar cliente
+2. Listar clientes
+3. Actualizar cliente
+4. Eliminar cliente
+5. Salir
+Elija una opcion: 2
+Lista de clientes:
+1 serena - 637383762 - serena@gmail.com
+
+===== MENU DE AGENDA DE CLIENTES =====
+1. Insertar cliente
+2. Listar clientes
+3. Actualizar cliente
+4. Eliminar cliente
+5. Salir
+Elija una opcion: 3
+1 serena
+Numero del cliente a actualizar: 1
+Nuevo nombre (dejar vacio para mantener): Serena Sania 
+Nuevo telefono (dejar vacio para mantener): 3248265256
+Nuevo correo (dejar vacio para mantener): serenaesteve@gmail.com
+Cliente actualizado correctamente.
+
+===== MENU DE AGENDA DE CLIENTES =====
+1. Insertar cliente
+2. Listar clientes
+3. Actualizar cliente
+4. Eliminar cliente
+5. Salir
+Elija una opcion: 4
+1 Serena Sania 
+Numero del cliente a eliminar: 1
+Cliente Serena Sania  eliminado correctamente.
+
+===== MENU DE AGENDA DE CLIENTES =====
+1. Insertar cliente
+2. Listar clientes
+3. Actualizar cliente
+4. Eliminar cliente
+5. Salir
+Elija una opcion: 5
+Saliendo del programa. Gracias por usar la agenda.
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 5>
+
+
+Este ejercicio me a ayudado a entender cómo usar un bucle infinito para que el programa siga funcionando hasta que el usuario quiera salir.
+También he aprendido a pedir datos al usuario y a mostrar resultados en pantalla.
+
+Podría mejorar el programa haciendo que guarde los datos en un archivo o que permita buscar clientes más rápido.
+Fue una buena práctica para aprender a hacer programas interactivos y útiles.

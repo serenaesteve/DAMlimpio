@@ -1,0 +1,30 @@
+Contexto
+En tu campo de estudio de programación, el entorno de desarrollo es crucial para tu productividad y eficiencia. La personalización de este espacio te permite adaptarlo a tus preferencias y necesidades específicas, lo que puede mejorar significativamente tu flujo de trabajo.
+
+Para este ejercicio, vamos a centrarnos en dos aspectos fundamentales de la personalización del entorno de desarrollo: el cambio de color del tema y el aumento del tamaño del texto. Estas son habilidades esenciales que te permitirán trabajar de manera más cómoda y eficiente.
+
+Enunciado paso a paso
+Cambio de color del tema: Aprenderás cómo cambiar el patrón de colores de fondo de tu entorno de desarrollo para adaptarlo a tus preferencias visuales.
+Aumento del tamaño del texto: Descubrirás cómo ajustar la fuente y el tamaño del texto en el editor de código, lo que te permitirá leer mejor el código mientras trabajas.
+Restricciones
+Solo puedes usar las herramientas y métodos explicados en clase.
+No utilices recursos externos o librerías adicionales.
+Criterios de evaluación
+Introducción y contextualización: Muestra una comprensión adecuada del contexto y el propósito de la actividad.
+Desarrollo técnico correcto y preciso: Demuestra un conocimiento profundo y preciso de los pasos para cambiar el color del tema y aumentar el tamaño del texto en tu entorno de desarrollo.
+Aplicación práctica con ejemplo claro: Proporciona ejemplos claros y prácticos que ilustren cómo realizar estos cambios.
+Cierre/Conclusión enlazando con la unidad: Concluye la actividad relacionando lo aprendido con el tema actual y su relevancia en la eficiencia del trabajo.
+Recuerda, la práctica constante es la clave para dominar estas habilidades importantes en el entorno de desarrollo. ¡Buena suerte!
+
+
+Respuesta:
+
+En programación, el entorno de desarrollo es muy importante para trabajar bien y ser más productivo. Si está bien configurado, es más cómodo, ayuda a concentrarse y a que este a tu gusto.
+Personalizarlo es común porque cada persona tiene gustos diferentes. En esta actividad aprenderemos a cambiar el color del tema y aumentar el tamaño del texto, lo que hace que trabajar sea más fácil y agradable.
+
+
+-Para cambiar el color de visual studio code hay que...lo primero, abrirlo , despues de lamos a view, luego a command palette , escribimos Color Theme y le damos a Color Theme. Ahi ya nos aparecerán todos los colores.
+-Para cambiar el tamaño del texto le damos a ctrl + , y nos sale directamente el numero de tamaño de fuente que queremos.
+
+
+Basicamente personalizar el entorno de desarrollo hace que trabajar sea más cómodo y productivo. Cambiar el color y el tamaño del texto ayuda a concentrarse mejor y trabajar más rápido.

@@ -1,0 +1,341 @@
+Actividad: Implementación de una Tienda Online con Flask y SQLite
+La tarea consiste en crear una tienda online básica utilizando Flask (Python) y SQLite como base de datos. El objetivo es simular un frontend sencillo que muestre los productos almacenados en la base de datos.
+
+Pasos a seguir:
+Configuración del Entorno:
+
+Asegúrate de tener instalado Python, Flask y SQLite3.
+Crea una nueva carpeta para tu proyecto y navega hasta ella en la terminal.
+Creación de la Base de Datos:
+
+Crea un archivo llamado tiendaonline.db usando SQLite3 o cualquier otro cliente de base de datos.
+Inserta algunos registros en la tabla productos. Por ejemplo:
+CREATE TABLE productos (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT NOT NULL,
+    descripcion TEXT NOT NULL,
+    imagen TEXT NOT NULL,
+    precio REAL NOT NULL
+);
+
+INSERT INTO productos (nombre, descripcion, imagen, precio) VALUES 
+('Portátil Lenovo IdeaPad', 'Portátil con procesador Ryzen 5 y 16GB RAM', 'lenovo.jpg', 799.99),
+('Smartphone Samsung Galaxy S23', 'Teléfono inteligente de última generación', 'samsung.jpg', 899.99);
+Desarrollo del Código:
+
+Crea un archivo llamado app.py.
+Copia y pega el código proporcionado en el archivo app.py. Asegúrate de que la ruta a las imágenes esté correcta.
+Ejecución de la Aplicación:
+
+Ejecuta el servidor Flask con el siguiente comando:
+python app.py
+Abre tu navegador y visita http://127.0.0.1:5000/ para ver la tienda online.
+Ejemplo de Código:
+import sqlite3
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def listar_productos():
+    basededatos = sqlite3.connect('./tiendaonline.db')
+    cursor = basededatos.cursor()
+    cursor.execute("SELECT * FROM productos")
+    productos = cursor.fetchall()
+    return render_template('index.html', productos=productos)
+    basededatos.close()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online de Tecnología</title>
+   <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .product-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .product-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 15px;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+        }
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        .product-item h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .product-item p {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .price {
+            font-size: 1.1em;
+            color: #e91e63;
+            margin: 10px 0;
+            display: block;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }   
+   </style>
+</head>
+<body>
+    <header>
+        <h1>Tienda Online de Tecnología</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Ofertas</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="product-list">
+            {% for producto in productos %}
+            <div class="product-item">
+                <img src="/static/img/{{ producto.imagen }}" alt="{{ producto.nombre }}">
+                <h2>{{ producto.nombre }}</h2>
+                <p>{{ producto.descripcion }}</p>
+                <span class="price">${{ producto.precio }}</span>
+                <button>Añadir al carrito</button>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Tienda Online de Tecnología. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+Cierre y Conclusión:
+Este ejercicio te permite aplicar los conocimientos adquiridos sobre Flask y SQLite para crear una aplicación web sencilla. Practicarás la conexión a bases de datos, el manejo de consultas SQL y la renderización dinámica de contenido en HTML. Asegúrate de probar diferentes productos y experimentar con el diseño del frontend para mejorar tu experiencia como desarrollador.
+
+Recuerda que este proyecto es un ejemplo básico y puede ser expandido añadiendo más funcionalidades como carrito de compras, gestión de usuarios y más.
+
+
+
+Respuesta:
+
+
+En este proyecto desarrollo una tienda online básica utilizando Flask y SQLite. Mi objetivo es crear una aplicación funcional que muestre productos tecnológicos almacenados en una base de datos y los presente de manera dinámica en un frontend sencillo.
+
+Con este proyecto aplico lo que aprendo sobre conexión a bases de datos, consultas SQL y la integración del backend con HTML mediante plantillas Jinja2. También organizo recursos estáticos como imágenes y estilos, y creo una base para agregar funcionalidades futuras como carrito de compras o gestión de usuarios.
+
+Mi Estructura:
+
+tienda_online/
+│
+├── app.py
+├── crear_db.py
+├── tiendaonline.db      
+├── static/
+│   └── img/
+│       ├── lenovo.jpg
+│       └── samsung.jpg
+└── templates/
+    └── index.html
+		
+		
+app.py:
+```
+import sqlite3
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def listar_productos():
+    with sqlite3.connect('./tiendaonlinenew.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM productos")
+        productos = cursor.fetchall()
+    
+    lista_productos = []
+    for p in productos:
+        lista_productos.append({
+            'id': p[0],
+            'nombre': p[1],
+            'descripcion': p[2],
+            'imagen': p[3],
+            'precio': p[4]
+        })
+    
+    return render_template('index.html', productos=lista_productos)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+crear_db.py:
+```
+import sqlite3
+import os
+
+db_file = 'tiendaonlinenew.db'
+
+
+if os.path.exists(db_file):
+    os.remove(db_file)
+
+
+conn = sqlite3.connect(db_file)
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE productos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    descripcion TEXT NOT NULL,
+    imagen TEXT NOT NULL,
+    precio REAL NOT NULL
+)
+""")
+
+
+cursor.execute("""
+INSERT INTO productos (nombre, descripcion, imagen, precio) VALUES
+('Portatil Lenovo IdeaPad', 'Portatil con procesador Ryzen 5 y 16GB RAM', 'lenovo.jpg', 799.99),
+('Smartphone Samsung Galaxy S23', 'Telefono inteligente de ultima generacion', 'samsung.jpg', 899.99)
+""")
+
+conn.commit()
+conn.close()
+
+print("Base de datos creada correctamente")
+```
+
+index.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online de Tecnologia</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #333; color: #fff; padding: 10px 0; text-align: center; }
+        nav ul { list-style: none; padding: 0; }
+        nav ul li { display: inline; margin: 0 15px; }
+        nav ul li a { color: #fff; text-decoration: none; }
+        .product-list { display: flex; justify-content: space-around; flex-wrap: wrap; padding: 20px; }
+        .product-item { background-color: #fff; border: 1px solid #ddd; border-radius: 5px; margin: 15px; padding: 15px; width: 250px; text-align: center; }
+        .product-item img { max-width: 100%; height: auto; }
+        .product-item h2 { font-size: 1.2em; margin: 10px 0; }
+        .product-item p { font-size: 0.9em; color: #555; }
+        .price { font-size: 1.1em; color: #e91e63; margin: 10px 0; display: block; }
+        button { background-color: #28a745; color: #fff; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
+        button:hover { background-color: #218838; }
+        footer { background-color: #333; color: #fff; text-align: center; padding: 10px 0; position: fixed; width: 100%; bottom: 0; }   
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tienda Online de Tecnologia</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Ofertas</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="product-list">
+            {% for producto in productos %}
+            <div class="product-item">
+                <img src="/static/img/{{ producto.imagen }}" alt="{{ producto.nombre }}">
+                <h2>{{ producto.nombre }}</h2>
+                <p>{{ producto.descripcion }}</p>
+                <span class="price">${{ producto.precio }}</span>
+                <button>Añadir al carrito</button>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Tienda Online de Tecnologia. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+```
+
+Ejecución:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Proyecto\Actividades\tema 6\tienda_online"
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 6\tienda_online> python crear_db.py
+Base de datos creada correctamente
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 6\tienda_online> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [13/Nov/2025 13:35:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [13/Nov/2025 13:35:24] "GET /static/img/samsung.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [13/Nov/2025 13:35:24] "GET /static/img/lenovo.jpg HTTP/1.1" 200 -
+
+Con la creación de esta tienda online compruebo cómo se puede desarrollar una aplicación web completa usando herramientas ligeras como Flask y SQLite. Los productos se almacenan correctamente en la base de datos y se muestran dinámicamente en el frontend, ofreciendo una experiencia básica de comercio electrónico.
+
+Este proyecto me permite reforzar mis conocimientos en bases de datos, renderizado dinámico y organización de aplicaciones web. Además, me sirve como base para ampliar la tienda en el futuro con más funcionalidades y mejoras en el diseño.

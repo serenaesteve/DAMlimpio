@@ -1,0 +1,13 @@
+nombre_jugador="juan"
+edad_jugador="30"
+
+
+print(type(nombre_jugador))
+print(type(edad_jugador))
+
+
+edad_entera=int(edad_jugador)
+print(type(edad_entera))
+
+edad_entera += 5
+print(edad_entera)

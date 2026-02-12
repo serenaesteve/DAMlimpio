@@ -1,0 +1,119 @@
+Ejercicio: Ajuste de un panel de administración
+Contexto
+En el mundo digital, los paneles de administración son herramientas esenciales para gestionar sistemas web. Un buen diseño y una buena estructura pueden mejorar significativamente la experiencia del usuario. Hoy, vamos a trabajar en la adaptación y mejora de un panel de administración utilizando HTML y CSS.
+
+Juegos de mesa / videojuegos
+Imagina que estás desarrollando una interfaz para un juego de mesa digital. El diseño limpio y organizado de los elementos es crucial para una buena experiencia de juego. En este ejercicio, aprenderás cómo estructurar y estilizar un panel de administración de manera similar a cómo se organiza un tablero de juegos.
+
+La naturaleza (todo lo que tenga que ver con el campo)
+El campo puede inspirar muchas cosas en la diseño web. Pensando en los paisajes naturales, puedes diseñar paneles de administración que sean intuitivos y fáciles de navegar, como si estuvieras explorando una granja o un bosque digital.
+
+Enunciado paso a paso
+Clona el archivo 002-un poco de css.html en tu entorno de desarrollo local.
+
+Este archivo contiene el código HTML y CSS básico para un panel de administración.
+Modifica el estilo del header utilizando CSS.
+
+Cambia el color de fondo a verde oscuro (DarkGreen) y aumenta la altura a 30px.
+Añade una fuente más grande y negrita al texto del encabezado.
+Ajusta el estilo del nav.
+
+Cambia el color de fondo a azul oscuro (DarkBlue).
+Aumenta la altura del nav a 100px.
+Centra el contenido dentro del nav.
+Modifica el estilo del section.
+
+Cambia el color de fondo a amarillo claro (LightYellow).
+Ajusta la altura del section para que ocupe el espacio restante en la página.
+Guarda los cambios y abre el archivo en tu navegador para ver las modificaciones.
+
+Restricciones
+Solo puedes usar los conceptos y tecnologías que se han visto en clase.
+No puedes utilizar librerías externas o estructuras no vistas hasta ahora.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica brevemente el propósito del ejercicio y cómo los hobbies pueden aplicarse al diseño web.
+Desarrollo técnico correcto y preciso (25%)
+
+Asegúrate de que todos los estilos se hayan modificado correctamente según las instrucciones.
+Verifica que la estructura del panel siga siendo coherente y funcional.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona un ejemplo claro de cómo el diseño del panel ha cambiado después de tus modificaciones.
+Explica cómo los cambios reflejan los principios de la naturaleza en el diseño web.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Reflexiona sobre cómo este ejercicio se relaciona con lo aprendido en esta unidad y cómo puedes aplicar estos conocimientos en proyectos futuros.
+
+
+Respuesta:
+
+En este ejercicio he trabajado la modificacion de un panel de administracion usando HTML y CSS. Mi objetivo ha sido aprender como pequeños cambios en los estilos pueden mejorar la apariencia y la funcionalidad de una interfaz.
+
+Me he inspirado en la organizacion de elementos en juegos de mesa y videojuegos, donde la claridad y la jerarquia visual son fundamentales para que el usuario comprenda facilmente la informacion. Ademas, he usado la inspiracion en la naturaleza para crear un diseño facil de navegar.
+
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Panel de administracion</title>
+    <meta charset="utf-8">
+    <style>
+      html,body{
+        width:100%;
+        height:100%;
+        padding:0;
+        margin:0;
+      }
+      body{
+        display:flex;
+        flex-direction:column;
+      }
+      header{
+        background:DarkGreen;
+        height:30px;
+        color:white;
+        font-size:1.3em;
+        font-weight:bold;
+        display:flex;
+        align-items:center;
+        padding-left:20px;
+      }
+      main{
+        display:flex;
+        height:100%;
+      }
+      nav{
+        flex:1;
+        background:DarkBlue;
+        height:100px;
+        color:white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:1.1em;
+      }
+      section{
+        flex:6;
+        padding:20px;
+        background:LightYellow;
+        height:calc(100vh - 30px);
+      }
+    </style>
+  </head>
+  <body>
+    <header> 
+      Panel de administracion jocarsa
+    </header>
+    <main>
+      <nav>Menu</nav>
+      <section>Contenido</section>
+    </main>
+  </body>
+</html>
+```
+
+Con este ejercicio he comprendido como aplicar conceptos basicos de HTML y CSS para mejorar la experiencia de usuario en un panel de administracion. Modificando colores, tamaños y distribucion de los elementos, he logrado una interfaz mas clara y agradable.
+
+Tambien he reforzado mis conocimientos sobre flexbox, jerarquia visual y distribucion de espacios. Estos aprendizajes me seran utiles en futuros proyectos para crear diseños coherentes, funcionales y esteticamente bonito.

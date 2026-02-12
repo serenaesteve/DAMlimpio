@@ -1,0 +1,269 @@
+Actividad: Simulando una tienda online con Flask y SQLite
+Contexto
+Imagine que eres un amante de los juegos de mesa y las actividades al aire libre. Quieres crear una pequeña tienda en línea donde puedas vender tus juguetes favoritos y productos relacionados con el campo. Para ello, aprenderás a usar Flask, una popular biblioteca para crear aplicaciones web, y SQLite, un sistema de gestión de bases de datos ligero.
+
+Enunciado paso a paso
+Configurar tu entorno:
+
+Asegúrate de tener instalados Python y Flask en tu computadora.
+Crea un nuevo proyecto llamado tienda_online.
+Crear la base de datos:
+
+Utiliza SQLite para crear una base de datos llamada tiendaonline.db.
+Inserta varios productos relacionados con los juegos de mesa y el campo (por ejemplo, sudaderas deportivas, mochilas, etc.) en la tabla productos.
+Desarrollar la aplicación Flask:
+
+Crea un archivo llamado app.py donde configurarás tu aplicación Flask.
+Define una ruta raíz ("/") que muestre todos los productos de la tienda en una página HTML.
+Utiliza CSS para mejorar la apariencia de la página.
+Añadir estilos y navegación:
+
+Añade un encabezado con el nombre de tu tienda online.
+Crea enlaces para navegar entre diferentes secciones (por ejemplo, "Inicio", "Productos", "Contacto").
+Utiliza plantillas HTML separadas para cada sección.
+Probar la aplicación:
+
+Ejecuta tu aplicación Flask y accede a ella desde un navegador.
+Verifica que todos los productos se muestran correctamente y que la navegación funciona.
+Restricciones
+No utilices librerías externas adicionales.
+Mantén el código limpio y organizado.
+Asegúrate de seguir los patrones de diseño de Flask recomendados para aplicaciones web simples.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante demuestra comprensión del contexto y la importancia del proyecto en su vida personal.
+Desarrollo técnico correcto y preciso (25%): El estudiante muestra habilidad técnica para configurar Flask, crear una base de datos SQLite y desarrollar una página web funcional.
+Aplicación práctica con ejemplo claro (25%): El estudiante aplica los conceptos aprendidos a través de ejemplos prácticos y muestra capacidad de resolución de problemas.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante reflexiona sobre cómo el proyecto se relaciona con su experiencia personal y cómo puede aplicarse en el futuro.
+
+
+
+
+Respuesta:
+
+
+En la actualidad, la venta de productos a través de internet se ha convertido en una herramienta fundamental para emprendedores y aficionados que desean compartir sus intereses con un público más amplio. En mi caso, como amante de los juegos de mesa y las actividades al aire libre, decidí crear una tienda online que me permitiera ofrecer productos relacionados con estas aficiones. Para lograrlo, utilicé Flask, un framework de Python para el desarrollo web, y SQLite, un sistema de gestión de bases de datos ligero y fácil de usar. Este proyecto no solo me permitió aprender a combinar tecnologías web y bases de datos, sino que también me ofreció la oportunidad de aplicar conceptos de programación en un entorno práctico y funcional.
+
+
+
+Mi estructura:
+
+tiendaonline/
+├── app.py
+├── tiendaonline.db
+├── crear_db.py
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── productos.html
+│   └── contacto.html
+└── static/
+    └── style.css
+
+
+app.py:
+```
+from flask import Flask, render_template
+import sqlite3
+
+app = Flask(__name__)
+
+ruta_db = r"C:\Users\Serena\Documents\Proyecto\Actividades\tema 6\tiendaonline\tiendaonline.db"
+
+def obtener_productos():
+    conn = sqlite3.connect(ruta_db)
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM productos')
+    productos = cursor.fetchall()
+    conn.close()
+    return productos
+
+@app.route('/')
+def index():
+    productos = obtener_productos()
+    return render_template('index.html', productos=productos)
+
+@app.route('/productos')
+def productos():
+    productos = obtener_productos()
+    return render_template('productos.html', productos=productos)
+
+@app.route('/contacto')
+def contacto():
+    return render_template('contacto.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+
+crear_db.py:
+```
+import sqlite3
+
+conn = sqlite3.connect('tiendaonline.db')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS productos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    descripcion TEXT,
+    precio REAL
+)
+''')
+
+productos = [
+    ('Sudadera Deportiva', 'Sudadera cómoda para actividades al aire libre', 25.99),
+    ('Mochila de Senderismo', 'Mochila resistente para excursiones', 45.50),
+    ('Juego de Mesa Aventura', 'Juego de mesa divertido para toda la familia', 30.00),
+    ('Pelota de Fútbol', 'Pelota oficial de tamaño estándar', 20.00)
+]
+
+cursor.executemany('INSERT INTO productos (nombre, descripcion, precio) VALUES (?, ?, ?)', productos)
+
+conn.commit()
+conn.close()
+
+print("Base de datos creada y productos insertados correctamente.")
+````
+
+base.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda Online</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Mi Tienda Online</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/productos">Productos</a>
+            <a href="/contacto">Contacto</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 Mi Tienda Online</p>
+    </footer>
+</body>
+</html>
+```
+
+contacto.html:
+```
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Contacto</h2>
+<p>Escríbenos a contacto@tiendaonline.com</p>
+{% endblock %}
+````
+
+indez.html:
+```
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Bienvenido a nuestra tienda</h2>
+<div class="productos">
+    {% for producto in productos %}
+        <div class="producto">
+            <h3>{{ producto[1] }}</h3>
+            <p>{{ producto[2] }}</p>
+            <p>Precio: ${{ producto[3] }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+```
+
+productos.html
+```
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Todos los Productos</h2>
+<div class="productos">
+    {% for producto in productos %}
+        <div class="producto">
+            <h3>{{ producto[1] }}</h3>
+            <p>{{ producto[2] }}</p>
+            <p>Precio: ${{ producto[3] }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+```
+
+style.css:
+```
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.producto {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+}
+```
+
+
+Ejecución:
+
+C:\Users\Serena> cd "C:\Users\Serena\Documents\Proyecto\Actividades\tema 6\tiendaonline"
+
+C:\Users\Serena\Documents\Proyecto\Actividades\tema 6\tiendaonline> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+
+
+La creación de esta tienda online me permitió comprender cómo funcionan las aplicaciones web modernas y cómo interactúan con una base de datos para mostrar información dinámica. A través de Flask y SQLite, pude desarrollar una plataforma sencilla pero funcional, donde los productos se muestran de forma organizada y es posible navegar entre diferentes secciones. Este proyecto refuerza mis conocimientos en desarrollo web y me prepara para crear aplicaciones más complejas en el futuro. Además, vincula directamente el aprendizaje con mi interés personal, demostrando que la programación puede convertirse en una herramienta para materializar ideas y proyectos propios.

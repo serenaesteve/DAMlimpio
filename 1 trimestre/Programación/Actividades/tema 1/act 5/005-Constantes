@@ -1,0 +1,77 @@
+Contexto
+En tu tiempo libre disfrutas mucho jugando videojuegos, especialmente juegos de estrategia que requieren mucha planificación y atención a los detalles. Además, adoras caminar por el campo, recoger hojas y observar las criaturas silvestres que te rodean.
+
+Enunciado paso a paso
+Declaración de constantes: Crea una constante llamada EDAD_MASCOTA con el valor 5. Este valor representa la edad de tu mascota favorita.
+Uso de variables: Declara una variable llamada edad_mascota y asígnale el mismo valor que EDAD_MASCOTA.
+Impresión del valor: Imprime en pantalla "Mi mascota tiene [edad_mascota] años".
+Constante matemática: Crea otra constante llamada PI con el valor 3.1416, que representa la constante matemática π.
+Uso de variable para cálculo: Declara una variable llamada radio_circulo y asignale un valor de 7.
+Cálculo del área: Calcula el área del círculo utilizando la fórmula ( A = \pi r^2 ) y almacena el resultado en una variable llamada area.
+Impresión del área: Imprime en pantalla "El área del círculo es [area]".
+Restricciones
+Solo usar constantes y variables según se indica.
+No modificar los valores de las constantes.
+Usar nombres de variables y datos de ejemplo que sean relevantes con tus hobbies.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica cómo has utilizado tus hobbies en el contexto del ejercicio.
+Desarrollo técnico correcto y preciso (25%): Verifica que las constantes y variables se han declarado correctamente y que los cálculos son precisos.
+Aplicación práctica con ejemplo claro (25%): Muestra cómo has aplicado el concepto de constante en tu vida diaria, relacionándolo con tus hobbies.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo este ejercicio te ha ayudado a entender mejor el uso de constantes y variables en programación.
+
+
+Respuesta:
+
+
+He relacionado mis hobbies con la programación. Como me gustan los videojuegos de estrategia y observar la naturaleza, uso la planificación para declarar constantes y variables perfectamente. Por ejemplo, he asignado la edad de mi mascota a la constante ```EDAD_MASCOTA``` y he calculado el área de un círculo usando ```PI```, aplicando matemáticas de forma práctica y cercana a mis hobbies.
+​
+A continuacion pongo el codigo:
+```
+EDAD_MASCOTA= 5
+​
+edad_mascota= EDAD_MASCOTA
+​
+print("Mi mascota tiene",edad_mascota,"años")
+​
+PI= 3.1416
+radio_circulo= 7
+​
+area = PI * (radio_circulo ** 2) 
+print("El área del círculo es",area,)
+```
+​
+Y ahora el resultado del codigo:
+​
+Mi mascota tiene 5 años
+El área del círculo es 153.9384
+PS C:\Users\Serena\Documents\programacion>
+​
+Este ejercicio me ha ayudado para entender mejor la diferencia entre variable y contante que es basicamente que variable tiene un valor que puede ir cambiando y contante es un valor fijo. Asi teniendo estas dos coas podemos convinarlas para tener un buen codigo y conseguir lo que quieremos.
+Autosaved: 11:07 AM24164
+Enviar
+Respuestas guardadas
+#1 · 2025-09-29T10:59:38+00:00 · Nota: 9.50/10
+He relacionado mis hobbies con la programación. Como me gustan los videojuegos de estrategia y observar la naturaleza, uso la planificación para declarar constantes y variables perfectamente. Por ejemplo, he asignado la edad de mi mascota a la constante ```EDAD_MASCOTA``` y he calculado el área de un círculo usando ```PI```, aplicando matemáticas de forma práctica y cercana a mis hobbies.
+
+A continuacion pongo el codigo:
+```
+EDAD_MASCOTA= 5
+
+edad_mascota= EDAD_MASCOTA
+
+print("Mi mascota tiene",edad_mascota,"años")
+
+PI= 3.1416
+radio_circulo= 7
+
+area = PI * (radio_circulo ** 2) 
+print("El área del círculo es",area,)
+```
+
+Y ahora el resultado del codigo:
+
+Mi mascota tiene 5 años
+El área del círculo es 153.9384
+PS C:\Users\Serena\Documents\programacion>
+
+Este ejercicio me ha ayudado para entender mejor la diferencia entre variable y contante que es basicamente que variable tiene un valor que puede ir cambiando y contante es un valor fijo. Asi teniendo estas dos coas podemos convinarlas para tener un buen codigo y conseguir lo que quieremos.

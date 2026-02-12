@@ -1,0 +1,360 @@
+Para practicar el concepto impartido en clase, debes completar los ejercicios proporcionados utilizando los conocimientos adquiridos sobre calendarios y eventos.
+
+Introducción y contextualización (25%)
+
+Comienza por abrir el archivo les pongo año mes y dia a los eventos.html. Este ejercicio te permite añadir atributos de año, mes y día a los elementos de evento cuando se crean.
+A continuación, abre el archivo Recuperar localstorage.html. Aquí aprenderás cómo recuperar los eventos almacenados en localStorage y mostrarlos en tu calendario.
+Desarrollo técnico correcto y preciso (25%)
+
+En el primer ejercicio (les pongo año mes y dia a los eventos.html), asegúrate de que cada evento creado tenga atributos anio, mes, dia y hora. Estos atributos te ayudarán a identificar y recuperar los eventos correctamente.
+En el segundo ejercicio (Recuperar localstorage.html), verifica que los eventos almacenados en localStorage se recuperen correctamente y se muestren en el calendario. Asegúrate de manejar cualquier error que pueda surgir al intentar parsear los datos JSON.
+Aplicación práctica con ejemplo claro (25%)
+
+En ambos ejercicios, realiza pruebas interactivas para verificar que tus eventos se creen y recuperen correctamente. Por ejemplo, puedes crear un evento en el calendario y luego recargar la página para asegurarte de que el evento persista.
+Asegúrate de manejar los eventos de forma correcta, incluyendo la eliminación de atributos innecesarios y el manejo de errores al intentar recuperar datos JSON.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Finaliza tu práctica revisando cómo estos ejercicios se relacionan con los conceptos teóricos aprendidos en clase sobre calendarios y eventos.
+Reflexiona sobre cómo podrías aplicar estos conocimientos en proyectos futuros o en situaciones reales donde necesites manejar datos de evento en un calendario.
+Recuerda que la práctica es clave para entender y aplicar los conceptos teóricos. Asegúrate de probar tus soluciones y hacer ajustes según sea necesario hasta que estés satisfecho con el resultado.
+
+
+Respuesta:
+
+En esta práctica estoy trabajando el tema de calendarios y eventos, usando lo que hemos dado en clase sobre JavaScript, el DOM y el almacenamiento en el navegador. La idea principal es crear un calendario que sea interactivo, es decir, que yo pueda ir creando eventos dentro del calendario y que esos eventos se queden bien guardados y organizados.
+
+Para hacerlo uso dos archivos. En el primero, “les pongo año mes y dia a los eventos.html”, creo el calendario del año 2026 con HTML y JavaScript. Cada día tiene varias franjas horarias, y cuando hago clic en una hora se crea un evento dentro de esa franja. Lo importante de este ejercicio es que cada evento tiene que guardar información de la fecha (año, mes, día y hora), así que cuando se crea el evento le añado los atributos anio, mes, dia y hora. Esto me sirve para poder identificarlo y recuperarlo luego si hace falta.
+
+Después, en el segundo archivo, “Recuperar localstorage.html”, hago que el calendario sea más “real”, porque uso localStorage para guardar los eventos. Así, si yo creo eventos y luego recargo la página, no se borran, sino que se vuelven a cargar en el mismo sitio. Con esto practico cómo guardar información con JSON y cómo recuperarla después sin que falle.
+
+les pongo año mes y dia a los eventos.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Calendario</title>
+    <style>
+      #jvcalendario .mes{display:grid;width:1400px;grid-template-columns:repeat(7,100fr);}
+      #jvcalendario .mes .dia{border:1px solid lightgray;height:250px;padding:10px;font-size:10px;display:flex;flex-direction:column;justify-content:space-between;}
+      #jvcalendario .mes .dia .hora{border-bottom:1px solid lightgray;display:flex;gap:20px;}
+      #jvcalendario .mes .desactivado{background:lightgrey;}
+      #jvcalendario .mes .dia .hora:nth-child(even){background:rgb(240,240,240);}
+      #jvcalendario .mes .dia .hora .evento{background:red;color:white;padding:5px;border-radius:5px;width:80%;}
+    </style>
+  </head>
+  <body>
+    <button id="guardar">Guardar</button>
+    <div id="jvcalendario"></div>
+
+    <script>
+      function diasEnMes(year, month) {
+        return new Date(year, month, 0).getDate();
+      }
+      function primerDiaDelMes(year, month) {
+        return new Date(year, month - 1, 1).getDay();
+      }
+
+      
+      let boton = document.querySelector("#guardar");
+      boton.onclick = function(){
+        let eventos = document.querySelectorAll(".evento");
+        let json = [];
+
+        eventos.forEach(function(ev){
+          const texto = ev.textContent.trim();
+          if (texto === "") return; 
+
+          json.push({
+            anio: Number(ev.getAttribute("anio")),
+            mes:  Number(ev.getAttribute("mes")),
+            dia:  Number(ev.getAttribute("dia")),
+            hora: Number(ev.getAttribute("hora")),
+            texto: texto
+          });
+        });
+
+        localStorage.setItem("jvcalendario_simple", JSON.stringify(json));
+        console.log("Guardado OK:", json);
+      };
+
+      let contenedor = document.querySelector("#jvcalendario");
+      let anio = 2026;
+      let meses = 12;
+      let nombres_meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
+      'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+      for(let i = 1; i <= meses; i++){
+        let dias_en_mes = diasEnMes(anio, i);
+
+        let titulo = document.createElement("h3");
+        titulo.textContent = nombres_meses[i-1];
+        contenedor.appendChild(titulo);
+
+        let mes = document.createElement("div");
+        mes.classList.add("mes");
+        mes.setAttribute("mes", nombres_meses[i-1]);
+
+        let inicio_mes = primerDiaDelMes(anio, i) + 6;
+
+        for(let j = 1; j <= inicio_mes; j++){
+          let dia = document.createElement("div");
+          dia.classList.add("dia");
+          dia.classList.add("desactivado");
+          mes.appendChild(dia);
+        }
+
+        for(let j = 1; j <= dias_en_mes; j++){
+          let dia = document.createElement("div");
+          dia.classList.add("dia");
+          dia.textContent = j;
+
+          for(let k = 8; k <= 21; k++){
+            let hora = document.createElement("div");
+            hora.classList.add("hora");
+            hora.textContent = k;
+
+            hora.onclick = function(){
+             
+              const existente = hora.querySelector(".evento");
+              if (existente) {
+                existente.focus();
+                return;
+              }
+
+              let evento = document.createElement("div");
+              evento.classList.add("evento");
+
+              
+              evento.setAttribute("anio", anio);
+              evento.setAttribute("mes", i);
+              evento.setAttribute("dia", j);
+              evento.setAttribute("hora", k);
+
+              evento.setAttribute("contenteditable", true);
+              hora.appendChild(evento);
+              evento.focus();
+            };
+
+            dia.appendChild(hora);
+          }
+
+          mes.appendChild(dia);
+        }
+
+        contenedor.appendChild(mes);
+      }
+    </script>
+  </body>
+</html>
+```
+
+Recuperar localstorage.html:
+```
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Calendario</title>
+    <style>
+      #jvcalendario .mes{display:grid;width:1400px;grid-template-columns:repeat(7,100fr);}
+      #jvcalendario .mes .dia{border:1px solid lightgray;height:250px;padding:10px;font-size:10px;display:flex;flex-direction:column;justify-content:space-between;}
+      #jvcalendario .mes .dia .hora{border-bottom:1px solid lightgray;display:flex;gap:20px;}
+      #jvcalendario .mes .desactivado{background:lightgrey;}
+      #jvcalendario .mes .dia .hora:nth-child(even){background:rgb(240,240,240);}
+      #jvcalendario .mes .dia .hora .evento{color:white;padding:5px;border-radius:5px;width:80%;}
+      .boton{border:0px;border-radius:5px;background:lightgray;padding:10px 20px;}
+      .personal{background:red;color:white;}
+      .laboral{background:green;color:white;}
+      .vacaciones{background:blue;color:white;}
+    </style>
+  </head>
+  <body>
+    <button id="guardar">Guardar</button>
+    <button class="boton personal">personal</button>
+    <button class="boton laboral">laboral</button>
+    <button class="boton vacaciones">vacaciones</button>
+
+    <div id="jvcalendario"></div>
+
+    <script>
+      function bindEvento(el){
+        el.addEventListener("click", function(e){
+          e.stopPropagation();
+        });
+      }
+
+      function diasEnMes(year, month) {
+        return new Date(year, month, 0).getDate();
+      }
+      function primerDiaDelMes(year, month) {
+        return new Date(year, month - 1, 1).getDay();
+      }
+
+      
+      function leerEventosSeguro(clave) {
+        const raw = localStorage.getItem(clave);
+        if (!raw) return [];
+        try {
+          const data = JSON.parse(raw);
+          return Array.isArray(data) ? data : [];
+        } catch (e) {
+          console.error("Error parseando JSON de localStorage:", e);
+          return [];
+        }
+      }
+
+     
+      function pintarEvento(ev) {
+        const selector = `.hora[anio="${ev.anio}"][mes="${ev.mes}"][dia="${ev.dia}"][hora="${ev.hora}"]`;
+        const slotHora = document.querySelector(selector);
+        if (!slotHora) return;
+
+        // Evitar duplicados
+        if (slotHora.querySelector(".evento")) return;
+
+        const evento = document.createElement("div");
+        evento.classList.add("evento");
+        if (ev.tipo) evento.classList.add(ev.tipo);
+
+        evento.setAttribute("anio", ev.anio);
+        evento.setAttribute("mes", ev.mes);
+        evento.setAttribute("dia", ev.dia);
+        evento.setAttribute("hora", ev.hora);
+
+        evento.setAttribute("contenteditable", true);
+        evento.textContent = ev.texto || "";
+
+        slotHora.appendChild(evento);
+        bindEvento(evento);
+      }
+
+      
+      let boton = document.querySelector("#guardar");
+      boton.onclick = function(){
+        let eventos = document.querySelectorAll(".evento");
+        let json = [];
+
+        eventos.forEach(function(evento){
+          const texto = evento.textContent.trim();
+          if (texto === "") return;
+
+          json.push({
+            anio: Number(evento.getAttribute("anio")),
+            mes:  Number(evento.getAttribute("mes")),
+            dia:  Number(evento.getAttribute("dia")),
+            hora: Number(evento.getAttribute("hora")),
+            tipo: evento.classList.contains("personal") ? "personal"
+                 : evento.classList.contains("laboral") ? "laboral"
+                 : evento.classList.contains("vacaciones") ? "vacaciones"
+                 : "",
+            texto: texto
+          });
+        });
+
+        localStorage.setItem("jvcalendario", JSON.stringify(json));
+        console.log("Guardado OK:", json);
+      };
+
+      
+      let calendario_activo = "personal";
+      let botones_calendario = document.querySelectorAll(".boton");
+      botones_calendario.forEach(function(boton){
+        boton.onclick = function(){
+          calendario_activo = this.textContent.trim();
+        };
+      });
+
+      
+      let contenedor = document.querySelector("#jvcalendario");
+      let anio = 2026;
+      let meses = 12;
+      let nombres_meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
+      'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+      for(let i = 1; i <= meses; i++){
+        let dias_en_mes = diasEnMes(anio, i);
+
+        let titulo = document.createElement("h3");
+        titulo.textContent = nombres_meses[i-1];
+        contenedor.appendChild(titulo);
+
+        let mes = document.createElement("div");
+        mes.classList.add("mes");
+        mes.setAttribute("mes", nombres_meses[i-1]);
+
+        let inicio_mes = primerDiaDelMes(anio, i) + 6;
+
+        for(let j = 1; j <= inicio_mes; j++){
+          let dia = document.createElement("div");
+          dia.classList.add("dia", "desactivado");
+          mes.appendChild(dia);
+        }
+
+        for(let j = 1; j <= dias_en_mes; j++){
+          let dia = document.createElement("div");
+          dia.classList.add("dia");
+          dia.textContent = j;
+
+          for(let k = 8; k <= 21; k++){
+            let hora = document.createElement("div");
+            hora.classList.add("hora");
+
+            
+            hora.setAttribute("anio", anio);
+            hora.setAttribute("mes", i);
+            hora.setAttribute("dia", j);
+            hora.setAttribute("hora", k);
+
+            hora.textContent = k;
+
+            hora.onclick = function(){
+              // Evitar duplicados en el slot
+              const existente = hora.querySelector(".evento");
+              if (existente) {
+                existente.focus();
+                return;
+              }
+
+              let evento = document.createElement("div");
+              evento.setAttribute("anio", anio);
+              evento.setAttribute("mes", i);
+              evento.setAttribute("dia", j);
+              evento.setAttribute("hora", k);
+
+              evento.classList.add("evento", calendario_activo);
+              evento.setAttribute("contenteditable", true);
+
+              hora.appendChild(evento);
+              bindEvento(evento);
+              evento.focus();
+            };
+
+            dia.appendChild(hora);
+          }
+
+          mes.appendChild(dia);
+        }
+
+        contenedor.appendChild(mes);
+      }
+
+      
+      const eventosRecuperados = leerEventosSeguro("jvcalendario");
+      eventosRecuperados.forEach(pintarEvento);
+    </script>
+  </body>
+</html>
+```
+
+
+Cuando termino la práctica, compruebo que todo funciona como se pide. Primero, en el archivo del primer ejercicio, al hacer clic en una hora del calendario se crea un evento editable (puedo escribir directamente en él). Para asegurarme de que está bien hecho, abro el inspector del navegador con F12 y reviso el evento creado. Ahí confirmo que el evento tiene exactamente los atributos que me piden, es decir, anio, mes, dia y hora.
+
+En mi caso, al inspeccionarlo me aparece este código:
+```
+<div class="evento" anio="2026" mes="1" dia="1" hora="13" contenteditable="true"></div>
+```
+
+Así que se ve claramente que el evento guarda la fecha y la hora correctamente, y que cumple el objetivo del ejercicio.
+
+Luego, en el segundo archivo, guardo los eventos con el botón Guardar, y lo que hago es convertir los eventos a JSON y almacenarlos en localStorage. Después recargo la página y veo que los eventos se vuelven a mostrar donde estaban, o sea, que realmente se están recuperando correctamente. También tengo controlado el tema de errores con un try/catch por si el JSON estuviese mal o si hubiera algún problema al parsearlo, para que el calendario no se rompa.
+
+En general, esta práctica me ayuda bastante a entender que un calendario no es solo una tabla con días, sino que detrás hay que organizar datos bien y saber guardarlos. Esto lo puedo aplicar perfectamente en proyectos reales, por ejemplo una agenda personal, un calendario de tareas, una app de reservas o incluso para algo tipo “planner” de estudios.

@@ -1,0 +1,90 @@
+Enunciado paso a paso
+Introducción y contexto: Comencemos explorando cómo definir esquemas en lenguajes de marcas para validar documentos XML. Imagina que estás en un campo de juegos de mesa, donde cada jugador tiene una ficha con información sobre él mismo. Similarmente, los esquemas XML nos ayudan a validar la estructura y contenido de nuestros documentos XML.
+
+Desarrollo técnico correcto y preciso: Para definir un esquema XML, necesitamos crear un archivo que describa cómo debe ser el formato de nuestro documento. Este archivo se llama schema.xsd. Vamos a crear un esquema para validar los documentos XML proporcionados.
+
+Aplicación práctica con ejemplo claro: Analicemos el siguiente documento XML:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre>Jose Vicente</nombre>
+  <apellidos>Carratalá Sanchis</apellidos>
+</persona>
+Este es un ejemplo de cómo podríamos definir un esquema para este documento en schema.xsd:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="persona">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="nombre" type="xs:string"/>
+        <xs:element name="apellidos" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+Este esquema asegura que nuestro documento XML tenga un elemento persona con los elementos secundarios nombre y apellidos.
+
+Cierre/Conclusión enlazando con la unidad: Ahora, intenta validar el siguiente documento JSON utilizando un esquema XML equivalente. Recuerda que los esquemas XML son útiles para garantizar la integridad de nuestros documentos y facilitar su procesamiento automático.
+
+Restricciones
+No uses librerías externas ni estructuras no vistas.
+Solo basarte en los archivos proporcionados (003-documento.xml, 002-documento json.json, 001-archivo.html, 004-otro documento.xml).
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante comprende el contexto del ejercicio.
+Desarrollo técnico correcto y preciso (25%): El estudiante define correctamente un esquema XML para validar un documento XML dado.
+Aplicación práctica con ejemplo claro (25%): El estudiante aplica el concepto a otro documento XML o JSON, mostrando comprensión práctica.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante reconoce cómo los esquemas XML pueden facilitar la gestión de información en contextos prácticos.
+
+
+Respuesta:
+
+En esta práctica he aprendido que los esquemas XML (XSD) sirven para comprobar que un documento XML tiene la estructura correcta. Es como un juego de fichas: cada ficha debe tener los datos necesarios, igual que un XML debe tener los elementos que indica su esquema. Gracias a esto, puedo asegurarme de que los datos estén organizados y sean fiables.
+
+1. Con el documento documento.xml que es este:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre>Jose Vicente</nombre>
+  <apellidos>Carratalá Sanchis</apellidos>
+</persona>
+```
+2. Hago el documento schema.xsd para validarlo:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="persona">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="nombre" type="xs:string"/>
+        <xs:element name="apellidos" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+```
+
+3. documentojson.json:
+```
+{
+  "nombre": "Jose Vicente",
+  "apellidos": "Carratalá Sanchis"
+}
+```
+Este documento JSON tiene la misma información que el XML, aunque en un formato diferente. JSON no puede validarse directamente con un esquema XML, pero su estructura lógica es equivalente.
+
+Si esta información se transformara a XML, el resultado sería el documento documento.xml, que sí puede validarse correctamente mediante el esquema XSD definido.
+
+4. otrodocumento.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombrepropio>Jose Vicente</nombrepropio>
+  <apellidos>Carratalá Sanchis</apellidos>
+</persona>
+```
+Este documento está bien formado, pero no es válido, ya que el esquema espera el elemento nombre y no nombrepropio. Esto demuestra la importancia de los esquemas para controlar la estructura exacta de los datos.
+
+Haciendo esta práctica he visto que los esquemas XML ayudan a que los documentos sean coherentes y correctos. Aunque JSON o HTML se usan de otra manera, la idea de mantener los datos ordenados es la misma. Esto me sirve para trabajar con información de forma más clara y segura.

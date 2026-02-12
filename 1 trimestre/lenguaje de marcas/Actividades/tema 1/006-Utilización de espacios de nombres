@@ -1,0 +1,84 @@
+Enunciado paso a paso
+Introducción y contexto (25%)
+
+El alumnado debe abrir el archivo 001-espacio de nombre persona.xml ubicado en /var/www/html/dam2526/Primero/Lenguajes de marcas y sistemas de gestión de información/001-Reconocimiento de las características de lenguajes de marcas/006-Utilización de espacios de nombres/101-Ejercicios/.
+Explique el propósito del archivo, que es describir a un ser humano utilizando elementos XML con espacios de nombres.
+Desarrollo técnico correcto y preciso (25%)
+
+El alumnado debe agregar la información de una nueva persona al documento XML. La nueva persona debe tener los siguientes datos:
+Nombre propio: Ana
+Mote: A
+Edad: 30 años
+Profesión: Diseñadora gráfica
+Utilizar el espacio de nombres https://jocarsa.com/personas para definir todos los elementos.
+Aplicación práctica con ejemplo claro (25%)
+
+El alumnado debe seleccionar una persona del documento XML y modificar su edad a 40 años.
+Añadir un nuevo atributo estado_civil con el valor "soltero" para la misma persona.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El alumnado debe guardar los cambios realizados y cerrar el archivo XML.
+Explique cómo utilizar los espacios de nombres en documentos XML y su importancia para evitar conflictos entre elementos.
+Restricciones
+No se pueden usar librerías externas ni herramientas de edición avanzadas.
+El alumnado solo puede trabajar con el archivo 001-espacio de nombre persona.xml y los conceptos básicos de XML descritos en los materiales de clase.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Correcta explicación del propósito del archivo y el uso de espacios de nombres.
+Desarrollo técnico correcto y preciso (25%)
+
+Añadir correctamente la nueva persona con los datos proporcionados.
+Utilizar correctamente el espacio de nombres en todos los elementos.
+Aplicación práctica con ejemplo claro (25%)
+
+Modificar correctamente la edad de una persona existente.
+Añadir el atributo estado_civil y asignarle el valor correcto.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Explicación clara del uso de espacios de nombres en documentos XML.
+Conexión con los conceptos aprendidos en clase y su aplicación práctica.
+
+
+Respuesta:
+
+
+El archivo XML sirve para describir a una persona usando etiquetas.
+Los espacios de nombres se usan para identificar las etiquetas y evitar el lio si se mezclan datos de diferentes fuentes.
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- En este documento voy a describir a un ser humano -->
+<personas xmlns:per="https://jocarsa.com/personas">
+
+  <per:persona>
+    <per:nombre id="propio">Jose Vicente</per:nombre>
+    <per:nombre id="mote">JV</per:nombre>
+    <per:edad medida="años">47</per:edad>
+    <per:profesion>Programador</per:profesion>
+  </per:persona>
+  
+  <per:persona>
+    <per:nombre id="propio">Jose Vicente</per:nombre>
+    <per:nombre id="mote">JV</per:nombre>
+    <per:edad medida="años">47</per:edad>
+    <per:profesion>Programador</per:profesion>
+  </per:persona>
+  
+  <per:persona>
+    <per:nombre id="propio">Ana</per:nombre>
+    <per:nombre id="mote">A</per:nombre>
+    <per:edad medida="años">40</per:edad>
+    <per:profesion>Diseñadora grafica</per:profesion>
+    <per:estado_civil>Soltero</per:estado_civil>
+  </per:persona>
+  
+</personas>
+```
+
+Los espacios de nombres:
+-Evita conflictos entre elementos con el mismo nombre.
+-Permite combinar datos de diferentes fuentes sin problemas.
+-Facilita que los programas reconozcan y usen correctamente la información.
+
+Conclusion, es importante utilizar espacios de nombres para evitar conflictos entre etiquetas y sea facil de leer.
+Todo lo aprendido teoricamente lo hemos aplicado a la prectica, conclusion, como se aprende realmente es picando codigo y hacer tener la necesidad de hacer algo para que se te quede al escribirlo.

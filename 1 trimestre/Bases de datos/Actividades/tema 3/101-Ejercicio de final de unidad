@@ -1,0 +1,61 @@
+Actividad de final de unidad:
+
+Sobre la base de datos creada en la unidad anterior (portafolio/blog):
+
+-Inserta un numero representativo de articulos de portafolio/blog -Selecciona de varias formas los artículos (fecha ascendiente/descendiente, por ejemplo)
+
+Selecciona desde la vista creada
+
+
+
+
+
+Respuesta:
+
+
+
+En esta actividad he trabajado con la base de datos de mi blog/portafolio creada en la unidad anterior. He insertado varios artículos de portafolio escritos por Serena Sania, que es la única autora. También he aprendido a seleccionar los artículos de diferentes formas, ordenándolos por fecha de manera ascendente o descendente, y a consultar la información desde la vista que creamos anteriormente. Esto me ha ayudado a practicar cómo organizar y mostrar datos de forma clara dentro de una base de datos.
+
+1. Inserto varios artículos en la tabla piezas:
+```
+INSERT INTO piezas (titulo, descripcion, fecha, imagen, autor_id)
+VALUES 
+('Mi primera noticia', 'Descripción de mi primera noticia', '2025-11-01', 'imagen1.jpg', 1),
+('Tutorial de HTML', 'Guía básica de HTML', '2025-11-02', 'imagen2.jpg', 1),
+('Proyecto de JavaScript', 'Pequeño proyecto de JS', '2025-11-05', 'imagen3.jpg', 1);
+```
+
+2. Selecciono los artículos de varias formas:
+-Por fecha ascendente:
+```
+SELECT * FROM piezas
+ORDER BY fecha ASC;
+```
+-Por fecha descendente:
+```
+SELECT * FROM piezas
+ORDER BY fecha DESC;
+```
+-Por autor:
+```
+SELECT * FROM piezas
+WHERE autor_id = 1;
+```
+
+3. Selecciono los artículos desde la vista:
+-Todos los artículos:
+```
+SELECT * FROM vista_piezas_autores;
+```
+-Artículos ordenados por fecha descendente:
+```
+SELECT * FROM vista_piezas_autores
+ORDER BY fecha DESC;
+```
+-Artículos de Serena:
+```
+SELECT * FROM vista_piezas_autores
+WHERE nombre = 'Serena';
+```
+
+Con esta actividad he aprendido a insertar varios registros en la tabla de artículos y a consultarlos de distintas maneras. Además, he usado la vista para ver los datos combinados de las piezas y la autora sin tener que hacer consultas complicadas. Esta práctica me ha permitido entender mejor cómo se manejan los datos en un blog o portafolio y cómo organizar la información de forma sencilla y ordenada dentro de una base de datos.

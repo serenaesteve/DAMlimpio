@@ -1,0 +1,199 @@
+Título
+Análisis y Diseño de una Aplicación para Rastrear Caminatas en el Campo
+
+Contexto
+En tu tiempo libre, disfrutas mucho jugando juegos de mesa que requieren estrategia y planificación, como "El Reino del Dragón". También te encanta explorar los campos naturales con tu perro favorito. Imagina un software que te permita rastrear tus caminatas en el campo, registrando la distancia recorrida, los puntos de interés visitados y las especies de animales observadas.
+
+Enunciado paso a paso
+Análisis de las necesidades del mercado
+
+Identifica tus necesidades como usuario de este software.
+¿Qué información te interesa registrar durante una caminata en el campo?
+¿Cómo deseas visualizar esta información?
+Diseño
+
+Planifica cómo estructurarás tu aplicación.
+Define los archivos y carpetas que necesitarás.
+Considera las tecnologías que podrías utilizar, como HTML, CSS y JavaScript.
+Codificación
+
+Crea una página web con un formulario para ingresar la distancia recorrida.
+Implementa una lista desplegable donde puedas seleccionar los puntos de interés visitados.
+Agrega un campo para registrar las especies de animales observadas.
+Pruebas
+
+Prueba cada función de tu aplicación.
+Verifica que la información se registre correctamente y se muestre en la interfaz.
+Refactoriza el código si es necesario y mejora su estructura.
+Restricciones
+No utilices librerías externas.
+No uses input() o lectura de teclado para obtener datos del usuario.
+Mantén el alcance estricto del tema actual, sin utilizar conocimientos posteriores.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica claramente qué necesitas registrar durante una caminata en el campo.
+Describe cómo estructurarás tu aplicación y qué tecnologías podrías utilizar.
+Desarrollo técnico correcto y preciso (25%)
+
+Muestra un diseño claro con los archivos y carpetas requeridos.
+Implementa cada función de la aplicación sin errores técnicos.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona ejemplos claros de cómo se registrará la información en tu aplicación.
+Muestra cómo se visualizará esta información en la interfaz.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluye el ejercicio, enfatizando cómo este proyecto puede ayudarte a desarrollar habilidades de análisis y diseño de software.
+Relaciona tus experiencias personales (juegos de mesa o exploraciones en el campo) con el desarrollo de esta aplicación.
+
+
+
+
+Respuesta:
+
+
+
+En mi tiempo libre me gusta mucho salir al campo con mi perro y también jugar a juegos de mesa de estrategia. En ambos casos, disfruto planificando, organizando y observando los resultados de mis decisiones.
+
+Por eso, he pensado en crear una aplicación web sencilla que me ayude a rastrear mis caminatas en el campo. Esta aplicación permitiría registrar la distancia recorrida, los puntos de interés visitados y las especies de animales observadas durante la salida.
+
+Así, podría tener un historial de mis paseos y ver qué sitios o animales he conocído.
+
+Como usuaria de esta aplicación, necesito un sistema que sea fácil de usar y que me permita guardar mis caminatas sin complicaciones.
+
+***Necesidades principales:***
+-Registrar la distancia recorrida en kilómetros.
+-Elegir de una lista los puntos de interés que visité.
+-Anotar las especies de animales que observé.
+-Poder ver toda esta información en una misma pantalla de forma ordenada.
+
+***Visualización de los datos:***
+Quiero que la información se muestre de una forma clara y visual. Por ej:
+-Ver una tabla o lista con las caminatas realizadas.
+-Mostrar los datos ingresados justo debajo del formulario, para revisar lo que se registró.
+
+Para este proyecto usaré HTML, CSS y JavaScript, ya que son tecnologías básicas para crear una página web interactiva.
+
+***Descripción del diseño:***
+
+En el archivo index.html, habrá un formulario con:
+-Un campo para introducir la distancia recorrida.
+-Una lista desplegable con puntos de interés (por ejemplo: “Río”, “Mirador”, “Bosque”, “Cueva”).
+-Un campo de texto para escribir las especies de animales observadas.
+-Un botón para guardar la caminata.
+
+En styles.css, se dará formato a los botones, campos y textos.
+
+En script.js, se programará el funcionamiento para que los datos se muestren debajo del formulario cuando se registren.
+
+
+Mi código html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Rastrear Caminatas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Rastreador de Caminatas en el Campo</h1>
+
+  <form id="formCaminata">
+    <label>Distancia recorrida (km):</label>
+    <input type="number" id="distancia" required><br><br>
+
+    <label>Punto de interés visitado:</label>
+    <select id="punto">
+      <option value="Río">Río</option>
+      <option value="Mirador">Mirador</option>
+      <option value="Bosque">Bosque</option>
+      <option value="Cueva">Cueva</option>
+    </select><br><br>
+
+    <label>Especies observadas:</label>
+    <input type="text" id="especies" placeholder="Ejemplo: zorro, águila"><br><br>
+
+    <button type="submit">Guardar caminata</button>
+  </form>
+
+  <h2>Mis caminatas registradas:</h2>
+  <ul id="listaCaminatas"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+
+Mi código CSS:
+```
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8f0;
+  margin: 20px;
+}
+
+h1 {
+  color: #2a7b3d;
+}
+
+form {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px #ccc;
+  width: 300px;
+}
+
+button {
+  background-color: #2a7b3d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1f5d2c;
+}
+```
+
+
+Mi código javascrpt:
+```
+function guardarCaminata() {
+  
+  let distancia = document.getElementById("distancia").value;
+  let punto = document.getElementById("punto").value;
+  let especies = document.getElementById("especies").value;
+
+
+  document.getElementById("listaCaminatas").innerHTML += 
+    "<li>Distancia: " + distancia + " km | Punto: " + punto + " | Especies: " + especies + "</li>";
+
+
+  document.getElementById("distancia").value = "";
+  document.getElementById("especies").value = "";
+
+  /
+  return false;
+```
+
+
+
+***Para comprobar que todo funciona correctamente, he probado lo siguiente:***
+-Ingresar una distancia y verificar que aparece en la lista.
+-Seleccionar distintos puntos de interés y ver que se registran bien.
+-Escribir varias especies y confirmar que se muestran todas.
+-Comprobar que el formulario se limpia después de guardar una caminata.
+-Todo ha funcionado correctamente. Si hubiera errores, podría revisar el código y mejorar su estructura.
+
+
+Con este proyecto he aprendido a crear y programar una aplicación web sencilla.
+Practiqué HTML, CSS y JavaScript, y también cómo organizar archivos y funciones.
+
+Me di cuenta de que mis hobbies, como salir al campo y planificar cosas, pueden ayudarme a crear ideas de software útiles.
+Esta aplicación mezcla mis gustos por la naturaleza y la tecnología, y muestra cómo el análisis y diseño de software se puede usar en la vida real.

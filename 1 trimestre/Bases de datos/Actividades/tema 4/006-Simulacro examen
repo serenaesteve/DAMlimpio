@@ -1,0 +1,180 @@
+Paso 4 · Actividad y entrega
+DNI: 53753034X Curso: DAM1 - Bases de datos Lección: dam2526/Primero/Bases de datos/004-Tratamiento de datos/006-Simulacro examen
+Actividad
+Instrucciones para el Alumnado
+En este ejercicio práctico, se te pedirá que insertes datos en una base de datos relacionada con un blog y luego realices una consulta utilizando un LEFT JOIN. El objetivo es familiarizarte con las inserciones de datos y la relación entre tablas.
+
+Contexto
+Imagine que estás trabajando como un desarrollador web para un pequeño blog que se centra en el campo y los juegos de mesa. Tienes dos tablas principales: autores (que almacena información sobre los autores del blog) y entradas (que contiene las publicaciones realizadas por esos autores). El objetivo es insertar datos en estas tablas y luego realizar una consulta para obtener todas las entradas junto con la información de sus autores.
+
+Enunciado Paso a Paso
+Inserta Datos en la Tabla autores
+
+Inserta los siguientes autores en la tabla autores. Puedes hacerlo utilizando el script proporcionado o insertarlos manualmente en el cliente MySQL.
+INSERT INTO autores (nombre, apellidos, email) VALUES
+('Carlos', 'Pérez Gómez', 'carlos.perez@example.com'),
+('María', 'López Sánchez', 'maria.lopez@example.com'),
+('Javier', 'Martínez Ruiz', 'javier.martinez@example.com');
+Crea la Tabla entradas
+
+Crea la tabla entradas con las columnas necesarias para almacenar los títulos, contenidos y fechas de publicación.
+CREATE TABLE entradas (
+  Identificador INT NOT NULL,
+  titulo VARCHAR(150) NOT NULL,
+  contenido VARCHAR(255) NOT NULL,
+  fecha VARCHAR(50) NOT NULL,
+  autor INT NOT NULL
+) ENGINE=InnoDB;
+Inserta Datos en la Tabla entradas
+
+Inserta algunas entradas en la tabla entradas, asegurándote de que el valor del campo autor coincide con los identificadores de los autores insertados anteriormente.
+INSERT INTO entradas (titulo, contenido, fecha, autor) VALUES
+('Introducción a la programación en Python', 'Una guía para comenzar a programar con Python desde cero.', '2025-01-05', 1),
+('Cómo crear un blog', 'Pasos sencillos para crear tu propio blog.', '2024-12-31', 2);
+Realiza una Consulta LEFT JOIN
+
+Realiza una consulta que combine las tablas entradas y autores utilizando un LEFT JOIN para obtener todas las entradas junto con la información de sus autores.
+SELECT 
+  entradas.titulo,
+  entradas.contenido,
+  entradas.fecha,
+  autores.nombre,
+  autores.apellidos,
+  autores.email
+FROM
+  entradas
+LEFT JOIN autores
+ON entradas.autor = autores.Identificador;
+Restricciones
+No uses librerías externas ni estructuras no vistas en este ejercicio.
+Asegúrate de que todas las consultas y operaciones se realicen dentro del contexto proporcionado.
+Criterios de Evaluación
+Introducción y Contextualización (25%)
+
+Explica brevemente el contexto del ejercicio, mencionando cómo los juegos de mesa y la naturaleza pueden estar relacionados con un blog sobre estos temas.
+Desarrollo Técnico Correcto y Preciso (25%)
+
+Verifica que los datos se inserten correctamente en las tablas autores y entradas.
+Asegúrate de que la consulta LEFT JOIN devuelva todos los registros de las entradas junto con la información correspondiente de sus autores.
+Aplicación Práctica con Ejemplo Claro (25%)
+
+Proporciona ejemplos claros de cómo insertar datos y realizar consultas en el contexto del ejercicio.
+Cierre/Conclusión enlazando con la Unidad (25%)
+
+Concluye el ejercicio explicando cómo los conocimientos adquiridos pueden ser aplicados en proyectos futuros relacionados con bases de datos y desarrollo web para plataformas como blogs que abordan temas específicos.
+
+
+
+
+
+Respuesta:
+
+
+Para este ejercicio, trabajé con un blog enfocado en juegos de mesa y naturaleza. La idea era relacionar los autores que escriben en el blog con las entradas que publican. Esto me permite aprender a insertar datos en tablas y a consultarlos usando un LEFT JOIN, que es muy útil para mostrar toda la información de las entradas junto con los datos de los autores, incluso si algún autor no existe.
+​
+1. Dentro de mi base de datos tengo creada la tabla "autores" y ahora quiero añadir datos a esa tabla:
+```
+INSERT INTO autores (nombre, apellidos, email) VALUES
+('Carlos', 'Pérez Gómez', 'carlos.perez@example.com'),
+('María', 'López Sánchez', 'maria.lopez@example.com'),
+('Javier', 'Martínez Ruiz', 'javier.martinez@example.com');
+```
+​
+2. Ahora creo la tabla entradas:
+```
+CREATE TABLE entradas (
+  Identificador INT NOT NULL AUTO_INCREMENT,
+  titulo VARCHAR(150) NOT NULL,
+  contenido VARCHAR(255) NOT NULL,
+  fecha DATE NOT NULL,
+  autor INT NOT NULL,
+  PRIMARY KEY (Identificador),
+  FOREIGN KEY (autor) REFERENCES autores(Identificador)
+) ENGINE=InnoDB;
+```
+​
+3. Inserto datos a la tabla "entradas":
+```
+INSERT INTO entradas (titulo, contenido, fecha, autor) VALUES
+('Introducción a la programación en Python', 'Una guía para comenzar a programar con Python desde cero.', '2025-01-05', 1),
+('Cómo crear un blog', 'Pasos sencillos para crear tu propio blog.', '2024-12-31', 2);
+```
+​
+4. Haco una consulta con LEFT JOIN:
+```
+SELECT 
+  e.titulo,
+  e.contenido,
+  e.fecha,
+  a.nombre,
+  a.apellidos,
+  a.email
+FROM
+  entradas e
+LEFT JOIN autores a
+ON e.autor = a.Identificador;
+```
+​
+Al ejecutarla veo el titulo, el contenido, la fecha, el nombre, los apellidos y el correo electronico.
+-Con este ejercicio aprendí a:
+-Insertar datos correctamente en varias tablas.
+-Relacionar tablas mediante LEFT JOIN para obtener información completa.
+-Aplicar estos conocimientos en proyectos de desarrollo web, como blogs que combinan contenidos de distintos autores.
+​
+Estos pasos son útiles para cualquier proyecto que implique manejo de bases de datos y presentación de contenido dinámico en un sitio web.
+Autosaved: 08:15 PM52320
+Enviar
+Respuestas guardadas
+#1 · 2025-11-04T19:15:39+00:00
+Para este ejercicio, trabajé con un blog enfocado en juegos de mesa y naturaleza. La idea era relacionar los autores que escriben en el blog con las entradas que publican. Esto me permite aprender a insertar datos en tablas y a consultarlos usando un LEFT JOIN, que es muy útil para mostrar toda la información de las entradas junto con los datos de los autores, incluso si algún autor no existe.
+
+1. Dentro de mi base de datos tengo creada la tabla "autores" y ahora quiero añadir datos a esa tabla:
+```
+INSERT INTO autores (nombre, apellidos, email) VALUES
+('Carlos', 'Pérez Gómez', 'carlos.perez@example.com'),
+('María', 'López Sánchez', 'maria.lopez@example.com'),
+('Javier', 'Martínez Ruiz', 'javier.martinez@example.com');
+```
+
+2. Ahora creo la tabla entradas:
+```
+CREATE TABLE entradas (
+  Identificador INT NOT NULL AUTO_INCREMENT,
+  titulo VARCHAR(150) NOT NULL,
+  contenido VARCHAR(255) NOT NULL,
+  fecha DATE NOT NULL,
+  autor INT NOT NULL,
+  PRIMARY KEY (Identificador),
+  FOREIGN KEY (autor) REFERENCES autores(Identificador)
+) ENGINE=InnoDB;
+```
+
+3. Inserto datos a la tabla "entradas":
+```
+INSERT INTO entradas (titulo, contenido, fecha, autor) VALUES
+('Introducción a la programación en Python', 'Una guía para comenzar a programar con Python desde cero.', '2025-01-05', 1),
+('Cómo crear un blog', 'Pasos sencillos para crear tu propio blog.', '2024-12-31', 2);
+```
+
+4. Haco una consulta con LEFT JOIN:
+```
+SELECT 
+  e.titulo,
+  e.contenido,
+  e.fecha,
+  a.nombre,
+  a.apellidos,
+  a.email
+FROM
+  entradas e
+LEFT JOIN autores a
+ON e.autor = a.Identificador;
+```
+
+Al ejecutarla veo el titulo, el contenido, la fecha, el nombre, los apellidos y el correo electronico.
+-Con este ejercicio aprendí a:
+-Insertar datos correctamente en varias tablas.
+-Relacionar tablas mediante LEFT JOIN para obtener información completa.
+-Aplicar estos conocimientos en proyectos de desarrollo web, como blogs que combinan contenidos de distintos autores.
+
+Estos pasos son útiles para cualquier proyecto que implique manejo de bases de datos y presentación de contenido dinámico en un sitio web.

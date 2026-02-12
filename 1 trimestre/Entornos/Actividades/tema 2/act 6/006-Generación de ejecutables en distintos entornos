@@ -1,0 +1,59 @@
+Actividad: Generación de ejecutables en Visual Studio
+Contexto
+A medida que te sumerges en el mundo de la programación, descubrirás que es crucial saber cómo generar ejecutables en distintos entornos. Este proceso no solo asegura que tu programa funcione correctamente en cualquier lugar, sino que también te permite experimentar con diferentes configuraciones y herramientas para mejorar su rendimiento y eficiencia. En este ejercicio, exploraremos cómo crear un proyecto de C en Visual Studio y generar ejecutables utilizando el complemento compilador de C/C++. Además, aprovecharemos la ayuda integrada de Copilot para acelerar nuestro desarrollo.
+
+Enunciado paso a paso
+Abrir Visual Studio: Inicia tu editor de código preferido (Visual Studio) y crea un nuevo proyecto.
+Crear un archivo de código fuente: Dentro del proyecto, crea un nuevo archivo de texto con extensión .c y nombralo ejemplo.c.
+Escribir el código en C: Abre el archivo ejemplo.c y escribe el siguiente código en C:
+#include <stdio.h>
+
+int main() {
+    printf("Hola, mundo!\n");
+    return 0;
+}
+Configurar el entorno de desarrollo: Asegúrate de tener instalado el complemento compilador de C/C++ en Visual Studio. Si no lo tienes, instálalo desde la tienda de extensiones.
+Generar y ejecutar el programa:
+En el editor, encuentra el botón de play (▶️) que aparece junto a tu archivo ejemplo.c.
+Haz clic en el botón de play para compilar y ejecutar tu programa.
+Verificar la salida: Si todo está configurado correctamente, deberías ver la siguiente salida en una ventana emergente:
+Hola, mundo!
+Restricciones
+No utilices herramientas externas o librerías adicionales para este ejercicio.
+Solo sigue las instrucciones proporcionadas y asegúrate de no utilizar conocimientos que no hayas aprendido en el curso.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica brevemente qué es la generación de ejecutables y por qué es importante.
+Desarrollo técnico correcto y preciso (25%): Describe los pasos que debes seguir para crear un proyecto en Visual Studio, escribir código C, configurar el entorno y generar ejecutables.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo práctico de cómo generar y ejecutar un programa simple en C usando Visual Studio.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre el proceso de generación de ejecutables y cómo esto puede ayudarte a experimentar con diferentes configuraciones y herramientas para mejorar tu desarrollo de software.
+¡Buena suerte con este ejercicio! Recuerda que la práctica es clave para dominar estos conceptos. ¡No dudes en preguntar si necesitas ayuda!
+
+Respuesta:
+
+.La generación de ejecutables es cuando el código que escribimos se convierte en un programa que se puede abrir y usar en el PC, como un archivo .exe en Windows.
+-Nos permite usar el programa sin abrir el editor de código.
+-Nos ayuda a probar y mejorar lo que hacemos.
+En Visual Studio, es fácil porque podemos escribir, compilar y ejecutar el programa facilmente.
+
+Yo para crear proyecto lo que hago es hacer una carpeta en mis documentos con el nombre del proyecto y la extensión (con el lenguaje que vaya a utilizar).
+Despues en VSC lo que hago es darle a open folder y al abrir la carpeta ya se convierte en proyecto en VSC (se que se puede hacer directamente desde visual studio pero digo como yo lo he hecho).
+Ya dentro de esa carpeta/proyecto puedo crear subcarpetas y "hojas" nuevas.
+
+Yo lo he he echo ha sido eso, me he instalado el compilador de C/C++ en Visual Studio, he puesto dentro de mi archivo de texto "ejemplo.c" esto:
+```
+#include <stdio.h>
+
+int main() {
+    printf("Hola, mundo!\n");
+    return 0;
+}
+```
+
+Y la salida del código ha sido:
+
+cd "c:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c\" && gcc ejemplo.c -o ejemplo && "c:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c\"ejemplo
+Hola, mundo!
+
+He conseguido que el codigo saliera por que he instalado MinGW.
+
+Generar un ejecutable nos permite ver nuestro programa funcionando en la computadora. Esto nos ayuda a probarlo, encontrar errores y mejorar nuestro código. También podemos experimentar con diferentes configuraciones para que el programa funcione mejor y más rápido.

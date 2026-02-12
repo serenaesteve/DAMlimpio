@@ -1,0 +1,195 @@
+Actividad: Validación de un Documento XML
+Contexto: En tu tiempo libre, disfrutas jugando videojuegos y explorando los campos naturales cercanos a tu casa. Hoy, decides aplicar lo que has aprendido en clase sobre el uso de esquemas XML para validar documentos.
+
+Enunciado paso a paso:
+
+Abre el archivo 004-documento no valido.xml en un editor de texto.
+Observa las etiquetas y atributos presentes en el documento.
+Crea un nuevo archivo llamado 006-validar campo.py.
+En este archivo, escribe el código necesario para validar el documento XML utilizando el esquema definido en 002-plantilla.xsd.
+Ejecuta el script 006-validar campo.py y verifica si el documento es válido o no.
+Restricciones:
+
+No puedes usar librerías externas ni estructuras que no hayan sido vistas en clase.
+Solo debes utilizar los conceptos explicados en la unidad actual.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): Explica cómo has integrado tus hobbies en el contexto del ejercicio.
+Desarrollo técnico correcto y preciso (25%): Muestra cómo has escrito el código para validar el documento XML utilizando el esquema XSD.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo claro de cómo ejecutar el script y qué resultado esperar.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo esta actividad te ha ayudado a entender mejor los conceptos de validación de documentos XML y cómo aplicarlos en situaciones prácticas.
+
+
+Respuesta:
+
+En mi tiempo libre me gusta jugar a videojuegos y pasear por el campo cerca de mi casa. Estas actividades me enseñan a fijarme en las reglas y en el orden de las cosas. Haciendo este ejercicio de XML he podido aplicar lo mismo: comprobar que un documento sigue unas reglas concretas usando un esquema XSD. Así me aseguro de que la información esté bien organizada y que no haya errores en la estructura del archivo.
+
+002-plantilla.xsd:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <!-- Elemento raíz -->
+  <xs:element name="persona">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="nombre" type="xs:string"/>
+        <xs:element name="apellidos" type="xs:string"/>
+        <xs:element name="profesion" type="xs:string"/>
+
+        <!-- roles -->
+        <xs:element name="roles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rol" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <!-- proyectosDestacados -->
+        <xs:element name="proyectosDestacados">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="proyecto" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <!-- interesesTecnicos -->
+        <xs:element name="interesesTecnicos">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="interes" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <!-- ubicacion -->
+        <xs:element name="ubicacion" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+```
+
+004-documento no valido.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <minombre>Jose Vicente</minombre>
+  <apellidos>Carratalá Sanchis</apellidos>
+  <profesion>Profesor de FP en desarrollo de software</profesion>
+
+  <roles>
+    <rol>Autor de libros técnicos (Python, SQL, etc.)</rol>
+    <rol>Creador de contenidos educativos en YouTube</rol>
+    <rol>Desarrollador de software y soluciones empresariales</rol>
+  </roles>
+
+  <proyectosDestacados>
+    <proyecto>Jocarsa (ecosistema de soluciones SaaS)</proyecto>
+    <proyecto>comoprogramar.es</proyecto>
+    <proyecto>Simulaciones 3D y gráficos en C++/CUDA</proyecto>
+    <proyecto>Modelos educativos fine-tuned con LLMs</proyecto>
+    <proyecto>Aplicaciones web en Flask, PHP, React y Next.js</proyecto>
+  </proyectosDestacados>
+
+  <interesesTecnicos>
+    <interes>Inteligencia Artificial y modelos LLM</interes>
+    <interes>Desarrollo web full stack</interes>
+    <interes>Gráficos 3D y simulaciones</interes>
+    <interes>Educación y automatización docente</interes>
+  </interesesTecnicos>
+
+  <ubicacion>Valencia (España)</ubicacion>
+</persona>
+```
+
+validardenuevo.py:
+```
+import xmlschema
+
+esquema = xmlschema.XMLSchema("002-plantilla.xsd")
+
+if esquema.is_valid("004-documento no valido.xml"):
+    print("✔️ XML válido")
+else:
+    print("❌ XML NO válido")
+    # Mostrar los errores de manera legible
+    for error in esquema.iter_errors("004-documento no valido.xml"):
+        print("-", error)
+```
+
+
+
+Consola:
+
+C:\Users\Serena\Documents\lenguaje de marcas\Actividades\tema 4> python validardenuevo.py
+❌ XML NO válido
+- failed validating <Element 'persona' at 0x0000021519B9B880> with XsdGroup(model='sequence', occurs=[1, 1]):
+
+Reason: Unexpected child with tag 'minombre' at position 1. Tag 'nombre' expected.
+
+Schema component:
+
+  <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" />
+      <xs:element name="apellidos" type="xs:string" />
+      <xs:element name="profesion" type="xs:string" />
+
+
+      <xs:element name="roles">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="rol" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+
+      <xs:element name="proyectosDestacados">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="proyecto" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+    ...
+    ...
+  </xs:complexType>
+
+Instance type: <class 'xml.etree.ElementTree.Element'>
+
+Instance:
+
+  <persona>
+    <minombre>Jose Vicente</minombre>
+    <apellidos>Carratalá Sanchis</apellidos>
+    <profesion>Profesor de FP en desarrollo de software</profesion>
+
+    <roles>
+      <rol>Autor de libros técnicos (Python, SQL, etc.)</rol>
+      <rol>Creador de contenidos educativos en YouTube</rol>
+      <rol>Desarrollador de software y soluciones empresariales</rol>
+    </roles>
+
+    <proyectosDestacados>
+      <proyecto>Jocarsa (ecosistema de soluciones SaaS)</proyecto>
+      <proyecto>comoprogramar.es</proyecto>
+      <proyecto>Simulaciones 3D y gráficos en C++/CUDA</proyecto>
+      <proyecto>Modelos educativos fine-tuned con LLMs</proyecto>
+      <proyecto>Aplicaciones web en Flask, PHP, React y Next.js</proyecto>
+    </proyectosDestacados>
+
+    <interesesTecnicos>
+    ...
+    ...
+  </persona>
+
+Path: /persona
+
+
+C:\Users\Serena\Documents\lenguaje de marcas\Actividades\tema 4>
+
+Con este ejercicio he aprendido a validar documentos XML y a ver si cumplen el esquema XSD. He visto que aunque un archivo tenga toda la información, si las etiquetas no son correctas o están en el orden equivocado, el documento no es válido. Esto me ayuda a entender mejor cómo organizar la información y a asegurarme de que todo esté correcto antes de usarlo en programas o bases de datos.

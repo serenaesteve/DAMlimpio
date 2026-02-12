@@ -1,0 +1,145 @@
+Actividad: Refactorización y Organización del Código
+Contexto
+En este ejercicio, vamos a continuar trabajando en nuestro programa de agenda. El objetivo es mejorar su estructura y legibilidad mediante la refactorización. Imagina que estás desarrollando un juego de mesa donde cada jugador necesita gestionar su inventario. Para ello, hemos creado una función imprimeBienvenida que muestra el mensaje inicial del programa. Ahora, debes añadir más funcionalidades para permitir a los jugadores interactuar con su inventario.
+
+Enunciado paso a paso
+Definición de Funciones: Crea funciones separadas para cada acción que puede realizar un jugador en el juego de mesa.
+
+muestraMenu: Muestra las opciones disponibles al jugador.
+insertarItem: Permite añadir nuevos elementos al inventario del jugador.
+listadoItems: Muestra todos los elementos actuales en el inventario.
+actualizarItem: Modifica la cantidad de un elemento existente en el inventario.
+borrarItem: Elimina un elemento del inventario.
+Uso de Variables Globales: Asegúrate de que las variables globales sean utilizadas adecuadamente para almacenar los datos del juego.
+
+Estructura del Código: Organiza el código en bloques lógicos y legibles, utilizando funciones separadas para cada acción.
+
+Restricciones
+No uses estructuras de control complejas como bucles infinitos.
+Asegúrate de que todas las variables sean globales si es necesario.
+Evita la duplicación de código entre funciones.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe comprender el contexto del ejercicio y cómo se relaciona con su juego de mesa.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe implementar correctamente las funciones separadas y asegurarse de que el código sea legible y funcione como se espera.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe aplicar la refactorización del código de manera práctica, utilizando un ejemplo claro para ilustrar su uso.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio enlazándolo con el tema actual y explicando cómo esta práctica mejora la estructura del código.
+
+
+
+Respuesta:
+
+
+
+Este ejercicio es sobre cómo organizar el código de un programa que gestiona el inventario de un jugador en un juego de mesa.
+Cada jugador puede tener objetos como espadas, pociones o monedas.
+El programa permite agregar, ver, actualizar o borrar esos objetos.
+
+Para que el código sea fácil de leer y usar, cada acción tiene su propia función:
+-Mostrar menú
+-Insertar objeto
+-Listar objetos
+-Actualizar cantidad
+-Borrar objeto
+
+Basicamente, estoy aprendiendo a organizar y simplificar el código, usando un ejemplo práctico que simula un juego de mesa.
+
+```
+inventario = {}
+
+def imprimeBienvenida():
+    print("¡Bienvenido al Juego de Mesa!")
+    print("Aqui puedes gestionar el inventario de tu jugador.\n")
+
+def muestraMenu():
+    print("=== Menu del Inventario ===")
+    print("1. Insertar nuevo item")
+    print("2. Listar items")
+    print("3. Actualizar cantidad de item")
+    print("4. Borrar item")
+    print("5. Salir")
+
+def insertarItem():
+    global inventario
+    nombre = input("Nombre del item: ")
+    cantidad = int(input("Cantidad: "))
+    inventario[nombre] = cantidad
+    print("Item agregado.\n")
+
+def listadoItems():
+    global inventario
+    if not inventario:
+        print("El inventario está vacio.\n")
+    else:
+        print("=== Inventario Actual ===")
+        for item, cantidad in inventario.items():
+            print(item, ":", cantidad)
+        print()
+
+def actualizarItem():
+    global inventario
+    nombre = input("Nombre del item a actualizar: ")
+    if nombre in inventario:
+        nueva = int(input("Nueva cantidad: "))
+        inventario[nombre] = nueva
+        print("Item actualizado.\n")
+    else:
+        print("Ese item no existe.\n")
+
+def borrarItem():
+    global inventario
+    nombre = input("Nombre del item a borrar: ")
+    if nombre in inventario:
+        del inventario[nombre]
+        print("Item eliminado.\n")
+    else:
+        print("Ese item no existe.\n")
+
+
+def main():
+    imprimeBienvenida()
+    muestraMenu()
+    opcion = input("Elige una opcion (1-5): ")
+
+    if opcion == "1":
+        insertarItem()
+    elif opcion == "2":
+        listadoItems()
+    elif opcion == "3":
+        actualizarItem()
+    elif opcion == "4":
+        borrarItem()
+    elif opcion == "5":
+        print("¡Hasta la proxima!")
+    else:
+        print("Opcion no valida.")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Salida del código en la terminal (poniendo de ejemplo la opcion 2):
+
+PS C:\Users\Serena>  python -u "c:\Users\Serena\Documents\Entornos\Actividades\tema 3\inventario.py"
+¡Bienvenido al Juego de Mesa!
+Aqui puedes gestionar el inventario de tu jugador.
+
+=== Menu del Inventario ===
+1. Insertar nuevo item
+2. Listar items
+3. Actualizar cantidad de item
+4. Borrar item
+5. Salir
+Elige una opcion (1-5): 2
+El inventario está vacio.
+
+PS C:\Users\Serena>
+
+
+Estoy haciendo un programa para un juego de mesa donde cada jugador tiene un inventario con objetos (espadas, pociones, monedas, etc.).
+El programa permite agregar, ver, cambiar o borrar esos objetos usando funciones separadas para que el código sea más fácil de entender.
+
+Al organizar el código en funciones:
+-Todo es más claro y fácil de leer.
+-Es más fácil arreglar errores o cambiar cosas.
+-Aprendemos a programar de manera ordenada y profesional.

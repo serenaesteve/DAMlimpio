@@ -1,0 +1,116 @@
+Ejercicio práctico: Trabajando con bases de datos no relacionales
+Contexto:
+En este ejercicio, vamos a trabajar con diferentes tipos de bases de datos no relacionales. Imagina que eres un desarrollador encargado de gestionar información sobre clientes y pedidos en una tienda online. Para esto, utilizaremos archivos JSON como nuestro sistema gestor de base de datos.
+
+Enunciado paso a paso:
+Carga inicial: Crea un archivo llamado datos_clientes.json con el siguiente contenido:
+{
+  "nombre": "Jose Vicente",
+  "apellidos": "Carratala Sanchis",
+  "email": "info@jocarsa.com"
+}
+Añadir información adicional: Abre datos_clientes.json y añade una lista de teléfonos al cliente:
+{
+  "nombre": "Jose Vicente",
+  "apellidos": "Carratala Sanchis",
+  "email": "info@jocarsa.com",
+  "telefonos": [
+    "12345678",
+    "87654321"
+  ]
+}
+Crear pedidos: Crea un archivo llamado pedidos.json con el siguiente contenido:
+{
+  "cliente": {
+    "nombre": "Jose Vicente",
+    "apellidos": "Carratala Sanchis"
+  },
+  "productos": [
+    {"nombre": "Producto 1", "cantidad": 3, "precio": 43},
+    {"nombre": "Producto 2", "cantidad": 2, "precio": 50}
+  ]
+}
+Añadir más detalles al pedido: Abre pedidos.json y añade el precio total del pedido:
+{
+  "cliente": {
+    "nombre": "Jose Vicente",
+    "apellidos": "Carratala Sanchis"
+  },
+  "productos": [
+    {"nombre": "Producto 1", "cantidad": 3, "precio": 43},
+    {"nombre": "Producto 2", "cantidad": 2, "precio": 50}
+  ],
+  "precio_total": 279
+}
+Visualizar los datos: Utiliza un editor de texto para abrir y visualizar los archivos datos_clientes.json y pedidos.json. Asegúrate de que la información esté correctamente estructurada.
+Restricciones:
+No uses librerías externas.
+Mantén el formato JSON como se muestra en los ejemplos.
+Evita cualquier tipo de código o pseudocódigo.
+Criterios de evaluación:
+Introducción y contextualización (25%): El ejercicio debe presentar claramente la situación del proyecto y las bases de datos no relacionales utilizadas.
+Desarrollo técnico correcto y preciso (25%): La estructura y contenido de los archivos JSON deben ser precisos y seguir el formato indicado.
+Aplicación práctica con ejemplo claro (25%): El ejercicio debe incluir pasos claros para cargar e interactuar con los datos en archivos JSON.
+Cierre/Conclusión enlazando con la unidad (25%): El ejercicio debe finalizar con una reflexión sobre cómo esta actividad se relaciona con el tema de bases de datos no relacionales y su uso en proyectos reales.
+Recuerda que este ejercicio es para practicar la estructura y manipulación de datos en archivos JSON, un tipo común de base de datos no relacionales.
+
+
+Respuesta:
+
+En este ejercicio me pongo en la situación de que soy un desarrollador de una tienda online. Mi trabajo es guardar información sobre clientes y pedidos.
+
+En vez de usar una base de datos relacional con tablas (como MySQL), en este ejercicio uso una forma más sencilla de base de datos no relacional: archivos JSON. Esto es un ejemplo de base de datos NoSQL, donde los datos no van en tablas, sino en documentos con estructura tipo texto.
+
+El objetivo es practicar cómo guardar datos en formato JSON y cómo puedo ir añadiendo información cuando lo necesito.
+
+datos_cliente.json:
+```
+{
+  "nombre": "Jose Vicente",
+  "apellidos": "Carratala Sanchis",
+  "email": "info@jocarsa.com",
+  "telefonos": [
+    "12345678",
+    "87654321"
+  ]
+}
+```
+
+pedidos.json:
+```
+{
+  "cliente": {
+    "nombre": "Jose Vicente",
+    "apellidos": "Carratala Sanchis"
+  },
+  "productos": [
+    {"nombre": "Producto 1", "cantidad": 3, "precio": 43},
+    {"nombre": "Producto 2", "cantidad": 2, "precio": 50}
+  ],
+  "precio_total": 279
+}
+```
+
+1. Creo una carpeta para guardarlo todo.
+
+2. Creo el archivo datos_clientes.json y pego el contenido inicial.
+
+3. Guardo el archivo y lo abro para comprobar que esta todo bien.
+
+4. Añado el campo telefonos y vuelvo a guardar.
+
+5. Creo el archivo pedidos.json y escribo el pedido.
+
+6. Abro el archivo para comprobar que está bien estructurado.
+
+7. Añado precio_total y vuelvo a guardar.
+
+8. Abro los dos archivos para comprobar que el JSON está bien escrito (llaves, corchetes y comas).
+
+Con este ejercicio entiendo mejor cómo funciona una base de datos NoSQL usando documentos JSON. Me doy cuenta de que en JSON puedo guardar información de forma muy flexible y añadir campos nuevos fácilmente.
+
+Por ejemplo, puedo añadir teléfonos al cliente o añadir el precio total al pedido sin cambiar tablas ni hacer relaciones.
+
+Comparado con una base de datos relacional, esto es más simple para empezar y es útil cuando los datos pueden cambiar o tener listas dentro.
+
+Basicamente, este ejercicio me ayuda a entender que las bases de datos no relacionales guardan los datos como documentos, y esto se usa mucho en proyectos reales, sobre todo cuando la información es variada o no sigue siempre la misma estructura.

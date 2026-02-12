@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{title_full}}</title>
+<link rel="stylesheet" href="estilochatgpt.css">
+</head>
+<body>
+
+<header>
+<div class="container">
+<nav>
+<a href="index.php">Inicio</a>
+<a href="chat.php">Asistente IA</a>
+<a href="#contacto">Contacto</a>
+</nav>
+</div>
+</header>
+
+<main class="container">
+
+<h1>{{heroetitulo}}</h1>
+<p>{{heroetexto}}</p>
+
+<section id="contacto">
+<form action="enviar.php" method="post">
+<label>Nombre</label>
+<input type="text" name="nombre" required>
+<label>Email</label>
+<input type="email" name="email" required>
+<label>Mensaje</label>
+<textarea name="mensaje" required></textarea>
+<button type="submit">Enviar</button>
+</form>
+</section>
+
+</main>
+
+<footer class="container">
+<p>{{anio}} {{titulo1}}</p>
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+</footer>
+
+</body>
+</html>
+

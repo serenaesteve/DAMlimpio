@@ -1,0 +1,454 @@
+Contexto
+En este ejercicio, vamos a explorar cómo gestionamos una base de datos utilizando Python y SQLite. Imagina que eres un dueño de una pequeña tienda en el campo donde todos tus clientes son amantes del aire libre y apasionados por los animales. Necesitas mantener un registro de tus clientes, productos y pedidos para facilitar la gestión del negocio.
+
+Enunciado paso a paso
+Conectar a la base de datos:
+
+Primero, necesitamos conectar con nuestra base de datos llamada empresa.db. Utiliza el código que se proporciona en los ejercicios anteriores para conectarte correctamente.
+Seleccionar una entidad:
+
+Muestra un menú con las entidades disponibles en la base de datos: clientes, productos y pedidos.
+El usuario debe seleccionar una entidad para realizar operaciones sobre ella.
+Elegir una operación:
+
+Para la entidad seleccionada, muestra opciones como crear un registro, listar registros, actualizar un registro o eliminar un registro.
+El usuario debe elegir la operación que desea realizar.
+Realizar la operación:
+
+Si el usuario elige "Crear un registro", solicita los datos necesarios para insertar un nuevo registro en la tabla seleccionada.
+Si elige "Listado de registros", muestra todos los registros de la tabla seleccionada.
+Si elige "Actualizar un registro", pide al usuario el identificador del registro a actualizar y los nuevos valores.
+Si elige "Eliminar un registro", solicita el identificador del registro que se desea eliminar.
+Restricciones
+Solo puedes usar las funciones y métodos proporcionados en los ejercicios anteriores.
+No puedes utilizar librerías adicionales.
+Asegúrate de manejar correctamente la conexión a la base de datos y cerrarla adecuadamente después de realizar las operaciones.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Muestra una comprensión clara del contexto del ejercicio, relacionado con el negocio en el campo.
+Desarrollo técnico correcto y preciso (25%):
+
+El código debe implementar correctamente las operaciones CRUD (Crear, Leer, Actualizar, Eliminar).
+La interacción con la base de datos debe ser eficiente y segura.
+Aplicación práctica con ejemplo claro (25%):
+
+El usuario debe ser capaz de interactuar con el programa y realizar las operaciones deseadas.
+Proporciona ejemplos claros de cómo insertar, listar, actualizar y eliminar registros en la base de datos.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Concluye el ejercicio relacionándolo con los conceptos aprendidos sobre bases de datos y su gestión.
+Reflexiona sobre cómo estos conocimientos pueden aplicarse en un entorno real, como el negocio del campo.
+
+
+Respuesta:
+
+
+Este programa está diseñado para una pequeña tienda en el campo,donde los clientes son amantes del aire libre y de los animales. 
+El dueño de la tienda necesita llevar un registro de sus clientes, los productos que vende y los pedidos realizados, para gestionar su negocio de manera más eficiente. 
+La base de datos permite almacenar la información de forma organizada, facilita la actualización de datos, el seguimiento de inventario y el control de pedidos, asegurando que la tienda funcione de manera fluida y profesional.
+
+
+Tienda.py :
+```
+import sqlite3
+
+# Conectar con la base de datos (se crea si no existe)
+conn = sqlite3.connect("empresa.db")
+
+# Crear cursor para ejecutar comandos SQL
+cursor = conn.cursor()
+
+# Crear tablas si no existen
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT,
+    email TEXT,
+    telefono TEXT
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS productos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT,
+    precio REAL,
+    stock INTEGER
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_cliente INTEGER,
+    id_producto INTEGER,
+    cantidad INTEGER,
+    FOREIGN KEY(id_cliente) REFERENCES clientes(id),
+    FOREIGN KEY(id_producto) REFERENCES productos(id)
+)
+""")
+
+conn.commit()
+conn.close()
+
+print("Base de datos creada correctamente.")
+```
+
+Salida del código:
+
+python -u "c:\Users\Serena\Documents\Bases de datos\tienda.py"
+Base de datos creada correctamente.
+
+
+Gestor.py :
+```
+import sqlite3
+
+
+def conectar():
+    return sqlite3.connect("empresa.db")
+
+
+def crear_cliente(conn):
+    nombre = input("Nombre del cliente: ")
+    email = input("Email: ")
+    telefono = input("Teléfono: ")
+    conn.execute("INSERT INTO clientes (nombre, email, telefono) VALUES (?, ?, ?)", (nombre, email, telefono))
+    conn.commit()
+    print("Cliente agregado correctamente.\n")
+
+def listar_clientes(conn):
+    cursor = conn.execute("SELECT * FROM clientes")
+    print("\n--- Lista de clientes ---")
+    for fila in cursor:
+        print(fila)
+    print()
+
+def actualizar_cliente(conn):
+    id_cliente = input("ID del cliente a actualizar: ")
+    nombre = input("Nuevo nombre: ")
+    email = input("Nuevo email: ")
+    telefono = input("Nuevo teléfono: ")
+    conn.execute("UPDATE clientes SET nombre=?, email=?, telefono=? WHERE id=?", (nombre, email, telefono, id_cliente))
+    conn.commit()
+    print("Cliente actualizado correctamente.\n")
+
+def eliminar_cliente(conn):
+    id_cliente = input("ID del cliente a eliminar: ")
+    conn.execute("DELETE FROM clientes WHERE id=?", (id_cliente,))
+    conn.commit()
+    print("Cliente eliminado correctamente.\n")
+
+
+def crear_producto(conn):
+    nombre = input("Nombre del producto: ")
+    precio = float(input("Precio: "))
+    stock = int(input("Stock: "))
+    conn.execute("INSERT INTO productos (nombre, precio, stock) VALUES (?, ?, ?)", (nombre, precio, stock))
+    conn.commit()
+    print("Producto agregado correctamente.\n")
+
+def listar_productos(conn):
+    cursor = conn.execute("SELECT * FROM productos")
+    print("\n--- Lista de productos ---")
+    for fila in cursor:
+        print(fila)
+    print()
+
+def actualizar_producto(conn):
+    id_producto = input("ID del producto a actualizar: ")
+    nombre = input("Nuevo nombre: ")
+    precio = float(input("Nuevo precio: "))
+    stock = int(input("Nuevo stock: "))
+    conn.execute("UPDATE productos SET nombre=?, precio=?, stock=? WHERE id=?", (nombre, precio, stock, id_producto))
+    conn.commit()
+    print("Producto actualizado correctamente.\n")
+
+def eliminar_producto(conn):
+    id_producto = input("ID del producto a eliminar: ")
+    conn.execute("DELETE FROM productos WHERE id=?", (id_producto,))
+    conn.commit()
+    print("Producto eliminado correctamente.\n")
+
+
+def crear_pedido(conn):
+    id_cliente = input("ID del cliente: ")
+    id_producto = input("ID del producto: ")
+    cantidad = int(input("Cantidad: "))
+    conn.execute("INSERT INTO pedidos (id_cliente, id_producto, cantidad) VALUES (?, ?, ?)", (id_cliente, id_producto, cantidad))
+    conn.commit()
+    print("Pedido creado correctamente.\n")
+
+def listar_pedidos(conn):
+    cursor = conn.execute("SELECT * FROM pedidos")
+    print("\n--- Lista de pedidos ---")
+    for fila in cursor:
+        print(fila)
+    print()
+
+def eliminar_pedido(conn):
+    id_pedido = input("ID del pedido a eliminar: ")
+    conn.execute("DELETE FROM pedidos WHERE id=?", (id_pedido,))
+    conn.commit()
+    print("Pedido eliminado correctamente.\n")
+
+
+def menu_entidad(entidad, conn):
+    while True:
+        if entidad == "clientes":
+            print("\nOperaciones con CLIENTES:")
+            print("1. Crear")
+            print("2. Listar")
+            print("3. Actualizar")
+            print("4. Eliminar")
+            print("5. Volver")
+            op = input("Opción: ")
+            if op == "1": crear_cliente(conn)
+            elif op == "2": listar_clientes(conn)
+            elif op == "3": actualizar_cliente(conn)
+            elif op == "4": eliminar_cliente(conn)
+            elif op == "5": break
+        elif entidad == "productos":
+            print("\nOperaciones con PRODUCTOS:")
+            print("1. Crear")
+            print("2. Listar")
+            print("3. Actualizar")
+            print("4. Eliminar")
+            print("5. Volver")
+            op = input("Opción: ")
+            if op == "1": crear_producto(conn)
+            elif op == "2": listar_productos(conn)
+            elif op == "3": actualizar_producto(conn)
+            elif op == "4": eliminar_producto(conn)
+            elif op == "5": break
+        elif entidad == "pedidos":
+            print("\nOperaciones con PEDIDOS:")
+            print("1. Crear")
+            print("2. Listar")
+            print("3. Eliminar")
+            print("4. Volver")
+            op = input("Opción: ")
+            if op == "1": crear_pedido(conn)
+            elif op == "2": listar_pedidos(conn)
+            elif op == "3": eliminar_pedido(conn)
+            elif op == "4": break
+
+
+def menu_principal():
+    conn = conectar()
+    while True:
+        print("\n=== TIENDA CAMPO Y HOGAR ===")
+        print("1. Clientes")
+        print("2. Productos")
+        print("3. Pedidos")
+        print("4. Salir")
+        opcion = input("Elige una entidad: ")
+        if opcion == "1": menu_entidad("clientes", conn)
+        elif opcion == "2": menu_entidad("productos", conn)
+        elif opcion == "3": menu_entidad("pedidos", conn)
+        elif opcion == "4": break
+        else: print("Opción no válida")
+    conn.close()
+
+
+if __name__ == "__main__":
+    menu_principal()
+```
+
+Salida del código en la terminal:
+
+PS C:\Users\Serena\Documents\Bases de datos> python gestor.py
+
+=== TIENDA CAMPO Y HOGAR ===
+1. Clientes
+2. Productos
+3. Pedidos
+4. Salir
+Elige una entidad: 1
+
+Operaciones con CLIENTES:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 1
+Nombre del cliente: Serena
+Email: serena@serena.com
+Teléfono: 637383762
+Cliente agregado correctamente.
+
+
+Operaciones con CLIENTES:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 2
+
+--- Lista de clientes ---
+(2, 'Serena', 'serena@serena.com', '637383762')
+
+
+Operaciones con CLIENTES:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 3
+ID del cliente a actualizar: 1
+Nuevo nombre: serenaesteve
+Nuevo email: serenaesteve@gmail.com
+Nuevo teléfono: 63789563
+Cliente actualizado correctamente.
+
+
+Operaciones con CLIENTES:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 4
+ID del cliente a eliminar: 1
+Cliente eliminado correctamente.
+
+
+Operaciones con CLIENTES:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 5
+
+=== TIENDA CAMPO Y HOGAR ===
+1. Clientes
+2. Productos
+3. Pedidos
+4. Salir
+Elige una entidad: 2
+
+Operaciones con PRODUCTOS:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 1
+Nombre del producto: Rosas
+Precio: 15
+Stock: 100
+Producto agregado correctamente.
+
+
+Operaciones con PRODUCTOS:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 2
+
+--- Lista de productos ---
+(1, 'Rosas', 15.0, 100)
+
+
+Operaciones con PRODUCTOS:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 3
+ID del producto a actualizar: 1
+Nuevo nombre: rosas
+Nuevo precio: 15
+Nuevo stock: 50
+Producto actualizado correctamente.
+
+
+Operaciones con PRODUCTOS:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 4
+ID del producto a eliminar: 1
+Producto eliminado correctamente.
+
+
+Operaciones con PRODUCTOS:
+1. Crear
+2. Listar
+3. Actualizar
+4. Eliminar
+5. Volver
+Opción: 5
+
+=== TIENDA CAMPO Y HOGAR ===
+1. Clientes
+2. Productos
+3. Pedidos
+4. Salir
+Elige una entidad: 3
+
+Operaciones con PEDIDOS:
+1. Crear
+2. Listar
+3. Eliminar
+4. Volver
+Opción: 1
+ID del cliente: 1
+ID del producto: 1
+Cantidad: 3
+Pedido creado correctamente.
+
+
+Operaciones con PEDIDOS:
+1. Crear
+2. Listar
+3. Eliminar
+4. Volver
+Opción: 2
+
+--- Lista de pedidos ---
+(1, 1, 1, 3)
+
+
+Operaciones con PEDIDOS:
+1. Crear
+2. Listar
+3. Eliminar
+4. Volver
+Opción: 3
+ID del pedido a eliminar: 1
+Pedido eliminado correctamente.
+
+
+Operaciones con PEDIDOS:
+1. Crear
+2. Listar
+3. Eliminar
+4. Volver
+Opción: 4
+
+=== TIENDA CAMPO Y HOGAR ===
+1. Clientes
+2. Productos
+3. Pedidos
+4. Salir
+Elige una entidad: 4
+PS C:\Users\Serena\Documents\Bases de datos> 
+
+
+
+Con este ejercicio he puesto en práctica la gestión de una base de datos utilizando Python y SQLite, aplicando los conceptos de creación de tablas, inserción, consulta, actualización y eliminación de registros (CRUD). 
+
+He aprendido cómo organizar la información de manera estructurada, cómo interactuar con la base de datos a través de un programa y cómo garantizar la integridad de los datos mediante operaciones controladas. 
+
+Estos conocimientos son fácilmente aplicables a un entorno real, como el de una pequeña tienda en el campo, donde es fundamental mantener un registro de clientes, productos y pedidos. La gestión eficiente de la información permite un mejor control del inventario, seguimiento de ventas y atención al cliente, lo que contribuye directamente al buen funcionamiento y crecimiento del negocio.

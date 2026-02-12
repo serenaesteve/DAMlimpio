@@ -1,0 +1,70 @@
+Actividad: Proceso de Obtención de Código Ejecutable
+El proceso de obtención de código ejecutable a partir del código fuente es un paso fundamental en el desarrollo de software. Este proceso implica una serie de transformaciones y conversiones necesarias para convertir el código escrito por los desarrolladores en programas funcionales. Este ejercicio te permitirá experimentar con la compilación de un programa en C, un lenguaje que requiere este proceso.
+
+Contexto
+Imagine que eres un entusiasta del campo que está interesado en aprender a programar. Durante tus paseos por el campo, encuentras un pequeño proyecto de código en C que te interesa compilar y ejecutar. Este ejercicio te ayudará a entender cómo se realiza este proceso.
+
+Enunciado paso a paso
+Descarga el archivo del proyecto: Descarga el archivo hola_mundo.c desde el repositorio remoto.
+Configura tu entorno de desarrollo: Asegúrate de tener instalado un compilador de C en tu sistema (por ejemplo, GCC).
+Compila el código fuente:
+Abre una terminal o línea de comandos.
+Navega hasta el directorio donde guardaste el archivo hola_mundo.c.
+Ejecuta el siguiente comando para compilar el programa:
+gcc hola_mundo.c -o ejecutable.out
+Ejecuta el programa:
+Después de la compilación exitosa, ejecuta el programa con el siguiente comando:
+./ejecutable.out
+Observa el resultado: Deberías ver la salida Hola mundo en la terminal.
+Restricciones
+No uses lenguajes como Python o Java para este ejercicio.
+Asegúrate de tener instalado GCC en tu sistema.
+Criterios de evaluación
+Introducción y contextualización (25%): Muestra comprensión del proceso de obtención de código ejecutable a partir del código fuente.
+Desarrollo técnico correcto y preciso (25%): Demuestra habilidad técnica al configurar el entorno y realizar la compilación.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo claro de cómo se realiza la compilación y ejecución del programa en C.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye el ejercicio relacionándolo con tus intereses personales, como tu pasión por la naturaleza o los juegos de mesa.
+
+
+Respuesta:
+
+Cuando escribimos un programa en un lenguaje como C, el código no se ejecuta directamente. Primero debe pasar por un proceso llamado compilación, donde se convierte el código fuente en código ejecutable que el PC puede entender.
+Este paso es muy importante en la programación, ya que transforma nuestras ideas escritas en un archivo que puede ejecutarse y producir resultados.
+
+Pasos a seguir:
+1. Descargar el compilador (MinGW)
+2. En la primera pantalla le damos a "install"
+3. En la segunda, comprobar que en la carpeta que se instale sea "C:\MinGW" y de damos a "continuar"
+4. Cuando terminan de descargarse todos los paquetes le volvemos a dar a "continuar"
+5. Nos ponemos encima de "the GNU C++ Compiler", le pulsamos y le damos a "Mark for installaton"
+6. Nos vamos a la barra de arriba y le damos a "installation" y le damos a "Aply Changes" y le damos a "Apply"
+7. Cuanto todo se termina de instalar cerramos el dialogo y cerramos el instalador.
+8. Para comprobar donde esta instalado el compilador nos vamos a nuestros archivos.
+9. Nos vamos a "este equipo" , "disco local" , en la carpeta "MinGW" y dento de esa carpeta en la carpeta "bin"
+10. Dento de es acarpeta ya encontraremos los ejecutables.
+11. Ahora ya tenemos el compilador pero hayq ue hacer que se vea en todo el sistema.
+12. Para hacer que se vea en todo el sistema nos vamos a "Editar las variables de entorno del sistema"
+13. Le damos a "variables de entorno" 
+14. Ahi vemos las variables del sistema y seleccionamos "path" y le damos a "editar"
+15. Creamos una nueva variable de entorno dandole a "Nuevo"
+16. La nueva variable de entorno va a ser esta ruta "C:\MinGW\bin" y le damos a "aceptar" en los 3 paneles que nos aparecen.
+17. Ahora te tenemos el compilador y ademas se puede ver desde cualquier carpeta.
+18. Ahora abriendo la consola y poniendo por ej g++ ya aparece en cualquier carpeta.
+19.  Ahora nos vamos a nuestro archivo de hola_mundo.c y escribimos esto:
+```
+#include <stdio.h>
+
+int main() {
+    printf("Hola, mundo!\n");
+    return 0;
+}
+```
+20.En la consola hacemos un change directory poniendo: cd C:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c y hacemos  >dir (pegado a lo anterior) para comprobar antes de compilar que estamos viendo lo correcto.
+21. Ahora al comprobar que si estamos viendo lo correcto lo que hago es poner (en este caso por que es .c) C:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c>gcc hola_mundo.c -o holamundoenc.exe y le doy a enter.
+22. Si no dice nada (no hay noticias son buenas noticias) quiere decir que ha generado un programa holamundoenc.exe.
+23. A continuación ejecutamos el programa poniendo: C:\Users\Serena\Documents\Entornos\Actividades\proyectoholamundo.c>holamundoenc.exe y le damos a enter.
+24. Ahora si nos aparece " Hola, mundo!".
+
+Este ejercicio me he hecho ver que compilar un programa es como cuidar una planta o jugar un juego de mesa: primero sigues los pasos, luego ves el resultado.
+
+Así como una semilla crece, el código se convierte en un programa que funciona. En el futuro, puedo usar esta técnica para crear mis propios programas paso a paso.

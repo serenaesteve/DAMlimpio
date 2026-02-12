@@ -1,0 +1,65 @@
+Actividad: Explorando la Naturaleza y los Videojuegos
+Contexto
+En un emocionante proyecto de campo, tu grupo de amigos ha decidido explorar una extensa región natural cercana a vuestras casas. Durante este viaje, os habéis divertido mucho jugando a videojuegos en el parque mientras esperabais que la naturaleza se desplegara ante vuestros ojos.
+
+Para documentar esta aventura, cada uno de vosotros ha decidido llevar un diario digital donde anotéis lo que observáis y qué juegos os gustaría jugar en casa. Vuestro objetivo es aprender a organizar y almacenar información de manera eficiente para compartirla con el resto del grupo.
+
+Enunciado paso a paso
+Definir Variables: Cada uno de vosotros debe definir las siguientes variables en su diario digital:
+
+nombre_jugador: Nombre del jugador.
+juegos_jugados: Lista de juegos jugados durante el viaje.
+arboles_contados: Número de árboles que se han contado durante la exploración.
+Ingresar Datos: Añadid información a cada variable:
+
+nombre_jugador = "Juan"
+juegos_jugados = ["Among Us", "Minecraft"]
+arboles_contados = 30
+Imprimir Información: Imprimid en pantalla la información que hayéis recopilado durante el viaje.
+
+Restricciones
+No se pueden usar estructuras de datos complejas como listas o diccionarios.
+Solo se pueden utilizar variables simples y operaciones básicas.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumnado debe mostrar comprensión del contexto del proyecto de campo y cómo los juegos de mesa y la naturaleza están integrados en el mismo.
+Desarrollo técnico correcto y preciso (25%): Las variables deben estar correctamente definidas y asignadas, y las operaciones realizadas deben ser precisas.
+Aplicación práctica con ejemplo claro (25%): El alumnado debe mostrar la capacidad de aplicar los conceptos aprendidos en un contexto práctico, proporcionando ejemplos claros de cómo se han utilizado las variables y qué información se ha recopilado.
+Cierre/Conclusión enlazando con la unidad (25%): El alumnado debe reflexionar sobre cómo esta actividad puede ser útil en su vida diaria y cómo los juegos de mesa y la naturaleza pueden complementarse para aprender y disfrutar juntos.
+
+
+Respuesta:
+
+
+En este ejercicio he creado un diario digital para registrar nuestra salida a la naturaleza. Durante la actividad hemos contado árboles y jugado a videojuegos en el parque. El objetivo es aprender a organizar la información usando variables y poder compartir con mis compañeros lo que hemos hecho y aprendido.
+
+```
+nombre_jugador = "Juan"
+juego1 = "Among Us"
+juego2 = "Minecraft"
+arboles_contados = 30
+
+nombre_jugador2 = "Serena"
+juego1_ana = "Fortnite"
+juego2_ana = "Roblox"
+arboles_contados_ana = 25
+
+print("Diario de exploracion de", nombre_jugador)
+print("Juegos jugados:", juego1, "y", juego2)
+print("Arboles contados durante la exploracion:", arboles_contados)
+
+print("Diario de exploracion de", nombre_jugador2)
+print("Juegos jugados:", juego1_ana, "y", juego2_ana)
+print("Arboles contados durante la exploracion:", arboles_contados_ana)
+```
+
+Salida del código:
+
+[Running] python -u "c:\Users\Serena\Desktop\juego.py"
+Diario de exploracion de Juan
+Juegos jugados: Among Us y Minecraft
+Arboles contados durante la exploracion: 30
+Diario de exploracion de Serena
+Juegos jugados: Fortnite y Roblox
+Arboles contados durante la exploracion: 25
+
+Con este ejercicio he aprendido a organizar y guardar información usando variables simples. Tambien he visto como se puede combinar la naturaleza con los videojuegos para aprender y disfrutar al mismo tiempo. Esta actividad me ayuda a registrar lo que hago y a compartirlo con mis amigos de forma clara y ordenada.

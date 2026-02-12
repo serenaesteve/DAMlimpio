@@ -1,0 +1,64 @@
+Tarea: Identificación y Uso de Conectores en Redes Locales
+Contexto
+En tu tiempo libre, disfrutas jugando a videojuegos en un equipo de juegos de mesa con amigos. Cada uno tiene su propio ordenador portátil, pero todos están conectados a una red local para compartir archivos y jugar juntos sin problemas. Hoy, te gustaría aprender más sobre cómo estos dispositivos se comunican entre sí.
+
+Enunciado paso a paso
+Identificación de Conectores:
+
+Identifica en tu entorno los diferentes tipos de conectores que utilizas para conectar tus dispositivos a la red local. Menciona al menos tres (3) tipos de conectores comunes y su propósito.
+Evaluación de Conectores:
+
+Basándote en lo que has aprendido sobre los conectores, evalúa cuál de estos sería el más adecuado para conectar tu ordenador portátil a la red local. Justifica tu elección con las ventajas y desventajas de cada uno.
+Aplicación Práctica:
+
+Imagina que estás instalando un nuevo adaptador de red en tu sistema operativo. Para qué tipo de conexión sería útil este adaptador? Describe cómo configurarías el protocolo TCP/IP para esta conexión.
+Restricciones
+No utilices conocimientos sobre conectores no vistos en clase.
+Evita hablar de cableado inalámbrico o tecnologías avanzadas de red que no se han cubierto en la asignatura.
+Criterios de evaluación
+Introducción y contextualización (25%): Muestra comprensión del contexto y relevancia de los conectores en una red local.
+Desarrollo técnico correcto y preciso (25%): Identifica correctamente los tipos de conectores y explica sus funciones con precisión.
+Aplicación práctica con ejemplo claro (25%): Evalúa adecuadamente el uso de un tipo de conexión en una red local y propone configuraciones técnicas correctas.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye relacionando lo aprendido con los conocimientos previos sobre cableado y conectores en sistemas microinformáticos.
+
+Respuesta:
+
+En mi tiempo libre, me gusta jugar videojuegos con mis amigos usando una red local (LAN). Cada uno tiene su portátil y todos están conectados para compartir archivos y jugar juntos. Para que esto funcione, es importante conocer los conectores, que son las partes donde se conectan los cables a los dispositivos. Sin ellos, no sería posible tener una red rápida y segura.
+
+
+-***RJ45:*** Es uno de los conectores más usados para conectar PCs y otros dispositivos a una red local con un cable llamado “Ethernet”. Es muy común porque tiene buena velocidad y va muy bien.
+-***USB:*** Aunque no es exclusivo de las redes, muchos dispositivos usan USB para compartir archivos, impresoras o periféricos como ratones y teclados. También se puede usar un adaptador USB a Ethernet para conectar a una red si el PC no tiene puerto de red.
+-***Fibra Óptica:*** Estos conectores se usan para enviar datos muy rápido y a largas distancias. No se ven mucho en casas, pero sí en empresas o sitios grandes.
+
+Conector más adecuado: RJ45
+El RJ45 es el conector más recomendado para conectar un portátil a una red local, sobre todo si necesitas buena velocidad y una conexión estable.
+
+***1. RJ45***
+Ventajas:
+-Alta velocidad de conexión.
+-Conexión muy estable.
+
+Desventajas:
+-Necesita un cable físico.
+-El portátil debe tener un puerto RJ45.
+
+***2. USB (con adaptador a red)***
+Ventajas:
+-Útil si tu portátil no tiene puerto RJ45.
+-Fácil de usar con un adaptador USB a Ethernet.
+
+Desventajas:
+-Puede ser un poco más lento que el RJ45. 
+
+
+***3. Fibra óptica***
+Ventajas:
+-Muchísima velocidad y largo alcance.
+
+Desventajas:
+-No se usa en casa ni en portátiles directamente.
+-Es caro y necesita equipos especiales.
+
+El nuevo adaptador es útil cuando tu portátil no tiene puerto Ethernet integrado, pero quieres conectarte a una red local con cable para tener una conexión más rápida y estable que el Wi-Fi.
+
+Esta actividad me ha ayudado a conocer mejor los conectores que hay y para que sirven. Esto hace que yo en mi dia dia si tengo alguna necesidad pueda sbaer que conector debo utilizar y cual no.

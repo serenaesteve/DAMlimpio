@@ -1,0 +1,66 @@
+Contexto
+En nuestra clase de desarrollo de software, hemos aprendido sobre el control de versiones utilizando Git y herramientas como GitHub. Imagina que eres un entusiasta de los juegos de mesa que también disfruta mucho del campo, lo que te lleva a llevar una vida muy activa. Para mantener tus habilidades frescas y aprender algo nuevo, decides aplicar lo que has aprendido en este contexto.
+
+Enunciado paso a paso
+Clonando el repositorio:
+
+Abre tu entorno de desarrollo favorito (como Visual Studio Code).
+Utiliza la función Clona un repositorio y proporciona la URL del repositorio que te han compartido en clase.
+Realizando cambios:
+
+En el archivo segund version.py, cambia el texto de la impresión para decir: "Hola, que tal como estás, disfrutando del campo".
+Guarda los cambios y realiza un commit con un mensaje descriptivo.
+Actualizando desde el servidor:
+
+Antes de subir tus cambios, asegúrate de tener las últimas versiones del repositorio ejecutando fetch en tu terminal o interfaz gráfica.
+Luego, utiliza pull para traer los cambios remotos a tu máquina.
+Subiendo los cambios al servidor:
+
+Finalmente, sube tus cambios al servidor utilizando push.
+Restricciones
+No uses herramientas externas que no hayamos visto en clase.
+Mantén el foco en la práctica del control de versiones y las funciones básicas de Git.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+El alumno debe mostrar comprensión del contexto y cómo aplicar lo aprendido a un caso práctico.
+Desarrollo técnico correcto y preciso (25%):
+
+Los cambios en el código deben ser precisos y los commits descriptivos.
+Aplicación práctica con ejemplo claro (25%):
+
+El alumno debe mostrar que ha entendido cómo usar fetch, pull y push correctamente.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+El alumno debe explicar cómo estos conceptos se aplican a su vida diaria, especialmente considerando sus hobbies de juegos de mesa y el campo.
+
+
+
+
+Respuesta:
+
+
+
+
+En clase hemos aprendido a usar Git para controlar las versiones de nuestro código y trabajar con repositorios en GitHub. Para practicar, decidí aplicar lo aprendido en algo que me gusta: los juegos de mesa y el campo.
+Como me gusta estar activa y aprender cosas nuevas, pensé que sería divertido practicar Git mientras modifico un pequeño proyecto de Python relacionado con esto. Así puedo mejorar mis habilidades y acostumbrarme al flujo de trabajo con repositorios.
+
+1. Creo mi archivo .py y lo subo a mi repositorio desde github desktop dandole a commit y despues push.
+2. Ahora quiero cambiar el contenido de mi archivo .py entonces entro en mi entorno ( que es donde he desarrollado el código) y modifico el contenido del código.
+3. Al modificarlo lo guardo y me vuelvo a ir a mi github desktop , ahi me sale un aviso de como que mi archivo ha sido modificado entonces lo que yo hago para poder subir ese cambo es poner un summary poniendo por ejemplo segunda version y ya le puedo dar a commit y a push.
+4. Ahora dentro de mi repositorio desde GITHUB (en el navegador) ya entro en mi archico y si le doy a historial me saldra la primera version y la segunda.
+
+
+Mi primera version fue:
+```
+print("Hola, que tal como estas, disfrutando de la playa")
+```
+
+Mi segunda version fue:
+```
+print("Hola, que tal como estas, drisfrutando del campo")
+```
+
+Gracias a esta actividad entendí cómo Git me ayuda a trabajar de forma ordenada y segura, tanto en proyectos de clase como en proyectos personales.
+Al igual que cuando juego o salgo al campo, en programación también es importante planificar, seguir pasos y adaptarse a los cambios.
+Ahora me siento más cómoda usando Git y GitHub, y creo que con la práctica voy a mejorar mucho más en este tipo de tareas.

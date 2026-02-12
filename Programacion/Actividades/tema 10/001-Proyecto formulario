@@ -1,0 +1,643 @@
+Para practicar el concepto imparto en clase, sigue estos pasos:
+
+Exploración del código: Abre el archivo PHP proporcionado y familiarízate con su estructura general. Identifica las partes donde se maneja la autenticación de usuarios, la conexión a la base de datos, y los procesos de mostrar y actualizar información.
+
+Desarrollo de nuevas funcionalidades: En el código, busca áreas donde podrías agregar nuevas características. Por ejemplo, puedes implementar un sistema que envíe notificaciones por correo electrónico cuando se actualice el estado CRM de una inscripción o cuando lleguen nuevos correos electrónicos a un contacto.
+
+Pruebas y depuración: Realiza pruebas exhaustivas del código para asegurar que todas las funcionalidades trabajen correctamente. Utiliza herramientas como Xdebug o simplemente imprime variables clave en el código para verificar los valores esperados.
+
+Documentación: Mientras desarrollas, documenta tus modificaciones y decisiones. Esto puede ser una simple nota en un archivo README.md o incluso comentarios dentro del código que expliquen por qué se implementó cierta funcionalidad.
+
+Refactorización: Una vez que hayas terminado de agregar nuevas características, realiza refactorizaciones para mejorar la estructura y legibilidad del código. Esto puede incluir el uso de funciones más pequeñas, la eliminación de duplicados, o la optimización de consultas a la base de datos.
+
+Práctica con ejemplos: Asegúrate de entender completamente cada parte del ejemplo proporcionado. Trata de replicar los pasos que se realizan en el código, pero con diferentes valores y condiciones para ver cómo funcionan las funciones y las estructuras de control.
+
+Exploración de la documentación de PHP: Para profundizar tus conocimientos, investiga sobre las funciones y métodos utilizados en el código. Por ejemplo, puedes aprender más sobre mysqli::prepare, PDO, o sobre cómo manejar sesiones seguras en PHP.
+
+Práctica con juegos de mesa y videojuegos: Utiliza la práctica del juego de mesa para simular diferentes escenarios de negocio y aplicar lo que has aprendido en el código. Por ejemplo, puedes crear un sistema de gestión de proyectos donde los jugadores puedan asignar tareas a diferentes miembros del equipo y ver cómo cambia el estado de cada tarea.
+
+Práctica con la naturaleza: Aplica tus conocimientos sobre bases de datos y programación para gestionar información relacionada con la naturaleza, como observaciones de animales o recolección de muestras. Por ejemplo, puedes crear un sistema que registre diferentes tipos de flora y fauna y muestre estadísticas basadas en los registros.
+
+Práctica con libros y series/películas: Utiliza tus conocimientos sobre bases de datos para gestionar información relacionada con los libros o películas que has leído o visto. Por ejemplo, puedes crear un sistema que registre diferentes géneros y muestre las películas más populares en cada género.
+
+Recuerda que la práctica es clave para dominar estos conceptos. Intenta aplicar lo que has aprendido en diferentes contextos y escenarios para consolidar tus conocimientos.
+
+Respuesta:
+
+En este ejercicio realizo una práctica en PHP y MySQL para aprender a trabajar con bases de datos y formularios. El objetivo es crear un sistema sencillo donde puedo iniciar sesión como usuario, ver información guardada en la base de datos y actualizar el estado de una inscripción.
+​
+Con esta práctica trabajo conceptos básicos como la conexión a la base de datos, el uso de sesiones para el login, la actualización de datos y el registro de cambios. También practico cómo guardar información de forma segura y organizada.
+​
+1. Creo la base de datos:
+```
+CREATE DATABASE crm_practica
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+```
+​
+2. Añado tablas:
+```
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  nombre VARCHAR(100) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+​
+CREATE TABLE inscripciones (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre_contacto VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  estado_crm VARCHAR(50) NOT NULL DEFAULT 'pendiente',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+​
+CREATE TABLE crm_estado_log (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  inscripcion_id INT NOT NULL,
+  user_id INT NULL,
+  estado_anterior VARCHAR(50) NOT NULL,
+  estado_nuevo VARCHAR(50) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (inscripcion_id) REFERENCES inscripciones(id)
+);
+​
+CREATE TABLE notificaciones_email (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  destinatario VARCHAR(255) NOT NULL,
+  asunto VARCHAR(255) NOT NULL,
+  cuerpo TEXT NOT NULL,
+  estado ENUM('pendiente','enviada','error') DEFAULT 'pendiente',
+  intentos INT DEFAULT 0,
+  last_error TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  sent_at DATETIME NULL
+);
+```
+​
+3. Inserto datos:
+```
+INSERT INTO usuarios (email, password, nombre)
+VALUES (
+  'serena@gmail.com',
+  'TAME123$',
+  'Serena Sania'
+);
+​
+INSERT INTO inscripciones (nombre_contacto, email, estado_crm) VALUES
+('Thais Esteve', 'thais@gmail.com', 'pendiente'),
+('Hector López', 'hector@gmail.com', 'contactado'),
+('Jonathan Torres', 'Jonathan@gmail.com', 'aprobado');
+```
+​
+config.php:
+```
+<?php
+​
+declare(strict_types=1);
+​
+return [
+  'db' => [
+    'host' => 'localhost',
+    'user' => 'root',
+    'pass' => '',
+    'name' => 'crm_practica',
+  ],
+​
+  
+  'mail' => [
+    'from' => 'serena@jocarsa.com',
+  ],
+];
+```
+​
+cron_send_emails.php:
+```
+<?php
+declare(strict_types=1);
+​
+require_once __DIR__ . '/lib/db.php';
+​
+$cfg = require __DIR__ . '/config.php';
+$from = $cfg['mail']['from'] ?? 'no-reply@tudominio.com';
+​
+function send_mail_simple(string $to, string $subject, string $body, string $from): bool {
+  $headers = "From: {$from}\r\n" .
+             "Content-Type: text/plain; charset=UTF-8\r\n";
+  return mail($to, $subject, $body, $headers);
+}
+​
+$conn = db();
+$stmt = $conn->prepare("
+  SELECT id, destinatario, asunto, cuerpo, intentos
+  FROM notificaciones_email
+  WHERE estado='pendiente'
+  ORDER BY created_at ASC
+  LIMIT 20
+");
+$stmt->execute();
+$res = $stmt->get_result();
+$items = $res->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+​
+foreach ($items as $n) {
+  $id = (int)$n['id'];
+  $to = (string)$n['destinatario'];
+​
+  $ok = false;
+  $err = null;
+​
+  try {
+    $ok = send_mail_simple($to, (string)$n['asunto'], (string)$n['cuerpo'], $from);
+    if (!$ok) $err = "mail() devolvió false (SMTP local no configurado?)";
+  } catch (Throwable $e) {
+    $ok = false;
+    $err = $e->getMessage();
+  }
+​
+  if ($ok) {
+    $stmt2 = $conn->prepare("UPDATE notificaciones_email SET estado='enviada', sent_at=NOW(), last_error=NULL WHERE id=?");
+    $stmt2->bind_param("i", $id);
+    $stmt2->execute();
+    $stmt2->close();
+    echo "ENVIADA #{$id} -> {$to}\n";
+  } else {
+    $intentos = ((int)$n['intentos']) + 1;
+    $stmt2 = $conn->prepare("UPDATE notificaciones_email SET estado='error', intentos=?, last_error=? WHERE id=?");
+    $stmt2->bind_param("isi", $intentos, $err, $id);
+    $stmt2->execute();
+    $stmt2->close();
+    echo "ERROR #{$id} -> {$to}: {$err}\n";
+  }
+}
+```
+​
+index.php:
+```
+<?php
+declare(strict_types=1);
+​
+require_once __DIR__ . '/lib/auth.php';
+start_session();
+​
+if (!empty($_SESSION['user_id'])) {
+  header('Location: inscripciones.php');
+  exit;
+}
+​
+header('Location: login.php');
+exit;
+```
+​
+inscripciones.php:
+```
+<?php
+declare(strict_types=1);
+​
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/csrf.php';
+​
+require_login();
+​
+$conn = db();
+$res = $conn->query("SELECT id, nombre_contacto, email, estado_crm, created_at FROM inscripciones ORDER BY created_at DESC");
+$inscripciones = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+​
+$estados = ['pendiente','contactado','aprobado','rechazado'];
+​
+$msg = $_GET['msg'] ?? '';
+?>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Inscripciones</title>
+</head>
+<body>
+  <h1>Inscripciones</h1>
+  <p>Hola, <?= htmlspecialchars(current_user_name() ?? 'usuario') ?> — <a href="logout.php">Salir</a></p>
+​
+  <?php if ($msg === 'actualizado'): ?>
+    <p style="color:green;">Estado actualizado y notificación encolada (si había email).</p>
+  <?php elseif ($msg === 'sin_cambios'): ?>
+    <p style="color:gray;">No hubo cambios.</p>
+  <?php endif; ?>
+​
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Contacto</th>
+        <th>Email</th>
+        <th>Estado CRM</th>
+        <th>Creado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($inscripciones as $i): ?>
+      <tr>
+        <td><?= (int)$i['id'] ?></td>
+        <td><?= htmlspecialchars((string)$i['nombre_contacto']) ?></td>
+        <td><?= htmlspecialchars((string)$i['email']) ?></td>
+        <td><?= htmlspecialchars((string)$i['estado_crm']) ?></td>
+        <td><?= htmlspecialchars((string)$i['created_at']) ?></td>
+        <td>
+          <form method="post" action="update_estado.php" style="margin:0;">
+            <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
+            <input type="hidden" name="inscripcion_id" value="<?= (int)$i['id'] ?>">
+            <select name="estado_crm">
+              <?php foreach ($estados as $e): ?>
+                <option value="<?= htmlspecialchars($e) ?>" <?= $e === $i['estado_crm'] ? 'selected' : '' ?>>
+                  <?= htmlspecialchars($e) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+            <button type="submit">Actualizar</button>
+          </form>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+​
+  <p>
+    Para enviar emails pendientes: ejecuta <code>php cron_send_emails.php</code>
+  </p>
+</body>
+</html>
+```
+​
+login.php;
+```
+<?php
+declare(strict_types=1);
+​
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/csrf.php';
+​
+start_session();
+​
+$error = null;
+​
+​
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  csrf_verify($_POST['csrf'] ?? '');
+​
+  $email = trim((string)($_POST['email'] ?? ''));
+  $pass  = (string)($_POST['password'] ?? '');
+​
+  if ($email === '' || $pass === '') {
+    $error = "Faltan datos.";
+  } else {
+    $conn = db();
+    $stmt = $conn->prepare("SELECT id, nombre, password FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $u = $res->fetch_assoc();
+    $stmt->close();
+​
+    if (!$u || !password_verify($pass, (string)$u['password'])) {
+      $error = "Credenciales incorrectas.";
+    } else {
+      session_regenerate_id(true);
+      $_SESSION['user_id']   = (int)$u['id'];
+      $_SESSION['user_name'] = (string)$u['nombre'];
+      header('Location: inscripciones.php');
+      exit;
+    }
+  }
+}
+​
+if (isset($_GET['seed']) && $_GET['seed'] === '1') {
+  $conn = db();
+​
+  $emailDemo     = 'serena@gmail.com';
+  $passwordPlano = 'TAME123$';
+  $passHash      = password_hash($passwordPlano, PASSWORD_DEFAULT);
+  $nombre        = 'Serena Sania';
+​
+​
+  $stmt = $conn->prepare("DELETE FROM usuarios WHERE email = ?");
+  $stmt->bind_param("s", $emailDemo);
+  $stmt->execute();
+  $stmt->close();
+​
+​
+  $stmt = $conn->prepare(
+    "INSERT INTO usuarios (email, password, nombre) VALUES (?, ?, ?)"
+  );
+  $stmt->bind_param("sss", $emailDemo, $passHash, $nombre);
+  $stmt->execute();
+  $stmt->close();
+​
+  header('Location: login.php?msg=seed_ok');
+  exit;
+}
+?>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Login CRM</title>
+</head>
+<body>
+​
+<h1>Login</h1>
+​
+<?php if (!empty($_GET['msg']) && $_GET['msg'] === 'seed_ok'): ?>
+  <p style="color:green;">
+    Usuario creado correctamente:<br>
+    <strong>serena@gmail.com</strong> / <strong>TAME123$</strong>
+  </p>
+<?php endif; ?>
+​
+<?php if ($error): ?>
+  <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+<?php endif; ?>
+​
+<form method="post">
+  <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
+​
+  <div>
+    <label>Email</label><br>
+    <input name="email" type="email" required>
+  </div>
+​
+  <div>
+    <label>Password</label><br>
+    <input name="password" type="password" required>
+  </div>
+​
+  <button type="submit">Entrar</button>
+</form>
+​
+<hr>
+​
+<p>
+  Crear usuario de prueba automáticamente:
+  <a href="login.php?seed=1">seed</a>
+</p>
+​
+</body>
+</html>
+```
+​
+logout.php:
+```
+<?php
+declare(strict_types=1);
+​
+require_once __DIR__ . '/lib/auth.php';
+start_session();
+​
+$_SESSION = [];
+session_destroy();
+​
+header('Location: login.php');
+exit;
+```
+​
+update_estado.php:
+```
+<?php
+declare(strict_types=1);
+​
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/csrf.php';
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/notify.php';
+​
+require_login();
+​
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  http_response_code(405);
+  echo "Método no permitido";
+  exit;
+}
+​
+csrf_verify($_POST['csrf'] ?? '');
+​
+$inscripcionId = isset($_POST['inscripcion_id']) ? (int)$_POST['inscripcion_id'] : 0;
+$nuevoEstado   = isset($_POST['estado_crm']) ? trim((string)$_POST['estado_crm']) : '';
+​
+$permitidos = ['pendiente','contactado','aprobado','rechazado'];
+if ($inscripcionId <= 0 || $nuevoEstado === '' || !in_array($nuevoEstado, $permitidos, true)) {
+  http_response_code(400);
+  echo "Datos inválidos";
+  exit;
+}
+​
+$conn = db();
+$conn->begin_transaction();
+​
+try {
+  // Bloqueo fila
+  $stmt = $conn->prepare("SELECT estado_crm FROM inscripciones WHERE id = ? FOR UPDATE");
+  $stmt->bind_param("i", $inscripcionId);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  $row = $res->fetch_assoc();
+  $stmt->close();
+​
+  if (!$row) throw new Exception("Inscripción no encontrada");
+​
+  $anterior = (string)$row['estado_crm'];
+​
+  if ($anterior === $nuevoEstado) {
+    $conn->commit();
+    header("Location: inscripciones.php?msg=sin_cambios");
+    exit;
+  }
+​
+  $stmt = $conn->prepare("UPDATE inscripciones SET estado_crm = ? WHERE id = ?");
+  $stmt->bind_param("si", $nuevoEstado, $inscripcionId);
+  $stmt->execute();
+  $stmt->close();
+​
+  log_estado_change($inscripcionId, current_user_id(), $anterior, $nuevoEstado);
+​
+  $email = get_inscripcion_email($inscripcionId);
+  if ($email) {
+    $subject = "Actualización de tu inscripción #{$inscripcionId}";
+    $body =
+      "Hola,\n\n".
+      "El estado CRM de tu inscripción ha cambiado:\n".
+      "- Antes: {$anterior}\n".
+      "- Ahora: {$nuevoEstado}\n\n".
+      "Saludos.";
+    enqueue_email($email, $subject, $body);
+  }
+​
+  $conn->commit();
+  header("Location: inscripciones.php?msg=actualizado");
+  exit;
+​
+} catch (Throwable $e) {
+  $conn->rollback();
+  http_response_code(500);
+  echo "Error: " . htmlspecialchars($e->getMessage());
+  exit;
+}
+```
+​
+auth.php:
+```
+<?php
+​
+declare(strict_types=1);
+​
+function start_session(): void {
+  if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+  }
+}
+​
+function require_login(): void {
+  start_session();
+  if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+  }
+}
+​
+function current_user_id(): ?int {
+  start_session();
+  return isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+}
+​
+function current_user_name(): ?string {
+  start_session();
+  return isset($_SESSION['user_name']) ? (string)$_SESSION['user_name'] : null;
+}
+```
+​
+csrf.php:
+```
+<?php
+​
+declare(strict_types=1);
+​
+require_once __DIR__ . '/auth.php';
+​
+function csrf_token(): string {
+  start_session();
+  if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+  }
+  return $_SESSION['csrf_token'];
+}
+​
+function csrf_verify(string $token): void {
+  start_session();
+  if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
+    http_response_code(403);
+    echo "CSRF inválido";
+    exit;
+  }
+}
+```
+​
+db.php:
+```
+<?php
+​
+declare(strict_types=1);
+​
+function db(): mysqli {
+  static $conn = null;
+  if ($conn instanceof mysqli) return $conn;
+​
+  $cfg = require __DIR__ . '/../config.php';
+  $db = $cfg['db'];
+​
+  $conn = new mysqli($db['host'], $db['user'], $db['pass'], $db['name']);
+  if ($conn->connect_error) {
+    throw new Exception("DB error: " . $conn->connect_error);
+  }
+  $conn->set_charset('utf8mb4');
+  return $conn;
+}
+```
+​
+notify.php:
+```
+<?php
+​
+declare(strict_types=1);
+​
+require_once __DIR__ . '/db.php';
+​
+function enqueue_email(string $to, string $subject, string $body): void {
+  $conn = db();
+  $stmt = $conn->prepare("INSERT INTO notificaciones_email (destinatario, asunto, cuerpo) VALUES (?, ?, ?)");
+  $stmt->bind_param("sss", $to, $subject, $body);
+  $stmt->execute();
+  $stmt->close();
+}
+​
+function log_estado_change(int $inscripcionId, ?int $userId, string $old, string $new): void {
+  $conn = db();
+  if ($userId === null) {
+    $stmt = $conn->prepare("INSERT INTO crm_estado_log (inscripcion_id, user_id, estado_anterior, estado_nuevo) VALUES (?, NULL, ?, ?)");
+    $stmt->bind_param("iss", $inscripcionId, $old, $new);
+    $stmt->execute();
+    $stmt->close();
+    return;
+  }
+​
+  $stmt = $conn->prepare("INSERT INTO crm_estado_log (inscripcion_id, user_id, estado_anterior, estado_nuevo) VALUES (?, ?, ?, ?)");
+  $stmt->bind_param("iiss", $inscripcionId, $userId, $old, $new);
+  $stmt->execute();
+  $stmt->close();
+}
+​
+function get_inscripcion_email(int $inscripcionId): ?string {
+  $conn = db();
+  $stmt = $conn->prepare("SELECT email FROM inscripciones WHERE id = ?");
+  $stmt->bind_param("i", $inscripcionId);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  $row = $res->fetch_assoc();
+  $stmt->close();
+  if (!$row || empty($row['email'])) return null;
+  return (string)$row['email'];
+}
+```
+​
+proyectoformulario/
+├─ login.php
+├─ inscripciones.php
+├─ config.php
+├─ lib/
+│  ├─ db.php
+│  ├─ auth.php
+│  ├─ csrf.php
+│  └─ notify.php
+​
+​
+Para realizar este ejercicio, primero preparo el entorno de trabajo. Inicio Apache y MySQL con XAMPP y coloco el proyecto dentro de la carpeta htdocs con el nombre proyectoformulario.
+​
+Después creo la base de datos en MySQL y ejecuto el archivo SQL para crear las tablas necesarias. A continuación configuro el archivo config.php con los datos de conexión y compruebo que la conexión a la base de datos funciona correctamente.
+​
+Luego entro al archivo login.php desde el navegador. Utilizo la opción de crear el usuario de prueba para insertar un usuario en la base de datos con la contraseña cifrada. Esto me permite comprobar que el sistema de login funciona correctamente usando sesiones.
+​
+A continuación inicio sesión con el usuario creado y accedo a la página inscripciones.php. En esta página se muestra un listado de inscripciones que se cargan desde la base de datos.
+​
+Desde el listado puedo cambiar el estado CRM de una inscripción usando un formulario. Cuando actualizo el estado, veo que el cambio se guarda correctamente en la tabla de inscripciones.
+​
+También compruebo que cada cambio de estado se registra en la tabla crm_estado_log, donde se guarda el estado anterior, el nuevo estado y el usuario que realiza la acción.
+​
+Además, al cambiar el estado se crea una notificación en la tabla notificaciones_email, que queda pendiente para enviarse más adelante.
+​
+Por último reviso las tablas desde phpMyAdmin y compruebo que todos los datos se guardan correctamente. De esta forma confirmo que el ejercicio funciona como se espera.
+​
+Con la realización de este ejercicio compruebo que el sistema funciona correctamente. Puedo iniciar sesión con un usuario, ver las inscripciones guardadas y cambiar su estado sin errores.
+​
+Además, veo que cada cambio se guarda en la base de datos y queda registrado, lo que permite llevar un control de las acciones realizadas. También se generan notificaciones cuando se actualiza un estado.
+​
+En general, este ejercicio me ayuda a entender mejor cómo funciona una aplicación web básica con PHP y MySQL y me permite poner en práctica los conocimientos aprendidos en clase.

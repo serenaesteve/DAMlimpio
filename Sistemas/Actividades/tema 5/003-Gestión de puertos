@@ -1,0 +1,246 @@
+Para practicar el concepto de SQLite y cómo interactuar con una base de datos utilizando PHP, sigue estos pasos:
+
+Conectar a la Base de Datos:
+
+Abre tu archivo producto.php o crea uno nuevo.
+Crea una instancia de la clase SQLite3 para conectarte a tu base de datos SQLite (recortables.db).
+Utiliza el método query() para ejecutar consultas SQL y recuperar los resultados.
+Ejecutar Consultas SQL:
+
+Escribe una consulta SQL para seleccionar los detalles del producto basado en su identificador (ID) pasado como parámetro GET.
+Recorre el resultado usando un bucle while y muestra la información del producto en la página web.
+Mostrar Productos Similares:
+
+Escribe otra consulta SQL para seleccionar 4 productos aleatorios de la base de datos.
+Muestra estos productos en una sección separada de tu página web, junto con su imagen y detalles básicos.
+Recuerda que debes manejar cualquier error o excepción que pueda surgir durante la conexión a la base de datos o la ejecución de las consultas SQL. Utiliza try-catch para capturar y manejar errores de forma segura.
+
+Este ejercicio te permitirá aplicar los conceptos de SQLite y PHP en un contexto práctico, desarrollando habilidades importantes para el desarrollo web basado en bases de datos.
+
+
+
+Respuesta:
+
+
+En este ejercico he hecho una pequeña aplicación web utilizando PHP y SQLite. El objetivo del ejercicio es aprender a conectar una base de datos con PHP y mostrar información en una página web de forma dinámica. Para ello, se ha creado una base de datos con productos y se ha desarrollado un archivo PHP que permite consultar y enseñar esos datos.
+
+
+
+Terminal crearndo la base de datos:
+```
+serena@serena-portatil:/var/www/html/DAM/Sistemas/Actividades$ sudo apt install sqlite3
+Leyendo lista de paquetes... Hecho
+Creando árbol de dependencias... Hecho
+Leyendo la información de estado... Hecho
+El paquete indicado a continuación se instaló de forma automática y ya no es necesario.
+  libllvm19
+Utilice «sudo apt autoremove» para eliminarlo.
+Paquetes sugeridos:
+  sqlite3-doc
+Se instalarán los siguientes paquetes NUEVOS:
+  sqlite3
+0 actualizados, 1 nuevos se instalarán, 0 para eliminar y 194 no actualizados.
+Se necesita descargar 144 kB de archivos.
+Se utilizarán 584 kB de espacio de disco adicional después de esta operación.
+Des:1 http://es.archive.ubuntu.com/ubuntu noble-updates/main amd64 sqlite3 amd64 3.45.1-1ubuntu2.5 [144 kB]
+Descargados 144 kB en 0s (403 kB/s)
+Seleccionando el paquete sqlite3 previamente no seleccionado.
+(Leyendo la base de datos ... 174008 ficheros o directorios instalados actualmen
+te.)
+Preparando para desempaquetar .../sqlite3_3.45.1-1ubuntu2.5_amd64.deb ...
+Desempaquetando sqlite3 (3.45.1-1ubuntu2.5) ...
+Configurando sqlite3 (3.45.1-1ubuntu2.5) ...
+Procesando disparadores para man-db (2.12.0-4build2) ...
+serena@serena-portatil:/var/www/html/DAM/Sistemas/Actividades$ sqlite3 recortables.db
+SQLite version 3.45.1 2024-01-30 16:01:20
+Enter ".help" for usage hints.
+sqlite> CREATE TABLE productos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    descripcion TEXT,
+    precio REAL NOT NULL,
+    imagen TEXT
+);
+sqlite> INSERT INTO productos (nombre, descripcion, precio, imagen) VALUES
+('Avión de papel', 'Recortable clásico de avión', 3.50, 'img/avion.jpg'),
+('Coche de carreras', 'Coche recortable para montar', 4.20, 'img/coche.jpg'),
+('Castillo medieval', 'Castillo de papel con torres', 6.90, 'img/castillo.jpg'), 
+('Robot', 'Robot articulado recortable', 5.00, 'img/robot.jpg'),
+('Barco pirata', 'Barco pirata de papel', 7.50, 'img/barco.jpg'),
+('Dinosaurio', 'Dinosaurio T-Rex recortable', 4.80, 'img/dino.jpg');
+sqlite> .exit
+serena@serena-portatil:/var/www/html/DAM/Sistemas/Actividades$ 
+```
+
+producto.php:
+```
+<?php
+declare(strict_types=1);
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+function e(string $s): string {
+    return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+$dbPath = __DIR__ . '/recortables.db';
+
+try {
+    if (!file_exists($dbPath)) {
+        throw new Exception("No existe la base de datos en: $dbPath");
+    }
+
+    $db = new SQLite3($dbPath, SQLITE3_OPEN_READWRITE);
+
+    // 1) Leer id (si viene). Si no viene, usaremos el primero.
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+    // 2) Si no hay id, tomar el primero disponible
+    if ($id <= 0) {
+        $res = $db->query("SELECT id FROM productos ORDER BY id ASC LIMIT 1");
+        if (!$res) {
+            throw new Exception("No puedo leer la tabla 'productos': " . $db->lastErrorMsg());
+        }
+        $row = $res->fetchArray(SQLITE3_ASSOC);
+        if (!$row) {
+            die("La tabla 'productos' está vacía. Inserta productos primero.");
+        }
+        $id = (int)$row['id'];
+    }
+
+    // 3) Buscar el producto por id
+    $stmt = $db->prepare("
+        SELECT id, nombre, descripcion, precio, imagen
+        FROM productos
+        WHERE id = :id
+        LIMIT 1
+    ");
+    if (!$stmt) {
+        throw new Exception("Error preparando SELECT producto: " . $db->lastErrorMsg());
+    }
+    $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
+
+    $result = $stmt->execute();
+    if (!$result) {
+        throw new Exception("Error ejecutando SELECT producto: " . $db->lastErrorMsg());
+    }
+
+    $producto = $result->fetchArray(SQLITE3_ASSOC);
+    if (!$producto) {
+        // Si el id no existe, mostramos un mensaje y sugerimos ids existentes
+        $ids = [];
+        $resIds = $db->query("SELECT id FROM productos ORDER BY id ASC LIMIT 10");
+        while ($r = $resIds->fetchArray(SQLITE3_ASSOC)) {
+            $ids[] = (int)$r['id'];
+        }
+        die("Producto no encontrado. Prueba con alguno de estos IDs: " . implode(", ", $ids));
+    }
+
+    // 4) Similares: 4 aleatorios, excluyendo el actual
+    $stmtSim = $db->prepare("
+        SELECT id, nombre, precio, imagen
+        FROM productos
+        WHERE id <> :id
+        ORDER BY RANDOM()
+        LIMIT 4
+    ");
+    if (!$stmtSim) {
+        throw new Exception("Error preparando SELECT similares: " . $db->lastErrorMsg());
+    }
+    $stmtSim->bindValue(':id', $id, SQLITE3_INTEGER);
+
+    $resSim = $stmtSim->execute();
+    if (!$resSim) {
+        throw new Exception("Error ejecutando SELECT similares: " . $db->lastErrorMsg());
+    }
+
+    $similares = [];
+    while ($row = $resSim->fetchArray(SQLITE3_ASSOC)) {
+        $similares[] = $row;
+    }
+
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo "Error: " . e($e->getMessage());
+    exit;
+}
+?>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title><?= e($producto['nombre']) ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; }
+    .producto { display: flex; gap: 30px; align-items: flex-start; }
+    .producto img { width: 280px; border: 1px solid #ddd; border-radius: 10px; }
+    .precio { font-size: 20px; font-weight: bold; margin: 10px 0; }
+    .similares { margin-top: 40px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 10px; text-align: center; }
+    .card img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; border: 1px solid #eee; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<h1><?= e($producto['nombre']) ?></h1>
+
+<section class="producto">
+  <img src="<?= e((string)$producto['imagen']) ?>" alt="<?= e($producto['nombre']) ?>">
+  <div>
+    <p><?= nl2br(e((string)$producto['descripcion'])) ?></p>
+    <div class="precio"><?= number_format((float)$producto['precio'], 2) ?> €</div>
+    <p><small>ID: <?= (int)$producto['id'] ?></small></p>
+  </div>
+</section>
+
+<section class="similares">
+  <h2>Productos similares</h2>
+
+  <?php if (count($similares) === 0): ?>
+    <p>No hay productos similares.</p>
+  <?php else: ?>
+    <div class="grid">
+      <?php foreach ($similares as $s): ?>
+        <article class="card">
+          <a href="producto.php?id=<?= (int)$s['id'] ?>">
+            <img src="<?= e((string)$s['imagen']) ?>" alt="<?= e($s['nombre']) ?>">
+            <p><?= e($s['nombre']) ?></p>
+            <strong><?= number_format((float)$s['precio'], 2) ?> €</strong>
+          </a>
+        </article>
+      <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+</section>
+
+</body>
+</html>
+```
+
+recortables2/
+│── producto.php
+│── recortables.db
+│── avion.jpg
+│── coche.jpg
+│── robot.jpg
+│── dino.jpg
+│── castillo.jpg
+│── barco.jpg
+
+
+En este ejercicio he usado PHP y SQLite para trabajar con una base de datos y mostrar información en una página web.
+
+Primero he creado una base de datos SQLite llamada recortables.db. Dentro de esta base de datos he creado una tabla llamada productos, donde guardo la información de cada producto, como el nombre, la descripción, el precio y la imagen.
+
+Después he creado el archivo producto.php. En este archivo PHP me conecto a la base de datos usando SQLite. El programa obtiene el producto que tiene el identificador (id) que se pasa por la URL. Si no se pasa ningún id, se muestra el primer producto de la base de datos.
+
+Cuando el producto está seleccionado, se ven sus datos en la página web. Además, el programa busca cuatro productos aleatorios de la base de datos y los muestra como productos similares.
+
+Las imágenes de los productos están guardadas en la misma carpeta del proyecto. En la base de datos solo se guarda el nombre de la imagen, no la imagen en sí.
+
+Con este ejercicio he aprendido a conectar PHP con una base de datos SQLite, hacer consultas SQL y mostrar información dinámica en una página web.

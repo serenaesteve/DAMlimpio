@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Curriculum Jose Vicente Carratala</title>
+    <meta charset="utf-8">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body, html {
+        background: black;
+        font-size: 11px;
+        font-family: Arial, sans-serif;
+      }
+      main {
+        display: flex;
+        justify-content: space-between;
+        background: white;
+        width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        gap: 20px;
+      }
+      #izquierda {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 35%;
+        background: #f4f4f4;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      #izquierda img {
+        width: 100%;
+        border-radius: 10px;
+      }
+      #izquierda article {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+      }
+      #izquierda article:nth-child(even) {
+        background-color: #e8e8e8;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      #derecha {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 65%;
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      #derecha article {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #333;
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+      h3 {
+        color: #0066cc;
+        margin-bottom: 5px;
+      }
+      ul {
+        list-style: none;
+        padding-left: 10px;
+      }
+      li::before {
+        content: "• ";
+        color: #0066cc;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section id="izquierda">
+        <h2>Informacion Personal</h2>
+        <img src="josevicente.jpg" alt="Fotografia">
+        <article>
+          <h3>Datos personales</h3>
+          <ul>
+            <li>Nombre: Jose Vicente Carratala</li>
+            <li>Email: josevicente@example.com</li>
+            <li>Telefono: 600 123 456</li>
+            <li>Ciudad: Valencia</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Habilidades</h3>
+          <ul>
+            <li>HTML y CSS</li>
+            <li>JavaScript basico</li>
+            <li>Diseno web responsive</li>
+            <li>Trabajo en equipo</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Idiomas</h3>
+          <ul>
+            <li>Espanol - Nativo</li>
+            <li>Ingles - Intermedio</li>
+            <li>Frances - Basico</li>
+          </ul>
+        </article>
+      </section>
+      <section id="derecha">
+        <h2>Experiencia y Formacion</h2>
+        <article>
+          <h3>Experiencia laboral</h3>
+          <ul>
+            <li>2022 - Presente: Desarrollador web en TechCorp</li>
+            <li>2020 - 2022: Disenador web freelance</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Formacion academica</h3>
+          <ul>
+            <li>Grado en Ingenieria Informatica (Universidad de Valencia)</li>
+            <li>Curso de desarrollo Front-End (Online)</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+
+
+

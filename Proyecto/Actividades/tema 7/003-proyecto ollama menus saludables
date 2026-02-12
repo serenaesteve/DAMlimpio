@@ -1,0 +1,224 @@
+Enunciado paso a paso
+Contexto: Imagina que eres un jugador de videojuegos en una granja virtual. Tu misión es recolectar los más altos puntos posible mientras cuidas tus animales y exploras diferentes áreas del campo.
+
+Enunciado: Crea un programa que simule tu día en la granja virtual. El programa debe hacer lo siguiente:
+
+Pedir al usuario su nombre de jugador.
+Mostrar una lista de opciones: recolectar puntos, cuidar animales o explorar el campo.
+Dependiendo de la opción elegida, ejecutar las acciones correspondientes:
+Si elige recolectar puntos, aumentar los puntos en 10.
+Si elige cuidar animales, mostrar un mensaje que indique que ha alimentado a todos tus animales y aumentar su salud.
+Si elige explorar el campo, mostrar una imagen de la granja y permitir al usuario elegir un área nueva para explorar.
+Restricciones:
+
+No se pueden usar librerías externas.
+Solo utilizar estructuras vistas en clase (por ejemplo, bucles for o while, sentencias if-else).
+Criterios de evaluación:
+
+El programa debe ejecutarse sin errores.
+Debe interactuar con el usuario y mostrar mensajes correctos según las acciones elegidas.
+Debe mantener un estado actualizado del juego (puntos, salud de animales) entre las acciones del usuario.
+
+
+Respuesta:
+
+En este trabajo presento un programa sencillo que simula un dia en una granja virtual. La idea es permitir que el jugador pueda realizar distintas acciones como recolectar puntos, cuidar animales o explorar diferentes areas del campo. Con este proyecto busco practicar el uso de estructuras basicas como bucles, condicionales y manejo de variables sin utilizar librerias externas. El objetivo es mostrar de forma clara como se mantiene y actualiza el estado del juego a medida que el usuario interactua con el programa.
+
+```
+def mostrar_menu():
+    print("\nQue quieres hacer hoy?")
+    print("1) Recolectar puntos")
+    print("2) Cuidar animales")
+    print("3) Explorar el campo")
+    print("4) Ver estado actual")
+    print("5) Salir")
+
+def mostrar_granja_ascii():
+    print(r"""
+                 __|__
+               _/_____\_
+        ______/_________\______
+       /  _  \  FARM LAND  / _  \
+      /__/ \__\         /__/ \__\
+        \_/ \_/  _   _  \_/ \_/
+          \___/  (") (")  \___/
+           / \    \   /    / \
+          /___\    ) (    /___\
+           |||    (   )   |||
+           |||     '-'    |||
+    """)
+    print("Has llegado a la granja. Elige un area para explorar:")
+
+def explorar_area(state):
+    mostrar_granja_ascii()
+    print("a) Granero")
+    print("b) Campo de trigo")
+    print("c) Lago")
+    print("d) Volver al menu")
+    choice = input("Elige un area (a/b/c/d): ").strip().lower()
+    if choice == 'a':
+        print("\nEntraste al granero. Obtienes semillas.")
+        print("-> +5 puntos")
+        state['puntos'] += 5
+    elif choice == 'b':
+        print("\nCaminas por el campo de trigo.")
+        print("-> Los animales ganan +5 salud")
+        for a in state['animales']:
+            state['animales'][a] = min(100, state['animales'][a] + 5)
+    elif choice == 'c':
+        print("\nLlegas al lago.")
+        print("-> +3 puntos")
+        state['puntos'] += 3
+    elif choice == 'd':
+        print("\nRegresas al menu.")
+    else:
+        print("\nOpcion no valida.")
+
+def cuidar_animales(state):
+    print("\nHas alimentado a los animales.")
+    for a in state['animales']:
+        before = state['animales'][a]
+        state['animales'][a] = min(100, before + 10)
+        after = state['animales'][a]
+        print(f" - {a}: salud {before} -> {after}")
+
+def recolectar_puntos(state):
+    state['puntos'] += 10
+    print(f"\nHas recolectado 10 puntos. Total: {state['puntos']}")
+
+def ver_estado(state):
+    print("\n--- Estado actual ---")
+    print(f"Jugador: {state['jugador']}")
+    print(f"Puntos: {state['puntos']}")
+    print("Salud de animales:")
+    for a, salud in state['animales'].items():
+        print(f"  - {a}: {salud}/100")
+    print("---------------------")
+
+def main():
+    print("Bienvenido a la Granja Virtual!")
+    nombre = input("Introduce tu nombre de jugador: ").strip()
+    if nombre == "":
+        nombre = "Jugador"
+    estado = {
+        'jugador': nombre,
+        'puntos': 0,
+        'animales': {
+            'vaca': 70,
+            'gallina': 60,
+            'cerdo': 65
+        }
+    }
+    print(f"\nHola, {estado['jugador']}!")
+    while True:
+        mostrar_menu()
+        opcion = input("Selecciona una opcion (1-5): ").strip()
+        if opcion == '1':
+            recolectar_puntos(estado)
+        elif opcion == '2':
+            cuidar_animales(estado)
+        elif opcion == '3':
+            explorar_area(estado)
+        elif opcion == '4':
+            ver_estado(estado)
+        elif opcion == '5':
+            print(f"\nGracias por jugar, {estado['jugador']}!")
+            break
+        else:
+            print("Opcion no valida.")
+
+if __name__ == "__main__":
+    main()
+```
+
+Salida del código:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Proyecto\Actividades"
+PS C:\Users\Serena\Documents\Proyecto\Actividades> python granja.py
+Bienvenido a la Granja Virtual!
+Introduce tu nombre de jugador: Serena 
+
+Hola, Serena!
+
+Que quieres hacer hoy?
+1) Recolectar puntos
+2) Cuidar animales
+3) Explorar el campo
+4) Ver estado actual
+5) Salir
+Selecciona una opcion (1-5): 1
+
+Has recolectado 10 puntos. Total: 10
+
+Que quieres hacer hoy?
+1) Recolectar puntos
+2) Cuidar animales
+3) Explorar el campo
+4) Ver estado actual
+5) Salir
+Selecciona una opcion (1-5): 2
+
+Has alimentado a los animales.
+ - vaca: salud 70 -> 80
+ - gallina: salud 60 -> 70
+ - cerdo: salud 65 -> 75
+
+Que quieres hacer hoy?
+1) Recolectar puntos
+2) Cuidar animales
+3) Explorar el campo
+4) Ver estado actual
+5) Salir
+Selecciona una opcion (1-5): 3
+
+                 __|__
+               _/_____\_
+        ______/_________\______
+       /  _  \  FARM LAND  / _  \
+      /__/ \__\         /__/ \__\
+        \_/ \_/  _   _  \_/ \_/
+          \___/  (") (")  \___/
+           / \    \   /    / \
+          /___\    ) (    /___\
+           |||    (   )   |||
+           |||     '-'    |||
+
+Has llegado a la granja. Elige un area para explorar:
+a) Granero
+b) Campo de trigo
+c) Lago
+d) Volver al menu
+Elige un area (a/b/c/d): b
+
+Caminas por el campo de trigo.
+-> Los animales ganan +5 salud
+
+Que quieres hacer hoy?
+1) Recolectar puntos
+2) Cuidar animales
+3) Explorar el campo
+4) Ver estado actual
+5) Salir
+Selecciona una opcion (1-5): 4
+
+--- Estado actual ---
+Jugador: Serena
+Puntos: 10
+Salud de animales:
+  - vaca: 85/100
+  - gallina: 75/100
+  - cerdo: 80/100
+---------------------
+
+Que quieres hacer hoy?
+1) Recolectar puntos
+2) Cuidar animales
+3) Explorar el campo
+4) Ver estado actual
+5) Salir
+Selecciona una opcion (1-5): 5
+
+Gracias por jugar, Serena!
+PS C:\Users\Serena\Documents\Proyecto\Actividades>
+
+Basicamente, el programa cumple con la simulacion de un dia en la granja virtual permitiendo al jugador tomar decisiones y observar los cambios en el estado del juego. A lo largo del desarrollo pude aplicar estructuras basicas de programacion y consolidar mi comprension sobre el manejo de datos y de la interaccion con el usuario. Considero que este ejercicio me  a ayudado a mejorar mis habilidades y entender mejor como funcionan los programas que conservan informacion mientras se ejecutan.

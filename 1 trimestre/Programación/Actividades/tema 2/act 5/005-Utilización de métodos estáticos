@@ -1,0 +1,48 @@
+Enunciado paso a paso
+Contexto: Imagina que estás en un parque con tu familia y decides jugar un juego de mesa llamado "La Exploradora". El objetivo del juego es recolectar las más variedades de frutas que puedas encontrar en el campo. Para ayudarte, tienes acceso a una lista de frutas que ya están clasificadas.
+
+Desarrollo:
+
+Declara una variable frutas que contenga la lista de frutas disponibles.
+Utiliza un método estático para ordenar las frutas alfabéticamente.
+Imprime la lista ordenada de frutas.
+Aplicación práctica con ejemplo claro:
+
+Crea una lista de frutas como ["platano", "fresa", "naranja"].
+Ordena la lista utilizando el método estático sort().
+Imprime la lista ordenada para verificar los resultados.
+Restricciones
+No puedes crear clases personalizadas.
+Solo puedes utilizar objetos y métodos que ya existan en Python.
+Evita usar estructuras de control complejas como bucles o condicionales.
+Criterios de evaluación
+Introducción y contextualización: El alumno debe entender el contexto del juego "La Exploradora" y cómo se relaciona con la actividad.
+Desarrollo técnico correcto y preciso: El alumnado debe declarar correctamente la variable frutas, utilizar el método estático sort() y imprimir la lista ordenada.
+Aplicación práctica con ejemplo claro: El alumno debe proporcionar un ejemplo claro de cómo aplicar los conocimientos en un contexto real.
+Cierre/Conclusión enlazando con la unidad: El alumnado debe relacionar su actividad con el concepto de métodos estáticos y cómo se utilizan en Python.
+
+
+
+Respuesta:
+
+
+Estoy en un parque jugando con mi familia un juego llamado “La Exploradora”.
+El objetivo es recolectar la mayor variedad de frutas que pueda.
+Tengo una lista de frutas y quiero ordenarlas alfabéticamente para encontrarlas más rápido.
+En Python, puedo hacer esto usando una lista y el método sort(), igual que organizaría las frutas en la cesta del juego.
+
+```
+frutas = ["platano", "fresa", "naranja"]
+
+frutas.sort()
+print(frutas)
+```
+
+Salida del código:
+```
+python -u "C:\Users\Serena\AppData\Local\Temp\tempCodeRunnerFile.python"
+['fresa', 'naranja', 'platano']
+```
+
+En Python, un método estático es una función que pertenece a un tipo de objeto y se puede usar directamente sobre ese objeto sin necesidad de crear una clase.
+La actividad demuestra cómo los métodos estáticos facilitan tareas comunes (como ordenar datos) de manera directa y eficiente, relacionando la programación con situaciones de la vida real.

@@ -1,0 +1,885 @@
+{
+  "base_url": "https://zooasis.org/",
+  "section": "perros",
+  "start_url": "https://zooasis.org/adoptar-perro/",
+  "animals_found": 30,
+  "items": [
+    {
+      "animal_url": "https://zooasis.org/adopcion-a-ciegas/",
+      "slug": "adopcion-a-ciegas",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/adopcion-a-ciegas/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/adopcion-a-ciegas/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/09/a-ciegas.webp",
+          "file": "zooasis_images/perros/adopcion-a-ciegas/img_f151776399f46daf.webp",
+          "ok": true,
+          "bytes": 15076,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/apadrina/",
+      "slug": "apadrina",
+      "images_found": 5,
+      "images_downloaded": 5,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/apadrina/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/pardo.jpg",
+          "file": "zooasis_images/perros/apadrina/img_673dde493ec92765.jpg",
+          "ok": true,
+          "bytes": 164196,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/vini.jpg",
+          "file": "zooasis_images/perros/apadrina/img_81758236abce87a8.jpg",
+          "ok": true,
+          "bytes": 76972,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/apadrina/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/Adoptar-gato-en-albacete.jpg",
+          "file": "zooasis_images/perros/apadrina/img_0d9bdd1c3d467a4e.jpg",
+          "ok": true,
+          "bytes": 113067,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/aviso-legal",
+      "slug": "aviso-legal",
+      "images_found": 2,
+      "images_downloaded": 2,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/aviso-legal/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/aviso-legal/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/chula/",
+      "slug": "chula",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/chula/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/chula/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Chula-1024x683.webp",
+          "file": "zooasis_images/perros/chula/img_e99f547e82975fed.webp",
+          "ok": true,
+          "bytes": 151394,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/cocote/",
+      "slug": "cocote",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/cocote/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/cocote/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/cocote-1024x683.webp",
+          "file": "zooasis_images/perros/cocote/img_f36b22647860a583.webp",
+          "ok": true,
+          "bytes": 139826,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/dobita/",
+      "slug": "dobita",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/dobita/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/dobita/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/Dobita-1024x683.webp",
+          "file": "zooasis_images/perros/dobita/img_f00356d2fc0e4c6e.webp",
+          "ok": true,
+          "bytes": 84654,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/hanna/",
+      "slug": "hanna",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/hanna/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/hanna/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/Hanna-1024x683.webp",
+          "file": "zooasis_images/perros/hanna/img_dcfb69f6011473a3.webp",
+          "ok": true,
+          "bytes": 188836,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/mami/",
+      "slug": "mami",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/mami/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/mami/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/Mami-1024x683.webp",
+          "file": "zooasis_images/perros/mami/img_8f105db266bb88a2.webp",
+          "ok": true,
+          "bytes": 65902,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/mulan-2/",
+      "slug": "mulan-2",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/mulan-2/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/mulan-2/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Mulan-1024x683.webp",
+          "file": "zooasis_images/perros/mulan-2/img_4e7635d7c9f8b182.webp",
+          "ok": true,
+          "bytes": 225994,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/mulan/",
+      "slug": "mulan",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/mulan/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/mulan/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Mulan-1024x683.webp",
+          "file": "zooasis_images/perros/mulan/img_4e7635d7c9f8b182.webp",
+          "ok": true,
+          "bytes": 225994,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pepe/",
+      "slug": "pepe",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pepe/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pepe/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Pepe-1024x683.webp",
+          "file": "zooasis_images/perros/pepe/img_6739dc8fcb1e679e.webp",
+          "ok": true,
+          "bytes": 56770,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pepita/",
+      "slug": "pepita",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pepita/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pepita/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Pepita-1024x683.webp",
+          "file": "zooasis_images/perros/pepita/img_1cfed4e8d349a9a7.webp",
+          "ok": true,
+          "bytes": 58096,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/perilla/",
+      "slug": "perilla",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/perilla/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/perilla/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Perilla-1024x683.webp",
+          "file": "zooasis_images/perros/perilla/img_14c1e32f4c7c322f.webp",
+          "ok": true,
+          "bytes": 88164,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pipi/",
+      "slug": "pipi",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pipi/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pipi/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/02/PHOTO-2026-02-08-13-33-45-1024x768.jpeg",
+          "file": "zooasis_images/perros/pipi/img_ef74bf3a718a227b.jpg",
+          "ok": true,
+          "bytes": 160559,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/poco/",
+      "slug": "poco",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/poco/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/poco/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Poco-1024x683.webp",
+          "file": "zooasis_images/perros/poco/img_fbc5f5703b25bb55.webp",
+          "ok": true,
+          "bytes": 71400,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/politica-de-cookies-ue/",
+      "slug": "politica-de-cookies-ue",
+      "images_found": 2,
+      "images_downloaded": 2,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/politica-de-cookies-ue/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/politica-de-cookies-ue/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/que-hacemos/",
+      "slug": "que-hacemos",
+      "images_found": 5,
+      "images_downloaded": 5,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/que-hacemos/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/que-hacemos/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/Hogar-para-perros.png",
+          "file": "zooasis_images/perros/que-hacemos/img_7c7eb0b4c1dc319b.png",
+          "ok": true,
+          "bytes": 11917,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/Rescate-de-animales-en-albacete.png",
+          "file": "zooasis_images/perros/que-hacemos/img_765cb93fe351824c.png",
+          "ok": true,
+          "bytes": 16121,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/10/educacion-y-adiestramiento-de-perros.png",
+          "file": "zooasis_images/perros/que-hacemos/img_7a3650ef50bd2261.png",
+          "ok": true,
+          "bytes": 10489,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/servicio-tecnico/",
+      "slug": "servicio-tecnico",
+      "images_found": 2,
+      "images_downloaded": 2,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/servicio-tecnico/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/servicio-tecnico/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/barba/",
+      "slug": "barba",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/barba/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/barba/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Barba-1024x683.webp",
+          "file": "zooasis_images/perros/barba/img_a9fbb40d41e3a74f.webp",
+          "ok": true,
+          "bytes": 68112,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/erra/",
+      "slug": "erra",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/erra/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/erra/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/01/Malta-1024x683.webp",
+          "file": "zooasis_images/perros/erra/img_d78b94da6b6df011.webp",
+          "ok": true,
+          "bytes": 194768,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/lila/",
+      "slug": "lila",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/lila/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/lila/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Lila-1024x683.webp",
+          "file": "zooasis_images/perros/lila/img_f0647612dbb174bb.webp",
+          "ok": true,
+          "bytes": 129434,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/loco/",
+      "slug": "loco",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/loco/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/loco/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Loco-1024x683.webp",
+          "file": "zooasis_images/perros/loco/img_b04aac63fb8968ee.webp",
+          "ok": true,
+          "bytes": 137854,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/papi/",
+      "slug": "papi",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/papi/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/papi/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/PHOTO-2025-12-22-19-00-29-1024x768.jpeg",
+          "file": "zooasis_images/perros/papi/img_39b3c90e76220270.jpg",
+          "ok": true,
+          "bytes": 234650,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/pastor/",
+      "slug": "pastor",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/pastor/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/pastor/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Pastor-1024x683.webp",
+          "file": "zooasis_images/perros/pastor/img_4be8ec8e71bae9e5.webp",
+          "ok": true,
+          "bytes": 126130,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/rafa/",
+      "slug": "rafa",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/rafa/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/rafa/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/10/Rafa-1024x683.webp",
+          "file": "zooasis_images/perros/rafa/img_621c1066c009df93.webp",
+          "ok": true,
+          "bytes": 135394,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/regi/",
+      "slug": "regi",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/regi/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/regi/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Regi-1024x683.webp",
+          "file": "zooasis_images/perros/regi/img_9e6bc1d1ad0a95b6.webp",
+          "ok": true,
+          "bytes": 95648,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/rhiannon/",
+      "slug": "rhiannon",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/rhiannon/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/rhiannon/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2026/01/Rhiannon-2-1024x683.webp",
+          "file": "zooasis_images/perros/rhiannon/img_14e4729932222f14.webp",
+          "ok": true,
+          "bytes": 102936,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/russell/",
+      "slug": "russell",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/russell/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/russell/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/12/Russell-1024x683.webp",
+          "file": "zooasis_images/perros/russell/img_504a13b50342e4f2.webp",
+          "ok": true,
+          "bytes": 54022,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/truco/",
+      "slug": "truco",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/truco/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/truco/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2025/11/Chato-1024x683.webp",
+          "file": "zooasis_images/perros/truco/img_55275602c8968ac4.webp",
+          "ok": true,
+          "bytes": 108384,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "animal_url": "https://zooasis.org/vesta/",
+      "slug": "vesta",
+      "images_found": 3,
+      "images_downloaded": 3,
+      "images": [
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/03/Marca-logotipo_RGB-1024x188.png",
+          "file": "zooasis_images/perros/vesta/img_a5861d40259dc5f5.png",
+          "ok": true,
+          "bytes": 28985,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2022/07/pago-seguro.webp",
+          "file": "zooasis_images/perros/vesta/img_5786987a578584d6.webp",
+          "ok": true,
+          "bytes": 7706,
+          "status": "ok"
+        },
+        {
+          "img_url": "https://zooasis.org/wp-content/uploads/2024/08/Vesta-1024x683.webp",
+          "file": "zooasis_images/perros/vesta/img_647e6621c13ef76a.webp",
+          "ok": true,
+          "bytes": 144332,
+          "status": "ok"
+        }
+      ]
+    }
+  ]
+}

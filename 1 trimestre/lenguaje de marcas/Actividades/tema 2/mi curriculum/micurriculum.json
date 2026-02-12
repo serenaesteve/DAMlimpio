@@ -1,0 +1,78 @@
+{
+  "nombre": "Serena Sania Esteve",
+  "contacto": {
+    "email": "serenaestevee@gmail.com",
+    "telefono": "637383762",
+    "ubicacion": "Mislata, Valencia"
+  },
+  "perfil": "Gran facilidad de comunicación. Capacidad de organización alta. Responsabilidad elevada. Con espíritu emprendedor. Aptitudes para el trabajo en equipo. Resolutiva. Dispongo de vehículo propio.",
+  "idiomas": {
+    "español": "Nativo",
+    "inglés": "Nivel A2 (en proceso de aprendizaje)",
+    "valenciano": "Alto"
+  },
+  "experiencia": [
+    {
+      "puesto": "Administrativa",
+      "empresa": "MISLATA FORMACION SL",
+      "tareas": [
+        "Atención telefónica y física a clientes",
+        "Documentación",
+        "Redactar y enviar correos",
+        "Marketing de las redes sociales",
+        "Plan de igualdad",
+        "Informes"
+      ],
+      "periodo": "2022 - Actual"
+    },
+    {
+      "puesto": "Administrativa",
+      "empresa": "NEMASA",
+      "tareas": [
+        "Fichajes",
+        "Documentación",
+        "Informes"
+      ],
+      "duración": "3 meses - Plan social del Ayuntamiento"
+    },
+    {
+      "puesto": "Administrativa (prácticas)",
+      "empresa": "FOREDU",
+      "tareas": [
+        "Documentación",
+        "Redactar y enviar correos",
+        "Búsqueda de información"
+      ],
+      "duración": "3 meses - Prácticas"
+    }
+  ],
+  "formacion": [
+    {
+      "titulo": "Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)",
+      "centro": "TAME FORMACIÓN",
+      "años": "Cursando actualmente"
+    },
+    {
+      "titulo": "Grado Medio Técnico Auxiliar Administrativo",
+      "centro": "Colegio Santa Cruz de Mislata",
+      "años": "2019 - 2021"
+    },
+    {
+      "titulo": "ESO",
+      "centro": "Colegio Santa Cruz de Mislata",
+      "años": "2015 - 2019"
+    }
+  ],
+  "formacion_complementaria": [
+    "Implantación de planes y medidas de igualdad en las empresas",
+    "IFCT163PO - Inteligencia artificial aplicada a la empresa",
+    "Aprende a usar un CRM",
+    "Gestión de posicionamiento SEM",
+    "Plan estratégico de social media nivel 1 y 2"
+  ],
+  "otras_competencias": [
+    "Conocimientos y experiencia en paquete Office",
+    "Curso de mecanografía",
+    "Conocimientos en Contasol y Factusol"
+  ]
+}

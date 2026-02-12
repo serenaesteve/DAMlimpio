@@ -1,0 +1,125 @@
+Actividad: Gestión de una Tienda en Juego
+Contexto Imagine que eres el dueño de una pequeña tienda en juego localizada en el campo. La naturaleza es tu mejor aliada, y los juegos de mesa son tu pasatiempo favorito. Para mantener tus clientes satisfechos y gestionar eficientemente tu inventario, necesitas una base de datos relacional que almacene información sobre tus productos, clientes y pedidos.
+
+Enunciado paso a paso
+
+Definir entidades: Identifica las entidades principales en tu negocio: Clientes, Productos y Pedidos.
+Determinar atributos: Para cada entidad, lista sus atributos. Por ejemplo:
+Clientes: nombre, apellidos, teléfono, email.
+Productos: nombre, descripción, precio, tamaño, peso.
+Pedidos: fecha, número de pedido, cliente (FK), productos (FK), impuestos, total.
+Crear relaciones: Establece cómo estas entidades están interconectadas. Por ejemplo, un pedido está asociado con un cliente y varios productos.
+Restricciones
+
+Solo puedes usar los conceptos y terminología presentados en la clase.
+Evita utilizar términos técnicos complejos o funciones no vistas hasta el momento.
+Criterios de evaluación
+
+Introducción y contextualización (25%): Muestra comprensión del contexto y cómo se aplican los conceptos a tu negocio.
+Desarrollo técnico correcto y preciso (25%): Define correctamente las entidades, atributos y relaciones según el modelo de datos.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo práctico de cómo estos conceptos se aplican en tu negocio.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye el ejercicio relacionándolo con lo aprendido en clase y cómo podrías utilizar esta información en tu tienda en juego.
+
+
+Respuesta:
+
+Tengo una pequeña tienda en juego donde vendo juegos de mesa. Para organizar mejor mi negocio, necesito guardar información de mis clientes, de los productos y de los pedidos que se hacen.
+
+Usando una base de datos puedo tener todo ordenado: saber quién compró, qué compró y cuánto pagó.
+Los conceptos de entidades, atributos y relaciones me ayudan a organizar bien esta información.
+
+Creo la base de datos:
+
+```
+CREATE DATABASE tienda_juego;
+USE tienda_juego;
+```
+
+Creo cada entidad con sus listas de atributos:
+
+```
+CREATE TABLE Clientes (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(50) NOT NULL,
+    telefono VARCHAR(20),
+    email VARCHAR(100)
+);
+```
+
+```
+CREATE TABLE Productos (
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    precio DECIMAL(10,2) NOT NULL,
+    tamaño VARCHAR(50),
+    peso DECIMAL(10,2)
+);
+```
+
+```
+CREATE TABLE Pedidos (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    impuestos DECIMAL(10,2),
+    totALTER TABLE Pedidos
+ADD COLUMN id_producto INT,
+ADD FOREIGN KEY (id_producto) REFERENCES Productos(id_producto);al DECIMAL(10,2),
+    id_cliente INT,
+    id_producto INT,
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    FOREIGN KEY (id_producto) REFERENCES Productos(id_producto)
+);
+```
+
+Ahora añado a cada tabla datos:
+```
+INSERT INTO Clientes (nombre, apellidos, telefono, email)
+VALUES ('serena', 'sania', '637383762', 'serena@example.com'),
+       ('hector', 'lopez', '654329087', 'hector@example.com'),
+       ('thais', 'sania', '615789053', 'thais@example.com');
+```
+```
+INSERT INTO Productos (nombre, descripcion, precio, tamaño, peso)
+VALUES ('Catan', 'Juego de estrategia para 4 jugadores', 45.00, 'Mediano', 1.20),
+       ('Jenga', 'Juego de habilidad con bloques de madera', 25.00, 'Pequeño', 0.80),
+       ('Monopoly', 'Juego de mesa clásico', 30.00, 'Grande', 1.50);
+```
+```
+INSERT INTO Pedidos (fecha, impuestos, total, id_cliente, id_producto)
+VALUES ('2025-10-11', 7.50, 52.50, 1, 1),
+       ('2025-10-11', 5.00, 30.00, 2, 2),
+       ('2025-10-12', 6.00, 36.00, 3, 3);
+```
+Comprubo que este todo bien creado :
+
+SELECT * FROM Clientes;
+
+SELECT * FROM Productos;
+
+SELECT * FROM Pedidos;
+
+En mi caso había tocado algo y no me salía el id_producto y he tenido que añadirlo por que me daba error todo el rato, he puesto esto:
+```
+ALTER TABLE Pedidos
+ADD COLUMN id_producto INT,
+ADD FOREIGN KEY (id_producto) REFERENCES Productos(id_producto);
+```
+
+Y finalmete para ver la relación de las tablas he puesto esto:
+```
+SELECT p.id_pedido, p.fecha, c.nombre AS cliente, pr.nombre AS producto, p.total
+FROM Pedidos p
+JOIN Clientes c ON p.id_cliente = c.id_cliente
+JOIN Productos pr ON p.id_producto = pr.id_producto;
+```
+
+Y ya me salida id del producto, fecha del pedido, impuestos,total,id del criente y id del pedido
+
+Por ejemplo, si Serena compra el juego Catan, yo guardo sus datos en Clientes, el juego en Productos y la compra en Pedidos.
+Así sé quién compró, qué compró y cuándo.
+
+Con este ejercicio he aprendido a crear tablas para organizar la información de mi tienda: Clientes, Productos y Pedidos.
+Pude ver cómo se relacionan las tablas y cómo guardar los datos de manera ordenada.
+Esta información me ayuda a saber quién compra, qué productos se venden y cuándo se hacen las ventas, lo que facilita llevar un buen control de mi tienda en juego.

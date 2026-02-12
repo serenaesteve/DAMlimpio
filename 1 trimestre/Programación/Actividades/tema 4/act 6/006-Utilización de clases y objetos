@@ -1,0 +1,91 @@
+Recoger datos de clientes y mostrarlos
+El objetivo de esta actividad es recoger datos de clientes y mostrarlos en pantalla. Para ello, utilizaremos una clase Cliente que almacenará información sobre cada cliente.
+
+Contexto
+En tu tiempo libre, has jugado a muchos juegos de mesa sobre exploración del campo, como "La Gran Búsqueda". También disfrutas mucho recorriendo senderos naturales y observando diferentes tipos de animales. Estos hobbies te han ayudado a desarrollar una gran paciencia y atención al detalle, habilidades que serán útiles para este ejercicio.
+
+Enunciado paso a paso
+Definir la clase Cliente:
+
+Crea una clase llamada Cliente con tres atributos: nombre, email y direccion.
+Utiliza un constructor (__init__) para inicializar estos atributos.
+Pedir datos al usuario:
+
+Pide al usuario que introduzca el nombre, email y dirección de un cliente.
+Almacena estos datos en variables correspondientes.
+Crear una instancia de la clase Cliente:
+
+Utiliza los datos ingresados por el usuario para crear una instancia de la clase Cliente.
+Mostrar los datos del cliente:
+
+Imprime la información del cliente en pantalla.
+Restricciones
+No puedes utilizar librerías externas.
+Debes seguir el formato y estructura exacta de las clases y métodos proporcionados en los ejemplos de clase.
+Evita usar variables globales o funciones adicionales que no sean necesarias para completar la tarea.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Comprueba si el contexto del juego de mesa y el recorrido por senderos naturales están presentes en la descripción de los hobbies del alumno.
+Desarrollo técnico correcto y preciso (25%)
+
+Verifica que la clase Cliente esté correctamente definida con los atributos y constructor adecuados.
+Asegúrate de que el usuario pueda introducir datos y crear una instancia de la clase sin errores.
+Aplicación práctica con ejemplo claro (25%)
+
+Comprueba si el código pide al usuario los datos necesarios y muestra correctamente la información del cliente.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Asegúrate de que el ejercicio finalice con una conclusión que resalte la importancia de la programación en situaciones prácticas, como recoger y mostrar datos.
+
+
+
+Respuesta:
+
+
+En mis ratos libres me gusta jugar a juegos de mesa y recorrer senderos naturales para observar animales.
+Estas actividades me han enseñado a ser paciente y detallista.
+Ahora, aplicaré esas habilidades para crear un programa que guarde y muestre datos de clientes, usando una clase llamada Cliente.
+
+
+```
+class Cliente:
+    def __init__(self, nombre, email, direccion):
+        self.nombre = nombre
+        self.email = email
+        self.direccion = direccion
+
+
+
+nombre = input("Introduce el nombre del cliente: ")
+email = input("Introduce el email del cliente: ")
+direccion = input("Introduce la dirección del cliente: ")
+
+
+cliente1 = Cliente(nombre, email, direccion)
+
+
+print("\n--- Datos del cliente ---")
+print("Nombre:", cliente1.nombre)
+print("Email:", cliente1.email)
+print("Dirección:", cliente1.direccion)
+```
+
+
+Salida del código:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Programacion\Actividades\tema 4"
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 4> python cliente.py
+Introduce el nombre del cliente: Serena
+Introduce el email del cliente: serenaestevee@gmail.com
+Introduce la dirección del cliente: Calle Palleter 9
+
+--- Datos del cliente ---
+Nombre: Serena
+Email: serenaestevee@gmail.com
+Dirección: Calle Palleter 9
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 4>
+
+
+Este ejercicio muestra cómo la programación puede ayudarme en situaciones prácticas, como recoger y mostrar información de personas o clientes.
+Aprender a usar clases y objetos me permite organizar los datos de forma ordenada y eficiente, algo muy útil tanto en proyectos pequeños como en sistemas reales.

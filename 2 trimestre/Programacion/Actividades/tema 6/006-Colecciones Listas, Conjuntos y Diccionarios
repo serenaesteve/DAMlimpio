@@ -1,0 +1,88 @@
+Enunciado paso a paso
+Introducción y contextualización Imagina que eres un aventurero en el campo, explorando diferentes tipos de árboles. Cada tipo de árbol tiene sus propias características únicas. Para organizar esta información, vamos a utilizar una colección llamada diccionario.
+
+Desarrollo técnico correcto y preciso Vamos a crear un diccionario que contenga la información de tres diferentes árboles: un roble, un pinos y un abeto. Cada árbol tendrá las siguientes características:
+
+Nombre común
+Altura promedio (en metros)
+Hojas (si son hojales o no)
+Aplicación práctica con ejemplo claro A continuación, se te proporciona un ejemplo de cómo crear y acceder a este diccionario:
+
+arboles = {
+    "roble": {
+        "nombre_comun": "Roble",
+        "altura_promedio": 15,
+        "hojas": True
+    },
+    "pinos": {
+        "nombre_comun": "Pinos",
+        "altura_promedio": 30,
+        "hojas": False
+    },
+    "abeto": {
+        "nombre_comun": "Abeto",
+        "altura_promedio": 25,
+        "hojas": True
+    }
+}
+
+# Acceder a la información del roble
+nombre_roble = arboles["roble"]["nombre_comun"]
+altura_roble = arboles["roble"]["altura_promedio"]
+hojas_roble = arboles["roble"]["hojas"]
+
+print("Nombre común del roble:", nombre_roble)
+print("Altura promedio del roble:", altura_roble, "metros")
+print("¿El roble tiene hojas?", "Sí" if hojas_roble else "No")
+Cierre/Conclusión enlazando con la unidad Ahora que has aprendido a crear y acceder a un diccionario, puedes utilizar esta técnica para organizar cualquier tipo de información que necesites en el campo o en cualquier otro contexto relevante.
+
+Restricciones
+No uses listas ni tuplas para almacenar la información.
+No utilices métodos propios de los diccionarios, solo las operaciones básicas de acceso y creación.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica claramente el contexto del ejercicio y cómo relaciona con la vida en el campo.
+Desarrollo técnico correcto y preciso (25%): Muestra un diccionario correctamente estructurado y acceso a sus elementos.
+Aplicación práctica con ejemplo claro (25%): Proporciona un ejemplo práctico de cómo utilizar los diccionarios en el código.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye explicando cómo este concepto puede ser aplicado en situaciones reales del campo.
+
+
+Respuesta:
+
+Cuando camino por el campo y observo los distintos árboles que me rodean, me doy cuenta de que cada uno tiene características únicas que merece la pena registrar. Para organizar toda esta información de manera clara y útil, utilizo un diccionario en programación, que me permite estructurar los datos igual que si tomara notas en mi libreta de campo. Así puedo tener a mano la información de cada árbol y consultarla fácilmente cuando la necesite.
+
+```
+arboles = {
+    "roble": {
+        "nombre_comun": "Roble",
+        "altura_promedio": 15,
+        "hojas": True
+    },
+    "pinos": {
+        "nombre_comun": "Pinos",
+        "altura_promedio": 30,
+        "hojas": False
+    },
+    "abeto": {
+        "nombre_comun": "Abeto",
+        "altura_promedio": 25,
+        "hojas": True
+    }
+}
+
+nombre_roble = arboles["roble"]["nombre_comun"]
+altura_roble = arboles["roble"]["altura_promedio"]
+hojas_roble = arboles["roble"]["hojas"]
+
+print("Nombre comun del roble:", nombre_roble)
+print("Altura promedio del roble:", altura_roble, "metros")
+print("El roble tiene hojas?", "Si" if hojas_roble else "No")
+```
+
+Salida del código:
+
+[Running] python -u "c:\Users\Serena\Desktop\diccionario.py"
+Nombre comun del roble: Roble
+Altura promedio del roble: 15 metros
+El roble tiene hojas? Si
+
+Después de usar diccionarios, me doy cuenta de que es una herramienta muy práctica para ordenar y consultar información de forma rápida. En mi recorrido por el campo, me resulta útil para clasificar árboles, anotar sus características y tener mis observaciones bien organizadas. Además, sé que esta misma técnica la puedo aplicar en muchas otras situaciones de la vida diaria o del estudio, ya que los diccionarios me permiten estructurar datos de una forma clara y eficiente.

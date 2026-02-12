@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crear Piezas — Portafolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <h1 class="logo">Serena Sania Esteve</h1>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+            <li><a href="{{ url_for('create') }}">Crear Piezas</a></li>
+        </ul>
+        <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    </nav>
+</header>
+
+<section id="create" style="padding: 120px 20px; text-align: center;">
+    <h2 class="titulo-seccion">Crear Nueva Pieza</h2>
+    <form method="POST" style="max-width:500px; margin: 30px auto; display:flex; flex-direction:column; gap:15px;">
+        <input type="text" name="titulo" placeholder="Título" required>
+        <textarea name="descripcion" placeholder="Descripción" rows="4" required></textarea>
+        <input type="date" name="fecha" required>
+        <input type="text" name="imagen" placeholder="Ruta de imagen (ej: images/proyecto.jpg)">
+        <select name="id_categoria" required>
+            <option value="">Selecciona categoría</option>
+            {% for cat in categorias %}
+            <option value="{{ cat.identificador }}">{{ cat.nombre }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="boton">Crear Pieza</button>
+    </form>
+</section>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+

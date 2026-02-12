@@ -1,0 +1,63 @@
+Título
+Recorrido de Juegos de Mesa
+
+Contexto
+Imagine que eres un aventurero en un increíble recorrido de juegos de mesa. Cada espacio en el tablero representa un nuevo reto o desafío que debes superar para completar tu aventura. Para ayudarte en este viaje, necesitas llevar un registro de tus progreso y los objetos que encuentras en cada lugar.
+
+Enunciado paso a paso
+Definir el Recorrido:
+
+Declara una variable llamada sendero_actual que represente la posición actual en tu recorrido.
+Contar Objetos:
+
+Crea una variable llamada objetos_encontrados para almacenar cuántos objetos diferentes has encontrado durante tu viaje.
+Moverte por el Sendero:
+
+Escribe un bucle que te permita moverte por el sendero. Cada iteración del bucle representa avanzar a la siguiente posición.
+Encuentra Objetos:
+
+Dentro del bucle, genera un número aleatorio entre 1 y 5 para representar cuántos objetos encuentras en cada espacio. Incrementa el valor de objetos_encontrados según el número generado.
+Imprimir Progreso:
+
+Al finalizar el recorrido, imprime la posición final (sendero_actual) y el total de objetos encontrados (objetos_encontrados).
+Restricciones
+No puedes usar estructuras de control como if, else, o switch.
+Solo se permite usar bucles for para moverte por el sendero.
+La generación de números aleatorios debe ser a través de una función llamada generar_objetos().
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante muestra comprensión del contexto y la relevancia de los hobbies en el enunciado.
+Desarrollo técnico correcto y preciso (25%): El estudiante implementa correctamente las variables y bucles según las indicaciones, sin usar estructuras no vistas.
+Aplicación práctica con ejemplo claro (25%): El estudiante proporciona un ejemplo claro de cómo el código se ejecuta y muestra progreso en el recorrido.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante cierra el ejercicio enlazando su solución con la unidad y refuerza la importancia del seguimiento de información durante un viaje o aventura.
+
+
+Respuesta:
+
+Voy a simular un recorrido por un tablero de juegos de mesa. Cada espacio que avanzo representa un reto o un objeto que puedo encontrar. Quiero llevar un registro de mi progreso y contar todos los objetos que voy encontrando durante mi aventura. Esto me ayuda a organizar la información y entender mejor mi recorrido.
+
+```
+import random
+
+def generar_objetos():
+    return random.randint(1, 5)
+
+sendero_actual = 0
+objetos_encontrados = 0
+longitud_sendero = 10  # por ejemplo, 10 espacios
+
+for _ in range(longitud_sendero):
+    sendero_actual += 1
+    objetos_encontrados += generar_objetos()
+
+print("Posicion final del sendero:", sendero_actual)
+print("Total de objetos encontrados:", objetos_encontrados)
+```
+
+Salida del código:
+```
+[Running] python -u "c:\Users\Serena\Desktop\juegomesa.py"
+Posicion final del sendero: 10
+Total de objetos encontrados: 33
+```
+
+He aprendido que con bucles puedo simular un recorrido y llevar un registro de todo lo que encuentro. Usar variables como sendero_actual y objetos_encontrados me ayuda a organizar la información de manera clara y sencilla, igual que en la vida real cuando llevo un registro de mis cosas. Esta práctica me enseña la importancia de registrar datos paso a paso durante cualquier proyecto.

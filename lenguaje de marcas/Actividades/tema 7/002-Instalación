@@ -1,0 +1,277 @@
+Para practicar el concepto de programación de IA, sigue estos pasos:
+
+Introducción y contextualización: Comienza revisando los videos y materiales de introducción a IA en directo que hemos visto en clase. Identifica las principales áreas de conocimiento y técnicas que hemos aprendido.
+
+Desarrollo técnico correcto y preciso: Prueba a implementar un ejemplo sencillo de IA utilizando la técnica que más te haya gustado o que consideres relevante para tu proyecto personal. Por ejemplo, puedes intentar crear un chatbot básico con funciones como responder preguntas, realizar búsquedas en internet, etc.
+
+Aplicación práctica con ejemplo claro: A continuación, realiza el ejercicio de "De la idea al proyecto" que hemos visto en clase. Diseña y desarrolla un proyecto final completo utilizando los conocimientos adquiridos. Este proyecto debe ser funcional y presentar todas las etapas necesarias para su despliegue.
+
+Recuerda que el objetivo es aplicar lo aprendido de una manera práctica y autónoma. No dudes en buscar ayuda o recursos adicionales si te encuentras con algún problema durante la implementación. ¡Buena suerte!
+
+
+
+Respuesta:
+
+
+En este proyecto pongo en practica los conceptos basicos de programacion de inteligencia artificial vistos en clase. El objetivo es aplicar lo aprendido de forma sencilla y practica, creando una aplicacion web funcional.
+​
+Para ello desarrollo una pagina web con PHP, HTML y CSS, donde muestro informacion sobre un curso y anado un chatbot basico. Con este trabajo practico el uso de archivos JSON, la generacion de contenido dinamico y la creacion de un asistente que responde automaticamente a preguntas.
+​
+index.php:
+```
+<?php
+declare(strict_types=1);
+​
+$asset = $_GET['asset'] ?? '';
+​
+if ($asset === 'robots') {
+  header('Content-Type: text/plain; charset=utf-8');
+  $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+  echo "User-agent: *\n";
+  echo "Allow: /\n";
+  echo "Sitemap: https://{$host}/?asset=sitemap\n";
+  exit;
+}
+​
+if ($asset === 'sitemap') {
+  header('Content-Type: application/xml; charset=utf-8');
+  $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+  $date = gmdate('Y-m-d');
+  echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+  echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
+  echo "<url><loc>https://{$host}/</loc><lastmod>{$date}</lastmod></url>";
+  echo "</urlset>";
+  exit;
+}
+​
+$template = file_get_contents('plantillaSEO.html');
+$data = json_decode(file_get_contents('datos.json'), true);
+​
+foreach ($data as $k => $v) {
+  if (is_string($v)) {
+    $template = str_replace('{{'.$k.'}}', htmlspecialchars($v, ENT_QUOTES), $template);
+  }
+}
+​
+echo $template;
+```
+​
+datos.json:
+```
+{
+  "titulo1": "Curso IA en Directo",
+  "title_full": "Curso IA en Directo",
+  "heroetitulo": "IA para programadores en directo",
+  "heroetexto": "Curso practico de inteligencia artificial aplicado al desarrollo",
+  "email": "info@tucursoia.com",
+  "anio": "2026"
+}
+```
+​
+enviar.php:
+```
+<?php
+declare(strict_types=1);
+​
+$nombre = $_POST['nombre'] ?? '';
+$email = $_POST['email'] ?? '';
+$mensaje = $_POST['mensaje'] ?? '';
+​
+$texto = date('Y-m-d H:i:s')."\n".$nombre."\n".$email."\n".$mensaje."\n---\n";
+file_put_contents('leads.txt',$texto,FILE_APPEND);
+?>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Enviado</title>
+<link rel="stylesheet" href="estilochatgpt.css">
+</head>
+<body>
+<div class="container">
+<p>Mensaje enviado correctamente</p>
+<a href="index.php">Volver</a>
+</div>
+</body>
+</html>
+```
+​
+estilochatgpt.css:
+```
+body{
+font-family: Arial, sans-serif;
+margin:0;
+padding:0;
+}
+​
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+​
+nav a{
+margin-right:10px;
+text-decoration:none;
+}
+​
+form{
+border:1px solid #ccc;
+padding:20px;
+}
+​
+input,textarea{
+width:100%;
+margin-bottom:10px;
+padding:8px;
+}
+```
+​
+​
+plantillaSEO.html:
+```
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{title_full}}</title>
+<link rel="stylesheet" href="estilochatgpt.css">
+</head>
+<body>
+​
+<header>
+<div class="container">
+<nav>
+<a href="index.php">Inicio</a>
+<a href="chat.php">Asistente IA</a>
+<a href="#contacto">Contacto</a>
+</nav>
+</div>
+</header>
+​
+<main class="container">
+​
+<h1>{{heroetitulo}}</h1>
+<p>{{heroetexto}}</p>
+​
+<section id="contacto">
+<form action="enviar.php" method="post">
+<label>Nombre</label>
+<input type="text" name="nombre" required>
+<label>Email</label>
+<input type="email" name="email" required>
+<label>Mensaje</label>
+<textarea name="mensaje" required></textarea>
+<button type="submit">Enviar</button>
+</form>
+</section>
+​
+</main>
+​
+<footer class="container">
+<p>{{anio}} {{titulo1}}</p>
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+</footer>
+​
+</body>
+</html>
+```
+​
+privacy.html:
+```
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<link rel="stylesheet" href="estilochatgpt.css">
+<body>
+<div class="container">
+<h1>Privacy policy</h1>
+<p>Pagina de ejemplo</p>
+<a href="index.php">Volver</a>
+</div>
+</body>
+</html>
+```
+​
+terms.html:
+```
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<link rel="stylesheet" href="estilochatgpt.css">
+<body>
+<div class="container">
+<h1>Terms of use</h1>
+<p>Pagina de ejemplo</p>
+<a href="index.php">Volver</a>
+</div>
+</body>
+</html>
+```
+​
+chat.php:
+```
+<?php
+declare(strict_types=1);
+​
+function e($s){ return htmlspecialchars($s, ENT_QUOTES); }
+​
+$data = json_decode(file_get_contents('datos.json'), true);
+​
+$pregunta = $_POST['pregunta'] ?? '';
+$respuesta = '';
+​
+if ($pregunta !== '') {
+  $p = strtolower($pregunta);
+​
+  if (strpos($p,'curso') !== false) {
+    $respuesta = $data['heroetexto'];
+  } elseif (strpos($p,'email') !== false) {
+    $respuesta = $data['email'];
+  } else {
+    $respuesta = "No tengo esa informacion";
+  }
+}
+?>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Chat IA</title>
+<link rel="stylesheet" href="estilochatgpt.css">
+</head>
+<body>
+​
+<div class="container">
+<h1>Asistente IA</h1>
+​
+<form method="post">
+<textarea name="pregunta" required></textarea>
+<button type="submit">Preguntar</button>
+</form>
+​
+<?php if($pregunta): ?>
+<p><strong>Pregunta:</strong> <?=e($pregunta)?></p>
+<p><strong>Respuesta:</strong> <?=e($respuesta)?></p>
+<?php endif; ?>
+​
+<a href="index.php">Volver</a>
+</div>
+​
+</body>
+</html>
+```
+​
+Al ejecutar el programa se abre una pagina web en el navegador. La pagina muestra informacion sobre un curso de inteligencia artificial, como una descripcion, las secciones principales y un formulario de contacto.
+​
+La web utiliza PHP para cargar los datos desde un archivo JSON, lo que permite cambiar los textos sin modificar el codigo HTML. El diseno esta hecho con CSS y se adapta al tamano de la pantalla.
+​
+El proyecto incluye un chatbot sencillo. Al entrar en el chatbot,puedes escribir una pregunta y el sistema responde automaticamente. El chatbot funciona buscando palabras clave y devolviendo informacion relacionada con el curso.
+​
+Con este proyecto se demuestra el uso basico de inteligencia artificial, ya que el programa simula una conversacion y responde de forma automatica. El objetivo es aplicar de forma practica lo aprendido en clase usando una aplicacion web sencilla.
+​
+Haciendo este proyecto consigo aplicar de forma practica los conocimientos aprendidos en clase sobre inteligencia artificial y desarrollo web. El chatbot demuestra como un programa puede simular una conversacion utilizando palabras clave.
+​
+Este trabajo me ayuda a entender mejor como funciona una aplicacion web completa y como se pueden integrar elementos de inteligencia artificial de forma basica. Ademas, me sirve para seguir aprendiendo y mejorando en el desarrollo de proyectos mas avanzados en el futuro.

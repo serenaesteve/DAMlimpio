@@ -1,0 +1,60 @@
+Enunciado paso a paso
+Entendiendo las vistas: Una vista en una base de datos relacional es un objeto virtual que proporciona una forma simplificada y personalizada de ver los datos. Esta estructura permite a los usuarios interactuar con subconjuntos específicos de datos, ocultando la complejidad del modelo base y presentándolo de manera más accesible.
+
+Ejemplo práctico: Imagina que eres un vendedor en una tienda de productos naturales. Quieres crear una vista que muestre los pedidos realizados por clientes frecuentes, incluyendo la fecha del pedido, el nombre y apellidos del cliente, el nombre del producto, su precio, el IVA aplicado y el precio total.
+
+Creando la vista: Para ello, necesitas combinar datos de tres tablas: pedidos, clientes y productos. La tabla pedidos contiene información sobre los pedidos realizados, clientes tiene datos de los clientes y productos contiene detalles de los productos vendidos.
+
+Escribir la consulta: Utiliza una consulta SQL para seleccionar y combinar estos datos. El resultado será una vista que facilita el seguimiento de los pedidos realizados por clientes frecuentes.
+
+Restricciones
+No puedes usar funciones complejas o operadores avanzados.
+Solo debes utilizar las tablas pedidos, clientes y productos.
+La consulta debe estar centrada en mostrar información relevante para el vendedor de productos naturales.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender la importancia de las vistas en una base de datos relacional y cómo pueden facilitar el acceso a los datos relevantes.
+Desarrollo técnico correcto y preciso (25%): La consulta SQL debe ser escrita correctamente, combinando adecuadamente las tablas pedidos, clientes y productos.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar un ejemplo práctico de cómo la vista facilitaría el seguimiento de los pedidos realizados por clientes frecuentes en una tienda de productos naturales.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio enlazándolo con el tema actual y explicando cómo las vistas pueden ser útiles en diferentes contextos, como el seguimiento de ventas o el manejo de inventario.
+
+
+Respuesta:
+
+
+Las vistas en una base de datos sirven para mostrar información importante de forma facil, sin tener que hacer consultas complicadas.
+Permiten ver solo los datos que necesitas, ahorran tiempo y facilitan el trabajo con la información.
+Por ejemplo, un vendedor puede ver los pedidos de sus clientes sin preocuparse por unir tablas cada vez.
+
+```
+CREATE VIEW vista_pedidos AS 
+SELECT 
+    p.fecha,
+    c.nombre AS nombre_cliente,
+    c.apellidos,
+    pr.nombre AS nombre_producto,
+    pr.precio,
+    pr.precio * 0.16 AS iva,
+    pr.precio * 1.16 AS total
+FROM pedidos p
+LEFT JOIN clientes c
+    ON p.id_cliente = c.id_cliente
+LEFT JOIN productos pr
+    ON p.id_producto = pr.id_producto;
+```
+
+Y para comprobar el resultado:
+
+```
+SELECT * FROM vista_pedidos;
+```
+
+En una tienda de productos naturales, el vendedor necesita revisar qué productos compran los clientes frecuentes, cuándo hicieron sus pedidos y cuánto pagaron.
+En vez de hacer varias consultas y unir tablas manualmente, solo tendría que escribir:
+```
+SELECT * FROM vista_pedidos;
+```
+La vista le enseñará directamente la fecha del pedido, el nombre del cliente, el producto, el precio, el IVA y el total.
+Así puede dar seguimiento rápido a los pedidos frecuentes, planificar promociones o dar un mejor servicio sin complicarse con consultas largas.
+
+Basicamente, las vistas facilitan el acceso a la información sin usar consultas largas.
+No solo sirven para ver pedidos de clientes frecuentes, también pueden ayudar a controlar ventas, revisar inventario y tomar decisiones más rápidas en la tienda.

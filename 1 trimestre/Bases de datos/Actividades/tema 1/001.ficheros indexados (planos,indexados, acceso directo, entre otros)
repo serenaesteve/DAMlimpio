@@ -1,0 +1,63 @@
+Contexto
+
+En nuestra clase de Bases de Datos, hemos estado explorando diferentes formatos de almacenamiento de información. Hoy, nos centraremos en los ficheros planos y estructurados, como archivos XML y JSON. Estos tipos de ficheros son fundamentales para almacenar datos de manera organizada y accesible.
+
+Para ilustrar mejor este concepto, vamos a imaginar que estás en un campo, recogiendo muestras de diferentes especies de plantas. Cada planta es una "persona" con su nombre, apellidos (especie) y telefonos (medidas). Necesitarás almacenar esta información para futuras referencias.
+
+Enunciado paso a paso
+
+Carga los datos: Comienza cargando los datos de las muestras recolectadas en un fichero XML o JSON.
+Procesa los datos: Escribe una función que lea y procese estos ficheros, extraíendo la información relevante sobre cada planta.
+Visualiza los datos: Diseña un programa que muestre en pantalla los nombres de las plantas y sus medidas.
+Restricciones
+
+No uses librerías externas para leer o escribir ficheros XML o JSON.
+Mantén el código lo más simple posible, sin complejidades innecesarias.
+Criterios de evaluación
+
+Introducción y contextualización (25%): Explica brevemente los tipos de ficheros que estamos trabajando y cómo se relacionan con el campo de la informática.
+Desarrollo técnico correcto y preciso (25%): Muestra un buen entendimiento del formato XML y JSON, así como habilidades en lectura y procesamiento de datos.
+Aplicación práctica con ejemplo claro (25%): Proporciona ejemplos claros de cómo leer y procesar los ficheros, incluyendo la extracción de información específica.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye el ejercicio enfatizando la importancia de almacenar datos de manera organizada y accesible para futuras referencias en cualquier campo de estudio.
+
+
+Respesta:
+
+Los ficheros xml y JSON:
+-Guardan datos con complejidad ilimitada
+-Muy estandarizados a día de hoy
+
+En informática los ficheros XML y JSON permiten que la información pueda moverse de un lado a otro sin que se pierda o se confunda.
+
+-XML usa etiquetas, es más largo y se usa en cosas muy formales.
+-JSON usa pares clave-valor, es más corto y se usa mucho en apps y páginas web.
+-XML Y JSON nos sirven para documentos complejos y anidados.
+
+A continuacion pongo el codigo del desarrollo del enunciado:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<plantas>
+  <planta>
+    <nombre>margarita</nombre>
+    <especie>Bellis perennis</especie>
+      <medida>20</medida>
+  </planta>
+  <planta>
+    <nombre>Manzano</nombre>
+    <especie>Malus pumila</especie>
+    <medida>3</medida>
+  </planta>
+  <planta>
+    <nombre>Girasol</nombre>
+    <especie>Helianthus annuus</especie>
+    <medida>50</medida>
+  </planta>
+  <planta>
+    <nombre>Lavanda</nombre>
+    <especie>Lavandula angustifolia</especie>
+    <medida>1</medida>
+  </planta>
+</plantas>
+```
+
+Basicamente guardar datos de forma ordenada con formatos como XML y JSON hace que la información sea fácil de usar y de volver a encontrar. Tener los datos organizados ayuda a compartirlos, entenderlos y aprovecharlos en el futuro, algo útil en cualquier empresa/persona.

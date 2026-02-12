@@ -1,0 +1,525 @@
+El objetivo de esta actividad es practicar la descarga de contenido remoto desde un servidor utilizando Python y la biblioteca paramiko. El ejercicio consta de tres partes principales: listar el contenido del directorio remoto, descargar todos los archivos desde ese directorio, y mostrar el progreso de la descarga.
+
+Parte 1: Listar el Contenido del Directorio Remoto
+El primer script (001-listar servidor remoto.py) se encarga de conectarse al servidor remoto y listar su contenido. El usuario debe proporcionar una configuración en un archivo JSON con los detalles de conexión, como el nombre de host, puerto, usuario y contraseña.
+
+Instrucciones:
+
+Asegúrate de tener instalado paramiko ejecutando pip install paramiko.
+Crea un archivo config.json con la siguiente estructura:
+{
+    "host": "your_server_host",
+    "port": 22,
+    "username": "your_username",
+    "password": "your_password"
+}
+Ejecuta el script 001-listar servidor remoto.py.
+El programa imprimirá un árbol de directorios con todos los archivos y carpetas en la ubicación especificada.
+Parte 2: Descargar Contenido Remoto
+El segundo script (002-contenido de html.py) se encarga de descargar todo el contenido del directorio remoto especificado. Similar al primer script, el usuario debe proporcionar una configuración en un archivo JSON con los detalles de conexión.
+
+Instrucciones:
+
+Asegúrate de tener instalado paramiko ejecutando pip install paramiko.
+Crea un archivo config.json con la siguiente estructura:
+{
+    "host": "your_server_host",
+    "port": 22,
+    "username": "your_username",
+    "password": "your_password",
+    "path": "/var/www/html"
+}
+Ejecuta el script 002-contenido de html.py.
+El programa descargará todos los archivos y carpetas del directorio remoto especificado a la carpeta local actual.
+Parte 3: Descargar Contenido con Progreso
+El tercer script (003-descarga.py) mejora el proceso de descarga añadiendo un indicador de progreso. Similar a los scripts anteriores, el usuario debe proporcionar una configuración en un archivo JSON con los detalles de conexión.
+
+Instrucciones:
+
+Asegúrate de tener instalado paramiko ejecutando pip install paramiko.
+Crea un archivo config.json con la siguiente estructura:
+{
+    "host": "your_server_host",
+    "port": 22,
+    "username": "your_username",
+    "password": "your_password",
+    "root_path": "/var/www/html/capitol"
+}
+Ejecuta el script 003-descarga.py.
+El programa descargará todos los archivos del directorio remoto especificado y mostrará un indicador de progreso en la terminal.
+Cierre
+Estos ejercicios te permitirán practicar las habilidades necesarias para interactuar con servidores remotos utilizando Python, manejar SSH/SFTP, y descargar contenido. Recuerda que el campo es una excelente fuente de inspiración para aplicar estos conceptos en situaciones reales. ¡Buena suerte!
+
+
+
+Respuesta:
+
+
+El objetivo de este ejercicio es aprender a conectarse a un servidor remoto utilizando Python. Para ello hetrabajado con la librería Paramiko y con archivos de configuración en formato JSON.
+
+A través de varios programas, he practicado cómo listar y descargar archivos desde un servidor usando SSH.
+
+
+001-listar servidor remoto.py:
+```
+import json
+import stat
+import posixpath
+import paramiko
+
+
+def load_config(path: str) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def create_ssh_client(cfg: dict) -> paramiko.SSHClient:
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    host = cfg["host"]
+    port = cfg.get("port", 22)
+    username = cfg["username"]
+    password = cfg["password"]
+
+    client.connect(hostname=host, port=port, username=username, password=password)
+    return client
+
+
+def walk_remote(sftp, root_path: str, prefix: str = "", depth: int = 0, max_depth=None):
+    if max_depth is not None and depth > max_depth:
+        return
+
+    try:
+        entries = sftp.listdir_attr(root_path)
+    except IOError as e:
+        print(f"{prefix}[ERROR al abrir {root_path}: {e}]")
+        return
+
+    entries_sorted = sorted(entries, key=lambda e: (not stat.S_ISDIR(e.st_mode), e.filename.lower()))
+    total = len(entries_sorted)
+
+    for i, entry in enumerate(entries_sorted):
+        name = entry.filename
+        remote_path = posixpath.join(root_path, name)
+
+        is_dir = stat.S_ISDIR(entry.st_mode)
+        is_last = (i == total - 1)
+
+        connector = "└── " if is_last else "├── "
+        print(f"{prefix}{connector}{name}{'/' if is_dir else ''}")
+
+        if is_dir:
+            child_prefix = prefix + ("    " if is_last else "│   ")
+            walk_remote(sftp, remote_path, prefix=child_prefix, depth=depth + 1, max_depth=max_depth)
+
+
+def main():
+    cfg = load_config("config.json")
+    root_path = cfg.get("root_path", ".")
+    max_depth = cfg.get("max_depth", None)
+
+    ssh = None
+    sftp = None
+    try:
+        ssh = create_ssh_client(cfg)
+        sftp = ssh.open_sftp()
+
+        print(root_path.rstrip("/") + "/")
+        walk_remote(sftp, root_path, prefix="", depth=0, max_depth=max_depth)
+
+    finally:
+        if sftp:
+            sftp.close()
+        if ssh:
+            ssh.close()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+002.contenido de html.py
+```
+import json
+import os
+import stat
+import posixpath
+import paramiko
+
+
+def load_config(path: str) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def create_ssh_client(cfg: dict) -> paramiko.SSHClient:
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    host = cfg["host"]
+    port = cfg.get("port", 22)
+    username = cfg["username"]
+    password = cfg["password"]
+
+    client.connect(hostname=host, port=port, username=username, password=password)
+    return client
+
+
+def ensure_local_dir(path: str) -> None:
+    os.makedirs(path, exist_ok=True)
+
+
+def download_dir(sftp, remote_dir: str, local_dir: str) -> None:
+    ensure_local_dir(local_dir)
+
+    try:
+        entries = sftp.listdir_attr(remote_dir)
+    except IOError as e:
+        print(f"[ERROR] No se pudo listar {remote_dir}: {e}")
+        return
+
+    for entry in entries:
+        remote_path = posixpath.join(remote_dir, entry.filename)
+        local_path = os.path.join(local_dir, entry.filename)
+
+        if stat.S_ISDIR(entry.st_mode):
+            download_dir(sftp, remote_path, local_path)
+        else:
+            print(f"Descargando: {remote_path} -> {local_path}")
+            sftp.get(remote_path, local_path)
+
+
+def main():
+    cfg = load_config("config.json")
+
+    remote_path = cfg.get("path")
+    if not remote_path:
+        print("ERROR: En config.json falta 'path' (ej: /var/www/html)")
+        return
+
+    local_folder = os.path.basename(remote_path.rstrip("/"))
+    if local_folder == "":
+        local_folder = "descarga"
+
+    ssh = None
+    sftp = None
+    try:
+        ssh = create_ssh_client(cfg)
+        sftp = ssh.open_sftp()
+
+        print(f"Descargando TODO desde: {remote_path}")
+        print(f"Destino local: ./{local_folder}\n")
+
+        download_dir(sftp, remote_path, local_folder)
+
+        print("\n✅ Descarga completada.")
+
+    finally:
+        if sftp:
+            sftp.close()
+        if ssh:
+            ssh.close()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+descarga.py:
+```
+import json
+import os
+import stat
+import time
+import posixpath
+import paramiko
+
+
+def load_config(path: str) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def create_ssh_client(cfg: dict) -> paramiko.SSHClient:
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    host = cfg["host"]
+    port = cfg.get("port", 22)
+    username = cfg["username"]
+    password = cfg["password"]
+
+    client.connect(hostname=host, port=port, username=username, password=password)
+    return client
+
+
+def format_bytes(n: int) -> str:
+    x = float(n)
+    for unit in ("B", "KB", "MB", "GB", "TB"):
+        if x < 1024 or unit == "TB":
+            return f"{x:.1f} {unit}"
+        x /= 1024
+    return f"{x:.1f} TB"
+
+
+def format_time(seconds: float) -> str:
+    seconds = int(seconds)
+    h, rem = divmod(seconds, 3600)
+    m, s = divmod(rem, 60)
+    if h > 0:
+        return f"{h}h {m:02d}m {s:02d}s"
+    if m > 0:
+        return f"{m}m {s:02d}s"
+    return f"{s}s"
+
+
+class GlobalProgress:
+    def __init__(self, total_bytes: int):
+        self.total_bytes = total_bytes
+        self.transferred = 0
+        self.start = time.time()
+
+    def add(self, delta: int):
+        self.transferred += delta
+        self.print()
+
+    def print(self):
+        elapsed = time.time() - self.start
+        speed = self.transferred / elapsed if elapsed > 0 else 0.0
+        remaining = (self.total_bytes - self.transferred) / speed if speed > 0 else 0.0
+        percent = (self.transferred / self.total_bytes) * 100.0 if self.total_bytes > 0 else 0.0
+
+        bar_len = 30
+        filled = int(bar_len * percent / 100.0)
+        bar = "█" * filled + "-" * (bar_len - filled)
+
+        msg = (
+            f"\r[{bar}] {percent:6.2f}% "
+            f"| {format_bytes(self.transferred)}/{format_bytes(self.total_bytes)} "
+            f"| elapsed {format_time(elapsed)} "
+            f"| ETA {format_time(remaining)}"
+        )
+        print(msg, end="", flush=True)
+
+        if self.transferred >= self.total_bytes:
+            print()
+
+
+def collect_remote_files(sftp: paramiko.SFTPClient, root_path: str):
+    """
+    Devuelve lista de (ruta_remota, tamaño) de todos los archivos bajo root_path (recursivo).
+    """
+    files = []
+
+    def _walk(path: str):
+        try:
+            entries = sftp.listdir_attr(path)
+        except IOError as e:
+            print(f"\n[ERROR] No se pudo listar {path}: {e}")
+            return
+
+        for entry in entries:
+            name = entry.filename
+            if name in (".", ".."):
+                continue
+
+            remote_path = posixpath.join(path, name)
+
+            if stat.S_ISDIR(entry.st_mode):
+                _walk(remote_path)
+            else:
+                files.append((remote_path, entry.st_size))
+
+    _walk(root_path)
+    return files
+
+
+def download_all_with_progress(sftp: toggle, files, remote_root: str, local_root: str):
+    total_bytes = sum(size for _, size in files)
+    progress = GlobalProgress(total_bytes)
+
+    remote_root_clean = remote_root.rstrip("/")
+
+    for remote_path, _size in files:
+        # Parte relativa (lo que va dentro de la carpeta local)
+        rel = remote_path[len(remote_root_clean) + 1:]
+        local_path = os.path.join(local_root, rel)
+
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+
+        last = {"v": 0}
+
+        def callback(transferred, total):
+            delta = transferred - last["v"]
+            last["v"] = transferred
+            progress.add(delta)
+
+        sftp.get(remote_path, local_path, callback=callback)
+
+
+def main():
+    cfg = load_config("config.json")
+
+    remote_root = cfg.get("root_path")
+    if not remote_root:
+        print("ERROR: En config.json falta 'root_path' (ej: /var/www/html/capitol)")
+        return
+
+    local_root = os.path.basename(remote_root.rstrip("/"))
+    if local_root == "":
+        local_root = "descarga"
+
+    os.makedirs(local_root, exist_ok=True)
+
+    ssh = None
+    sftp = None
+    try:
+        ssh = create_ssh_client(cfg)
+        sftp = ssh.open_sftp()
+
+        print(f"Buscando archivos en: {remote_root} ...")
+        files = collect_remote_files(sftp, remote_root)
+        print(f"Archivos encontrados: {len(files)}")
+        print(f"Destino local: ./{local_root}\n")
+
+        if len(files) == 0:
+            print("No hay archivos para descargar.")
+            return
+
+        print("Descargando con progreso:")
+        download_all_with_progress(sftp, files, remote_root, local_root)
+        print("✅ Descarga terminada.")
+
+    finally:
+        if sftp:
+            sftp.close()
+        if ssh:
+            ssh.close()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
+
+config.json (1):
+```
+{
+  "host": "localhost",
+  "port": 22,
+  "username": "serena",
+  "password": "1463",
+  "root_path": "/var/www/html/DAM/Sistemas/Actividades"
+}
+```
+
+
+config.json (2):
+```
+{
+  "host": "localhost",
+  "port": 22,
+  "username": "serena",
+  "password": "1463",
+  "path": "/var/www/html/DAM/Sistemas/Actividades"
+}
+```
+
+Terminal:
+
+
+│   │   ├── mysql_all_databases_backups/
+│   │   │   └── backup_all_mysql_20251231_102229.sql.gz
+│   │   ├── 001-Gestión de sistemas de archivos mediante comandos y entornos gráficos
+│   │   ├── 002-Estructura de directorios de sistemas operativos libres y propietarios
+│   │   ├── 003-Búsqueda de información del sistema mediante comandos y herramientas gráficas
+│   │   ├── 004-Identificación del software instalado mediante comandos y herramientas gráficas
+│   │   ├── 005-Realización y restauración de copias de seguridad
+│   │   ├── backupmysqlall.py
+│   │   ├── buscararchivos.py
+│   │   ├── config_mysql_backup.json
+│   │   ├── imprimir_estilo.py
+│   │   └── libreria_os.py
+│   ├── tema 6/
+│   │   ├── proyectoemail/
+│   │   │   ├── config2.json
+│   │   │   ├── enviar_email.py
+│   │   │   └── template.html
+│   │   └── 005-Servidores de impresión
+│   ├── tema 8/
+│   │   └── 001-Generacion de imagenes
+│   ├── 001-listar servidor remoto.py
+│   ├── 002-contenido de html.py
+│   ├── 003-descarga.py
+│   └── config.json
+├── tema 3/
+│   ├── mysql_all_databases_backups/
+│   │   └── backup_all_mysql_20251231_102229.sql.gz
+│   ├── 001-Gestión de sistemas de archivos mediante comandos y entornos gráficos
+│   ├── 002-Estructura de directorios de sistemas operativos libres y propietarios
+│   ├── 003-Búsqueda de información del sistema mediante comandos y herramientas gráficas
+│   ├── 004-Identificación del software instalado mediante comandos y herramientas gráficas
+│   ├── 005-Realización y restauración de copias de seguridad
+│   ├── backupmysqlall.py
+│   ├── buscararchivos.py
+│   ├── config_mysql_backup.json
+│   ├── imprimir_estilo.py
+│   └── libreria_os.py
+├── tema 6/
+│   ├── proyectoemail/
+│   │   ├── config2.json
+│   │   ├── enviar_email.py
+│   │   └── template.html
+│   └── 005-Servidores de impresión
+├── tema 8/
+│   └── 001-Generacion de imagenes
+├── 001-listar servidor remoto.py
+├── 002-contenido de html.py
+├── 003-descarga.py
+└── config.json
+(venv) serena@serena-portatil:/var/www/html/DAM/Sistemas/Actividades$ 
+
+
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 6/proyectoemail/template.html -> Actividades/tema 6/proyectoemail/template.html
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 6/proyectoemail/config2.json -> Actividades/tema 6/proyectoemail/config2.json
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 6/proyectoemail/enviar_email.py -> Actividades/tema 6/proyectoemail/enviar_email.py
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 6/005-Servidores de impresión -> Actividades/tema 6/005-Servidores de impresión
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/005-Realización y restauración de copias de seguridad -> Actividades/tema 3/005-Realización y restauración de copias de seguridad
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/003-Búsqueda de información del sistema mediante comandos y herramientas gráficas -> Actividades/tema 3/003-Búsqueda de información del sistema mediante comandos y herramientas gráficas
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/mysql_all_databases_backups/backup_all_mysql_20251231_102229.sql.gz -> Actividades/tema 3/mysql_all_databases_backups/backup_all_mysql_20251231_102229.sql.gz
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/imprimir_estilo.py -> Actividades/tema 3/imprimir_estilo.py
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/backupmysqlall.py -> Actividades/tema 3/backupmysqlall.py
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/002-Estructura de directorios de sistemas operativos libres y propietarios -> Actividades/tema 3/002-Estructura de directorios de sistemas operativos libres y propietarios
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/buscararchivos.py -> Actividades/tema 3/buscararchivos.py
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/004-Identificación del software instalado mediante comandos y herramientas gráficas -> Actividades/tema 3/004-Identificación del software instalado mediante comandos y herramientas gráficas
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/config_mysql_backup.json -> Actividades/tema 3/config_mysql_backup.json
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/libreria_os.py -> Actividades/tema 3/libreria_os.py
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 3/001-Gestión de sistemas de archivos mediante comandos y entornos gráficos -> Actividades/tema 3/001-Gestión de sistemas de archivos mediante comandos y entornos gráficos
+Descargando: /var/www/html/DAM/Sistemas/Actividades/001-listar servidor remoto.py -> Actividades/001-listar servidor remoto.py
+Descargando: /var/www/html/DAM/Sistemas/Actividades/tema 8/001-Generacion de imagenes -> Actividades/tema 8/001-Generacion de imagenes
+Descargando: /var/www/html/DAM/Sistemas/Actividades/002-contenido de html.py -> Actividades/002-contenido de html.py
+
+✅ Descarga completada.
+(venv) serena@serena-portatil:/var/www/html/DAM/Sistemas/Actividades$ ^C
+(venv) serena@serena-portatil:/var/www/html/DAM/Sistemas/Actividades$ 
+
+
+
+Solo pongo un trozo de lo que ha salido en la temrminal por que es muchisimo.
+
+
+
+En este ejercicio he aprendido a conectarme a un servidor usando Python y la librería Paramiko. Para hacerlo, he usado mi propio ordenador como servidor conectándome por SSH.
+
+Primero he creado el archivo config.json, donde he puesto los datos necesarios para la conexión, como el usuario, la contraseña y la carpeta con la que iba a trabajar.
+
+Después he hecho el programa 001-listar servidor remoto.py, que muestra los archivos y carpetas de una ruta en forma de árbol.
+
+Luego he creado el programa 002-contenido de html.py, que descarga todos los archivos y carpetas del directorio indicado.
+
+Por último, he usado el programa 003-descarga.py, que descarga los archivos mostrando una barra de progreso para ver cómo avanza la descarga.
+
+He aprendido a descargar contenido y a ver el progreso de una descarga.
+Esta práctica me ha ayudado a entender mejor cómo funcionan las conexiones remotas y cómo se pueden usar en situaciones reales.

@@ -1,0 +1,201 @@
+Actividad: Creación de un Panel de Control Interactivo
+Para esta actividad, vamos a crear un panel de control interactivo que muestre las tablas de una base de datos y permita seleccionar una tabla para ver sus datos en forma de tabla. Este ejercicio nos ayudará a entender cómo manejar parámetros GET y POST en PHP.
+
+Contexto
+Imagina que eres un desarrollador web que trabaja en una empresa de turismo. Tu tarea es crear una herramienta interactiva que muestre las tablas de la base de datos correspondiente a los lugares que el negocio gestiona, como hoteles, restaurantes y actividades turísticas.
+
+Enunciado paso a paso
+Crea un archivo PHP llamado panel_control.php.
+
+Este archivo mostrará una lista de tablas en la base de datos.
+Cada tabla debe tener un enlace que permita seleccionarla y ver sus datos.
+Añade el siguiente código a panel_control.php:
+
+<?php
+$mysqli = new mysqli("localhost", "miempresa", "miempresa", "miempresa");
+if ($mysqli->connect_error) {
+    die("Conexión fallida: " . $mysqli->connect_error);
+}
+?>
+<!doctype html>
+<html>
+<head>
+  <style>
+    html, body { width: 100%; height: 100%; padding: 0px; margin: 0px; font-family: sans-serif; }
+    body { display: flex; }
+    nav { flex: 1; background: indigo; color: white; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+    main { flex: 5; background: aliceblue; padding: 20px; }
+    nav a { border: none; background: white; padding: 20px; text-decoration: none; color: indigo; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <?php
+      $sql = "SHOW TABLES";
+      $resultado = $mysqli->query($sql);
+      while ($fila = $resultado->fetch_assoc()) {
+        echo '<a href="?tabla=' . urlencode($fila['Tables_in_miempresa']) . '">' . htmlspecialchars($fila['Tables_in_miempresa']) . '</a>';
+      }
+    ?>
+  </nav>
+  <main>
+    <?php
+      if (isset($_GET['tabla'])) {
+        $sql = "SELECT * FROM " . $_GET['tabla'] . ";";
+        $resultado = $mysqli->query($sql);
+        if ($resultado->num_rows > 0) {
+          echo "<table class='redondeado'>";
+          echo "<thead>";
+          while ($fila = $resultado->fetch_assoc()) {
+            echo "<tr>";
+            foreach ($fila as $clave => $valor) {
+              echo "<th>" . htmlspecialchars($clave) . "</th>";
+            }
+            echo "</tr>";
+            break;
+          }
+          echo "</thead>";
+          echo "<tbody>";
+          while ($fila = $resultado->fetch_assoc()) {
+            echo "<tr>";
+            foreach ($fila as $valor) {
+              echo "<td>" . htmlspecialchars($valor) . "</td>";
+            }
+            echo "</tr>";
+          }
+          echo "</tbody>";
+          echo "</table>";
+        } else {
+          echo "No hay datos en la tabla seleccionada.";
+        }
+      } else {
+        echo "Selecciona una tabla para ver sus datos.";
+      }
+    ?>
+  </main>
+</body>
+</html>
+Guarda el archivo y prueba la aplicación:
+
+Abre un navegador y accede a http://localhost/panel_control.php.
+Verás una lista de tablas en la base de datos.
+Haz clic en cualquier tabla para ver sus datos.
+Restricciones
+No uses librerías externas ni estructuras no vistas hasta ahora.
+Asegúrate de que el código esté bien indentado y legible.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica brevemente el propósito del panel de control y cómo maneja los parámetros GET y POST.
+Desarrollo técnico correcto y preciso (25%)
+
+Comprueba que el código muestra correctamente las tablas y sus datos.
+Asegúrate de que no haya errores en la conexión a la base de datos ni en la consulta SQL.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona un ejemplo claro de cómo funciona el panel de control al seleccionar una tabla y ver sus datos.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluye explicando cómo este ejercicio se relaciona con los conceptos vistos en clase y cómo puede ser útil en un proyecto real.
+¡Buena suerte con tu actividad!
+
+
+Respuesta:
+
+En este ejercicio he desarrollado un panel de control interactivo utilizando PHP y una base de datos MySQL. El objetivo principal de esta práctica es aprender a conectar una aplicación web con una base de datos y enseñar su información de forma dinámica. A través de este panel, puedo visualizar las tablas disponibles en la base de datos y seleccionar cualquiera de ellas para ver sus datos en formato tabla.
+
+Además, con esta actividad he trabajado el uso de los parámetros GET en PHP, ya que la tabla seleccionada se envía mediante la URL. De esta manera, he podido reforzar conceptos importantes del desarrollo web, como la conexión a bases de datos, la ejecución de consultas SQL y la generación dinámica de contenido HTML.
+
+1. Primero he creado la base de datos "miempresa"
+```
+CREATE DATABASE miempresa;
+```
+
+2. He creado la tabla Hoteles y le he añadido datos:
+```
+CREATE TABLE hoteles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100),
+  ciudad VARCHAR(100),
+  precio INT
+);
+
+INSERT INTO hoteles (nombre, ciudad, precio) VALUES
+('Hotel Sol', 'Madrid', 120),
+('Hotel Playa', 'Valencia', 90),
+('Hotel Norte', 'Bilbao', 110);
+```
+
+3. Luego he creado el archivo php:
+```
+<?php
+$mysqli = new mysqli("localhost", "root", "", "miempresa");
+
+if ($mysqli->connect_error) {
+    die("Conexión fallida: " . $mysqli->connect_error);
+}
+?>
+<!doctype html>
+<html>
+<head>
+  <style>
+    html, body { width: 100%; height: 100%; padding: 0px; margin: 0px; font-family: sans-serif; }
+    body { display: flex; }
+    nav { flex: 1; background: indigo; color: white; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+    main { flex: 5; background: aliceblue; padding: 20px; }
+    nav a { border: none; background: white; padding: 20px; text-decoration: none; color: indigo; text-transform: uppercase; font-weight: bold; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <?php
+      $sql = "SHOW TABLES";
+      $resultado = $mysqli->query($sql);
+      while ($fila = $resultado->fetch_assoc()) {
+        echo '<a href="?tabla=' . urlencode($fila['Tables_in_miempresa']) . '">' . htmlspecialchars($fila['Tables_in_miempresa']) . '</a>';
+      }
+    ?>
+  </nav>
+  <main>
+    <?php
+      if (isset($_GET['tabla'])) {
+        $sql = "SELECT * FROM " . $_GET['tabla'];
+        $resultado = $mysqli->query($sql);
+
+        if ($resultado && $resultado->num_rows > 0) {
+          echo "<table border='1' cellpadding='5'>";
+          echo "<thead><tr>";
+          
+          $fila = $resultado->fetch_assoc();
+          foreach ($fila as $clave => $valor) {
+            echo "<th>" . htmlspecialchars($clave) . "</th>";
+          }
+          echo "</tr></thead><tbody>";
+
+          do {
+            echo "<tr>";
+            foreach ($fila as $valor) {
+              echo "<td>" . htmlspecialchars($valor) . "</td>";
+            }
+            echo "</tr>";
+          } while ($fila = $resultado->fetch_assoc());
+
+          echo "</tbody></table>";
+        } else {
+          echo "No hay datos en la tabla seleccionada.";
+        }
+      } else {
+        echo "Selecciona una tabla para ver sus datos.";
+      }
+    ?>
+  </main>
+</body>
+</html>
+```
+
+4. Lo he tenido que meter en la ruta C:\xampp\htdocs para poder verlo en el navegador.
+5. Y ya me dejaba verlo ejecutando http://localhost/panel_control.php y me dejaba entrar en la tabla hoteles y me aparecian los que yo previamente habia metido en la base de datos.
+
+Gracias a hacer este ejercicio, he podido aplicar de forma práctica los conocimientos aprendidos en clase sobre PHP y MySQL. El panel de control creado permite enseñar de manera clara y ordenada las tablas de una base de datos y sus datos, lo que demuestra cómo se pueden crear aplicaciones web dinámicas utilizando parámetros GET.
+
+Este ejercicio me ha ayudado a entender mejor la relación entre el servidor, la base de datos y el navegador. Además, considero que este tipo de panel puede ser muy útil en proyectos reales, ya que puede servir como base para un panel de administración más completo en el que se puedan gestionar los datos de una forma más avanzada.

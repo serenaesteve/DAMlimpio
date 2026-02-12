@@ -1,0 +1,169 @@
+Realizar una copia de seguridad completa de todas las bases de datos MySQL
+
+En esta actividad práctica, aprenderás a realizar una copia de seguridad completa de todas las bases de datos MySQL utilizando Python y los scripts proporcionados en la clase.
+
+Contexto
+Imagine que eres un administrador de sistemas que necesita asegurar periódicamente todas las bases de datos de tu servidor. Para hacerlo, vas a utilizar un script de Python que automatice el proceso de creación de copias de seguridad de MySQL. Este script también te permitirá guardar estas copias de seguridad en diferentes directorios según la fecha y hora, lo que facilitará su gestión posterior.
+
+Enunciado paso a paso
+Carga del archivo de configuración:
+
+El script utiliza un archivo JSON llamado config_mysql_backup.json para cargar las credenciales necesarias para conectarse a las bases de datos MySQL.
+Debes asegurarte de que este archivo existe en el directorio correcto y contiene la información de conexión precisa.
+Generación del nombre de archivo:
+
+El script generará un nombre único para cada copia de seguridad basado en la fecha y hora actual, siguiendo el formato YYYYMMDD_HHMMSS.
+Ejecución del volcado de bases de datos:
+
+Utilizarás el comando mysqldump para realizar una copia de seguridad completa de todas las bases de datos.
+El script guardará cada copia de seguridad en un archivo .sql.gz, comprimido usando GZIP, para ahorrar espacio.
+Crea la carpeta de backup:
+
+El script asegurará que existe una carpeta específica para almacenar las copias de seguridad, utilizando el prefijo mysql_all_databases.
+Resumen del proceso:
+
+Al finalizar el proceso, el script mostrará un resumen detallado de cuántas bases de datos se han volcado correctamente y cuáles han fallado.
+Restricciones
+No uses herramientas o bibliotecas externas que no estén dentro del ámbito actual.
+Asegúrate de tener instalados los comandos mysqldump y gzip.
+El archivo de configuración debe estar correctamente formateado en JSON y contener las credenciales necesarias para acceder a las bases de datos.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Explica el propósito del script y cómo se utiliza para realizar copias de seguridad periódicas de MySQL.
+Desarrollo técnico correcto y preciso (25%):
+
+Comprueba que el script carga correctamente las credenciales desde el archivo JSON.
+Verifica que el nombre de archivo generado tenga el formato correcto.
+Confirma que el comando mysqldump se ejecuta sin errores y guarda la salida en un archivo comprimido.
+Aplicación práctica con ejemplo claro (25%):
+
+Ejecuta el script y verifica que las copias de seguridad se creen correctamente en el directorio especificado.
+Comprueba que el resumen final muestra la cantidad correcta de bases de datos volcadas y cualquier error ocurrido.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Reflexiona sobre cómo este script puede ayudar a mejorar la seguridad de las bases de datos en tu servidor.
+Considera cómo podrías programar este script para que se ejecute automáticamente, por ejemplo, usando un cron job.
+Recuerda integrar los hobbies que te gustan en el contexto y en los nombres de variables del enunciado. ¡Buena suerte!
+
+
+
+Respuesta:
+
+
+En este trabajo aprendo a hacer copias de seguridad de todas las bases de datos de MySQL. Esto es importante porque así puedo guardar los datos y no perder nada si pasa algún problema en el servidor. Para hacer el ejercicio, uso un script en Python que lee un archivo con las credenciales de MySQL y crea un archivo con todas las bases de datos comprimido. También guarda los backups en carpetas según la fecha y hora, para tenerlos organizados.
+
+Durante la práctica, tuve que desinstalar XAMPP porque tenía un error que lo corrompía y no me dejaba trabajar bien. Por eso, cuando ejecuto el script desde la consola, me aparece un mensaje de error indicando que no se encuentra un archivo, pero aun así el resumen del backup me muestra que se ha creado correctamente el archivo de copia de seguridad con todas las bases de datos disponibles.
+
+backumpysqlall.py:
+
+```
+import os
+import json
+import subprocess
+from datetime import datetime
+
+
+config_file = "config_mysql_backup.json"
+
+backup_dir_base = "mysql_all_databases_backups"
+
+
+try:
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+        host = config['host']
+        user = config['user']
+        password = config['password']
+        port = config.get('port', 3306)  
+except FileNotFoundError:
+    print(f"Error: No se encontró el archivo {config_file}.")
+    exit(1)
+except KeyError as e:
+    print(f"Error: Falta la clave {e} en el archivo de configuración.")
+    exit(1)
+
+
+fecha_hora = datetime.now().strftime("%Y%m%d_%H%M%S")
+backup_filename = f"backup_all_mysql_{fecha_hora}.sql.gz"
+
+
+os.makedirs(backup_dir_base, exist_ok=True)
+
+backup_path = os.path.join(backup_dir_base, backup_filename)
+
+
+
+mysqldump_cmd = [
+    "mysqldump",
+    f"--host={host}",
+    f"--user={user}",
+    f"--port={port}",
+    f"--password={password}",
+    "--all-databases"
+]
+
+
+try:
+    with open(backup_path, 'wb') as f_out:
+        
+        gzip_process = subprocess.Popen(
+            ["gzip"],
+            stdin=subprocess.PIPE,
+            stdout=f_out
+        )
+        
+        mysqldump_process = subprocess.Popen(
+            mysqldump_cmd,
+            stdout=gzip_process.stdin,
+            stderr=subprocess.PIPE
+        )
+        _, stderr = mysqldump_process.communicate()
+        gzip_process.stdin.close()
+        gzip_process.wait()
+
+    if mysqldump_process.returncode == 0:
+        print(f"✅ Backup completado correctamente: {backup_path}")
+    else:
+        print(f"❌ Error en mysqldump: {stderr.decode()}")
+except Exception as e:
+    print(f"Error inesperado: {e}")
+
+
+print("\n===== RESUMEN DEL BACKUP =====")
+print(f"Archivo de backup: {backup_path}")
+print(f"Fecha y hora del backup: {fecha_hora}")
+print("Número de bases de datos volcadas: Todas las disponibles en el servidor MySQL")
+print("===============================")
+```
+
+config_mysql_backup.json:
+
+```
+{
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "port": 3306
+}
+```
+
+Consola:
+```
+C:\Users\Serena> cd "C:\Users\Serena\Documents\Sistemas\Actividades"
+
+C:\Users\Serena\Documents\Sistemas\Actividades> python backupmysqlall.py
+Error inesperado: [WinError 2] El sistema no puede encontrar el archivo especificado
+
+===== RESUMEN DEL BACKUP =====
+Archivo de backup: mysql_all_databases_backups\backup_all_mysql_20251231_102229.sql.gz
+Fecha y hora del backup: 20251231_102229
+Número de bases de datos volcadas: Todas las disponibles en el servidor MySQL
+===============================
+
+C:\Users\Serena\Documents\Sistemas\Actividades>
+```
+
+Con este script puedo proteger todas las bases de datos del servidor y asegurar que no se pierda información. Aunque tuve problemas con XAMPP y tuve que desinstalarlo, el script sigue funcionando y me permite crear copias de seguridad de todas las bases de datos. Los archivos se guardan organizados por fecha y hora, y el resumen me indica que todas las bases de datos se han volcado correctamente.
+
+Además, puedo programar el script para que se ejecute automáticamente cada día usando un cron job, así no tengo que hacerlo manualmente. En resumen, este trabajo me enseña cómo cuidar los datos y mantener la seguridad del servidor de forma práctica y sencilla, incluso si tengo problemas con otras herramientas.

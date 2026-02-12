@@ -1,0 +1,105 @@
+Enunciado paso a paso
+Introducción Desarrolla un programa que gestione dos animales: un gato y un perro. Ambos serán instancias de una clase base llamada Animal. El programa pedirá al usuario datos sobre el color, la edad y la raza de cada animal.
+
+Desarrollo
+
+Define la clase Animal con los atributos color, edad y raza.
+Implementa métodos para establecer (set) y obtener (get) los valores de estos atributos.
+Crea las clases Gato y Perro que hereden de Animal. Asegúrate de llamar al constructor de la clase madre en cada uno de ellos.
+Aplicación
+
+Solicita al usuario el color, la edad y la raza del gato.
+Solicita al usuario el color, la edad y la raza del perro.
+Muestra por pantalla los datos introducidos para ambos animales.
+Restricciones
+No se permite el uso de librerías externas.
+Solo puedes usar estructuras vistas hasta ahora (bloques fundamentales, variables, tipos de datos, etc.).
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe entender la relación entre las clases Animal, Gato y Perro.
+Desarrollo técnico correcto y preciso (25%): La implementación de los métodos y la herencia deben ser precisos y seguidos de las reglas establecidas.
+Aplicación práctica con ejemplo claro (25%): El programa debe funcionar correctamente al solicitar datos y mostrarlos por pantalla.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe explicar cómo el concepto de herencia se aplica en este ejercicio y cómo podría ser útil en un contexto real.
+
+
+
+Respuesta:
+
+
+En este ejercicio voy a crear un programa que gestione dos animales, un gato y un perro.
+Ambos serán instancias de una clase base llamada Animal, y cada uno tendrá sus propios datos como color, edad y raza.
+Este ej me permite entender cómo la herencia ayuda a organizar y reutilizar código en programación.
+
+```
+
+class Animal:
+    def __init__(self, color, edad, raza):
+        self.color = color
+        self.edad = edad
+        self.raza = raza
+
+
+class Gato(Animal):
+    pass  
+
+
+class Perro(Animal):
+    pass  
+
+
+color_gato = input("Introduce el color del gato: ")
+edad_gato = int(input("Introduce la edad del gato: "))
+raza_gato = input("Introduce la raza del gato: ")
+gato = Gato(color_gato, edad_gato, raza_gato)
+
+
+color_perro = input("Introduce el color del perro: ")
+edad_perro = int(input("Introduce la edad del perro: "))
+raza_perro = input("Introduce la raza del perro: ")
+perro = Perro(color_perro, edad_perro, raza_perro)
+
+
+print("\n--- Datos del gato ---")
+print("Color:", gato.color)
+print("Edad:", gato.edad)
+print("Raza:", gato.raza)
+
+print("\n--- Datos del perro ---")
+print("Color:", perro.color)
+print("Edad:", perro.edad)
+print("Raza:", perro.raza)
+
+
+print("\nEste programa muestra cómo la herencia permite que Gato y Perro usen los mismos atributos de Animal,")
+print("lo que hace mas facil organizar y reutilizar el codigo en situaciones practicas.")
+```
+
+
+
+Salida del código:
+
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 4> python datosperroygato.py
+Introduce el color del gato: Blanco
+Introduce la edad del gato: 5
+Introduce la raza del gato: Persa
+Introduce el color del perro: Negro
+Introduce la edad del perro: 10
+Introduce la raza del perro: Mestizo
+
+--- Datos del gato ---
+Color: Blanco
+Edad: 5
+Raza: Persa
+
+--- Datos del perro ---
+Color: Negro
+Edad: 10
+Raza: Mestizo
+
+Este programa muestra cómo la herencia permite que Gato y Perro usen los mismos atributos de Animal,
+lo que hace mas facil organizar y reutilizar el codigo en situaciones practicas.
+PS C:\Users\Serena\Documents\Programacion\Actividades\tema 4> 
+
+
+En este ejercicio, Gato y Perro usan los mismos atributos de Animal sin tener que repetirlos.
+La herencia sirve para organizar el código y no repetir información.
+En la vida real, esto ayuda a manejar diferentes tipos de objetos que comparten cosas en común, como animales, vehículos o personas.

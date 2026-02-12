@@ -1,0 +1,223 @@
+Descripción del ejercicio
+El objetivo de este ejercicio es profundizar en la comprensión y aplicación de relaciones entre entidades en un diagrama UML. Utilizando los conceptos aprendidos en clase, se te pedirá que complete un diagrama de clases y sus correspondientes relaciones.
+
+Pasos a seguir
+Diagrama UML: Abre el archivo diagrama relaciones.html en tu navegador para visualizar el diagrama actualizado con las entidades Cliente, Producto, Pedido y LineaPedido.
+
+Completar las relaciones:
+
+Añade las relaciones entre las entidades según los tipos de relaciones que existen (uno a uno, uno a muchos, muchos a muchos).
+Utiliza flechas para representar las relaciones y etiqueta cada una con el tipo de relación.
+Exportar el diagrama: Una vez completado, exporta el diagrama como un archivo .png o .jpg. Asegúrate de que todos los elementos estén claramente visibles y bien organizados.
+
+Subir el archivo:
+
+Envía el archivo exportado al sistema de entrega indicado en la plataforma de aprendizaje (como Moodle, Google Classroom, etc.).
+Consideraciones adicionales
+Relaciones entre Cliente y Pedido: Un cliente puede realizar muchos pedidos.
+Relaciones entre Producto y LineaPedido: Un producto puede estar en muchas líneas de pedido.
+Relación entre Pedido y LineaPedido: Un pedido tiene muchas líneas de pedido.
+Ejemplo claro
+Para ilustrar cómo debería verse una relación, considera la siguiente imagen:
+
+Ejemplo de relación
+
+En esta imagen:
+
+Se ha añadido una flecha desde Cliente a Pedido con el texto "realiza" para indicar que un cliente realiza pedidos.
+Se ha añadido una flecha desde Producto a LineaPedido con el texto "esta en" para indicar que un producto está en varias líneas de pedido.
+Conclusión
+A través de este ejercicio, deberás aplicar los conceptos aprendidos sobre relaciones entre entidades en diagramas UML. Este tipo de práctica es crucial para entender cómo se organizan y relacionan diferentes objetos en una base de datos o sistema de gestión empresarial. Recuerda que la claridad y precisión son fundamentales en la representación de estos diagramas.
+
+
+
+Respuesta:
+
+
+El objetivo de este ejercicio es aprender a representar un sistema mediante un diagrama UML y entender cómo se relacionan las distintas entidades entre sí. Para ello, he hecho un ejemplo de pedidos, utilizando las entidades Cliente, Pedido, Producto y LineaPedido.
+​
+Este tipo de diagramas ayudan a ver mejor cómo funciona un sistema y cómo se organizan los datos antes de crear una base de datos o una aplicación.
+​
+diagrama.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Diagrama UML – Relaciones</title>
+​
+<style>
+body {
+  margin: 0;
+  padding: 20px;
+  background: #f3f3f7;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+​
+.page {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  width: 740px;
+  height: 450px;
+}
+​
+/* ENTIDADES */
+.shape.entity {
+  position: absolute;
+  width: 160px;
+  background: #fff;
+  border: 2px solid #111827;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  font-size: 13px;
+}
+​
+.entity-header {
+  background: #f3f4f6;
+  text-align: center;
+  font-weight: 600;
+  padding: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+​
+.entity-properties {
+  padding: 4px 8px;
+}
+​
+.entity-properties div {
+  padding: 2px 0;
+}
+​
+/* FLECHAS */
+.arrow {
+  position: absolute;
+  height: 2px;
+  background: #111827;
+}
+​
+.arrow::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: -4px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #111827;
+}
+​
+/* TEXTOS */
+.text {
+  position: absolute;
+  font-size: 12px;
+  background: #ffffff;
+  padding: 2px 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  color: #111827;
+}
+​
+.card {
+  font-weight: 600;
+}
+</style>
+</head>
+​
+<body>
+<div class="page">
+​
+<!-- CLIENTE -->
+<div class="shape entity" style="left:40px; top:40px;">
+  <div class="entity-header">Cliente</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>nombre</div>
+    <div>apellidos</div>
+    <div>email</div>
+    <div>direccion</div>
+  </div>
+</div>
+​
+<!-- PEDIDO -->
+<div class="shape entity" style="left:290px; top:40px;">
+  <div class="entity-header">Pedido</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>fecha</div>
+    <div>id_cliente</div>
+  </div>
+</div>
+​
+<!-- PRODUCTO -->
+<div class="shape entity" style="left:290px; top:240px;">
+  <div class="entity-header">Producto</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>nombre</div>
+    <div>descripcion</div>
+    <div>precio</div>
+  </div>
+</div>
+​
+<!-- LINEA PEDIDO -->
+<div class="shape entity" style="left:540px; top:140px;">
+  <div class="entity-header">LineaPedido</div>
+  <div class="entity-properties">
+    <div>id</div>
+    <div>pedido_id</div>
+    <div>producto_id</div>
+    <div>cantidad</div>
+  </div>
+</div>
+​
+<!-- FLECHAS -->
+<!-- Cliente -> Pedido -->
+<div class="arrow" style="left:200px; top:95px; width:90px;"></div>
+​
+<!-- Pedido -> LineaPedido -->
+<div class="arrow" style="left:450px; top:95px; width:90px;"></div>
+​
+<!-- Producto -> LineaPedido -->
+<div class="arrow" style="left:450px; top:285px; width:90px;"></div>
+​
+<!-- TEXTOS DE RELACIÓN -->
+<div class="text" style="left:215px; top:70px;">realiza</div>
+<div class="text card" style="left:205px; top:45px;">1</div>
+<div class="text card" style="left:280px; top:45px;">0..*</div>
+​
+<div class="text" style="left:465px; top:70px;">contiene</div>
+<div class="text card" style="left:455px; top:45px;">1</div>
+<div class="text card" style="left:530px; top:95px;">1..*</div>
+​
+<div class="text" style="left:465px; top:260px;">está en</div>
+<div class="text card" style="left:455px; top:290px;">1</div>
+<div class="text card" style="left:530px; top:245px;">0..*</div>
+​
+</div>
+</body>
+</html>
+```
+​
+​
+Imagen en pdf:
+​
+https://files.fm/u/m9dscacyq2
+​
+​
+En este ejercicio he realizado un diagrama para representar las relaciones entre las entidades Cliente, Pedido, Producto y LineaPedido.
+​
+Primero he colocado las cuatro entidades con sus atributos principales. Después he añadido las relaciones entre ellas según lo que se pedía en el ejercicio.
+​
+He relacionado Cliente con Pedido, ya que un cliente puede hacer varios pedidos, pero cada pedido pertenece a un solo cliente. A esta relación le he puesto el nombre de “realiza”.
+​
+También he relacionado Pedido con LineaPedido, porque un pedido puede tener varias líneas de pedido y cada línea pertenece a un único pedido. Esta relación se llama “contiene”.
+​
+Por último, he relacionado Producto con LineaPedido, ya que un producto puede aparecer en muchas líneas de pedido, pero cada línea de pedido solo tiene un producto. Esta relación se ha llamado “está en”.
+​
+Con estas relaciones se puede ver cómo se conectan los clientes, los pedidos y los productos. Para terminar he exportado el diagrama en  PDF para poder entregarlo.
+​
+​
+Por haber hecho este diagrama he podido entender mejor cómo se relacionan las entidades dentro de un sistema de pedidos. He aprendido a identificar las relaciones entre las clases y a usar las cardinalidades para indicar cuántos elementos pueden relacionarse entre sí.
+​
+Este ejercicio me ha servido para entender mejor el uso de diagramas  y su importancia para organizar la información de forma clara antes de pasar a la fase de desarrollo.

@@ -1,0 +1,56 @@
+Título
+Explorando las Herramientas de Visual Studio para Mejorar tu Experiencia en el Campo
+
+Contexto
+Imagine que estás explorando un maravilloso sendero en el campo, lleno de árboles y flores. Tu compañero te sugiere usar una aplicación especial llamada "Visual Studio" para ayudarte a identificar los tipos de árboles que encuentras en tu viaje. Esta aplicación tiene muchas herramientas útiles que pueden hacer tu expedición más divertida y productiva.
+
+Enunciado paso a paso
+Abre Visual Studio:
+
+Comienza por abrir Visual Studio, la herramienta poderosa para desarrollar software.
+Explora el Catálogo de Herramientas:
+
+En el menú principal, busca la opción "Herramientas". Allí encontrarás un ícono que dice "Complementos".
+Busca Complementos Especiales para tu Campo:
+
+Haz clic en "Complementos" y selecciona la opción de buscar entre un catálogo impresionante de herramientas.
+Busca herramientas específicas, como una "Herramienta de Identificación de Árboles" o "Mapa Interactivo del Campo".
+Instala las Herramientas Seleccionadas:
+
+Una vez que encuentres la herramienta que deseas, selecciona "Instalar". Visual Studio hará el resto.
+Usa la Herramienta en tu Expedición:
+
+Ahora que tienes la herramienta instalada, puedes usarla durante tu viaje en el campo.
+Por ejemplo, si encuentras un árbol desconocido, simplemente seleccionas la herramienta y te mostrará información sobre ese tipo de árbol.
+Restricciones
+No utilices librerías externas ni estructuras no vistas en esta unidad.
+Solo puedes usar las herramientas y técnicas que se enseñaron en clase.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Muestra comprensión del contexto y cómo las herramientas de Visual Studio pueden mejorar la experiencia en el campo.
+Desarrollo técnico correcto y preciso (25%):
+
+Explica cómo abrir Visual Studio, explorar el catálogo de complementos y instalar una herramienta específica.
+Aplicación práctica con ejemplo claro (25%):
+
+Describe cómo usar la herramienta instalada durante un viaje en el campo.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Concluye explicando cómo estas herramientas pueden ser útiles no solo en el campo, sino también en otros contextos de desarrollo de software.
+
+
+Respuesta:
+
+
+Estoy caminando por el campo, con muchos árboles y flores. Veo un árbol y quiero saber cómo se llama o si es especial.
+Visual Studio me puede ayudar. Con herramientas como Todo Tree (que es la extension que he instalado), puedo apuntar mis observaciones y organizar todo lo que veo. Así mi paseo es más fácil y divertido.
+
+1. Abrir VSG
+2. Ir a la pestaña de View y dentro de ella Extensions
+3. Buscas (yo he preguntado a chatgpt que extension seria util) la extension que quieras.
+4. Le das a instalar y compruebas que esta bien instalada y habilitada.
+
+Mientras camino por el campo, si veo un árbol o una planta interesante, abro Visual Studio y escribo un comentario en mi archivo, como “Investigar este árbol”. Todo Tree lo pone en una lista y así puedo guardar todas mis observaciones organizadas mientras sigo explorando.
+
+Usar Visual Studio con herramientas como Todo Tree no solo me ayuda a organizar mis observaciones durante un paseo por el campo, sino que también es muy útil en otros contextos. Por ejemplo, cuando programo, puedo anotar cosas pendientes, registrar ideas importantes o marcar errores que debo corregir. Estas herramientas me ayudan a trabajar de manera más ordenada, ahorrar tiempo y no olvidarme de nada, ya sea que esté explorando la naturaleza o desarrollando un proyecto de software.

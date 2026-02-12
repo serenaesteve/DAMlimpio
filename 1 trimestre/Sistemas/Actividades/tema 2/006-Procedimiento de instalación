@@ -1,0 +1,43 @@
+Instalación de sistemas operativos: Descarga y preparación del medio de instalación
+En primer lugar, lo que tenemos que hacer es descargar un medio de instalación para nuestro sistema operativo preferido. El medio por defecto es una imagen ISO (el antiguo DVD de instalación), la cual se puede descargar desde la web oficial.
+
+Ejemplo con Ubuntu
+Para instalar Ubuntu, el proceso sería el siguiente:
+
+Descarga del archivo ISO: Ve a https://ubuntu.com/download/desktop y descarga la imagen ISO más reciente.
+Preparación del medio de instalación:
+Puedes "quemar" esta imagen en un DVD utilizando software como Brasero.
+Otra opción es crear un medio de instalación USB usando herramientas como Rufus (en caso de preferir una unidad de estado sólido).
+Desarrollo técnico correcto y preciso
+El primer paso en este proceso es seleccionar el sistema operativo adecuado, considerando factores como la compatibilidad con el hardware y las necesidades específicas del usuario. Una vez que tengas el archivo ISO descargado, puedes proceder a crear un medio de instalación que sea compatible con tu dispositivo.
+
+Aplicación práctica con ejemplo claro
+Descarga del archivo ISO:
+
+Ve a la página oficial de Ubuntu y descarga la imagen ISO más reciente.
+Preparación del medio de instalación:
+
+Si decides usar un DVD, instala software como Brasero en tu sistema operativo actual para "quemar" el archivo ISO en un DVD.
+Si prefieres usar una unidad USB, descarga e instala Rufus y sigue las instrucciones para crear un medio de instalación a partir del archivo ISO.
+Cierre/Conclusión enlazando con la unidad
+La preparación correcta del medio de instalación es crucial para una instalación exitosa. Esta actividad te permite familiarizarte con el proceso de descarga y creación de medios de instalación, lo cual es fundamental tanto para sistemas operativos como para otros tipos de software que necesiten ser instalados en dispositivos físicos.
+
+
+
+Respuesta:
+
+
+1. Me he metido en el link que me da la actividad y me he descargado la ISO. 
+2. Me he descargado Rufus por que yo no tengo un DVD.
+3. He buscado un USB que estuviera vacio ya que se podrian perder los datos.
+4. Lo he puesto y he abierto Rufus.
+5. Dentro de Rufus me salia una pestaña donde tenia que poner las cosas.
+6. En dispositivos he seleccionado mi USB
+7. Y en ISO le he dado al boton de " Seleccionar" y en el he seleccionado la ISO Ubuntu ( la que descargue previamiente)
+8. Luego le he dado a empezar.
+9. Luego te sale una pestaña y marcas el recomentado y le das a continuar. 
+10. Luego te sale una advertencia y le das a OK.
+11. Y finalmente de las a "Empezar"
+
+
+Esta actividad me permite familiarizarte con el proceso de descarga y creación de medios de instalación, lo cual es fundamental tanto para sistemas operativos como para otros tipos de software que necesiten ser instalados en dispositivos físicos.

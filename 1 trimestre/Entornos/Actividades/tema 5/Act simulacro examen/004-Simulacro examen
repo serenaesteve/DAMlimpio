@@ -1,0 +1,133 @@
+Título
+Refactorización y Extracción de Funciones en un CRUD de Portafolio
+
+Contexto
+Estás jugando a un juego de mesa donde cada jugador debe gestionar su propio portafolio de piezas históricas. Cada pieza tiene un título, una descripción, una fecha y una imagen asociada. Para facilitar esta gestión, has decidido crear un programa en Python que te permita insertar, listar, actualizar y eliminar piezas del portafolio.
+
+Enunciado paso a paso
+Refactorización de las funciones:
+
+Abre el archivo funcionesbasededatos.py y observa cómo están organizadas las funciones para interactuar con la base de datos.
+Identifica las funciones que realizan tareas específicas, como insertar, seleccionar, actualizar y eliminar piezas.
+Extracción de funciones:
+
+Crea un nuevo archivo llamado extraccion a funciones.py.
+Copia el código de las funciones presentaMenu, insertar, seleccionar, actualizar y eliminar desde funcionesbasededatos.py a extraccion a funciones.py.
+Modificar el programa principal:
+
+Abre el archivo 004-importacion de archivo.py.
+Importa las funciones desde extraccion a funciones.py en lugar de desde funcionesbasededatos.py.
+Modifica el bucle principal para que utilice estas nuevas funciones.
+Restricciones
+No puedes usar librerías externas adicionales.
+Mantén el código dentro del contexto de la unidad actual, sin hacer referencias a temas posteriores.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Explica cómo el juego de mesa te ha motivado a crear un programa para gestionar tu portafolio.
+Describe los pasos que has seguido para refactorizar el código.
+Desarrollo técnico correcto y preciso (25%):
+
+Muestra la estructura del archivo extraccion a funciones.py con las funciones correctamente definidas.
+Demuestra cómo se ha modificado el programa principal para utilizar las nuevas funciones importadas.
+Aplicación práctica con ejemplo claro (25%):
+
+Proporciona un ejemplo de cómo ejecutar el programa y los resultados esperados.
+Explica cómo puedes probar cada función individualmente para asegurarte de que funciona correctamente.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Reflexiona sobre cómo esta actividad te ha ayudado a entender mejor el concepto de refactorización y extracción de funciones.
+Enlaza esta experiencia con tus hobbies, como jugar juegos de mesa o explorar la naturaleza, donde la organización y gestión del código son cruciales.
+
+
+
+
+Respuesta:
+
+
+
+En esta actividad he trabajado con un programa que sirve para gestionar un portafolio de piezas históricas. Mi objetivo a sido organizar el código usando funciones separadas, en lugar de tener todo junto en un solo archivo. Para eso he creado un archivo llamado extraccionafunciones.py con las funciones de insertar, listar, actualizar y eliminar, y luego he modificado el programa principal para usar esas funciones desde el menú.
+
+
+
+
+extraccionafunciones.py:
+```
+def presentaMenu():
+  # Esta función simplemente pinta un menu en pantalla con prints
+  print("Escoge una opcion")
+  print("1.-Insertar")
+  print("2.-Listar")
+  print("3.-Actualizar")
+  print("4.-Eliminar")
+  
+def insertar():
+  # Esta funcion le pide una serie de inputs al usuario y los inserta en la base de datos
+  titulo = input("Introduce el titulo de la nueva pieza: ")
+  descripcion = input("Introduce la descripcion de la nueva pieza: ")
+  fecha = input("Introduce la fecha de la nueva pieza: ")
+  imagen = input("Introduce el nombre de la imagen de la nueva pieza: ")
+  cursor.execute("INSERT INTO piezas VALUES (NULL,'"+titulo+"','"+descripcion+"','"+fecha+"',1,'"+imagen+"');")
+  conexion.commit()
+def seleccionar():
+  #Esta función selecciona todo de la tabla y lo presenta en pantalla
+  cursor.execute("SELECT * FROM piezas;")
+  lineas = cursor.fetchall()
+  for linea in lineas:
+    print(linea)
+def actualizar():
+  identificador = input("Introduce el Identificador a actualizar: ")
+  titulo = input("Introduce el titulo de la nueva pieza: ")
+  descripcion = input("Introduce la descripcion de la nueva pieza: ")
+  fecha = input("Introduce la fecha de la nueva pieza: ")
+  imagen = input("Introduce el nombre de la imagen de la nueva pieza: ")
+  cursor.execute('''
+    UPDATE piezas 
+    SET
+    titulo = "'''+titulo+'''",
+    descripcion = "'''+descripcion+'''",
+    fecha = "'''+fecha+'''",
+    imagen = "'''+imagen+'''"
+    WHERE Identificador = '''+identificador+'''
+  ''')
+  conexion.commit()
+def eliminar():
+  identificador = input("Introduce el Identificador a eliminar: ")
+  cursor.execute("DELETE FROM piezas WHERE Identificador = "+identificador+";")
+  conexion.commit()
+```
+
+importaccion de archivo.py:
+```
+"""
+Archivo: 004-importacion_de_archivo.py
+Descripción:
+    Programa principal para gestionar un portafolio de piezas historicas.
+    Importa las funciones desde 'extraccion_a_funciones.py' y ejecuta un menú interactivo.
+"""
+
+from extraccionafunciones import presentaMenu, insertar, seleccionar, actualizar, eliminar
+
+print("Gestión de portafolio v0.1")
+
+while True:
+    presentaMenu()
+    opcion = int(input("Escoge una opción: "))
+    print("La opción que has escogido es:", opcion)
+
+    if opcion == 1:
+        insertar()
+    elif opcion == 2:
+        seleccionar()
+    elif opcion == 3:
+        actualizar()
+    elif opcion == 4:
+        eliminar()
+    elif opcion == 5:
+        print("Saliendo del programa...")
+        break
+    else:
+        print("Opción no válida. Intenta de nuevo.")
+```
+
+Con esta actividad he aprendido a ordenar mejor un programa usando funciones y a separar el código en diferentes archivos. Ahora el programa es más fácil de entender y modificar. También me a ayudado a ver que, igual que en un juego de mesa, es importante organizar bien las cosas para que todo funcione correctamente.

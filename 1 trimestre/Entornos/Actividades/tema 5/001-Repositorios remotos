@@ -1,0 +1,126 @@
+Título
+Configuración y Uso Básico de Git
+
+Contexto
+En nuestro campo de estudio, aprender a usar Git es una habilidad fundamental para colaborar en proyectos de desarrollo y mantener versiones de nuestros códigos fuente. Además, como amantes del juego de mesa "Explorador del Campo", hemos decidido integrar nuestras actividades de programación con nuestra pasión por la naturaleza. Cada versión de nuestro código será como un nuevo territorio descubierto en nuestro campo digital.
+
+Enunciado paso a paso
+Configuración de Git: Configura Git para que muestre colores automáticamente y establece tu editor preferido como nano.
+
+git config --global color.ui auto
+git config --global core.editor nano
+Ver la versión de Git instalada: Comprueba cuál es la versión actual de Git que tienes instalada en tu sistema.
+
+git --version
+Clonar un repositorio: Utiliza el comando git clone para clonar el repositorio de nuestro proyecto en local. Este paso será como explorar una nueva región geográfica.
+
+git clone https://github.com/jocarsa/dam2526.git
+cd dam2526
+Restricciones
+No usar herramientas externas o estructuras no vistas en clase.
+Solo utilizar los comandos y configuraciones descritos en el contexto.
+Criterios de evaluación
+Introducción y contextualización: El alumno debe entender la importancia de Git y cómo nuestra pasión por el campo lo integra con nuestras actividades de programación.
+Desarrollo técnico correcto y preciso: El alumno debe configurar Git correctamente y clonar un repositorio sin errores.
+Aplicación práctica con ejemplo claro: El alumno debe mostrar la versión de Git instalada y confirmar que el repositorio se ha clonado correctamente.
+Cierre/Conclusión enlazando con la unidad: El alumno debe reflexionar sobre cómo esta actividad puede aplicarse en proyectos futuros y cómo su pasión por la naturaleza refuerza sus habilidades de programación.
+
+
+
+Respuesta:
+
+En esta actividad aprendo a usar Git, una herramienta esencial para gestionar versiones de código y colaborar en proyectos de desarrollo. Relaciono la programación con mi afición por la naturaleza y el juego de mesa "Explorador del Campo", viendo cada nueva versión de mi código como un territorio que descubro en nuestro campo digital. Esto hace que aprender Git sea más práctico y motivador.
+​
+Configuro git:
+```
+PS C:\Users\Serena> git config --global color.ui auto
+PS C:\Users\Serena> git config --global core.editor nano
+PS C:\Users\Serena> git config --global core.editor notepad
+PS C:\Users\Serena> git config --list
+diff.astextplain.textconv=astextplain
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+http.sslbackend=schannel
+core.autocrlf=true
+core.fscache=true
+core.symlinks=false
+pull.rebase=false
+credential.helper=manager
+credential.https://dev.azure.com.usehttppath=true
+init.defaultbranch=master
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+user.name=serenaesteve
+user.email=serenaestevee@gmail.com
+color.ui=auto
+core.editor=notepad
+PS C:\Users\Serena>
+```
+​
+Compruebo que version tengo:
+```
+PS C:\Users\Serena> git --version
+git version 2.51.2.windows.1
+```
+​
+Clono el repositorio de nuestro proyecto para trabajar en local:
+```
+git clone https://github.com/jocarsa/dam2526.git
+cd dam2526
+```
+​
+Con esta actividad verifico que puedo configurar Git correctamente, conocer mi versión instalada y clonar un repositorio sin errores. Aprender a usar Git me permite mantener un control seguro de mi código y aplicar estas habilidades en proyectos futuros. Además, relacionar la programación con mi pasión por la naturaleza hace que el aprendizaje sea más motivador y divertido.
+Autosaved: 11:53 AM45298
+Enviar
+Respuestas guardadas
+#1 · 2025-11-13T10:54:02+00:00
+En esta actividad aprendo a usar Git, una herramienta esencial para gestionar versiones de código y colaborar en proyectos de desarrollo. Relaciono la programación con mi afición por la naturaleza y el juego de mesa "Explorador del Campo", viendo cada nueva versión de mi código como un territorio que descubro en nuestro campo digital. Esto hace que aprender Git sea más práctico y motivador.
+
+Configuro git:
+```
+PS C:\Users\Serena> git config --global color.ui auto
+PS C:\Users\Serena> git config --global core.editor nano
+PS C:\Users\Serena> git config --global core.editor notepad
+PS C:\Users\Serena> git config --list
+diff.astextplain.textconv=astextplain
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+http.sslbackend=schannel
+core.autocrlf=true
+core.fscache=true
+core.symlinks=false
+pull.rebase=false
+credential.helper=manager
+credential.https://dev.azure.com.usehttppath=true
+init.defaultbranch=master
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+user.name=serenaesteve
+user.email=serenaestevee@gmail.com
+color.ui=auto
+core.editor=notepad
+PS C:\Users\Serena>
+```
+
+Compruebo que version tengo:
+```
+PS C:\Users\Serena> git --version
+git version 2.51.2.windows.1
+```
+
+Clono el repositorio de nuestro proyecto para trabajar en local:
+```
+git clone https://github.com/jocarsa/dam2526.git
+cd dam2526
+```
+
+Con esta actividad verifico que puedo configurar Git correctamente, conocer mi versión instalada y clonar un repositorio sin errores. Aprender a usar Git me permite mantener un control seguro de mi código y aplicar estas habilidades en proyectos futuros. Además, relacionar la programación con mi pasión por la naturaleza hace que el aprendizaje sea más motivador y divertido.
+

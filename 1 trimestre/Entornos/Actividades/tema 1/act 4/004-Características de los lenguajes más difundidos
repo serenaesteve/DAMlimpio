@@ -1,0 +1,129 @@
+Actividad
+Contexto: En un proyecto de desarrollo de software, necesitamos analizar la evolución de los lenguajes de programación populares en el año 2025. Para hacer esto, vamos a utilizar datos recopilados del sitio web Tiobe que proporciona una lista de los lenguajes de programación más comunes y su cuota de mercado.
+
+Enunciado paso a paso:
+
+Introduce las variables necesarias:
+
+lenguaje: Almacena el nombre del lenguaje de programación.
+porcentaje: Almacena la cuota de mercado del lenguaje en porcentaje.
+evolución: Almacena la evolución del lenguaje (crecimiento, mantiene, baja).
+Crea una función llamada analizar_lenguaje que reciba como parámetros el nombre del lenguaje, su cuota de mercado y su evolución:
+
+En la función, imprime un mensaje con los datos proporcionados.
+Llama a la función analizar_lenguaje para cada uno de los lenguajes populares en 2025 según el sitio web Tiobe:
+
+Python
+C++
+C
+Java
+C#
+Javascript
+Restricciones:
+
+No usar librerías externas.
+No usar input()/lectura de teclado.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El estudiante debe introducir correctamente las variables y la función según el contexto proporcionado.
+Desarrollo técnico correcto y preciso (25%): La función debe imprimir los datos proporcionados de manera clara y precisa.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe llamar a la función para cada uno de los lenguajes populares en 2025.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio explicando cómo ha analizado la evolución de los lenguajes de programación y cómo podría aplicar esta información en un proyecto real.
+
+
+Respuesta:
+
+```
+lenguaje = ""
+porcentaje = 0.0
+evolución = ""
+​
+def analizar_lenguaje(lenguaje, porcentaje, evolucion):
+    print("Lenguaje:", lenguaje)
+    print("Cuota de mercado:", porcentaje, "%")
+    print("Evolución:", evolucion)
+    
+analizar_lenguaje("Python", 23.28, "crecimiento")
+analizar_lenguaje("C++", 10.29, "crecimiento")
+analizar_lenguaje("C", 8.86, "baja")
+analizar_lenguaje("Java", 10.15, "crecimiento")
+analizar_lenguaje("C#", 4.45, "baja")
+analizar_lenguaje("JavaScript", 1.4, "crecimiento")
+```
+​
+Resultado del codigo:
+​
+Lenguaje: Python
+Cuota de mercado: 23.28 %
+Evolución: crecimiento
+Lenguaje: C++
+Cuota de mercado: 10.29 %
+Evolución: crecimiento
+Lenguaje: C
+Cuota de mercado: 8.86 %
+Evolución: baja
+Lenguaje: Java
+Cuota de mercado: 10.15 %
+Evolución: crecimiento
+Lenguaje: C#
+Cuota de mercado: 4.45 %
+Evolución: baja
+Lenguaje: JavaScript
+Cuota de mercado: 1.4 %
+Evolución: crecimiento
+PS C:\Users\Serena>
+​
+Pues la informacion la he sacado de google y de chat gpt:
+​
+https://www.xataka.com/basics/lenguajes-programacion-cuales-cinco-populares-para-2025-36-cursos-gratis-para-aprender-a-usarlos
+​
+Esta busqueda puede servir para proyectos saber que lenguaje es el que mas te interesa utilizar.
+Autosaved: 10:16 AM45159
+Enviar
+Respuestas guardadas
+#1 · 2025-10-04T08:55:52+00:00 · Nota: 10.00/10
+```
+lenguaje = ""
+porcentaje = 0.0
+evolución = ""
+
+def analizar_lenguaje(lenguaje, porcentaje, evolucion):
+    print("Lenguaje:", lenguaje)
+    print("Cuota de mercado:", porcentaje, "%")
+    print("Evolución:", evolucion)
+    
+analizar_lenguaje("Python", 23.28, "crecimiento")
+analizar_lenguaje("C++", 10.29, "crecimiento")
+analizar_lenguaje("C", 8.86, "baja")
+analizar_lenguaje("Java", 10.15, "crecimiento")
+analizar_lenguaje("C#", 4.45, "baja")
+analizar_lenguaje("JavaScript", 1.4, "crecimiento")
+```
+
+Resultado del codigo:
+
+Lenguaje: Python
+Cuota de mercado: 23.28 %
+Evolución: crecimiento
+Lenguaje: C++
+Cuota de mercado: 10.29 %
+Evolución: crecimiento
+Lenguaje: C
+Cuota de mercado: 8.86 %
+Evolución: baja
+Lenguaje: Java
+Cuota de mercado: 10.15 %
+Evolución: crecimiento
+Lenguaje: C#
+Cuota de mercado: 4.45 %
+Evolución: baja
+Lenguaje: JavaScript
+Cuota de mercado: 1.4 %
+Evolución: crecimiento
+PS C:\Users\Serena>
+
+Pues la informacion la he sacado de google y de chat gpt:
+
+https://www.xataka.com/basics/lenguajes-programacion-cuales-cinco-populares-para-2025-36-cursos-gratis-para-aprender-a-usarlos
+
+Esta busqueda puede servir para proyectos saber que lenguaje es el que mas te interesa utilizar.

@@ -1,0 +1,112 @@
+Enunciado paso a paso
+Configuración de usuarios y grupos en una red local:
+
+Crea un nuevo usuario llamado jose con el nombre completo "José Pérez".
+Asigna al usuario jose al grupo desarrolladores.
+Configura la contraseña para el usuario jose.
+Configuración de permisos de acceso:
+
+Asegúrate de que el usuario jose pueda acceder a su directorio personal (/home/jose) y a las carpetas compartidas del grupo desarrolladores.
+Deniega el acceso al resto de los usuarios a la carpeta /home/jose.
+Verificación de configuración:
+
+Comprueba que el usuario jose pueda iniciar sesión en el sistema.
+Verifica que el usuario jose pueda navegar y escribir en su directorio personal y las carpetas compartidas del grupo.
+Restricciones
+No uses herramientas gráficas para crear usuarios o modificar permisos.
+Utiliza solo comandos de línea en un sistema operativo Linux.
+Asegúrate de que todas las configuraciones sean efectivas inmediatamente después de ejecutar los comandos.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Explica por qué es importante configurar usuarios y grupos en una red local.
+Menciona cómo estos permisos afectan la seguridad del sistema.
+Desarrollo técnico correcto y preciso (25%):
+
+Comprueba que los comandos utilizados sean correctos y efectuen las acciones solicitadas.
+Verifica que el usuario jose tenga los permisos adecuados para su directorio personal y las carpetas compartidas.
+Aplicación práctica con ejemplo claro (25%):
+
+Proporciona ejemplos claros de cómo ejecutar los comandos mencionados.
+Incluye capturas de pantalla o descripciones detalladas del proceso.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Discute cómo esta configuración contribuye a la gestión de recursos en una red local.
+Menciona posibles problemas que podrían surgir si no se configuran los permisos correctamente.
+(El alumnado debe completar este apartado)
+
+
+
+Respuesta:
+
+
+En una red local, configurar usuarios y grupos es muy importante porque así se puede controlar quién accede a qué archivos o carpetas.
+Por ejemplo, si varias personas trabajan en el mismo proyecto, se puede crear un grupo (como desarrolladores) y darles permisos a todos los que lo necesiten.
+
+Esto mejora la seguridad del sistema, porque cada usuario tiene su propia cuenta y no puede entrar en los archivos personales de otros.
+Si todos usaran la misma cuenta, sería un caos y podrían borrarse o modificar archivos por error.
+
+
+1. Creo un nuevo ususario llamado "Jose" con el nombre completo "Jose Perez"
+```
+sudo useradd -m -c "José Pérez" jose
+```
+2. Creo el grupo "Desarrolladores":
+```
+sudo groupadd desarrolladores
+```
+3. Meto a Jose en el grupo:
+```
+sudo usermod -aG desarrolladores jose
+```
+4. Configuro la contraseña de jose:
+```
+sudo passwd jose
+```
+5. Aseguro que solo Jose pueda entrar en su carpeta:
+```
+sudo chmod 700 /home/jose
+```
+6. Creo una carpeta compartida para el grupo:
+```
+sudo mkdir /home/desarrolladores
+```
+7. Doy propiedad al grupo:
+```
+sudo chown :desarrolladores /home/desarrolladores
+```
+8. Doy permisos para que el grupo pueda leer, escribir y acceder:
+```
+sudo chmod 770 /home/desarrolladores
+```
+9. Compruebo que Jose existe y pertenece al grupo:
+```
+id jose
+```
+10. Inicio sesión como jose:
+```
+su - jose
+```
+11. Voy a su carpeta personal:
+```
+cd /home/jose
+```
+12. Compruebo que puede crear archivos:
+```
+touch archivo_prueba.txt
+```
+13. Voy a la carpeta del grupo:
+```
+cd /home/desarrolladores
+```
+Esta configuración permite que cada usuario tenga su propio espacio seguro, y que los miembros del grupo desarrolladores compartan archivos sin que otros usuarios del sistema puedan acceder a ellos.
+
+Así se mejora la organización y seguridad en una red local:
+-Los datos personales están protegidos.
+-Se evita que un usuario borre o modifique archivos de otro.
+-Es más fácil mantener el control y hacer copias de seguridad.
+
+Si no se configuraran bien los permisos, podrían pasar cosas como:
+-Pérdida de archivos por errores de otros usuarios.
+-Acceso no autorizado a información sensible.
+-Confusión entre archivos personales y del grupo.

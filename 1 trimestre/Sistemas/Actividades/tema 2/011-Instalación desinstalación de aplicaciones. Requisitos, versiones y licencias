@@ -1,0 +1,135 @@
+Creación y Aseguramiento de una Página Web
+Contexto
+Para comenzar a explorar el mundo del desarrollo web, vamos a crear nuestra propia página HTML y luego asegurarla en un servidor Linux. Este ejercicio te ayudará a entender los fundamentos de la instalación y configuración de aplicaciones en sistemas operativos, especialmente cuando se trata de servidores web.
+
+Enunciado paso a paso
+Crea una nueva página web:
+
+Abre el terminal en tu servidor.
+
+Navega hasta el directorio /var/www/html.
+
+Crea un nuevo archivo llamado index3.html usando el comando sudo nano index3.html.
+
+Añade el siguiente código HTML básico:
+
+<!doctype html>
+<html>
+        <head>
+        </head>
+        <body>
+                <h1>Hola mundo desde el servidor</h1>
+        </body>
+</html>
+Instala MySQL:
+
+Asegúrate de que tu sistema esté actualizado con el comando sudo apt update.
+Instala MySQL Server usando el comando sudo apt install mysql-server.
+Asegura tu servidor MySQL:
+
+Una vez instalado MySQL, asegúralo ejecutando el script de seguridad con el comando sudo mysql_secure_installation.
+Sigue las indicaciones para configurar la contraseña del usuario root y otros parámetros de seguridad.
+Restricciones
+No usar librerías externas ni estructuras no vistas en los contenidos impartidos.
+Solo utilizar comandos disponibles en sistemas Linux basados en Debian (como Ubuntu).
+Criterios de evaluación
+Introducción y contextualización: 25%
+
+El alumno debe entender el contexto del ejercicio y cómo crear una página web básica.
+Desarrollo técnico correcto y preciso: 25%
+
+El alumno debe conocer los comandos necesarios para navegar en el terminal, crear archivos y instalar aplicaciones.
+Aplicación práctica con ejemplo claro: 25%
+
+El ejercicio debe mostrar cómo aplicar los conocimientos adquiridos a una situación real de desarrollo web.
+
+
+
+
+
+Respuesta:
+
+
+En este ejercicio aprendí a crear una página web básica desde el terminal de un servidor Linux. El objetivo principal fue entender cómo se construye y se aloja una página dentro del directorio del servidor, utilizando comandos del sistema para crear y editar archivos.
+​
+También comprendí la importancia de tener un entorno seguro para alojar sitios web, por eso se incluyó la instalación y configuración de MySQL, que es uno de los gestores de bases de datos más utilizados.
+Gracias a esta práctica, pude conocer el proceso completo desde la creación del archivo HTML hasta la configuración de seguridad del servidor, lo cual me ayuda a tener una mejor idea de cómo funciona una página web en un entorno real.
+​
+​
+1. He entrado en mi maquina virtual y a mi Ubunto server.
+2. He copiado esto:
+-cd /var/www/html
+-sudo nano index3.html
+3. He escrito esto:
+```
+<!doctype html>
+<html>
+    <head>
+        <title>Página de prueba</title>
+    </head>
+    <body>
+        <h1>Hola mundo desde el servidor</h1>
+    </body>
+</html>
+```
+​
+Le he dado a Contrl O y luego a enter ( en mi ordenador el Contrl X no funciona)
+​
+Me he ido al navegador poniendo esto:
+​
+http://192.168.1.130/index3.html
+​
+Y salia Hola mundo desde el servidor
+​
+​
+​
+Como yo ya tenia mysql descargado voy a explicar como lo hice y como he echo ahora para asegurarme:
+​
+***Actualizar los repositorios del sistema:***
+​
+sudo apt update
+​
+​
+***Instalar el servidor MySQL:***
+​
+sudo apt install mysql-server -y
+​
+​
+***Comprobar que el servicio está activo:***
+​
+sudo systemctl status mysql
+​
+​
+***Si no lo está, iniciarlo con:***
+​
+sudo systemctl start mysql
+​
+​
+***Ejecutar el script de configuración de seguridad:***
+​
+sudo mysql_secure_installation
+​
+​
+***Una vez finalizado, acceder al servicio MySQL para comprobar que todo funciona:***
+​
+sudo mysql -u root -p
+​
+​
+​
+Yo he echo esto:
+​
+https://files.fm/u/k8fqx7f7e5
+​
+​
+En este ejercicio puse en práctica los conocimientos aprendidos sobre el uso del terminal en Linux, la creación de archivos HTML y la instalación de servicios en un servidor. Apliqué los pasos necesarios para construir una página web básica y alojarla dentro del directorio /var/www/html, lo que me permitió ver cómo funciona realmente un sitio web desde el lado del servidor.
+​
+También realicé la instalación y aseguramiento de MySQL, entendiendo cómo un servidor web puede trabajar junto con una base de datos para almacenar y manejar información. Este proceso me ayudó a comprender cómo se aplican los conocimientos teóricos a una situación real de desarrollo web, similar a la que se encuentra en entornos laborales donde se configuran y administran servidores para hospedar aplicaciones o páginas web.
+​
+Con este ejercicio pude relacionar los temas vistos en clase sobre sistemas operativos y administración de servidores con una aplicación práctica. Aprendí que la creación de una página web no solo depende del código HTML, sino también de la correcta configuración del entorno donde se aloja.
+​
+Además, entendí la importancia de la seguridad en los servidores, ya que al asegurar MySQL se protege la información y se evitan accesos no autorizados. Este tipo de procedimientos son muy comunes en el entorno profesional, donde se trabaja constantemente con servidores Linux, bases de datos y servicios web.
+​
+Basicamente, esta práctica me permitió unir la teoría con la práctica, reforzando mis conocimientos sobre instalación, configuración y aseguramiento de aplicaciones en un servidor, habilidades que son esenciales para cualquier profesional del área de sistemas o desarrollo web.
+Cierre/Conclusión enlazando con la unidad: 25%
+
+El alumno debe entender cómo el ejercicio se relaciona con los temas vistos en clase y cómo puede aplicarse en un entorno profesional.

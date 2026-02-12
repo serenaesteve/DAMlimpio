@@ -1,0 +1,162 @@
+Carga y visualización de pedidos en MongoDB
+Contexto
+Imagina que eres un vendedor de productos en línea llamado TiendaOnline. Para gestionar tus ventas, has decidido utilizar MongoDB como base de datos. Hoy, vamos a cargar el primer pedido en la colección pedidos de tu base de datos y luego visualizarlo.
+
+Enunciado paso a paso
+Conexión al servidor MongoDB Primero, necesitas establecer una conexión con el servidor MongoDB. Utiliza el siguiente código para crear un objeto Manager que te permita interactuar con la base de datos.
+
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+Consulta del primer pedido Crea una consulta para obtener el primer documento de la colección pedidos. Utiliza un filtro vacío y limita el resultado a 1 documento.
+
+$query = new MongoDB\Driver\Query(
+    [],                 // filtro
+    ['limit' => 1]      // opciones
+);
+Ejecución de la consulta Ejecuta la consulta en la colección pedidos y almacena el resultado en una variable $cursor.
+
+$cursor = $manager->executeQuery('tiendaonline.pedidos', $query);
+Obtención del primer documento Recorre el cursor para obtener el primer documento y almacenalo en la variable $doc. Si no hay documentos, muestra un mensaje indicando que la colección está vacía.
+
+foreach ($cursor as $doc) {
+    var_dump($doc);
+    break;
+}
+
+if (!isset($doc)) {
+    echo "La colección 'pedidos' está vacía\n";
+}
+Restricciones
+No utilizar librerías externas.
+No usar estructuras no vistas.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+Explica claramente el contexto del ejercicio, relacionándolo con la gestión de ventas en línea utilizando MongoDB.
+Desarrollo técnico correcto y preciso (25%)
+
+Demuestra un conocimiento adecuado de cómo establecer una conexión a MongoDB, crear consultas y obtener resultados.
+Asegúrate de que el código esté escrito correctamente y siga las mejores prácticas.
+Aplicación práctica con ejemplo claro (25%)
+
+Proporciona un ejemplo claro de cómo cargar y visualizar un pedido en MongoDB.
+Utiliza variables y nombres de objetos apropiados relacionados con el tema del ejercicio.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+Concluye el ejercicio explicando cómo este ejemplo puede ser aplicado en una situación real de gestión de ventas en línea.
+Enlace con los conceptos vistos en la unidad sobre bases de datos no relacionales.
+
+
+
+Respuesta:
+
+
+En esta actividad voy a trabajar con MongoDB como base de datos para gestionar los pedidos de una tienda online llamada TiendaOnline. El objetivo es aprender a conectar PHP con una base de datos no relacional y realizar operaciones básicas como insertar y consultar documentos.
+​
+MongoDB permite guardar la información en formato documento, lo que facilita almacenar datos completos de un pedido, incluyendo cliente, productos y total, dentro de una misma estructura. A través de este ejercicio pondré en práctica la conexión al servidor, la inserción de datos y la visualización de la información almacenada.
+​
+pedidos.php:
+```
+<?php
+​
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+​
+$pedido = [
+    "cliente" => "Serena",
+    "fecha" => new MongoDB\BSON\UTCDateTime(),
+    "estado" => "pendiente",
+    "productos" => [
+        ["nombre" => "Collar para perro", "cantidad" => 1, "precio" => 9.99],
+        ["nombre" => "Comida para gato", "cantidad" => 2, "precio" => 6.50]
+    ],
+    "total" => 9.99 + (2 * 6.50)
+];
+​
+$bulk = new MongoDB\Driver\BulkWrite();
+$bulk->insert($pedido);
+$manager->executeBulkWrite("tiendaonline.pedidos", $bulk);
+​
+​
+$query = new MongoDB\Driver\Query(
+    [],                 
+    ['limit' => 1]      
+);
+​
+$cursor = $manager->executeQuery('tiendaonline.pedidos', $query);
+​
+foreach ($cursor as $doc) {
+    echo "Primer pedido encontrado:\n";
+    var_dump($doc);
+    break;
+}
+​
+if (!isset($doc)) {
+    echo "La colección 'pedidos' está vacía\n";
+}
+```
+​
+Terminal:
+​
+serena@serena-portatil:/var/www/html/DAM/Bases de datos/Actividades/tema 7$ sudo systemctl status mongod --no-pager
+ss -lntp | grep 27017
+● mongod.service - MongoDB Database Server
+     Loaded: loaded (/usr/lib/systemd/system/mongod.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-02-11 13:30:58 CET; 13s ago
+       Docs: https://docs.mongodb.org/manual
+   Main PID: 15773 (mongod)
+     Memory: 90.8M (peak: 91.0M)
+        CPU: 278ms
+     CGroup: /system.slice/mongod.service
+             └─15773 /usr/bin/mongod --config /etc/mongod.conf
+​
+feb 11 13:30:58 serena-portatil systemd[1]: Started mongod.service - MongoDB…er.
+feb 11 13:30:58 serena-portatil mongod[15773]: {"t":{"$date":"2026-02-11T12:…e"}
+Hint: Some lines were ellipsized, use -l to show in full.
+LISTEN 0      4096       127.0.0.1:27017      0.0.0.0:*          
+serena@serena-portatil:/var/www/html/DAM/Bases de datos/Actividades/tema 7$ php pedidos.php
+Primer pedido encontrado:
+object(stdClass)#11 (6) {
+  ["_id"]=>
+  object(MongoDB\BSON\ObjectId)#7 (1) {
+    ["oid"]=>
+    string(24) "698c7695e82fb56bbf02e7a1"
+  }
+  ["cliente"]=>
+  string(6) "Serena"
+  ["fecha"]=>
+  object(MongoDB\BSON\UTCDateTime)#8 (1) {
+    ["milliseconds"]=>
+    string(13) "1770813077943"
+  }
+  ["estado"]=>
+  string(9) "pendiente"
+  ["productos"]=>
+  array(2) {
+    [0]=>
+    object(stdClass)#9 (3) {
+      ["nombre"]=>
+      string(17) "Collar para perro"
+      ["cantidad"]=>
+      int(1)
+      ["precio"]=>
+      float(9.99)
+    }
+    [1]=>
+    object(stdClass)#10 (3) {
+      ["nombre"]=>
+      string(16) "Comida para gato"
+      ["cantidad"]=>
+      int(2)
+      ["precio"]=>
+      float(6.5)
+    }
+  }
+  ["total"]=>
+  float(22.990000000000002)
+}
+serena@serena-portatil:/var/www/html/DAM/Bases de datos/Actividades/tema 7$
+​
+En esta actividad he aprendido a conectar PHP con una base de datos MongoDB para gestionar pedidos de una tienda online. Primero he establecido la conexión con el servidor MongoDB utilizando la clase MongoDB\Driver\Manager. Después he creado un pedido de ejemplo con información del cliente, productos, fecha y total, y lo he insertado en la colección pedidos.
+​
+Una vez guardado el pedido, he realizado una consulta para obtener el primer documento de la colección y lo he mostrado por pantalla. Así he comprobado que los datos se almacenan correctamente en MongoDB y que puedo recuperarlos desde PHP.
+​
+Este ejercicio me ha permitido entender cómo funcionan las bases de datos no relacionales orientadas a documentos y cómo se pueden aplicar en una situación real de gestión de tiendas online.

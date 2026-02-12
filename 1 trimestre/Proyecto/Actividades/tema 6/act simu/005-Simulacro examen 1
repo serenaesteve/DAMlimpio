@@ -1,0 +1,146 @@
+Ejercicio: Integración de Hobbies en la Aplicación Web
+El objetivo de este ejercicio es integrar tus hobbies favoritos (juegos de mesa y la naturaleza) en una aplicación web que muestra entradas de un blog.
+
+Contexto
+Imagine que eres un amante del campo, un apasionado por los juegos de mesa y un apasionado lector. Quieres crear una página web donde puedas mostrar tus pensamientos sobre libros y juegos de mesa que te gusten.
+
+Enunciado paso a paso
+Conexión a la base de datos:
+
+Utiliza mysql.connector para conectarte a tu base de datos llamada "blog2526".
+Crea una variable llamada cursor para realizar consultas.
+Consulta SQL:
+
+Escribe una consulta SQL que seleccione todas las entradas del blog, incluyendo el título, la introducción, la fecha y el autor.
+Almacena esta consulta en una variable llamada consulta_sql.
+Mostrar los resultados en HTML:
+
+Crea un bucle para recorrer cada fila de los resultados de la consulta.
+Para cada entrada, genera un bloque HTML que incluya el título del artículo, la introducción, la fecha y el autor.
+Almacena este bloque HTML en una variable llamada bloque_html.
+Integración con Flask:
+
+Crea una función llamada mostrar_entradas que devuelva el contenido completo de tu página web.
+Dentro de esta función, ejecuta la consulta SQL y almacena los resultados en una variable llamada entradas.
+Genera el bloque HTML para cada entrada y concaténalo a la cadena bloque_html.
+Ejecución del servidor:
+
+Define una ruta / que use la función mostrar_entradas para mostrar el contenido de la página web.
+Inicia el servidor Flask con aplicacion.run().
+Restricciones
+Solo puedes usar los conceptos y funciones permitidos en la lista blanca.
+No utilices librerías externas o estructuras no vistas en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): Comprueba que el contexto mencione tus hobbies favoritos y cómo se integran en la aplicación web.
+Desarrollo técnico correcto y preciso (25%): Verifica que el código esté bien estructurado, que las variables tengan nombres descriptivos y que la lógica sea correcta.
+Aplicación práctica con ejemplo claro (25%): Asegúrate de que cada paso del ejercicio esté resuelto correctamente y que el resultado final muestre los datos de la base de datos en formato HTML.
+Cierre/Conclusión enlazando con la unidad (25%): Comprueba que el ejercicio concluya con una reflexión sobre cómo tus hobbies se reflejan en el proyecto y cómo podrías mejorarlo.
+
+
+
+Respuesta:
+
+
+En este proyecto desarrollo una aplicación web con Flask y MySQL que me permite mostrar entradas de un blog personal. En esta página integro mis hobbies favoritos: la naturaleza, los juegos de mesa y la lectura. Mi objetivo es crear un espacio donde pueda compartir mis experiencias, opiniones y reflexiones sobre estos temas que tanto disfruto. Con este trabajo aprendo a conectar una base de datos MySQL con una aplicación Flask, ejecutar consultas SQL y mostrar los resultados de forma dinámica en una página web.
+
+
+1. Crear la base de datos blog2526:
+```
+CREATE DATABASE blog2526;
+USE blog2526;
+```
+
+2. Crear la tabla entradas_blog:
+```
+CREATE TABLE entradas_blog (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    introduccion TEXT NOT NULL,
+    fecha DATE NOT NULL,
+    autor VARCHAR(100) NOT NULL
+);
+```
+
+3. Inserto datos:
+```
+INSERT INTO entradas_blog (titulo, introduccion, fecha, autor) VALUES
+('Explorando la naturaleza', 'Hoy comparto mi experiencia haciendo senderismo en la sierra. Me encanta respirar aire fresco y descubrir nuevos paisajes.', '2025-11-13', 'Serena'),
+('Noche de juegos de mesa', 'Pasé una tarde genial jugando Catan y Dixit con mis amigos. Los juegos de mesa siempre nos hacen reír y pensar.', '2025-11-12', 'Serena'),
+('Lectura al aire libre', 'Combino mi amor por los libros con la naturaleza. Leer en el campo es una de mis actividades favoritas.', '2025-11-10', 'Serena');
+```
+
+4. app.py:
+```
+import mysql.connector
+from flask import Flask
+
+aplicacion = Flask(__name__)
+
+def obtener_cursor():
+    conexion = mysql.connector.connect(
+        host="localhost",
+        user="root",      
+        password="", 
+        database="blog2526"
+    )
+    return conexion, conexion.cursor()
+
+consulta_sql = "SELECT titulo, introduccion, fecha, autor FROM entradas_blog"
+
+def mostrar_entradas():
+    conexion, cursor = obtener_cursor()
+    cursor.execute(consulta_sql)
+    entradas = cursor.fetchall()
+
+    bloque_html = ""
+    for entrada in entradas:
+        titulo, introduccion, fecha, autor = entrada
+        bloque_html += f"""
+        <div>
+            <h2>{titulo}</h2>
+            <p>{introduccion}</p>
+            <p>Fecha: {fecha} | Autor: {autor}</p>
+            <hr>
+        </div>
+        """
+
+    cursor.close()
+    conexion.close()
+
+    pagina = f"""
+    <html>
+    <head>
+        <title>Mi Blog de Hobbies</title>
+    </head>
+    <body>
+        <h1>Mis Hobbies: Naturaleza y Juegos de Mesa</h1>
+        {bloque_html}
+    </body>
+    </html>
+    """
+    return pagina
+
+@aplicacion.route("/")
+def inicio():
+    return mostrar_entradas()
+
+if __name__ == "__main__":
+    aplicacion.run(debug=True)
+```
+
+
+Ejecución:
+
+PS C:\Users\Serena> cd "C:\Users\Serena\Documents\Proyecto\Actividades\tema 6"
+PS C:\Users\Serena\Documents\Proyecto\Actividades\tema 6> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [13/Nov/2025 13:54:03] "GET / HTTP/1.1" 200 -
+
+Con la creación de esta aplicación web logro combinar mis intereses personales con la programación. El proyecto me permite practicar la conexión entre Flask y MySQL, el uso de consultas SQL y la generación de contenido dinámico en HTML. También aprendo a estructurar mejor mi código y a organizar la información de la base de datos para presentarla de forma clara y atractiva. En el futuro me gustaría ampliar la aplicación añadiendo más secciones, imágenes y estilos para que mi blog refleje mejor mi pasión por la naturaleza, los juegos de mesa y la lectura.

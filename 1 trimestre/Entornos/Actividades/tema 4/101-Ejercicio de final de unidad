@@ -1,0 +1,146 @@
+Actividad final de unidad:
+
+Toma un programa - de entre los simulacros de examen de programación que estamos haciendo en el ciclo Aplica refactorización basada en extracción de funciones Documenta, tanto en docstring de programa, como en docstring de funcion, como en comentarios de lineas, cdonde corresponda
+
+
+
+
+
+Respuesta:
+
+
+En esta actividad he trabajado con un programa que gestiona una lista de plantas. A partir del código original, hice una refactorización para separar las partes del programa en funciones y hacerlo más ordenado y fácil de entender. También añadí comentarios y docstrings para explicar qué hace cada parte del código.
+
+
+```
+"""
+Programa: Sistema de gestión de plantas
+Autor: Serena Sania Esteve
+Descripción:
+    Este programa implementa un sistema CRUD (Crear, Leer, Actualizar, Eliminar)
+    para gestionar una lista de plantas. El usuario puede insertar nuevas plantas,
+    listar todas las registradas, actualizar el nombre de una existente o eliminarla.
+
+    Se ha aplicado refactorización por extracción de funciones para mejorar la
+    organización, la legibilidad y la reutilización del código.
+"""
+
+def mostrar_menu():
+    """Muestra el menú principal de opciones CRUD."""
+    print("\nMenu CRUD de plantas")
+    print("1. Insertar planta")
+    print("2. Listar plantas")
+    print("3. Actualizar planta")
+    print("4. Eliminar planta")
+    print("5. Salir")
+
+
+def insertar_planta(plantas):
+    """
+    Inserta una nueva planta en la lista.
+    
+    Parámetros:
+        plantas (list): Lista actual de plantas.
+    """
+    nombre = input("Introduce el nombre de la planta: ")
+    plantas.append(nombre)
+    print("🌿 Planta agregada correctamente.")
+
+
+def listar_plantas(plantas):
+    """
+    Muestra todas las plantas registradas.
+    
+    Parámetros:
+        plantas (list): Lista actual de plantas.
+    """
+    if not plantas:
+        print("No hay plantas registradas.")
+    else:
+        print("Lista de plantas:")
+        for i, p in enumerate(plantas, start=1):
+            print(f"{i}. {p}")
+
+
+def actualizar_planta(plantas):
+    """
+    Actualiza el nombre de una planta seleccionada por el usuario.
+    
+    Parámetros:
+        plantas (list): Lista actual de plantas.
+    """
+    if not plantas:
+        print("No hay plantas para actualizar.")
+        return
+    
+    listar_plantas(plantas)
+    try:
+        indice = int(input("Introduce el número de la planta que deseas actualizar: ")) - 1
+        if 0 <= indice < len(plantas):
+            nuevo_nombre = input("Introduce el nuevo nombre: ")
+            plantas[indice] = nuevo_nombre
+            print("🌼 Planta actualizada correctamente.")
+        else:
+            print("Número de planta no válido.")
+    except ValueError:
+        print("Entrada no válida. Debes ingresar un número.")
+
+
+def eliminar_planta(plantas):
+    """
+    Elimina una planta de la lista según el número que indique el usuario.
+    
+    Parámetros:
+        plantas (list): Lista actual de plantas.
+    """
+    if not plantas:
+        print("No hay plantas para eliminar.")
+        return
+    
+    listar_plantas(plantas)
+    try:
+        indice = int(input("Introduce el número de la planta que deseas eliminar: ")) - 1
+        if 0 <= indice < len(plantas):
+            plantas.pop(indice)
+            print("🌺 Planta eliminada correctamente.")
+        else:
+            print("Número de planta no válido.")
+    except ValueError:
+        print("Entrada no válida. Debes ingresar un número.")
+
+
+def main():
+    """
+    Función principal del programa.
+    Controla el flujo del menú y llama a las funciones correspondientes
+    según la opción elegida por el usuario.
+    """
+    print("Bienvenido al sistema de gestión de plantas 🌱")
+
+    plantas = []  # Lista vacía para almacenar las plantas
+
+    while True:
+        mostrar_menu()
+        opcion = input("\nElige una opción: ")
+
+        if opcion == "1":
+            insertar_planta(plantas)
+        elif opcion == "2":
+            listar_plantas(plantas)
+        elif opcion == "3":
+            actualizar_planta(plantas)
+        elif opcion == "4":
+            eliminar_planta(plantas)
+        elif opcion == "5":
+            print("Saliendo del sistema... 🌻")
+            break
+        else:
+            print("Opción no válida. Intenta de nuevo.")
+
+
+# Punto de entrada del programa
+if __name__ == "__main__":
+    main()
+```
+
+Con esta actividad he aprendido a organizar mejor un programa usando funciones y a documentarlo correctamente. El código ahora es más claro, más corto y más fácil de modificar si se quiere mejorar en el futuro. Me a ayudado a entender la importancia de escribir el código de forma limpia y bien explicada.

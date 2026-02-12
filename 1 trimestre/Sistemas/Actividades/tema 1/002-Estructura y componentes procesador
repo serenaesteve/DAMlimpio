@@ -1,0 +1,36 @@
+Actividad: Configuración y características del procesador
+Contexto
+En el mundo digital actual, la comprensión de los sistemas microinformáticos es fundamental para cualquier profesional que desee trabajar en el campo de la informática. El procesador, a menudo conocido como el "cé" del ordenador, se encarga de realizar todos los cálculos y operaciones necesarias para ejecutar programas. Para este ejercicio, vamos a explorar cómo configurar y caracterizar un procesador utilizando juegos de mesa y observaciones en la naturaleza.
+
+Enunciado paso a paso
+Identificación del procesador: Identifica el tipo de procesador que tienes en tu ordenador. Puedes hacerlo buscando información en el manual o usando herramientas como lscpu en sistemas Linux.
+Configuración del procesador: Configura un juego de mesa que requiera una gran cantidad de cálculos, como "Civilization" o "StarCraft". Observa cómo se comporta tu ordenador durante la partida y compara con otros juegos más simples.
+Características del procesador: Analiza las características del procesador en el contexto de tus observaciones. ¿Qué tipo de procesador tienes? ¿Cuántos núcleos tiene? ¿Cómo afecta esto a los tiempos de carga y rendimiento durante los juegos?
+Restricciones
+No usar herramientas externas o software adicional.
+No realizar cambios físicos en el ordenador.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica qué tipo de procesador tienes y cómo lo identificaste.
+Desarrollo técnico correcto y preciso (25%): Describe tus observaciones sobre el rendimiento del ordenador durante los juegos y cómo afecta la cantidad de núcleos del procesador.
+Aplicación práctica con ejemplo claro (25%): Comparte una captura de pantalla del manual o herramientas como lscpu que demuestre la identificación del procesador.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo esta experiencia te ha ayudado a entender los componentes internos del ordenador y su impacto en el rendimiento.
+Recuerda, la práctica activa es clave para comprender estos conceptos. ¡Buena suerte!
+
+
+Respuesta:
+
+Tengo un AMD Ryzen 5 5500 y lo identifique en Sistemas-Información.
+
+Rndimiento en el juego:
+
+Antes- 2%
+Durante-30%
+Despues-2%
+
+Mi ordenador tiene 4 nucleos y en este caso afectan a la velocidad y la capacidad de respuesta del juego.
+
+Por aqui dejo la imagen del administrador de tareas:
+
+file:///C:/Users/Serena/Downloads/WhatsApp%20Image%202025-09-29%20at%2010.43.19.webp
+
+Esta actividad me ha ayudado a ver realmente el rendimiento de la CPU y darme cuenta de la diferencia de cuando no haces nada a hacer una minima cosa como mover el raton ya sube el %. Tambien de la importancia de si haces muchas cosas con el ordenador tener un buen procesador te ayuda a que todo vaya mas rapido.

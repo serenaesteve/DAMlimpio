@@ -1,0 +1,87 @@
+Introducción
+
+En esta actividad, aprenderás a crear un documento HTML utilizando las herramientas de edición recomendadas para lenguajes de marcas. Para este ejemplo, utilizaremos Gedit, una IDE popular y fácil de usar.
+
+Contexto
+
+Como amante del campo, imagina que estás organizando tu expedición en el parque nacional. Necesitas documentar tus observaciones y encontrar formas de compartirlas con amigos. Utilizarás HTML para crear un informe detallado de tu visita.
+
+Enunciado paso a paso
+
+Abrir Gedit
+
+Inicia Gedit desde tu entorno de trabajo.
+Crear un nuevo archivo
+
+Crea un nuevo archivo llamado expedicion.html.
+Escribir el código HTML básico
+
+Escribe el siguiente código en el archivo:
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Expedición al Parque Nacional</title>
+</head>
+<body>
+    <h1>Resumen de la Expedición</h1>
+    <p>(El alumnado debe completar este apartado)</p>
+</body>
+</html>
+Completar el contenido del cuerpo
+
+En el parrafo (El alumnado debe completar este apartado), escribe un resumen de tu expedición, incluyendo información sobre los animales observados y tus impresiones generales.
+Guardar el archivo
+
+Guarda el archivo en una carpeta adecuada para futuras referencias.
+Restricciones
+
+No utilices herramientas de diseño web adicionales.
+No copies código de otros lugares.
+Mantén el código original y solo modifícalo según las instrucciones.
+Criterios de evaluación
+
+Introducción y contextualización (25%)
+
+El alumno debe entender la importancia del uso de HTML para documentar información.
+Desarrollo técnico correcto y preciso (25%)
+
+El código HTML debe ser válido y bien estructurado, siguiendo las mejores prácticas.
+Aplicación práctica con ejemplo claro (25%)
+
+El contenido del informe debe ser relevante y detallado, reflejando la experiencia de la expedición.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El alumno debe mostrar cómo el uso de HTML es útil para organizar y compartir información sobre eventos o experiencias personales.
+
+
+
+Respuesta:
+
+
+
+HTML es una herramienta muy útil para organizar y guardar información de forma clara. 
+Gracias a ella puedo compartir mis experiencias y recuerdos de manera sencilla.
+Es importante para que el codigo sea claro y sencillo y ademas lo que se genera con ese codigo tambien lo sea.
+
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Expedición al Parque Nacional</title>
+</head>
+<body>
+    <h1>Resumen de la Expedición</h1>
+    <p>En mi visita del parque nacional del dia 29/09/2025 ha sido maravillosa.He podido observar diferentes plantas y animales.Los animales que he visto han sido desde aves coloridas como abejarugos,mamiferos terrestres como osos y peces como salmones. Y si hablamos de las plantas he podido observar han sido desde algo autoptono como el romero o el tomillo hasta arboles no autoptonos como el eucalipto y el bambu.Me ha encantado caminar por los senderos observando todo esto</p>
+</body>
+</html>
+```
+
+Para que puedas ver el resultado del codigo:
+
+file:///C:/Users/Serena/Desktop/expedicion.html
+
+ El uso de HTML es útil para organizar y compartir información sobre eventos o experiencias personales ya que te permite tener el registro de todo de forma ordenada, limpia y permite que si quieres compartir esa información con los demas para ti sea sencillo y para ellos visualmente agradable.
+ 
+ Me ha encantado hacer este ejercicio, cada vez voy aprendiendo mas cosas sobre html y demas lenguajes de marcas y la verdad que es la asignatura que mas me gusta.

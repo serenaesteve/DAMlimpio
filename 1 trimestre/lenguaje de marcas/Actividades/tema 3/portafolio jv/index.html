@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>El portafolio de Jose Vicente</title>
+    <meta charset="utf-8">
+    <style>
+      body, html {
+        background: grey;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header, main, footer {
+        background: white;
+        padding: 20px;
+        text-align: center;
+        margin: 20px auto;
+        width: 600px;
+        border-radius: 10px;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 20px;
+      }
+
+      article {
+        background: #f4f4f4;
+        border-radius: 8px;
+        padding: 10px;
+        transition: transform 0.2s ease;
+      }
+
+      article:hover {
+        transform: scale(1.03);
+        background: #fff;
+      }
+
+      article img {
+        width: 100%;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Jose Vicente Carratala</h1>
+      <h2>info@jocarsa.com</h2>
+    </header>
+
+    <main>
+      
+    </main>
+
+    <footer>
+      (c) 2025 Jose Vicente Carratala
+    </footer>
+
+  
+    <template id="plantilla_entrada">
+      <article>
+        <h3></h3>
+        <p></p>
+        <img src="" alt="">
+      </article>
+    </template>
+
+    <script>
+     
+      let origen = document.querySelector("#plantilla_entrada");
+      let destino = document.querySelector("main");
+
+      
+      fetch("portafolio.json")
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+          datos.forEach(dato => {
+            let clon = origen.content.cloneNode(true);
+            clon.querySelector("h3").textContent = dato.titulo;
+            clon.querySelector("p").textContent = dato.descripcion;
+            clon.querySelector("img").src = dato.imagen;
+            clon.querySelector("img").alt = dato.titulo;
+            destino.appendChild(clon);
+          });
+        })
+        .catch(error => console.error("Error al cargar el portafolio:", error));
+    </script>
+  </body>
+</html>

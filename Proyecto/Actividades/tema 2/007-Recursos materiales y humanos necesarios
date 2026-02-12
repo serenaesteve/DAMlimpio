@@ -1,0 +1,537 @@
+Para practicar el concepto de estructura XML y su uso en páginas web dinámicas, sigue estos pasos:
+
+Crear una página XML: Utiliza el archivo pagina.xml proporcionado como ejemplo para crear tu propia página XML. Añade secciones adicionales con diferentes tipos de contenido (texto, listas, tarjetas, preguntas frecuentes) y asegúrate de que la estructura sea coherente y bien organizada.
+
+Desarrollar una página web dinámica: Utiliza el archivo pagina.php como plantilla para crear tu página web. Asegúrate de cargar correctamente los datos del archivo XML y mostrarlos en la página según su tipo (texto, lista, tarjetas, preguntas frecuentes). Prueba diferentes secciones para asegurarte de que todo funciona correctamente.
+
+Añadir funcionalidades adicionales: Para mejorar tu práctica, puedes añadir funcionalidades adicionales como filtros por categoría o búsqueda dentro de la página. Esto te permitirá experimentar con JavaScript y AJAX para cargar contenido dinámicamente sin recargar la página completa.
+
+Recuerda que los hobbies del alumno pueden influir en su enfoque durante este ejercicio. Si le gusta la naturaleza, podría considerar usar imágenes relacionadas con el campo o mencionar lugares de interés natural en sus secciones de texto. Si le gusta los animales, podría incluir tarjetas informativas sobre diferentes especies o preguntas frecuentes sobre cuidados de mascotas.
+
+Al completar estos pasos, tendrás una página web dinámica funcional que utiliza estructura XML para su contenido.
+
+
+
+Respuesta:
+
+
+En este ejercicio realizo una página web dinámica utilizando XML y PHP. El objetivo es separar el contenido de la estructura, de forma que la información se cargue desde archivos externos y la página se pueda reutilizar fácilmente. Para ello, trabajo con un archivo XML donde guardo todo el contenido y un archivo PHP que se encarga de leerlo y mostrarlo en la web.
+
+
+pagina.php:
+```
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+function h($s){
+  return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
+}
+
+function safe_path($rel){
+  $rel = (string)$rel;
+  if (!preg_match('/^[a-zA-Z0-9_\-\/\.]+$/', $rel) || str_contains($rel, '..')) return "";
+  return __DIR__ . '/' . ltrim($rel, '/');
+}
+
+function safe_img_src($src){
+  $src = trim((string)$src);
+  if ($src === "") return "";
+  if (str_contains($src, '..')) return "";
+  if (preg_match('#^https?://#i', $src)) return $src;
+  if (!preg_match('/^[a-zA-Z0-9_\-\/\.\%\=\?\&]+$/', $src)) return "";
+  return $src;
+}
+
+
+$defaultRel = "paginas/".($_GET['p'] ?? "").".xml";
+$relFile = $_GET['file'] ?? $defaultRel;
+$xmlPath = safe_path($relFile);
+
+if ($xmlPath === "" || !file_exists($xmlPath)) {
+  die("XML no encontrado");
+}
+
+$xml = simplexml_load_file($xmlPath);
+
+
+$cats = [];
+if (file_exists("db/categorias.json")) {
+  $cats = json_decode(file_get_contents("db/categorias.json"), true);
+  if (!is_array($cats)) $cats = [];
+}
+
+$footerJson = [];
+if (file_exists("db/piedepagina.json")) {
+  $footerJson = json_decode(file_get_contents("db/piedepagina.json"), true);
+  if (!is_array($footerJson)) $footerJson = [];
+}
+
+
+$title = (string)($xml->meta->title ?? $xml->hero->title ?? "Página");
+$subtitle = (string)($xml->hero->subtitle ?? "");
+
+$heroImg = [
+  'src' => (string)($xml->hero->media->image['src'] ?? ''),
+  'alt' => (string)($xml->hero->media->image['alt'] ?? '')
+];
+
+$badges = [];
+if (isset($xml->hero->badges->badge)) {
+  foreach ($xml->hero->badges->badge as $b) {
+    $badges[] = (string)$b;
+  }
+}
+
+$actions = [];
+if (isset($xml->hero->actions->action)) {
+  foreach ($xml->hero->actions->action as $a) {
+    $actions[] = [
+      'type' => (string)($a['type'] ?? ''),
+      'text' => (string)$a,
+      'href' => (string)($a['href'] ?? '')
+    ];
+  }
+}
+
+$sections = [];
+if (isset($xml->sections->section)) {
+  foreach ($xml->sections->section as $s) {
+
+    $items = [];
+    if (isset($s->items->item)) {
+      foreach ($s->items->item as $it) $items[] = (string)$it;
+    }
+
+    $cards = [];
+    if (isset($s->cards->card)) {
+      foreach ($s->cards->card as $c) {
+        $cards[] = [
+          'title' => (string)$c->title,
+          'text'  => (string)$c->text
+        ];
+      }
+    }
+
+    $faqs = [];
+    if (isset($s->faq->qa)) {
+      foreach ($s->faq->qa as $qa) {
+        $faqs[] = [
+          'q' => (string)$qa->q,
+          'a' => (string)$qa->a
+        ];
+      }
+    }
+
+    $sections[] = [
+      'id' => (string)$s['id'],
+      'layout' => (string)$s['layout'],
+      'title' => (string)$s->title,
+      'subtitle' => (string)$s->subtitle,
+      'text' => (string)$s->text,
+      'image' => [
+        'src' => (string)($s->media->image['src'] ?? ''),
+        'alt' => (string)($s->media->image['alt'] ?? '')
+      ],
+      'items' => $items,
+      'cards' => $cards,
+      'faqs' => $faqs
+    ];
+  }
+}
+
+function render_image($img){
+  $src = safe_img_src($img['src']);
+  if ($src === "") return;
+  echo '<div class="articleMedia">';
+  echo '<img src="'.h($src).'" alt="'.h($img['alt']).'">';
+  echo '</div>';
+}
+?>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title><?= h($title) ?></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <style>
+    @font-face {font-family:Ubuntu;src:url(estilo/Ubuntu-R.ttf);}
+    @font-face {font-family:UbuntuB;src:url(estilo/Ubuntu-B.ttf);}
+    html{scroll-behavior:smooth;}
+
+    body{
+      margin:0;
+      font-family:Ubuntu,sans-serif;
+      background:#fff;
+      color:#111;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      padding:10px;
+      background:white;
+      box-shadow:0 2px 4px rgba(0,0,0,.2);
+      z-index:10;
+    }
+
+    header a{
+      text-decoration:none;
+      color:indigo;
+      font-size:11px;
+      font-family:UbuntuB,Ubuntu,sans-serif;
+    }
+
+    .wrap{max-width:1100px;margin:auto;}
+
+    .hero{text-align:center;padding:60px 20px 20px;}
+    .hero h1{font-size:48px;margin:0;}
+    .hero p{color:#555;}
+
+    .badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+    .badge{background:#eee;padding:6px 10px;border-radius:20px;font-size:11px;}
+
+    .actions{margin-top:20px;}
+    .btn{padding:10px 18px;border-radius:20px;border:1px solid #ccc;text-decoration:none;color:#111;font-size:12px;}
+    .btn.primary{background:indigo;color:white;border-color:indigo;}
+
+    main{padding:20px;display:grid;gap:20px;}
+    article{background:#f8f8f8;border-radius:16px;overflow:hidden;}
+    .articleMedia img{width:100%;height:200px;object-fit:cover;}
+    .articleBody{padding:20px;text-align:center;}
+
+    .card{border:1px solid #ccc;border-radius:10px;padding:10px;margin-bottom:10px;}
+    details{margin-bottom:10px;}
+
+    footer{
+      text-align:center;
+      padding:20px;
+      font-size:11px;
+      border-top:1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+ 
+  <a href="pagina.php?p=<?= h($_GET['p'] ?? '') ?>">
+    <?= h($title) ?>
+  </a>
+
+  <?php foreach($cats as $c){ ?>
+    <a href="pagina.php?p=<?= h(strtolower($c)) ?>"><?= h($c) ?></a>
+  <?php } ?>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <?php if($heroImg['src'] !== ""){ ?>
+      <img src="<?= h($heroImg['src']) ?>" alt="<?= h($heroImg['alt']) ?>" style="width:100%;max-height:240px;object-fit:cover;border-radius:16px;">
+    <?php } ?>
+
+    <h1><?= h($title) ?></h1>
+    <p><?= h($subtitle) ?></p>
+
+    <div class="badges">
+      <?php foreach($badges as $b){ ?><span class="badge"><?= h($b) ?></span><?php } ?>
+    </div>
+
+    <div class="actions">
+      <?php foreach($actions as $a){ 
+        $cls = ($a['type']==='primary') ? 'btn primary' : 'btn';
+      ?>
+        <a class="<?= $cls ?>" href="<?= h($a['href']) ?>"><?= h($a['text']) ?></a>
+      <?php } ?>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <?php foreach($sections as $sec){ ?>
+    <article id="<?= h($sec['id']) ?>">
+      <?php render_image($sec['image']); ?>
+      <div class="articleBody">
+        <h3><?= h($sec['title']) ?></h3>
+        <p><?= h($sec['subtitle']) ?></p>
+
+        <?php if($sec['layout']==="text"){ ?>
+          <p><?= h($sec['text']) ?></p>
+
+        <?php } elseif($sec['layout']==="list"){ ?>
+          <p><?= h($sec['text']) ?></p>
+          <ul>
+            <?php foreach($sec['items'] as $it){ ?><li><?= h($it) ?></li><?php } ?>
+          </ul>
+
+        <?php } elseif($sec['layout']==="cards"){ ?>
+          <?php foreach($sec['cards'] as $c){ ?>
+            <div class="card">
+              <b><?= h($c['title']) ?></b>
+              <p><?= h($c['text']) ?></p>
+            </div>
+          <?php } ?>
+
+        <?php } elseif($sec['layout']==="faq"){ ?>
+          <?php foreach($sec['faqs'] as $qa){ ?>
+            <details>
+              <summary><?= h($qa['q']) ?></summary>
+              <p><?= h($qa['a']) ?></p>
+            </details>
+          <?php } ?>
+        <?php } ?>
+      </div>
+    </article>
+  <?php } ?>
+</main>
+
+<footer>
+  Página creada con XML y PHP – 1º DAM
+</footer>
+
+</body>
+</html>
+```
+
+naturaleza.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<pagina>
+
+  <meta>
+    <title>Naturaleza y Animales</title>
+  </meta>
+
+  <hero>
+    <title>Naturaleza y Animales</title>
+    <subtitle>
+      Información básica sobre el cuidado de los animales y el respeto por el entorno natural.
+    </subtitle>
+
+    <media>
+      <image src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e" alt="Bosque"/>
+    </media>
+
+    <badges>
+      <badge>Naturaleza</badge>
+      <badge>Animales</badge>
+      <badge>Medio ambiente</badge>
+    </badges>
+
+    <actions>
+      <action type="primary" href="#introduccion">Empezar</action>
+      <action href="#faq">Preguntas frecuentes</action>
+      <action href="#contacto">Contacto</action>
+    </actions>
+  </hero>
+
+  <sections>
+
+    <section id="introduccion" layout="text">
+      <title>Introducción</title>
+      <subtitle>La importancia de cuidar el planeta</subtitle>
+      <text>
+        La naturaleza y los animales forman parte fundamental de nuestro entorno.
+        Cuidarlos es importante para mantener el equilibrio del planeta y asegurar
+        un futuro mejor para las próximas generaciones.
+      </text>
+
+      <media>
+        <image src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Montañas"/>
+      </media>
+    </section>
+
+    <section id="naturaleza" layout="list">
+      <title>Acciones para cuidar la naturaleza</title>
+      <subtitle>Pequeños gestos que ayudan al medio ambiente</subtitle>
+      <text>
+        Estas son algunas acciones sencillas que cualquier persona puede hacer en su día a día.
+      </text>
+
+      <items>
+        <item>Reducir el uso de plásticos</item>
+        <item>No tirar basura en espacios naturales</item>
+        <item>Ahorrar agua y energía</item>
+        <item>Respetar la flora y la fauna</item>
+      </items>
+
+      <media>
+        <image src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" alt="Sendero natural"/>
+      </media>
+    </section>
+
+    <section id="animales" layout="cards">
+      <title>Animales que necesitan protección</title>
+      <subtitle>Ejemplos de especies que debemos cuidar</subtitle>
+      <text>
+        Algunos animales necesitan especial atención debido a la pérdida de su hábitat
+        o al abandono.
+      </text>
+
+      <cards>
+        <card>
+          <title>Erizo</title>
+          <text>
+            Animal nocturno que suele verse afectado por el tráfico y la destrucción
+            de su hábitat natural.
+          </text>
+        </card>
+
+        <card>
+          <title>Zorro</title>
+          <text>
+            Mamífero muy adaptable, pero que necesita espacios naturales para sobrevivir.
+          </text>
+        </card>
+
+        <card>
+          <title>Gato doméstico</title>
+          <text>
+            Aunque es una mascota común, requiere cuidados, alimentación adecuada y
+            esterilización responsable.
+          </text>
+        </card>
+
+        <card>
+          <title>Aves</title>
+          <text>
+            Muchas aves dependen de bosques y zonas verdes que deben ser protegidas.
+          </text>
+        </card>
+      </cards>
+
+      <media>
+        <image src="https://images.unsplash.com/photo-1474511320723-9a56873867b5" alt="Zorro"/>
+      </media>
+    </section>
+
+    <section id="faq" layout="faq">
+      <title>Preguntas frecuentes</title>
+      <subtitle>Dudas comunes sobre naturaleza y animales</subtitle>
+      <text>
+        En esta sección se responden algunas preguntas habituales relacionadas con el cuidado
+        de los animales y el respeto por el entorno natural.
+      </text>
+
+      <faq>
+        <qa>
+          <q>¿Por qué es importante cuidar la naturaleza?</q>
+          <a>
+            Porque de ella dependen los ecosistemas y los seres vivos. Cuidar la naturaleza
+            ayuda a mantener el equilibrio del planeta.
+          </a>
+        </qa>
+
+        <qa>
+          <q>¿Qué se debe tener en cuenta antes de adoptar un animal?</q>
+          <a>
+            Hay que pensar en el tiempo, el espacio y la responsabilidad que supone cuidar
+            de un animal durante toda su vida.
+          </a>
+        </qa>
+
+        <qa>
+          <q>¿Cómo se puede ayudar a los animales sin tener mascota?</q>
+          <a>
+            Respetando su hábitat, no abandonando animales y colaborando con protectoras
+            o asociaciones.
+          </a>
+        </qa>
+
+        <qa>
+          <q>¿Por qué es importante respetar los espacios naturales?</q>
+          <a>
+            Porque son el hogar de muchas especies y su conservación es clave para
+            la biodiversidad.
+          </a>
+        </qa>
+      </faq>
+    </section>
+
+ 
+    <section id="contacto" layout="cards">
+      <title>Contacto</title>
+      <subtitle>Si quieres saber más, aquí tienes opciones</subtitle>
+      <text>
+        Este apartado sirve para navegar desde los botones del hero y tener un lugar final
+        con información básica de contacto.
+      </text>
+
+      <cards>
+        <card>
+          <title>Email</title>
+          <text>serenaestevee@gmail.com</text>
+        </card>
+        <card>
+          <title>instagram</title>
+          <text>@serenaestevee</text>
+        </card>
+      </cards>
+
+    </section>
+
+  </sections>
+
+</pagina>
+```
+
+piedepagina.json:
+```
+{
+  "categorias": [
+    "Naturaleza",
+    "Animales",
+    "Tecnología",
+    "Viajes"
+  ],
+  "enlaces": [
+    {
+      "nombre": "Sobre nosotros",
+      "enlace": "pagina.php?p=sobrenosotros"
+    },
+    {
+      "nombre": "Contacto",
+      "enlace": "contacto.php"
+    },
+    {
+      "nombre": "Aviso legal",
+      "enlace": "#"
+    }
+  ]
+}
+```
+
+estilo/
+- Ubuntu-B.ttf
+- Ubuntu-R.ttf
+
+/proyecto
+│
+├── pagina.php
+├
+│
+├── paginas/
+│   └── naturaleza.xml
+│
+├── db/
+│   ├── categorias.json
+│   └── piedepagina.json
+│
+└── estilo/
+    ├── Ubuntu-R.ttf
+    └── Ubuntu-B.ttf
+
+
+Primero creo un archivo XML donde guardo todo el contenido de la página, como los textos, las imágenes y las distintas secciones. El contenido está organizado de forma clara y todo está relacionado con la temática de la naturaleza y los animales.
+
+Después utilizo PHP para leer el archivo XML y mostrar la información en la página web. Según el tipo de contenido, se muestra como texto, listas, tarjetas o preguntas frecuentes. De esta manera no tengo que escribir el contenido directamente en el código HTML.
+
+También añado botones en la parte principal de la página que permiten desplazarse a diferentes secciones. El nombre de la web se carga desde el XML, haciendo que la página sea dinámica y fácil de modificar.
+
+Con este ejercicio entiendo mejor cómo funciona la manipulación de contenido dinámico usando XML y PHP. Aprendo a separar la información del diseño y a crear páginas más organizadas y fáciles de mantener. Este tipo de estructura es muy útil para proyectos futuros, ya que permite cambiar el contenido sin tocar el código y facilita el trabajo cuando la web crece o se reutiliza en otras páginas.

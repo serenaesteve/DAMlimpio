@@ -1,0 +1,149 @@
+Contexto
+En un proyecto de gestión de una granja familiar, es crucial mantener una base de datos para organizar información sobre los animales y sus hábitats. Para ello, se ha diseñado un esquema de relación que incluye varias tablas como Animales, Habitats y Relacion_Habitat_Animal. Es importante garantizar que esta base de datos esté en la Tercera Forma Normal (3FN) para evitar inconsistencias y redundancias.
+
+Enunciado paso a paso
+Identificar dependencias funcionales: Analiza las tablas Animales, Habitats y Relacion_Habitat_Animal. Identifica todas las dependencias funcionales presentes en estas tablas.
+Verificar la Primera Forma Normal (1FN): Asegúrate de que cada atributo sea atómico, que no existan filas repetidas y que todos los campos estén correctamente relacionados con la clave primaria.
+Verificar la Segunda Forma Normal (2FN): Comprueba que todos los atributos que no formen parte de ninguna clave dependan completamente de la clave principal.
+Verificar la Tercera Forma Normal (3FN): Asegúrate de que no existan dependencias funcionales transitivas en los atributos que no son claves.
+Restricciones
+No utilizar funciones o estructuras avanzadas de SQL.
+Solo usar los conceptos y técnicas aprendidos en clase para resolver el problema.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe explicar claramente la importancia de normalizar una base de datos.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe identificar correctamente las dependencias funcionales en cada tabla y verificar que el esquema cumpla con las reglas de 1FN, 2FN y 3FN.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar un ejemplo práctico de cómo aplicar los conceptos de normalización a una base de datos real.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe discutir las implicaciones de no normalizar una base de datos y cómo el concepto de 3FN se relaciona con la eficiencia y mantenibilidad de una base de datos.
+Ejemplo de dependencias funcionales en la tabla Animales:
+
+Atributo: Código_Animal
+Dependencia funcional: Código_Animal → Nombre, Edad, Especie
+El estudiante debe verificar que esta dependencia no sea transitiva y cumplir las condiciones necesarias para estar en 3FN.
+
+
+Resultado:
+
+En este trabajo, mi objetivo ha sido organizar la información de mi granja familiar usando una base de datos. Quería que los datos de los animales y sus hábitats estuvieran bien ordenados para evitar errores o confusiones. Para conseguirlo, he aprendido a aplicar la normalización, que hace que cada dato dependa solo de su clave principal y no se repita en varias partes. Llegar hasta la Tercera Forma Normal (3FN) permite que la información sea más clara y fácil de manejar.
+​
+1. Creo la base de datos:
+```
+CREATE DATABASE GranjaFamilia;
+```
+​
+2. Creo las tablas:
+```
+​
+CREATE TABLE Animales (
+    Codigo_Animal INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Edad INT NOT NULL,
+    Especie VARCHAR(50) NOT NULL
+);
+​
+CREATE TABLE Habitats (
+    Codigo_Habitat INT PRIMARY KEY,
+    Tipo_Habitat VARCHAR(50) NOT NULL,
+    Ubicacion VARCHAR(100) NOT NULL
+);
+​
+CREATE TABLE Relacion_Habitat_Animal (
+    Codigo_Animal INT,
+    Codigo_Habitat INT,
+    Fecha_Asignacion DATE NOT NULL,
+    PRIMARY KEY (Codigo_Animal, Codigo_Habitat),
+    FOREIGN KEY (Codigo_Animal) REFERENCES Animales(Codigo_Animal),
+    FOREIGN KEY (Codigo_Habitat) REFERENCES Habitats(Codigo_Habitat)
+);
+```
+​
+3. Inserto datos:
+```
+INSERT INTO Animales (Codigo_Animal, Nombre, Edad, Especie)
+VALUES 
+(1, 'Betsy', 4, 'Vaca'),
+(2, 'Rocco', 2, 'Caballo'),
+(3, 'Mimi', 1, 'Gallina');
+​
+​
+INSERT INTO Habitats (Codigo_Habitat, Tipo_Habitat, Ubicacion)
+VALUES 
+(101, 'Pastizal', 'Sector Norte'),
+(102, 'Establo', 'Sector Este'),
+(103, 'Gallinero', 'Sector Sur');
+​
+​
+INSERT INTO Relacion_Habitat_Animal (Codigo_Animal, Codigo_Habitat, Fecha_Asignacion)
+VALUES 
+(1, 101, '2025-12-22'),
+(2, 102, '2025-12-20'),
+(3, 103, '2025-12-21');
+```
+​
+4. Veo a los animales con su habitat:
+```
+SELECT a.Nombre, a.Especie, h.Tipo_Habitat, h.Ubicacion, r.Fecha_Asignacion
+FROM Relacion_Habitat_Animal r
+JOIN Animales a ON r.Codigo_Animal = a.Codigo_Animal
+JOIN Habitats h ON r.Codigo_Habitat = h.Codigo_Habitat;
+```
+​
+Betsy
+Vaca
+Pastizal
+Sector Norte
+2025-12-22
+Rocco
+Caballo
+Establo
+Sector Este
+2025-12-20
+Mimi
+Gallina
+Gallinero
+Sector Sur
+2025-12-21
+​
+5. Ver que animales estan el el pastizal:
+```
+SELECT a.Nombre, a.Especie
+FROM Relacion_Habitat_Animal r
+JOIN Animales a ON r.Codigo_Animal = a.Codigo_Animal
+JOIN Habitats h ON r.Codigo_Habitat = h.Codigo_Habitat
+WHERE h.Tipo_Habitat = 'Pastizal';
+```
+​
+Betsy
+Vaca
+​
+```
+-------------------------
+|        Animales       |
+-------------------------
+| PK Codigo_Animal      |
+| Nombre                |
+| Edad                  |
+| Especie               |
+-------------------------
+​
+-------------------------
+|        Habitats       |
+-------------------------
+| PK Codigo_Habitat     |
+| Tipo_Habitat          |
+| Ubicacion             |
+-------------------------
+​
+-------------------------------
+|   Relacion_Habitat_Animal   |
+-------------------------------
+| PK (Codigo_Animal, Codigo_Habitat) |
+| FK Codigo_Animal -> Animales(Codigo_Animal) |
+| FK Codigo_Habitat -> Habitats(Codigo_Habitat) |
+| Fecha_Asignacion               |
+-------------------------------
+​
+Relaciones:
+Animales 1 ----- * Relacion_Habitat_Animal * ----- 1 Habitats
+```
+​
+Al hacer este ejercicio, he comprendido que normalizar la base de datos es muy importante. Gracias a la 3FN, cada tabla tiene únicamente la información que le corresponde, sin repetir datos. También he aprendido a relacionar los animales con sus hábitats usando claves, lo que hace que la base sea más organizada y fácil de actualizar. Si no normalizara la base, podrían aparecer errores o datos duplicados. Con este trabajo, veo que la 3FN ayuda a mantener la información correcta y sencilla de usar.

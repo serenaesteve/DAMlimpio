@@ -1,0 +1,49 @@
+Título
+Explorando Literales en un Juego de Campo
+
+Contexto
+Imagine que estás explorando un hermoso parque natural, lleno de árboles y flores. Tu objetivo es recoger los más bonitos flores para llevarlas a casa. Cada flor tiene un nombre específico, como "Rosa" o "Tulipán". Estos nombres son literales que representan el valor inmutable de cada flor.
+
+Enunciado paso a paso
+Definición de Literales: Comienza por definir dos variables que representen los nombres de las flores que has recogido. Por ejemplo, si has recolectado una Rosa y un Tulipán, puedes usar las siguientes variables:
+
+nombre_flor_1 = "Rosa"
+nombre_flor_2 = "Tulipán"
+Operaciones con Literales: Ahora que tienes los nombres de tus flores, realiza algunas operaciones sencillas. Por ejemplo, puedes concatenar los nombres para formar una frase:
+
+frase = nombre_flor_1 + " y " + nombre_flor_2
+Imprimir el Resultado: Finalmente, imprime la frase que has creado. Esto mostrará en pantalla las flores que has recogido.
+
+print(frase)
+Restricciones
+Solo puedes usar literales de cadena (strings) para representar los nombres de las flores.
+No utilices números o cualquier otro tipo de literal.
+Criterios de evaluación
+Introducción y contextualización (25%): Explana cómo has utilizado el concepto de literales en un contexto real, relacionado con la exploración del campo.
+Desarrollo técnico correcto y preciso (25%): Muestra que entiendes cómo definir variables con literales y realizar operaciones básicas con ellos.
+Aplicación práctica con ejemplo claro (25%): Demuestra tu comprensión mediante la creación de las variables, la concatenación y el impresión del resultado.
+Cierre/Conclusión enlazando con la unidad (25%): Concluye explicando cómo este ejercicio te ha ayudado a entender los literales en un contexto práctico y relevante para ti.
+
+
+Respuesta:
+
+He usado las literales para unir en una frase las flores que he recolectado.
+
+Ha continuacion adjunto el codigo pedido:
+
+```
+nombre_flor_1 = "Rosa"
+nombre_flor_2 = "Tulipán"
+
+frase = nombre_flor_1 + " y " + nombre_flor_2
+print(frase)
+```
+
+Y este es el resultado que da en pantalla:
+```
+iterales.py
+Rosa y Tulipán
+PS C:\Users\Serena\Documents\programacion> 
+```
+
+Este ejercicio me ha ayudado a entenderlos por que ha sido algo super sencillo. Habia puesto dos nombres mas de flores pero finalmente lo he quitado por que no es lo que pedia el ejercicio.

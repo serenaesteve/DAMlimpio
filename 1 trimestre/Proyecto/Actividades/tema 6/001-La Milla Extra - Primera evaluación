@@ -1,0 +1,194 @@
+📝 Proyecto Intermodular: Gestor sencillo de tareas en Flask
+
+Alumna: Serena Sania Esteve
+Curso: 1º DAM
+Asignatura: Proyecto Intermodular
+Modalidad: Individual
+
+🎯 Objetivo
+
+Desarrollar una pequeña aplicación web que permita gestionar tareas, aplicando conocimientos de Python, Flask y estructuras de datos. El proyecto integra investigación, desarrollo y documentación.
+
+Al finalizar, el alumnado será capaz de:
+-Crear rutas y manejar formularios en Flask.
+-Manipular listas de datos en Python.
+-Generar una interfaz básica para interactuar con el usuario.
+-Documentar el funcionamiento de una aplicación.
+
+📌 Funcionalidades del proyecto
+
+La aplicación deberá permitir:
+-Añadir tareas con nombre y descripción.
+-Listar todas las tareas, indicando si están completadas o pendientes.
+-Marcar tareas como completadas.
+-Eliminar tareas.
+-Interactuar con todo lo anterior desde una interfaz web sencilla (HTML + Flask).
+
+🧠 Parte 1: Investigación
+
+Antes de desarrollar la aplicación:
+-Investigar qué es un gestor de tareas y qué aplicaciones similares existen.
+-Buscar información sobre Flask: instalación, estructura básica de una app, rutas y templates.
+-Revisar cómo almacenar listas de tareas en Python usando listas o ficheros.
+
+
+💻 Parte 2: Desarrollo práctico
+
+Crear un proyecto Flask con la siguiente estructura:
+
+gestor_tareas_flask/
+│
+├── app.py
+├── templates/
+│   └── index.html
+└── static/
+    └── style.css  (opcional)
+
+
+Implementar rutas y funciones en app.py para:
+-Mostrar el listado de tareas.
+-Añadir nuevas tareas.
+-Marcar tareas como completadas.
+-Eliminar tareas.
+
+Crear la plantilla HTML (index.html) con:
+-Formulario para añadir tareas.
+-Lista dinámica de tareas con acciones para completar y eliminar.
+-Añadir estilos opcionales en style.css para mejorar la presentación.
+
+
+
+
+Resultado:
+En este proyecto he desarrollado un gestor sencillo de tareas utilizando Python y Flask. El objetivo principal ha sido crear una pequeña aplicación web que me permita añadir, listar, completar y eliminar tareas de manera práctica y visual.
+
+Antes de comenzar a programar, investigué sobre gestores de tareas y sobre la herramienta Flask, para entender cómo organizar una aplicación web básica y cómo manejar los datos en listas de Python. A través de este proyecto he podido aplicar los conocimientos adquiridos en clase, como rutas, formularios, templates y control de datos, y al mismo tiempo desarrollar habilidades de planificación y documentación de un proyecto real.
+
+app.py:
+```
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
+
+tareas = []
+
+@app.route("/")
+def index():
+    return render_template("index.html", tareas=tareas)
+
+@app.route("/anadir", methods=["POST"])
+def anadir():
+    nombre = request.form.get("nombre")
+    descripcion = request.form.get("descripcion")
+    if nombre:
+        tareas.append({"nombre": nombre, "descripcion": descripcion, "completada": False})
+    return redirect(url_for("index"))
+
+@app.route("/completar/<int:indice>")
+def completar(indice):
+    if 0 <= indice < len(tareas):
+        tareas[indice]["completada"] = True
+    return redirect(url_for("index"))
+
+@app.route("/eliminar/<int:indice>")
+def eliminar(indice):
+    if 0 <= indice < len(tareas):
+        tareas.pop(indice)
+    return redirect(url_for("index"))
+
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+Index.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Tareas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gestor de Tareas</h1>
+
+    <h2>Anadir nueva tarea</h2>
+    <form action="/anadir" method="post">
+        <input type="text" name="nombre" placeholder="Nombre de la tarea" required>
+        <input type="text" name="descripcion" placeholder="Descripcion">
+        <button type="submit">Anadir</button>
+    </form>
+
+    <h2>Tareas</h2>
+    <ul>
+        {% for tarea in tareas %}
+            <li>
+                {% if tarea.completada %}
+                    <s>{{ tarea.nombre }} - {{ tarea.descripcion }}</s>
+                {% else %}
+                    {{ tarea.nombre }} - {{ tarea.descripcion }}
+                {% endif %}
+                <a href="/completar/{{ loop.index0 }}">Completar</a> |
+                <a href="/eliminar/{{ loop.index0 }}">Eliminar</a>
+            </li>
+        {% else %}
+            <li>No hay tareas</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+```
+
+Style.css:
+```
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+form input {
+    margin: 5px;
+}
+
+ul li {
+    margin: 8px 0;
+}
+```
+
+
+Consola:
+
+C:\Users\Serena\Documents\Proyecto\Actividades> cd "C:\Users\Serena\Documents\Proyecto\Actividades\gestor_tareas"
+
+C:\Users\Serena\Documents\Proyecto\Actividades\gestor_tareas> python app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 552-435-600
+127.0.0.1 - - [12/Nov/2025 13:37:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2025 13:37:12] "GET /static/style.css HTTP/1.1" 404 -
+127.0.0.1 - - [12/Nov/2025 13:37:12] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [12/Nov/2025 13:37:24] "POST /anadir HTTP/1.1" 302 -
+127.0.0.1 - - [12/Nov/2025 13:37:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2025 13:37:24] "GET /static/style.css HTTP/1.1" 404 -
+127.0.0.1 - - [12/Nov/2025 13:37:29] "GET /eliminar/0 HTTP/1.1" 302 -
+127.0.0.1 - - [12/Nov/2025 13:37:29] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2025 13:37:29] "GET /static/style.css HTTP/1.1" 404 -
+
+
+link:
+
+http://127.0.0.1:5000
+
+Con este proyecto he aprendido a crear una aplicación web sencilla usando Python y Flask. Pude añadir, ver, completar y eliminar tareas de forma práctica. También aprendí a organizar el código y a trabajar con listas para guardar información.
+
+Me ha gustado ver cómo funciona todo en la web y, en el futuro, me gustaría mejorar la aplicación guardando los datos en un archivo y haciendo la interfaz más bonita.

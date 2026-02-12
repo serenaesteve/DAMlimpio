@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículum de Serena Sania Esteve</title>
+
+  <style>
+    body {
+      font-family: Verdana, Geneva, sans-serif;
+      background: linear-gradient(to bottom, #e9e4f0, #d3cce3);
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      width: 800px;
+      background-color: white;
+      padding: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-radius: 10px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      border-bottom: 3px solid #b7a2d6;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    header img {
+      width: 180px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      border: none;
+    }
+
+    header div {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #4b3b73;
+      margin: 0;
+    }
+
+    header p {
+      font-style: italic;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    h2 {
+      color: white;
+      background-color: #a48bd3;
+      padding: 6px 10px;
+      border-radius: 5px;
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+
+    h3 {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 25px;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      background-color: #b7a2d6;
+      margin: 30px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #555;
+      font-size: 0.9em;
+      border-top: 2px solid #b7a2d6;
+      padding-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      header div {
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="{{ url_for('static', filename='images/serena.jpg') }}" alt="Foto de Serena Sania Esteve">
+      <div>
+        <h1>Serena Sania Esteve</h1>
+        <p>Gran facilidad de comunicación. Capacidad de organización alta. Responsabilidad elevada. Con espíritu emprendedor. Aptitudes para el trabajo en equipo. Resolutiva. Dispongo de vehículo propio.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Datos personales</h2>
+      <ul>
+        <li>📧 Email: serenaestevee@gmail.com</li>
+        <li>📞 Teléfono: 637383762</li>
+        <li>📍 Ubicación: Mislata, Valencia</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación académica</h2>
+      <ul>
+        <li>Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) – TAME FORMACIÓN (Cursando actualmente)</li>
+        <li>Grado Medio Técnico Auxiliar Administrativo – Colegio Santa Cruz de Mislata (2019 - 2021)</li>
+        <li>ESO – Colegio Santa Cruz de Mislata (2015 - 2019)</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Experiencia profesional</h2>
+      <h3>Administrativa – MISLATA FORMACIÓN SL (2022 - Actual)</h3>
+      <ul>
+        <li>Atención telefónica y física a clientes</li>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Marketing de las redes sociales</li>
+        <li>Plan de igualdad</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa – NEMASA (3 meses - Plan social del Ayuntamiento)</h3>
+      <ul>
+        <li>Fichajes</li>
+        <li>Documentación</li>
+        <li>Informes</li>
+      </ul>
+
+      <h3>Administrativa (prácticas) – FOREDU (3 meses - Prácticas)</h3>
+      <ul>
+        <li>Documentación</li>
+        <li>Redactar y enviar correos</li>
+        <li>Búsqueda de información</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Idiomas</h2>
+      <ul>
+        <li>Español: Nativo</li>
+        <li>Inglés: Nivel A1 (en proceso de aprendizaje)</li>
+        <li>Valenciano: Alto</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Formación complementaria</h2>
+      <ul>
+        <li>Implantación de planes y medidas de igualdad en las empresas</li>
+        <li>IFCT163PO - Inteligencia artificial aplicada a la empresa</li>
+        <li>Aprende a usar un CRM</li>
+        <li>Gestión de posicionamiento SEM</li>
+        <li>Plan estratégico de social media nivel 1 y 2</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Otras competencias</h2>
+      <ul>
+        <li>Conocimientos y experiencia en paquete Office</li>
+        <li>Curso de mecanografía</li>
+        <li>Conocimientos en Contasol y Factusol</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Vehículos</h2>
+      <p>Dispongo de vehículo propio.</p>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Aficiones y hobbies</h2>
+      <p>Viajar, aprender nuevas tecnologías, leer y practicar deporte.</p>
+    </section>
+
+    <footer>
+      <p>© 2025 Serena Sania Esteve</p>
+    </footer>
+  </main>
+</body>
+</html>
+
+
+
+
+   

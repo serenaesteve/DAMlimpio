@@ -1,0 +1,55 @@
+Contexto
+En nuestro curso de programación, hemos estado trabajando con estructuras de datos multidimensionales. Estas estructuras nos permiten organizar y gestionar información de una manera más eficiente. Para poner en práctica lo que hemos aprendido, vamos a trabajar con un ejemplo práctico.
+
+Considera que tienes una agenda donde quieres almacenar la información de tus amigos. Cada amigo tiene nombre, apellido y correo electrónico. Queremos crear una matriz multidimensional para organizar esta información.
+
+Enunciado paso a paso
+Definición de la Agenda:
+
+Declara una variable llamada agenda que será una lista vacía.
+Añadir Amigos:
+
+Utiliza el método append() para agregar cada amigo a la agenda. Cada amigo debe ser representado como una lista con tres elementos: nombre, apellido y correo electrónico.
+Por ejemplo, para añadir "Jose Vicente Carratala", podrías hacer algo así:
+agenda.append(["Jose Vicente", "Carratala", "info@jocarsa.com"])
+Imprimir la Agenda:
+
+Finalmente, imprime la variable agenda para ver cómo se ha organizado la información.
+Restricciones
+No usar librerías externas.
+Solo utilizar estructuras de datos vistas hasta ahora (listas y métodos asociados).
+No crear bucles o funciones adicionales.
+Criterios de evaluación
+Introducción y contextualización (25%): El estudiante debe mostrar una comprensión adecuada del contexto y el propósito del ejercicio.
+Desarrollo técnico correcto y preciso (25%): El código debe ser escrito correctamente, siguiendo las reglas de sintaxis y semántica.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe aplicar el concepto aprendido en un ejemplo práctico.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe cerrar el ejercicio enlazándolo con lo que ha aprendido hasta ahora y cómo este ejemplo se relaciona con los temas vistos en la clase.
+Actividad
+El objetivo es crear una agenda multidimensional para almacenar información de amigos. Sigue los pasos descritos en el enunciado paso a paso para completar el ejercicio. Asegúrate de seguir las restricciones establecidas y usar solo las estructuras de datos vistas hasta ahora.
+
+Una vez que hayas terminado, ejecuta tu código y verifica que se imprima la agenda correctamente.
+
+
+Respuesta:
+
+En este ejercicio voy a practicar el uso de listas multidimensionales. La idea es crear una agenda sencilla para guardar informacion de amigos, como el nombre, el apellido y el correo electronico, usando solo listas.
+
+```
+agenda = []
+
+agenda.append(["Jose Vicente", "Carratala", "info@jocarsa.com"])
+agenda.append(["Serena", "Sania", "serena@gemail.com"])
+agenda.append(["Hector", "Lopez", "hector@gemail.com"])
+
+print(agenda)
+```
+
+Salida del código:
+
+[Running] python -u "c:\Users\Serena\Desktop\agenda.py"
+[['Jose Vicente', 'Carratala', 'info@jocarsa.com'], ['Serena', 'Sania', 'serena@gemail.com'], ['Hector', 'Lopez', 'hector@gemail.com']]
+
+La agenda se convierte en una matriz multidimensional, donde cada fila representa a un amigo y cada columna contiene uno de sus datos (nombre, apellido y correo).
+Al ejecutar el código, se imprime toda la agenda organizada, lo que permite visualizar claramente cómo se estructura la información.
+
+Basicamente, he aprendido a organizar varios datos dentro de una misma estructura usando listas dentro de listas. Esto me ayuda a entender mejor como guardar y manejar informacion relacionada en programacion.

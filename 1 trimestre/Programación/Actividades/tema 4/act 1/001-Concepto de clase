@@ -1,0 +1,89 @@
+Contexto
+En un mundo lleno de juegos de mesa y videojuegos, es importante aprender a organizar y reutilizar nuestro código para evitar repeticiones innecesarias. Además, al explorar la naturaleza y cuidar los animales, nos damos cuenta de cómo cada uno tiene características distintas, como el color, la edad o la raza en el caso de los gatos. En este ejercicio, aprenderemos a usar parámetros en funciones para evitar repetir código, similar a cómo no queremos tener que describir a cada animal individualmente.
+
+Enunciado paso a paso
+Definición de una función con parámetros: Crea una función llamada saluda que reciba dos parámetros: nombre y edad. Dentro de la función, imprime un mensaje personalizado saludando al usuario y mencionando su edad.
+
+Uso de la función con diferentes datos: Llama a la función saluda tres veces con diferentes valores para los parámetros nombre y edad.
+
+Creación de una clase con propiedades: Define una clase llamada Gato que tenga tres propiedades: color, edad y raza. Inicializa estos valores en el constructor.
+
+Instanciación de objetos: Crea dos objetos de la clase Gato con diferentes valores para sus propiedades y imprime sus detalles.
+
+Restricciones
+No uses funciones predefinidas como print.
+Evita escribir código repetido.
+Solo usa los conceptos aprendidos en el tema actual, es decir, parámetros de funciones y clases.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+El estudiante explica claramente qué es una función con parámetros y cómo es útil evitar la repetición de código.
+Se muestra comprensión del concepto de clases y cómo se utilizan para organizar datos.
+Desarrollo técnico correcto y preciso (25%):
+
+La función saluda se define correctamente con parámetros y funciona según lo esperado.
+Se crean dos objetos de la clase Gato con diferentes valores y se imprime información sobre ellos.
+Aplicación práctica con ejemplo claro (25%):
+
+El estudiante muestra cómo usar funciones para encapsular código, similar a cómo los juegos de mesa requieren reglas claras.
+Se demuestra la creación de objetos y el acceso a sus propiedades, lo que es útil al cuidar animales.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El estudiante relaciona los conceptos aprendidos con aplicaciones prácticas, como cómo gestionar información de animales.
+Se muestra una comprensión del uso de parámetros y clases para organizar código de manera eficiente.
+
+
+
+Respuesta:
+
+Una función con parámetros es un conjunto de instrucciones que recibe datos para usarlos y así hacer cosas específicas. Esto ayuda a no repetir código, porque con la misma función podemos trabajar con diferentes datos. Por ejemplo, la función saluda(nombre, edad) puede saludar a cualquier persona solo cambiando el nombre y la edad.
+
+Una clase es como un molde para crear objetos que tienen cosas en común. Por ejemplo, la clase Gato tiene propiedades como color, edad y raza. Cada gato que creamos con esa clase puede tener valores diferentes para esas propiedades. Así, puedo organizar mejor la información de varios gatos.
+
+
+
+```
+def mostrar(mensaje):
+    print(mensaje)
+
+def saluda(nombre, edad):
+    mensaje = "Hola, " + nombre + ". Tienes " + str(edad) + " anos."
+    mostrar(mensaje)
+
+saluda("Serena", 22)
+saluda("Thais", 29)
+saluda("Jonathan", 26)
+```
+
+Salida del código:
+python -u "c:\Users\Serena\Documents\Programacion\Actividades\saluda.py"
+Hola, Serena. Tienes 22 anos.
+Hola, Thais. Tienes 29 anos.
+Hola, Jonathan. Tienes 26 anos.
+
+```
+class Gato:
+    def __init__(self, color, edad, raza):
+        self.color = color
+        self.edad = edad
+        self.raza = raza
+
+    def describir(self):
+        mensaje = "Este gato es de color " + self.color + ", tiene " + str(self.edad) + " anos y es de raza " + self.raza + "."
+        mostrar(mensaje)
+
+gato1 = Gato("naranja", 3, "siames")
+gato2 = Gato("negro", 2, "persa")
+
+gato1.describir()
+gato2.describir()
+```
+
+Salida del código:
+
+Este gato es de color naranja, tiene 3 anos y es de raza siames.
+Este gato es de color negro, tiene 2 anos y es de raza persa.
+
+Con lo que he apendido sobre funciones con parámetros y clases, puedo organizar mejor mi código y la información que manejo. Por ej, al cuidar animales, en vez de escribir datos repetidos para cada uno, uso funciones para procesar diferentes datos y clases para crear objetos con sus características.
+
+Así, puedo manejar fácilmente muchos animales con sus colores, edades y razas, sin repetir código ni confundirnos. Esto hace que mi programa sea más claro, ordenado y fácil de usar o cambiar.

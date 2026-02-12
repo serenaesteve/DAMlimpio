@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plantas>
+  <planta>
+    <nombre>margarita</nombre>
+    <especie>Bellis perennis</especie>
+      <medida>20</medida>
+  </planta>
+  <planta>
+    <nombre>Manzano</nombre>
+    <especie>Malus pumila</especie>
+    <medida>3</medida>
+  </planta>
+  <planta>
+    <nombre>Girasol</nombre>
+    <especie>Helianthus annuus</especie>
+    <medida>50</medida>
+  </planta>
+  <planta>
+    <nombre>Lavanda</nombre>
+    <especie>Lavandula angustifolia</especie>
+    <medida>1</medida>
+  </planta>
+</plantas>

@@ -1,0 +1,87 @@
+Título
+Funciones básicas de un sistema operativo
+
+Contexto
+En el mundo digital actual, la comprensión de los sistemas operativos es fundamental para cualquier profesional del campo informático. Un sistema operativo es un software que controla todos los recursos disponibles en una computadora, proporcionando servicios a otros programas y aplicaciones. Sus funciones son esenciales para la eficiencia y el funcionamiento correcto del equipo.
+
+En nuestro campo de estudio, hemos visto cómo un sistema operativo gestiona el hardware del ordenador, interpreta las entradas humanas como teclado y ratón, y ofrece salidas al usuario a través de la pantalla y los altavoces. Además, aprendimos que estos sistemas también administran procesos y programas, así como el sistema de archivos donde se guardan tanto programas como documentos.
+
+Para practicar estas funciones básicas, vamos a realizar un ejercicio interactivo utilizando juegos de mesa en nuestro campo. Imaginemos que estamos instalando un nuevo sistema operativo en un ordenador de juego y necesitamos configurar varios aspectos del mismo.
+
+Enunciado paso a paso
+Gestión del hardware: Configura la velocidad de los motores del ordenador para optimizar el rendimiento.
+Interpretación de entradas humanas: Simula un jugador interactuando con un juego de mesa en tu campo, como lanzar dados o mover fichas.
+Ofrecer salidas al ser humano: Muestra los resultados del juego al jugador, como cuántos puntos ha obtenido.
+Administración de procesos y programas: Simula el inicio y finalización de diferentes juegos de mesa en tu campo.
+Restricciones
+No usar funciones externas ni estructuras no vistas en la asignatura actual.
+Mantén el contexto dentro del tema de instalación y configuración de sistemas operativos.
+Criterios de evaluación
+Introducción y contextualización (25%): El alumno debe explicar brevemente cómo un sistema operativo gestiona los recursos del hardware, interpreta las entradas humanas y ofrece salidas al usuario.
+Desarrollo técnico correcto y preciso (25%): El alumno debe implementar correctamente las funciones de gestión del hardware, interpretación de entradas humanas, ofrecer salidas al usuario y administración de procesos y programas.
+Aplicación práctica con ejemplo claro (25%): El alumno debe proporcionar un ejemplo práctico de cómo configurar el sistema operativo utilizando juegos de mesa en su campo.
+Cierre/Conclusión enlazando con la unidad (25%): El alumno debe cerrar su ejercicio explicando cómo estas funciones básicas son esenciales para el funcionamiento del sistema operativo y cómo pueden ser aplicadas en situaciones reales.
+Para completar este ejercicio, el alumnado debe:
+
+Gestión del hardware: Configurar la velocidad de los motores del ordenador para optimizar el rendimiento.
+Interpretación de entradas humanas: Simular un jugador interactuando con un juego de mesa en su campo, como lanzar dados o mover fichas.
+Ofrecer salidas al ser humano: Muestra los resultados del juego al jugador, como cuántos puntos ha obtenido.
+Administración de procesos y programas: Simula el inicio y finalización de diferentes juegos de mesa en su campo.
+Recuerda que estos ejercicios son prácticos para entender mejor cómo funcionan los sistemas operativos. ¡Buena suerte!
+
+
+Respuesta:
+
+Un sistema operativo es un programa muy importante que hace que la computadora funcione bien.
+Es como el “jefe” que organiza todo lo que pasa dentro del ordenador.
+
+***El sistema operativo se encarga de:***
+-Controlar las partes físicas del ordenador (como el teclado, pantalla o ventilador).
+-Entender lo que el usuario quiere hacer (por ejemplo, mover el ratón o presionar una tecla).
+-Mostrar resultados al usuario (como mensajes o puntos en pantalla).
+-Iniciar y cerrar los programas (como juegos o aplicaciones).
+
+En este ejercicio, voya usar juegos de mesa para entender mejor cómo trabaja un sistema operativo.
+
+***En este ej, voy a simular que el sistema ajusta la velocidad del motor del ordenador:***
+-Si jugamos un juego rápido (como "UNO"), el motor va rápido.
+-Si jugamos un juego lento (como "Ajedrez"), el motor va más lento.
+Esto ayuda a que el ordenador no gaste más energía de la necesaria.
+
+1. El sistema operativo entiende lo que el usuario hace.
+Por ejemplo, si muevo una ficha en un juego, el sistema lo “lee”.
+ ***Ej:***
+-Tú lanzas un dado y sale un 6.
+-El sistema sabe que tienes que mover 6 casillas.
+-Eso es como cuando presionas una tecla y el sistema entiende qué quieres hacer.
+
+
+2. Después de hacer algo, el sistema debe mostrar el resultado.
+***Ej:***
+-Si gano 10 puntos, el sistema muestra en una tarjeta:
+“¡Ganaste 10 puntos!”
+Esto es como cuando el PC te enseña un mensaje o el resultado de una acción.
+
+3. El sistema operativo abre y cierra programas.
+-Primero jugamos a "La Oca" (el sistema lo abre).
+-Cuando se termina, lo cerramos.
+-Luego jugamos al "Dominó" (el sistema abre ese juego).
+Esto es igual que cuando cierras un juego en el PC y abres otro.
+
+***Ejemplo completo y práctico***
+Imaginamos que estamos instalando un sistema operativo en un “ordenador de juegos de mesa”.
+-Configuramos el motor: según el juego, ponemos el ventilador en velocidad alta o baja.
+-El jugador lanza un dado: el sistema interpreta esa acción.
+-El sistema muestra el resultado: “Has avanzado 5 casillas”.
+Terminamos un juego y abrimos otro: el sistema cierra un juego y abre uno nuevo.
+
+
+Gracias a este ejercicio con juegos de mesa, ahora entiendo mejor qué hace un sistema operativo:
+-Controla el hardware
+-Entiende lo que el usuario hace
+-Muestra resultados
+-Abre y cierra programas
+
+Estas funciones son muy importantes para que el ordenador funcione bien.
+Todo lo que hacemos en un PC (jugar, escribir, ver videos) es posible gracias al sistema operativo.
+

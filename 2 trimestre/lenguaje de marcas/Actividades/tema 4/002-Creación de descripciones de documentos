@@ -1,0 +1,225 @@
+Validación de documentos XML con esquemas
+
+En este ejercicio, aprenderás a validar documentos XML utilizando esquemas definidos en archivos XSD (XML Schema Definition). Esta práctica te permitirá asegurarte de que los datos estén bien estructurados y sigan las reglas predefinidas.
+
+Enunciado paso a paso
+Descarga los archivos necesarios:
+
+002-plantilla.xsd (el esquema)
+001-documento.xml (un documento XML válido)
+004-documento no valido.xml (un documento XML con errores)
+Crea un nuevo archivo Python llamado validar_xml.py.
+
+Escribe el código para validar los documentos XML:
+
+import xmlschema
+
+esquema = xmlschema.XMLSchema("002-plantilla.xsd")
+
+try:
+    esquema.validate("001-documento.xml")
+    print("✔️ XML válido")
+except xmlschema.exceptions.XMLSchemaValidationError as e:
+    print("❌ XML NO válido")
+    print(e)
+Ejecuta el script para validar 001-documento.xml. Deberías ver la salida "✔️ XML válido".
+
+Modifica 001-documento.xml en tu editor favorito, por ejemplo, cambiando <nombre>Jose Vicente</nombre> a <minombre>Jose Vicente</minombre>, lo que hará que el documento sea no válido.
+
+Ejecuta nuevamente el script para validar 001-documento.xml modificado. Deberías ver la salida "❌ XML NO válido" y un mensaje de error explicando el problema.
+
+Restricciones
+No uses librerías externas.
+Mantén el código dentro del archivo validar_xml.py.
+Criterios de evaluación
+Introducción y contextualización (25%):
+
+Explica qué es un esquema XML y su propósito.
+Desarrollo técnico correcto y preciso (25%):
+
+Escribe correctamente el código para cargar el esquema y validar los documentos XML.
+Maneja adecuadamente las excepciones de validación.
+Aplicación práctica con ejemplo claro (25%):
+
+Valida dos documentos XML distintos, uno válido y otro no válido.
+Muestra la salida del script para ambos casos.
+Cierre/Conclusión enlazando con la unidad (25%):
+
+Reflexiona sobre cómo esta práctica se relaciona con el tema de definición de esquemas y vocabularios en lenguajes de marcas.
+Explora posibles aplicaciones prácticas del uso de esquemas XML en proyectos de desarrollo web.
+
+
+Respuesta:
+
+n esta práctica he aprendido a comprobar si un archivo XML cumple las reglas de un esquema XSD. El esquema sirve para decir qué etiquetas tiene que tener el XML, en qué orden y qué tipo de datos debe haber. Validar el XML me ayuda a asegurar que la información está bien organizada y que otros programas puedan leerla sin problemas. Con Python he visto que es fácil detectar si el XML es correcto o tiene errores.
+
+documento.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <nombre>Jose Vicente</nombre>
+  <apellidos>Carratalá Sanchis</apellidos>
+  <profesion>Profesor de FP en desarrollo de software</profesion>
+
+  <roles>
+    <rol>Autor de libros técnicos (Python, SQL, etc.)</rol>
+    <rol>Creador de contenidos educativos en YouTube</rol>
+    <rol>Desarrollador de software y soluciones empresariales</rol>
+  </roles>
+
+  <proyectosDestacados>
+    <proyecto>Jocarsa (ecosistema de soluciones SaaS)</proyecto>
+    <proyecto>comoprogramar.es</proyecto>
+    <proyecto>Simulaciones 3D y gráficos en C++/CUDA</proyecto>
+    <proyecto>Modelos educativos fine-tuned con LLMs</proyecto>
+    <proyecto>Aplicaciones web en Flask, PHP, React y Next.js</proyecto>
+  </proyectosDestacados>
+
+  <interesesTecnicos>
+    <interes>Inteligencia Artificial y modelos LLM</interes>
+    <interes>Desarrollo web full stack</interes>
+    <interes>Gráficos 3D y simulaciones</interes>
+    <interes>Educación y automatización docente</interes>
+  </interesesTecnicos>
+
+  <ubicacion>Valencia (España)</ubicacion>
+</persona>
+```
+
+validador_xml.py:
+```
+import xmlschema
+
+esquema = xmlschema.XMLSchema("plantilla.xsd")
+
+try:
+    esquema.validate("documento.xml")
+    print("✔️ XML válido")
+except xmlschema.exceptions.XMLSchemaValidationError as e:
+    print("❌ XML NO válido")
+    print(e)
+```
+
+Salida de la consola:
+
+C:\Users\Serena\Documents\lenguaje de marcas\Actividades> python validar_xml.py
+✔️ XML válido
+
+C:\Users\Serena\Documents\lenguaje de marcas\Actividades>
+
+documento.xml:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+  <minombre>Jose Vicente</minombre>
+  <apellidos>Carratalá Sanchis</apellidos>
+  <profesion>Profesor de FP en desarrollo de software</profesion>
+
+  <roles>
+    <rol>Autor de libros técnicos (Python, SQL, etc.)</rol>
+    <rol>Creador de contenidos educativos en YouTube</rol>
+    <rol>Desarrollador de software y soluciones empresariales</rol>
+  </roles>
+
+  <proyectosDestacados>
+    <proyecto>Jocarsa (ecosistema de soluciones SaaS)</proyecto>
+    <proyecto>comoprogramar.es</proyecto>
+    <proyecto>Simulaciones 3D y gráficos en C++/CUDA</proyecto>
+    <proyecto>Modelos educativos fine-tuned con LLMs</proyecto>
+    <proyecto>Aplicaciones web en Flask, PHP, React y Next.js</proyecto>
+  </proyectosDestacados>
+
+  <interesesTecnicos>
+    <interes>Inteligencia Artificial y modelos LLM</interes>
+    <interes>Desarrollo web full stack</interes>
+    <interes>Gráficos 3D y simulaciones</interes>
+    <interes>Educación y automatización docente</interes>
+  </interesesTecnicos>
+
+  <ubicacion>Valencia (España)</ubicacion>
+</persona>
+```
+
+validador_xml.py:
+```
+import xmlschema
+
+esquema = xmlschema.XMLSchema("plantilla.xsd")
+
+try:
+    esquema.validate("documentonovalido.xml")
+    print("✔️ XML valido")
+except xmlschema.validators.exceptions.XMLSchemaValidationError as e:
+    print("❌ XML NO valido")
+    print(e)
+```
+
+Salida de consola:
+```
+C:\Users\Serena\Documents\lenguaje de marcas\Actividades> python validar_xml.py
+❌ XML NO valido
+failed validating <Element 'persona' at 0x000001BB984EE0C0> with XsdGroup(model='sequence', occurs=[1, 1]):
+
+Reason: Unexpected child with tag 'minombre' at position 1. Tag 'nombre' expected.
+
+Schema component:
+
+  <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" />
+      <xs:element name="apellidos" type="xs:string" />
+      <xs:element name="profesion" type="xs:string" />
+
+
+      <xs:element name="roles">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="rol" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+
+      <xs:element name="proyectosDestacados">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="proyecto" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+    ...
+    ...
+  </xs:complexType>
+
+Instance type: <class 'xml.etree.ElementTree.Element'>
+
+Instance:
+
+  <persona>
+    <minombre>Jose Vicente</minombre>
+    <apellidos>Carratalá Sanchis</apellidos>
+    <profesion>Profesor de FP en desarrollo de software</profesion>
+
+    <roles>
+      <rol>Autor de libros técnicos (Python, SQL, etc.)</rol>
+      <rol>Creador de contenidos educativos en YouTube</rol>
+      <rol>Desarrollador de software y soluciones empresariales</rol>
+    </roles>
+
+    <proyectosDestacados>
+      <proyecto>Jocarsa (ecosistema de soluciones SaaS)</proyecto>
+      <proyecto>comoprogramar.es</proyecto>
+      <proyecto>Simulaciones 3D y gráficos en C++/CUDA</proyecto>
+      <proyecto>Modelos educativos fine-tuned con LLMs</proyecto>
+      <proyecto>Aplicaciones web en Flask, PHP, React y Next.js</proyecto>
+    </proyectosDestacados>
+
+    <interesesTecnicos>
+    ...
+    ...
+  </persona>
+
+Path: /persona
+
+
+C:\Users\Serena\Documents\lenguaje de marcas\Actividades>
+```
+
+Al hacer la práctica he podido ver un XML correcto y otro con errores, y comprobar cómo Python me avisa cuando algo no coincide con el esquema. He aprendido que los esquemas son útiles para mantener los datos organizados y que esto se puede aplicar en proyectos web o en programas que intercambian información. La práctica me ha ayudado a entender mejor cómo funcionan los XML y los XSD.

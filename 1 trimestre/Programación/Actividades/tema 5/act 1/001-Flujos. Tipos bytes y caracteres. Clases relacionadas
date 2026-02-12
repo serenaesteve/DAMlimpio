@@ -1,0 +1,78 @@
+Ejercicio: Manipulación de Flujos y Archivos
+En este ejercicio, aprenderás a trabajar con flujos de caracteres y archivos en Python. Imagina que eres un aventurero en el campo, explorando nuevos lugares y descubriendo maravillosas criaturas. Cada lugar que visitas tiene su propio archivo, y tú necesitas leer y escribir información en ellos para recordar tus experiencias.
+
+Contexto
+A continuación, te presentamos un ejemplo de cómo abrir y leer un archivo de texto usando Python:
+
+archivo = open("clientes.txt", 'r')
+linea = archivo.readline()
+print(linea)
+archivo.close()
+Este código abre el archivo clientes.txt en modo lectura ('r') y lee la primera línea del archivo, imprimiéndola en pantalla. Luego cierra el archivo.
+
+Enunciado paso a paso
+Abrir un archivo de texto para escritura: Crea un nuevo archivo llamado exploraciones.txt donde podrás escribir tus descubrimientos en el campo.
+
+Escribir información en el archivo: Escribe lo siguiente en el archivo:
+
+Explorando la selva tropical
+Encontré una especie de ave que no conocía
+Leer y mostrar contenido del archivo: Abre el archivo exploraciones.txt para lectura y muestra su contenido en pantalla.
+
+Restricciones
+No uses librerías externas ni estructuras no vistas.
+Asegúrate de cerrar correctamente los archivos después de leer o escribir.
+Criterios de evaluación
+Introducción y contextualización (25%)
+
+El ejercicio debe presentar un contexto claro relacionado con la naturaleza, como explorar nuevos lugares en el campo.
+Desarrollo técnico correcto y preciso (25%)
+
+El código debe usar correctamente los métodos open, write y readline para abrir, escribir y leer archivos.
+Aplicación práctica con ejemplo claro (25%)
+
+El ejercicio debe incluir un ejemplo práctico de cómo abrir y manipular archivos en Python.
+Cierre/Conclusión enlazando con la unidad (25%)
+
+El ejercicio debe cerrar con una conclusión que relacione el concepto aprendido con la exploración en el campo.
+
+
+
+
+
+Respuesta:
+
+
+
+
+Soy una exploradora de la naturaleza que recorre diferentes lugares del campo en busca de nuevas especies y paisajes bonitos.
+Cada día descubro ríos, montañas y animales que llaman mi atención.
+
+Para no olvidar mis aventuras, he decidido crear un registro digital donde anotaré mis descubrimientos.
+Usaré archivos de texto en Python para escribir y leer la información, como si fuera tu propio diario de exploraciones.
+
+
+```
+archivo = open("exploraciones.txt", 'w')
+
+
+archivo.write("Explorando la selva tropical\n")
+archivo.write("Encontre una especie de ave que no conocia\n")
+
+archivo.close()
+
+
+archivo = open("exploraciones.txt", 'r')
+
+
+contenido = archivo.read()
+print("Contenido del registro de exploraciones:\n")
+print(contenido)
+
+
+archivo.close()
+```
+
+Con este ejercicio he aprendido a crear, escribir y leer archivos en Python.
+Así como un explorador anota sus descubrimientos en una libreta, un programador usa archivos de texto para guardar información importante y consultarla después.
+Este conocimiento me permitirá registrar datos, resultados o cualquier información que desee conservar.

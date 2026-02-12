@@ -1,0 +1,45 @@
+Actividad: Fragmentación en Bases de Datos Centralizadas
+Contexto: Imagina que eres un jardínero experimentado que tiene una gran variedad de plantas en su huerto. Cada planta tiene sus propias necesidades, como el tipo de riego, el sol necesario y la fertilización. Si intentaras almacenar toda esta información en un solo cuaderno, pronto te verías atascado debido a las limitaciones del mismo.
+
+Enunciado paso a paso:
+
+Definición: Define qué es la fragmentación en el contexto de una base de datos centralizada.
+Ejemplo práctico: Considera que tienes un huerto con 50 diferentes plantas y cada planta necesita información específica para su cuidado. ¿Cómo podrías organizar esta información usando la fragmentación?
+Aplicación: Imagina que necesitas buscar rápidamente los datos de una planta específica. ¿Cuáles serían las ventajas y desventajas de almacenar toda la información en un solo lugar versus distribuirla?
+Restricciones:
+
+No uses palabras o conceptos que no hayan sido explicados en clase.
+Evita usar términos técnicos complejos.
+Criterios de evaluación:
+
+Introducción y contextualización (25%): El estudiante debe entender la diferencia entre almacenar toda la información en un solo lugar y distribuirla, usando el ejemplo del huerto.
+Desarrollo técnico correcto y preciso (25%): El estudiante debe poder definir claramente qué es la fragmentación y cómo se aplica en este contexto.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe ser capaz de organizar los datos del huerto usando la fragmentación y explicar las ventajas y desventajas de cada método.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe relacionar su respuesta con el concepto de bases de datos centralizadas y cómo esta técnica puede ayudar a manejar grandes volúmenes de información.
+
+
+Respuesta:
+
+Si se guarda todo en el mismo lugar a la hora de tu ponerte a buscar va a ser una locura, sin embargo si tu pones cada planta en su sección (como el tipo de riego, las horas de sol y la fertilización) a la hora de buscar/hacer alguna consulta, se te hara super sencillo por que lo tendras todo ordenado.
+
+La fragmentación es una técnica utilizada en bases de datos distribuidas para mejorar el rendimiento y la eficiencia. Consiste en dividir los datos en partes más pequeñas que se almacenan en diferentes servidores o nodos. 
+En este contexto se aplica en la division por seccion de cada planta por tipo de riego, las horas de sol y la fertilización.
+
+Si uso fragmentación, puedo organizar tu información así:
+
+***Fragmento por horas de sol:***
+Fragmento 1: Plantas que necesitan mucho sol
+Fragmento 2: Plantas que necesitan poca luz
+
+***Fragmento por tipo de riego:***
+Fragmento 3: Plantas que se riegan todos los días
+Fragmento 4: Plantas que se riegan cada semana
+
+La unica ventaja que le puedo ver a buscar la planta que esta todo en el mismo lugar es que se que esta ahi y al final la encontrare, sin embargo deventajas veo muchas , como desorden, tardar mucho en encontrarla , tener que tardar mas en ver los cuidados que necesita. Sin enbargo si distribuimos las plantas tiene multiples ventajas como el orden , la claridad , la rapidez de busqueda. Y la uica desventaja que le puedo ver es que igualno recordar donde has puesto tal sección.
+
+Una base de datos centralizada guarda toda la información en un solo sitio.
+Cuando hay mucha información, puede volverse lenta y difícil de usar.
+
+La fragmentación ayuda a dividir los datos en partes más pequeñas, dentro de esa misma base, para que sea más fácil buscar, organizar y mantener la información.
+
+Aunque sigue siendo una base de datos, esta técnica hace que trabajar con grandes cantidades de datos sea más rápido y ordenado.

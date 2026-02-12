@@ -1,0 +1,166 @@
+Envío de correo electrónico con HTML
+El objetivo de este ejercicio es aprender a enviar un correo electrónico con contenido HTML utilizando Python. Para ello, necesitarás configurar los datos del servidor SMTP y utilizar una plantilla HTML para el cuerpo del mensaje.
+
+Contexto
+La naturaleza del campo se refleja en la idea de que a menudo necesitamos comunicarnos con diferentes partes interesadas, como clientes o compañeros de trabajo. En este caso, vamos a enviar un correo electrónico con detalles sobre las capacidades de nuestro centro educativo. Esta práctica es similar a cómo los profesionales del campo utilizan herramientas de comunicación para mantenerse en contacto y compartir información.
+
+Enunciado paso a paso
+Carga de configuración: Utiliza el archivo config2.json para cargar los datos necesarios para enviar el correo electrónico, como el servidor SMTP, el puerto, el usuario y la contraseña.
+
+config = load_config("config2.json")
+smtp_host = config["smtp"]["host"]
+smtp_port = config["smtp"]["port"]
+smtp_user = config["smtp"]["user"]
+smtp_password = config["smtp"]["password"]
+Configuración del correo electrónico: Define los detalles del correo electrónico, incluyendo el remitente, destinatarios, asunto y cuerpo HTML.
+
+email_from = config["email"]["from"]
+email_to = config["email"]["to"]
+email_subject = config["email"]["subject"]
+html_template_path = config["email"]["html_template"]
+Carga de la plantilla HTML: Lee el contenido de la plantilla HTML desde el archivo template.html.
+
+with open(html_template_path, "r", encoding="utf-8") as f:
+    html_content = f.read()
+Envío del correo electrónico: Utiliza la biblioteca smtplib para enviar el correo electrónico con el contenido HTML.
+
+message = EmailMessage()
+message.set_content(html_content, subtype="html")
+message["From"] = email_from
+message["To"] = ", ".join(email_to)
+message["Subject"] = email_subject
+
+context = ssl.create_default_context()
+with smtplib.SMTP(smtp_host, smtp_port, context=context) as server:
+    server.login(smtp_user, smtp_password)
+    server.sendmail(email_from, email_to, message.as_string())
+Restricciones
+No uses librerías externas adicionales.
+Solo utiliza los conceptos y herramientas vistos en clase.
+Criterios de evaluación
+Introducción y contextualización (25%): Explica el contexto del ejercicio y cómo se relaciona con la vida real.
+Desarrollo técnico correcto y preciso (25%): Comprueba que el código esté bien estructurado y funcione correctamente.
+Aplicación práctica con ejemplo claro (25%): Asegúrate de que el alumno entienda cómo aplicar los conceptos aprendidos a un escenario real.
+Cierre/Conclusión enlazando con la unidad (25%): Reflexiona sobre cómo esta práctica se relaciona con los temas vistos en clase y cómo puede ser útil en el campo profesional.
+
+
+Respuesta:
+
+En mi vida diaria uso mucho el correo electrónico para comunicarme con otras personas. En el trabajo es importante enviar información rápida y clara.
+
+En este ejercicio aprendo a enviar un correo con Python usando HTML, que es un formato que hace que el correo se vea más ordenado y atractivo. Esto me ayuda a practicar algo que en la vida real usan los centros educativos y las empresas para enviar información a varias personas de forma automática.
+
+config2.json:
+```
+{
+  "smtp": {
+    "host": "smtp.ionos.es",
+    "port": 587,
+    "user": "serena@jocarsa.com",
+    "password": "TAME123$"
+  },
+  "email": {
+    "from": "serena@jocarsa.com",
+    "to": ["serena@jocarsa.com"],
+    "subject": "Información de nuestro centro educativo",
+    "html_template": "template.html"
+  }
+}
+```
+
+template.html:
+```
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Centro Educativo</title>
+</head>
+<body>
+    <h1>Bienvenidos a nuestro centro educativo</h1>
+
+    <p>
+        En nuestro centro ofrecemos formación de calidad orientada al mundo profesional,
+        combinando teoría y práctica.
+    </p>
+
+    <h3>Nuestras principales ventajas:</h3>
+    <ul>
+        <li>Instalaciones modernas</li>
+        <li>Profesorado cualificado</li>
+        <li>Formación práctica</li>
+    </ul>
+
+    <p>
+        Para más información, no dudes en ponerte en contacto con nosotros.
+    </p>
+
+    <p>
+        Atentamente,<br>
+        <strong>Equipo del Centro Educativo</strong>
+    </p>
+</body>
+</html>
+```
+
+enviar_correo.py:
+```
+import json
+import smtplib
+import ssl
+from email.message import EmailMessage
+
+
+def load_config(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+config = load_config("config2.json")
+
+smtp_host = config["smtp"]["host"]
+smtp_port = config["smtp"]["port"]
+smtp_user = config["smtp"]["user"]
+smtp_password = config["smtp"]["password"]
+
+email_from = config["email"]["from"]
+email_to = config["email"]["to"]
+email_subject = config["email"]["subject"]
+html_template_path = config["email"]["html_template"]
+
+
+with open(html_template_path, "r", encoding="utf-8") as f:
+    html_content = f.read()
+
+
+message = EmailMessage()
+message.set_content(html_content, subtype="html")
+message["From"] = email_from
+message["To"] = ", ".join(email_to)
+message["Subject"] = email_subject
+
+
+context = ssl.create_default_context()
+with smtplib.SMTP(smtp_host, smtp_port) as server:
+    server.starttls(context=context)
+    server.login(smtp_user, smtp_password)
+    server.sendmail(email_from, email_to, message.as_string())
+
+print("Correo enviado correctamente ✅")
+```
+
+Consola:
+
+Microsoft Windows [Versión 10.0.26100.7462]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\Serena> cd "C:\Users\Serena\Documents\Sistemas\Actividades\proyectoemail"
+
+C:\Users\Serena\Documents\Sistemas\Actividades\proyectoemail> python enviar_email.py
+Correo enviado correctamente ✅
+
+C:\Users\Serena\Documents\Sistemas\Actividades\proyectoemail>
+
+Con este ejercicio aprendo a enviar correos electrónicos con HTML usando Python. También aprendo a leer archivos de configuración y a conectarme a un servidor SMTP para enviar los mensajes de manera segura.
+
+Esto me resulta útil porque en el trabajo a veces necesito enviar información a varias personas y automatizar el proceso. Con lo que aprendo puedo hacer correos más bonitos y enviarlos de forma más rápida y profesional.

@@ -1,0 +1,69 @@
+Actividad: Iteración y Condicionales en Juegos de Mesa
+Contexto Imagine que estás desarrollando un juego de mesa digital llamado "Explorador del Campo". Este juego requiere iterar sobre diferentes elementos del campo, como árboles o rocas, y aplicar condiciones para determinar su estado. Para mejorar tu fluidez en el desarrollo de software, vamos a practicar los conceptos de iteración y condicionales usando un entorno de desarrollo como Visual Studio con Copilot.
+
+Enunciado paso a paso
+
+Iteración sobre elementos del campo:
+
+Crea una lista que contenga nombres de diferentes tipos de árboles en el campo.
+Utiliza un bucle for para recorrer esta lista y imprimir cada nombre de árbol.
+Condicionales para determinar la salud de los árboles:
+
+Añade una condición que verifique si el nombre del árbol contiene la palabra "rojo".
+Si el nombre contiene "rojo", imprime "Árbol rojo sano". De lo contrario, imprime "Árbol verde saludable".
+Restricciones
+
+No puedes usar estructuras de control condicional como if...else directamente.
+Solo puedes utilizar funciones y métodos disponibles en Python.
+Criterios de evaluación
+
+Introducción y contextualización (25%): El estudiante debe entender el contexto del juego "Explorador del Campo" y cómo se aplican los conceptos de iteración y condicionales.
+Desarrollo técnico correcto y preciso (25%): El código debe implementar correctamente las iteraciones y las condiciones utilizando estructuras apropiadas.
+Aplicación práctica con ejemplo claro (25%): El estudiante debe proporcionar un ejemplo claro de cómo el código funciona en diferentes situaciones.
+Cierre/Conclusión enlazando con la unidad (25%): El estudiante debe reflexionar sobre cómo estos conceptos se relacionan con los juegos de mesa y cómo pueden aplicarse en proyectos futuros.
+Ejemplos de datos
+
+Lista de árboles: ["rojo", "verde", "marrón", "rojo"]
+Instrucciones para el estudiante:
+
+Abre Visual Studio Code.
+Crea un nuevo archivo Python llamado explorador_campo.py.
+Copia y pega el código base proporcionado en el archivo.
+Completar los espacios en blanco según las instrucciones del enunciado.
+Ejecuta el programa para ver los resultados.
+Refleja tus observaciones sobre cómo los conceptos de iteración y condicionales se aplican en este contexto.
+Nota: Recuerda que la IA de Copilot está aquí para ayudarte, pero no debes dejar que haga todo el trabajo por ti. Intenta entender cada paso y aprender de las soluciones propuestas.
+
+
+Respuesta:
+
+
+En el juego "Explorador del Campo" usamos un bucle para revisar cada árbol y una condición para ver si es rojo o verde. Así sabemos qué mensaje enseñar para cada árbol.
+
+```
+arboles = ["rojo", "verde", "marrón", "rojo"]
+
+estados = {
+    False: "Árbol verde saludable",
+    True:  "Árbol rojo sano"
+}
+
+for arbol in arboles:
+    print(f"Árbol: {arbol}")
+    
+    estado = estados['rojo' in arbol.lower()]
+    print(estado)
+```
+
+Resultado del código:
+Árbol: rojo
+Árbol rojo sano
+Árbol: verde
+Árbol verde saludable
+Árbol: marrón
+Árbol verde saludable
+Árbol: rojo
+Árbol rojo sano
+PS C:\Users\Serena\Documents\Entornos\Actividades\ProyectoExcursiones.py>   
+
+Esto se parece a los juegos de mesa porque miramos cada pieza y decidimos qué hacer con ella. Aprender a usar repeticiones y decisiones nos ayuda a crear programas que actúan solos según las reglas, como juegos o actividades en el PC.

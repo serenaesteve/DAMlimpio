@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Mi Tienda</h1>
+
+    <div id="categories">
+        <button onclick="filterCategory('')">Todos</button>
+        <button onclick="filterCategory('Electrónica')">Electrónica</button>
+        <button onclick="filterCategory('Ropa')">Ropa</button>
+    </div>
+
+    <div id="products"></div>
+
+    <div id="cart">
+        <h2>Carrito</h2>
+        <ul id="cartItems"></ul>
+        <p>Total: $<span id="total">0</span></p>
+        <form id="userForm">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="direccion" placeholder="Dirección" required>
+            <input type="email" id="correo" placeholder="Correo" required>
+            <button type="submit">Pagar</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
