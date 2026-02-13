@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animales>
+
+  <animal>
+    <slug>luna</slug>
+    <nombre>Luna</nombre>
+    <especie>Perro</especie>
+    <edad>2 años</edad>
+    <sexo>Hembra</sexo>
+    <descripcion>Perrita tranquila y sociable</descripcion>
+    <foto>img/luna.jpg</foto>
+    <color>lightpink</color>
+    <estado>En adopción</estado>
+  </animal>
+
+  <animal>
+    <slug>toby</slug>
+    <nombre>Toby</nombre>
+    <especie>Gato</especie>
+    <edad>1 año</edad>
+    <sexo>Macho</sexo>
+    <descripcion>Gato joven, curioso y juguetón</descripcion>
+    <foto>img/toby.jpg</foto>
+    <color>lightgrey</color>
+    <estado>Reservado</estado>
+  </animal>
+
+  <animal>
+    <slug>nala</slug>
+    <nombre>Nala</nombre>
+    <especie>Gato</especie>
+    <edad>3 años</edad>
+    <sexo>Hembra</sexo>
+    <descripcion>Cariñosa, ideal para familia</descripcion>
+    <foto>img/nala.jpg</foto>
+    <color>beige</color>
+    <estado>Adoptado</estado>
+  </animal>
+
+</animales>
+

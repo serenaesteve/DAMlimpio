@@ -1,0 +1,365 @@
+En este trabajo se ha utilizado el código visto en clase como punto de partida para crear una pequeña aplicación web. El ejercicio original servía para aprender a usar PHP junto con un archivo XML y mostrar información en una página web de forma dinámica.
+
+A partir de ese ejemplo, se ha desarrollado una versión mejorada y adaptada a un caso práctico diferente, en este caso una página de animales en adopción. El objetivo ha sido aplicar los conceptos aprendidos en clase y entender mejor cómo se pueden organizar los datos y mostrarlos en una web sencilla sin usar bases de datos ni frameworks.
+
+
+
+
+index.php:
+
+Muestra todos los animales que hay en la web.
+
+Lee el archivo animales.xml y enseña:
+-la foto
+-el nombre
+-una pequeña descripción
+
+Desde aquí se puede entrar a la ficha de cada animal.
+
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Animales en adopción</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    article {
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: opacity .3s;
+    }
+
+    article.no-disponible { opacity: 0.6; }
+
+    article img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 0 auto;
+      background: rgba(0,0,0,.08);
+    }
+
+    article strong { font-size: 24px; }
+
+    article em {
+      font-size: 14px;
+      opacity: .9;
+    }
+
+    .estado {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(0,0,0,.15);
+      display: inline-block;
+      margin: 5px auto;
+    }
+
+    article a {
+      margin-top: 15px;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+    }
+
+    article a.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    @media (min-width: 600px) {
+      article { width: calc(50% - 20px); }
+    }
+
+    @media (min-width: 900px) {
+      article { width: calc(33.333% - 20px); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Animales en adopción</h1>
+</header>
+
+<main>
+<?php
+// (Opcional) Para ver errores mientras desarrollas:
+// error_reporting(E_ALL); ini_set('display_errors', 1);
+
+$xml = simplexml_load_file("animales.xml");
+if ($xml === false) {
+  echo "<p>No se pudo cargar animales.xml</p>";
+  exit;
+}
+
+// Clasificamos sin usort (más robusto con SimpleXML)
+$grupos = [
+  "En adopción" => [],
+  "Reservado"  => [],
+  "Adoptado"   => [],
+  "Otros"      => [],
+];
+
+foreach ($xml->animal as $animal) {
+  $estadoRaw = trim((string)$animal->estado);
+
+  if (isset($grupos[$estadoRaw])) {
+    $grupos[$estadoRaw][] = $animal;
+  } else {
+    $grupos["Otros"][] = $animal;
+  }
+}
+
+$ordenSalida = ["En adopción", "Reservado", "Adoptado", "Otros"];
+
+foreach ($ordenSalida as $estadoGrupo) {
+  foreach ($grupos[$estadoGrupo] as $animal) {
+
+    $nombre = htmlspecialchars(trim((string)$animal->nombre));
+    $descripcion = htmlspecialchars(trim((string)$animal->descripcion));
+    $foto = htmlspecialchars(trim((string)$animal->foto));
+    $color = htmlspecialchars(trim((string)$animal->color));
+    $estado = htmlspecialchars(trim((string)$animal->estado));
+    $slug = urlencode(trim((string)$animal->slug));
+
+    $disponible = ($estado === "En adopción");
+    $clase = $disponible ? "" : "no-disponible";
+
+    echo "<article class='$clase' style='background:$color'>";
+    echo "<img src='$foto' alt='$nombre'>";
+    echo "<strong>$nombre</strong>";
+    echo "<em>$descripcion</em>";
+    echo "<span class='estado'>$estado</span>";
+
+    if ($disponible) {
+      echo "<a href='ficha.php?animal=$slug'>Ver ficha</a>";
+    } else {
+      echo "<a class='disabled'>No disponible</a>";
+    }
+
+    echo "</article>";
+  }
+}
+?>
+</main>
+
+</body>
+</html>
+```
+
+
+animales.xml:
+
+Es el archivo donde están guardados los datos.
+
+Aquí se escribe:
+-la información de cada animal
+-su foto
+-su estado (si está en adopción o no)
+
+Funciona como una base de datos muy sencilla.
+
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<animales>
+
+  <animal>
+    <slug>luna</slug>
+    <nombre>Luna</nombre>
+    <especie>Perro</especie>
+    <edad>2 años</edad>
+    <sexo>Hembra</sexo>
+    <descripcion>Perrita tranquila y sociable</descripcion>
+    <foto>img/luna.jpg</foto>
+    <color>lightpink</color>
+    <estado>En adopción</estado>
+  </animal>
+
+  <animal>
+    <slug>toby</slug>
+    <nombre>Toby</nombre>
+    <especie>Gato</especie>
+    <edad>1 año</edad>
+    <sexo>Macho</sexo>
+    <descripcion>Gato joven, curioso y juguetón</descripcion>
+    <foto>img/toby.jpg</foto>
+    <color>lightgrey</color>
+    <estado>Reservado</estado>
+  </animal>
+
+  <animal>
+    <slug>nala</slug>
+    <nombre>Nala</nombre>
+    <especie>Gato</especie>
+    <edad>3 años</edad>
+    <sexo>Hembra</sexo>
+    <descripcion>Cariñosa, ideal para familia</descripcion>
+    <foto>img/nala.jpg</foto>
+    <color>beige</color>
+    <estado>Adoptado</estado>
+  </animal>
+
+</animales>
+```
+
+
+ficha.php:
+
+Es la página que muestra un solo animal.
+
+Cuando haces clic en uno:
+-este archivo busca ese animal en el XML
+-muestra toda su información
+-permite volver a la página principal
+
+
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ficha del animal</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: sans-serif;
+      background: #f5f5f5;
+    }
+
+    article {
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 20px;
+      background: white;
+      text-align: center;
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: rgba(0,0,0,.08);
+    }
+
+    h1 { margin-top: 20px; }
+
+    p { margin: 8px 0; }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #222;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<?php
+if (!isset($_GET["animal"])) {
+  echo "<p>Animal no especificado</p>";
+  exit;
+}
+
+$slug = trim($_GET["animal"]);
+$xml = simplexml_load_file("animales.xml");
+if ($xml === false) {
+  echo "<p>No se pudo cargar animales.xml</p>";
+  exit;
+}
+
+$encontrado = false;
+
+foreach ($xml->animal as $animal) {
+  if (trim((string)$animal->slug) === $slug) {
+
+    $nombre = htmlspecialchars(trim((string)$animal->nombre));
+    $descripcion = htmlspecialchars(trim((string)$animal->descripcion));
+    $foto = htmlspecialchars(trim((string)$animal->foto));
+    $estado = htmlspecialchars(trim((string)$animal->estado));
+    $especie = htmlspecialchars(trim((string)$animal->especie));
+    $edad = htmlspecialchars(trim((string)$animal->edad));
+    $sexo = htmlspecialchars(trim((string)$animal->sexo));
+
+    echo "<article>";
+    echo "<img src='$foto' alt='$nombre'>";
+    echo "<h1>$nombre</h1>";
+    echo "<p><strong>Especie:</strong> $especie</p>";
+    echo "<p><strong>Edad:</strong> $edad</p>";
+    echo "<p><strong>Sexo:</strong> $sexo</p>";
+    echo "<p>$descripcion</p>";
+    echo "<p><strong>Estado:</strong> $estado</p>";
+    echo "<a href='index.php'>← Volver</a>";
+    echo "</article>";
+
+    $encontrado = true;
+    break;
+  }
+}
+
+if (!$encontrado) {
+  echo "<p>Animal no encontrado</p>";
+}
+?>
+
+</body>
+</html>
+```
+
+En este trabajo he partido del código que hicimos en clase, donde usábamos HTML, CSS, PHP y un archivo XML para mostrar un catálogo de productos. Ese código servía para entender cómo leer datos desde un XML con PHP y mostrarlos en la página usando un foreach.
+
+Yo he mantenido la misma estructura, pero en vez de hacer un catálogo de productos lo he adaptado a una página de animales en adopción. Es decir, he usado la misma idea, pero cambiando el contenido y mejorándolo un poco.
+
+He modificado el archivo XML para añadir más información de cada animal, como la especie, la edad, el sexo y el estado (si está en adopción, reservado o adoptado). Así los datos están más completos y organizados.
+
+También he mejorado el PHP creando una segunda página para ver la ficha individual de cada animal. Para eso he usado un parámetro en la URL y he hecho que cada animal tenga un identificador. Además, he añadido pequeñas mejoras como comprobar que el XML se carga bien y usar htmlspecialchars() para evitar errores.
+
+Otra mejora es que los animales se muestran ordenados según su estado y que si no están en adopción el botón aparece desactivado. Esto hace que la página tenga un poco más de lógica y no solo muestre información sin más.
+
+En general, he usado lo que aprendimos en clase pero lo he aplicado a un ejemplo más real y completo, manteniendo la estructura original pero mejorándola poco a poco.
