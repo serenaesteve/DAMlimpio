@@ -1,0 +1,891 @@
+En este proyecto he desarrollado una aplicación web dinámica aplicando y ampliando los conocimientos adquiridos en clase. El objetivo principal ha sido crear una web funcional, organizada y fácil de mantener, incorporando un sistema de gestión de contenidos que permita actualizar la información sin necesidad de modificar el código.
+Durante el desarrollo he puesto en práctica conceptos de PHP, bases de datos MySQL, diseño web y buenas prácticas de programación, buscando un resultado más cercano a una aplicación real que a un ejercicio básico.
+
+
+Base de datos:
+
+La base de datos guarda las páginas y las entradas del blog. El contenido se almacena y se muestra dinámicamente en la web, evitando tener información fija en el código.
+
+
+serena@serena-portatil:/var/www/html/DAMlimpio/proyectosfinaldeunidad/proyecto/webpanel$ sudo mysql
+[sudo] contraseña para serena: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE IF NOT EXISTS jocarsapress
+    ->   CHARACTER SET utf8mb4
+    ->   COLLATE utf8mb4_unicode_ci;
+Query OK, 1 row affected, 1 warning (0,02 sec)
+
+mysql> CREATE USER 'jocarsapress'@'localhost'
+    -> IDENTIFIED BY 'jocarsapress';
+Query OK, 0 rows affected (0,05 sec)
+
+mysql> GRANT ALL PRIVILEGES ON jocarsapress.* TO 'jocarsapress'@'localhost';
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0,00 sec)
+
+mysql> exit;
+Bye
+serena@serena-portatil:/var/www/html/DAMlimpio/proyectosfinaldeunidad/proyecto/webpanel$ 
+
+ebpanel$ sudo mysql
+[sudo] contraseña para serena: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE jocarsapress;
+Database changed
+mysql> 
+mysql> CREATE TABLE IF NOT EXISTS paginas(
+    ->   Identificador INT AUTO_INCREMENT PRIMARY KEY,
+    ->   titulo VARCHAR(255) NOT NULL UNIQUE,
+    ->   contenido MEDIUMTEXT NOT NULL
+    -> ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+Query OK, 0 rows affected (0,02 sec)
+
+mysql> 
+mysql> CREATE TABLE IF NOT EXISTS entradas(
+    ->   Identificador INT AUTO_INCREMENT PRIMARY KEY,
+    ->   fecha DATE NOT NULL,
+    ->   titulo VARCHAR(255) NOT NULL,
+    ->   contenido MEDIUMTEXT NOT NULL,
+    ->   categorias VARCHAR(255) DEFAULT ''
+    -> ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> 
+mysql> INSERT INTO paginas (titulo, contenido)
+    -> VALUES
+    -> ('Sobre mí', '# Sobre mí\n\nHola, soy **Jose Vicente**.\n'),
+    -> ('Contacto', '# Contacto\n\nPuedes escribirme a [correo](mailto:ejemplo@ejemplo.com).\n')
+    -> ON DUPLICATE KEY UPDATE titulo=titulo;
+Query OK, 2 rows affected (0,02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+
+
+
+index.php:
+
+Es el archivo principal del proyecto. Se encarga de mostrar la parte pública de la web. Conecta con la base de datos, carga las páginas y las entradas del blog y las muestra dinámicamente según lo que el usuario seleccione. También transforma el contenido escrito en Markdown a HTML de forma segura.
+
+
+```
+<?php
+$c = new mysqli("localhost", "jocarsapress", "jocarsapress", "jocarsapress");
+if ($c->connect_error) { die("Error de conexión"); }
+$c->set_charset("utf8mb4");
+
+
+function md_inline($s){
+  $s = htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+  $s = preg_replace('/`([^`]+)`/', '<code>$1</code>', $s);
+  $s = preg_replace('/\*\*([^\*]+)\*\*/', '<strong>$1</strong>', $s);
+  $s = preg_replace('/\*([^\*]+)\*/', '<em>$1</em>', $s);
+
+  $s = preg_replace_callback('/\[(.*?)\]\((.*?)\)/', function($m){
+    $text = $m[1];
+    $url  = $m[2];
+    if (!preg_match('~^(https?://|mailto:)~i', $url)) return $text;
+    $url = htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return '<a href="'.$url.'" class="c-brand td-none">'.$text.'</a>';
+  }, $s);
+
+  return $s;
+}
+
+function markdown_to_html($md){
+  $md = str_replace(["\r\n","\r"], "\n", (string)$md);
+  $lines = explode("\n", $md);
+
+  $html = "";
+  $in_ul = false;
+  $in_ol = false;
+  $in_pre = false;
+  $pre_buf = [];
+
+  $flush_lists = function() use (&$html, &$in_ul, &$in_ol){
+    if ($in_ul) { $html .= "</ul>\n"; $in_ul = false; }
+    if ($in_ol) { $html .= "</ol>\n"; $in_ol = false; }
+  };
+
+  foreach($lines as $line){
+    if (preg_match('/^\s*```/', $line)) {
+      if (!$in_pre) {
+        $flush_lists();
+        $in_pre = true;
+        $pre_buf = [];
+      } else {
+        $code = htmlspecialchars(implode("\n", $pre_buf), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $html .= "<pre class=\"p-10 b-surface bradius-10\"><code>".$code."</code></pre>\n";
+        $in_pre = false;
+      }
+      continue;
+    }
+
+    if ($in_pre) { $pre_buf[] = $line; continue; }
+
+    if (trim($line) === "") { $flush_lists(); continue; }
+
+    if (preg_match('/^(#{1,6})\s+(.*)$/', $line, $m)) {
+      $flush_lists();
+      $lvl = strlen($m[1]);
+      $txt = md_inline(trim($m[2]));
+      $html .= "<h$lvl class=\"m-0\">$txt</h$lvl>\n";
+      continue;
+    }
+
+    if (preg_match('/^\s*[-\*]\s+(.*)$/', $line, $m)) {
+      if ($in_ol) { $html .= "</ol>\n"; $in_ol = false; }
+      if (!$in_ul) { $html .= "<ul class=\"m-0 p-0\" style=\"padding-left:18px;\">\n"; $in_ul = true; }
+      $html .= "<li>".md_inline(trim($m[1]))."</li>\n";
+      continue;
+    }
+
+    if (preg_match('/^\s*\d+\.\s+(.*)$/', $line, $m)) {
+      if ($in_ul) { $html .= "</ul>\n"; $in_ul = false; }
+      if (!$in_ol) { $html .= "<ol class=\"m-0 p-0\" style=\"padding-left:18px;\">\n"; $in_ol = true; }
+      $html .= "<li>".md_inline(trim($m[1]))."</li>\n";
+      continue;
+    }
+
+    if (preg_match('/^\s*>\s+(.*)$/', $line, $m)) {
+      $flush_lists();
+      $html .= "<blockquote class=\"p-10 b-white bradius-10\" style=\"border-left:4px solid var(--brand);\">".md_inline(trim($m[1]))."</blockquote>\n";
+      continue;
+    }
+
+    $flush_lists();
+    $html .= "<p class=\"m-0 lh-24\">".md_inline(trim($line))."</p>\n";
+  }
+
+  if ($in_pre) {
+    $code = htmlspecialchars(implode("\n", $pre_buf), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $html .= "<pre class=\"p-10 b-surface bradius-10\"><code>".$code."</code></pre>\n";
+  } else {
+    $flush_lists();
+  }
+
+  $allowed = '<p><br><h1><h2><h3><h4><h5><h6><ul><ol><li><strong><em><code><pre><a><blockquote>';
+  return strip_tags($html, $allowed);
+}
+
+function get_pagina_por_titulo(mysqli $c, string $titulo){
+  $stmt = $c->prepare("SELECT * FROM paginas WHERE titulo = ? LIMIT 1");
+  $stmt->bind_param("s", $titulo);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  return $res ? $res->fetch_assoc() : null;
+}
+
+function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
+
+$p = isset($_GET['p']) ? (string)$_GET['p'] : "";
+?>
+<!doctype html>
+<html lang="es" class="w-100pc h-100pc p-0 m-0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Jose Vicente Carratalá</title>
+
+  <link rel="stylesheet" href="JVestilo/JVestilo.php">
+  <link rel="stylesheet" href="JVestilo/escritorio.php">
+  <link rel="stylesheet" href="estilo/estilo.css">
+
+  <style>*{box-sizing:border-box}</style>
+</head>
+
+<body class="b-app flex fd-column fa-center p-20 ff-sans-serif">
+
+  <header class="w-900 card p-20 flex fd-column g-16 shadow-soft">
+    <div class="flex fd-column g-6">
+      <h1 class="p-0 m-0 fs-32">Jose Vicente Carratalá</h1>
+      <h2 class="p-0 m-0 fs-14 c-muted">Desarrollador, profesor y diseñador</h2>
+    </div>
+
+    <nav class="flex g-10 fa-center fw-wrap">
+      <a href="?" class="btn btn-ghost">Inicio</a>
+      <?php
+        $r = $c->query("SELECT titulo FROM paginas ORDER BY titulo ASC;");
+        while($f = $r->fetch_assoc()){
+      ?>
+        <a href="?p=<?= urlencode($f['titulo']) ?>" class="btn btn-ghost"><?= h($f['titulo']) ?></a>
+      <?php } ?>
+      <a href="?p=blog" class="btn btn-brand">Blog</a>
+    </nav>
+  </header>
+
+  <main class="w-900 card p-20 flex fd-column g-20 shadow-soft" style="margin-top:16px;">
+
+    <?php if(!isset($_GET['p'])){ ?>
+
+      <section id="heroe" class="b-brand-soft bradius-16 p-20 flex fd-column g-10">
+        <div class="badge">Color corporativo: teal</div>
+        <h2 class="m-0 fs-22">Bienvenido</h2>
+        <p class="m-0 c-muted ta-justify">
+          Esta portada renderiza contenidos en <strong>Markdown</strong> desde base de datos y los muestra como HTML de forma segura.
+        </p>
+      </section>
+
+      <section class="grid gc-1 d-gc-2 g-20">
+        <article class="ta-center h-180 flex fd-column fa-center fj-center b-surface bradius-16">
+          <h3 class="m-0">Páginas</h3>
+          <p class="m-0 c-muted">Contenido editable</p>
+        </article>
+        <article class="ta-center h-180 flex fd-column fa-center fj-center b-surface bradius-16">
+          <h3 class="m-0">Blog</h3>
+          <p class="m-0 c-muted">Entradas en Markdown</p>
+        </article>
+      </section>
+
+    <?php } else { ?>
+
+      <?php if($p === "blog"){ ?>
+
+        <h2 class="m-0 fs-20">Blog</h2>
+
+        <section class="grid gc-1 d-gc-3 g-20">
+          <?php
+            $r = $c->query("SELECT * FROM entradas ORDER BY fecha DESC;");
+            while($f = $r->fetch_assoc()){
+          ?>
+            <article class="b-surface p-16 bradius-16 flex fd-column g-10">
+              <h3 class="m-0 fs-16"><?= h($f['titulo']) ?></h3>
+              <time class="fs-10 c-muted"><?= h($f['fecha']) ?></time>
+              <div class="markdown ta-justify"><?= markdown_to_html($f['contenido']) ?></div>
+            </article>
+          <?php } ?>
+        </section>
+
+      <?php } else {
+
+        $pagina = get_pagina_por_titulo($c, $p);
+
+        if(!$pagina){ ?>
+          <section class="b-surface p-16 bradius-16">
+            <h3 class="m-0">Página no encontrada</h3>
+            <p class="m-0 c-muted">La página solicitada no existe.</p>
+          </section>
+        <?php } else { ?>
+
+          <article class="flex fd-column g-12">
+            <h2 class="m-0 fs-22"><?= h($pagina['titulo']) ?></h2>
+            <div class="markdown ta-justify"><?= markdown_to_html($pagina['contenido'] ?? "") ?></div>
+          </article>
+
+        <?php } ?>
+
+      <?php } ?>
+
+    <?php } ?>
+
+  </main>
+
+  <footer class="w-900 p-20 ta-center c-muted fs-10">
+    © <?= date("Y") ?> — Jocarsa
+  </footer>
+
+</body>
+</html>
+```
+
+
+admin/escritorio.php:
+
+Es el panel de administración. Desde aquí se pueden crear, editar y eliminar páginas y entradas del blog. Gestiona las acciones del CRUD y se comunica con la base de datos para guardar los cambios.
+
+
+```
+<?php
+session_start();
+if(!isset($_SESSION['admin_ok'])){
+  header("Location: index.php");
+  exit;
+}
+
+if(isset($_GET['logout'])){
+  session_destroy();
+  header("Location: index.php");
+  exit;
+}
+
+$c = new mysqli("localhost", "jocarsapress", "jocarsapress", "jocarsapress");
+if($c->connect_error){ die("Error de conexión"); }
+$c->set_charset("utf8mb4");
+
+function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8"); }
+
+function pk_de($c, $tabla){
+  $tabla = preg_replace('/[^a-zA-Z0-9_]/', '', $tabla);
+  $r = $c->query("SHOW COLUMNS FROM `$tabla`");
+  if(!$r) return "id";
+  while($f = $r->fetch_assoc()){
+    if(isset($f['Key']) && $f['Key'] === 'PRI'){
+      return $f['Field'];
+    }
+  }
+  return "id";
+}
+
+$s = isset($_GET['s']) ? (string)$_GET['s'] : "paginas";
+if($s !== "paginas" && $s !== "entradas"){ $s = "paginas"; }
+
+$a = isset($_GET['a']) ? (string)$_GET['a'] : "list";
+if(!in_array($a, ["list","new","edit","delete"], true)){ $a="list"; }
+
+$tabla = $s;
+$pk = pk_de($c, $tabla);
+
+$fields = ($s === "paginas")
+  ? ["titulo","contenido"]
+  : ["fecha","titulo","contenido","categorias"];
+
+$msg = "";
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+  $post_action = isset($_POST['do']) ? (string)$_POST['do'] : "";
+  if($post_action === "save"){
+    $data = [];
+    foreach($fields as $f){
+      $data[$f] = isset($_POST[$f]) ? (string)$_POST[$f] : "";
+    }
+    if($s === "entradas" && trim($data["fecha"]) === ""){
+      $data["fecha"] = date("Y-m-d");
+    }
+
+    $id = isset($_POST[$pk]) ? (string)$_POST[$pk] : "";
+
+    if($id === ""){
+      $cols = implode(",", array_map(fn($x)=>"`$x`", array_keys($data)));
+      $qs   = implode(",", array_fill(0, count($data), "?"));
+      $sql = "INSERT INTO `$tabla` ($cols) VALUES ($qs)";
+      $stmt = $c->prepare($sql);
+
+      $types = str_repeat("s", count($data));
+      $vals = array_values($data);
+
+      $stmt->bind_param($types, ...$vals);
+      if($stmt->execute()){
+        $msg = "Guardado";
+        $a = "list";
+      }else{
+        $msg = "Error al guardar";
+      }
+    }else{
+      $set = implode(",", array_map(fn($x)=>"`$x` = ?", array_keys($data)));
+      $sql = "UPDATE `$tabla` SET $set WHERE `$pk` = ? LIMIT 1";
+      $stmt = $c->prepare($sql);
+
+      $types = str_repeat("s", count($data))."s";
+      $vals = array_values($data);
+      $vals[] = $id;
+
+      $stmt->bind_param($types, ...$vals);
+      if($stmt->execute()){
+        $msg = "Actualizado";
+        $a = "list";
+      }else{
+        $msg = "Error al actualizar";
+      }
+    }
+  }
+}
+
+if($a === "delete" && isset($_GET['id'])){
+  $id = (string)$_GET['id'];
+  $stmt = $c->prepare("DELETE FROM `$tabla` WHERE `$pk` = ? LIMIT 1");
+  $stmt->bind_param("s", $id);
+  if($stmt->execute()){
+    $msg = "Eliminado";
+    $a = "list";
+  }else{
+    $msg = "Error al eliminar";
+    $a = "list";
+  }
+}
+
+$edit = null;
+if($a === "edit" && isset($_GET['id'])){
+  $id = (string)$_GET['id'];
+  $stmt = $c->prepare("SELECT * FROM `$tabla` WHERE `$pk` = ? LIMIT 1");
+  $stmt->bind_param("s", $id);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  if($res && $res->num_rows){ $edit = $res->fetch_assoc(); }
+}
+
+$rows = [];
+if($a === "list"){
+  $order = ($s === "entradas") ? "ORDER BY fecha DESC, `$pk` DESC" : "ORDER BY `$pk` DESC";
+  $r = $c->query("SELECT * FROM `$tabla` $order");
+  if($r){ while($f = $r->fetch_assoc()){ $rows[] = $f; } }
+}
+?>
+<!doctype html>
+<html class="w-100pc h-100pc p-0 m-0" lang="es">
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="../JVestilo/JVestilo.php">
+  <link rel="stylesheet" href="../estilo/estilo.css">
+
+  <style>
+    *{box-sizing:border-box}
+    body{background:#f4f7f7;}
+    table{border-collapse:collapse;}
+    th,td{padding:10px;border-bottom:1px solid #eef2f7;vertical-align:top;}
+    textarea{min-height:220px;}
+    input,textarea{width:100%;box-sizing:border-box;}
+    .btn{border-radius:10px;border:1px solid #d7dee5;background:#eef2f7;}
+    .btn-teal{background:teal;color:white;border:1px solid teal;border-radius:10px;}
+    .muted{color:#5b6b78;}
+  </style>
+</head>
+
+<body class="w-100pc h-100pc p-0 m-0 flex">
+
+  <nav class="f-1 p-20 flex fd-column g-10" style="background:linear-gradient(180deg, teal, #0ea5a5);">
+    <div class="p-10 bradius-14" style="background:rgba(255,255,255,.12);color:white;">
+      <div class="fs-16"><strong>Panel</strong></div>
+      <div class="fs-10" style="opacity:.9;">JocarsaPress</div>
+    </div>
+
+    <a href="?s=paginas" class="p-10 td-none bradius-10" style="background:white;color:teal;">Páginas</a>
+    <a href="?s=entradas" class="p-10 td-none bradius-10" style="background:white;color:teal;">Entradas</a>
+
+    <div style="height:10px;"></div>
+    <a href="?logout=1" class="p-10 td-none bradius-10" style="background:rgba(255,255,255,.18);color:white;">Salir</a>
+  </nav>
+
+  <main class="f-5 p-20">
+    <div class="flex fd-row fa-center" style="justify-content:space-between;gap:10px;">
+      <h1 class="m-0 c-teal fs-22"><?= $s === "paginas" ? "Páginas" : "Entradas" ?></h1>
+      <div class="flex g-10">
+        <a class="p-10 btn-teal td-none" href="?s=<?= h($s) ?>&a=new">Nueva</a>
+        <a class="p-10 btn td-none c-teal" href="?s=<?= h($s) ?>&a=list">Listado</a>
+      </div>
+    </div>
+
+    <?php if($msg){ ?>
+      <p class="muted"><?= h($msg) ?></p>
+    <?php } ?>
+
+    <?php if($a === "list"){ ?>
+      <div class="card shadow-1" style="margin-top:15px;overflow:auto;">
+        <table class="w-100pc">
+          <thead style="background:#eef2f7;">
+            <tr>
+              <th><?= h($pk) ?></th>
+              <?php foreach($fields as $f){ ?><th><?= h($f) ?></th><?php } ?>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($rows as $row){ ?>
+              <tr>
+                <td><?= h($row[$pk] ?? "") ?></td>
+                <?php foreach($fields as $f){ ?>
+                  <td class="muted" style="max-width:420px;">
+                    <?php
+                      $val = (string)($row[$f] ?? "");
+                      if($f === "contenido"){
+                        echo h(mb_substr($val, 0, 180)).(mb_strlen($val)>180 ? "…" : "");
+                      }else{
+                        echo h($val);
+                      }
+                    ?>
+                  </td>
+                <?php } ?>
+                <td>
+                  <a class="td-none c-teal" href="?s=<?= h($s) ?>&a=edit&id=<?= urlencode($row[$pk]) ?>">Editar</a>
+                  <span class="muted"> | </span>
+                  <a class="td-none" style="color:#b91c1c;" href="?s=<?= h($s) ?>&a=delete&id=<?= urlencode($row[$pk]) ?>" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+                </td>
+              </tr>
+            <?php } ?>
+            <?php if(!count($rows)){ ?>
+              <tr><td colspan="<?= 2+count($fields) ?>" class="muted">Sin registros</td></tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+
+    <?php } else { ?>
+
+      <?php
+        $is_edit = ($a === "edit" && $edit);
+        $val = function($k) use ($is_edit, $edit){
+          if($is_edit && isset($edit[$k])) return (string)$edit[$k];
+          return "";
+        };
+      ?>
+
+      <form method="post" class="card shadow-1 p-20" style="margin-top:15px;">
+        <input type="hidden" name="do" value="save">
+        <?php if($is_edit){ ?>
+          <input type="hidden" name="<?= h($pk) ?>" value="<?= h($edit[$pk]) ?>">
+        <?php } ?>
+
+        <?php foreach($fields as $f){ ?>
+          <div class="flex fd-column g-5" style="margin-bottom:12px;">
+            <label class="muted fs-10"><?= h($f) ?></label>
+
+            <?php if($f === "contenido"){ ?>
+              <textarea name="contenido" class="p-10 bradius-10 br-1-solid-lightgray"><?= h($val("contenido")) ?></textarea>
+              <div class="muted fs-10">Escribe en Markdown (en el front se renderiza a HTML).</div>
+            <?php } else if($f === "fecha"){ ?>
+              <input name="fecha" type="date" class="p-10 bradius-10 br-1-solid-lightgray" value="<?= h($val("fecha")) ?>">
+            <?php } else { ?>
+              <input name="<?= h($f) ?>" type="text" class="p-10 bradius-10 br-1-solid-lightgray" value="<?= h($val($f)) ?>">
+            <?php } ?>
+          </div>
+        <?php } ?>
+
+        <div class="flex g-10">
+          <input type="submit" value="Guardar" class="p-10 btn-teal">
+          <a class="p-10 btn td-none c-teal" href="?s=<?= h($s) ?>&a=list">Cancelar</a>
+        </div>
+      </form>
+
+    <?php } ?>
+
+  </main>
+</body>
+</html>
+```
+
+admin/index.php:
+
+Es la pantalla de inicio de sesión del panel de administración. Comprueba el usuario y la contraseña y, si son correctos, inicia una sesión para permitir el acceso al panel.
+
+
+```
+<?php
+session_start();
+
+$error = "";
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+  $u = isset($_POST['usuario']) ? (string)$_POST['usuario'] : "";
+  $p = isset($_POST['contrasena']) ? (string)$_POST['contrasena'] : "";
+
+  if($u === "jocarsa" && $p === "jocarsa"){
+    session_regenerate_id(true);
+    $_SESSION['admin_ok'] = 1;
+    header("Location: escritorio.php");
+    exit;
+  }else{
+    $error = "Usuario o contraseña incorrectos";
+  }
+}
+?>
+<!doctype html>
+<html class="w-100pc h-100pc p-0 m-0" lang="es">
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="../JVestilo/JVestilo.php">
+  <link rel="stylesheet" href="../estilo/estilo.css">
+
+  <style>
+    *{box-sizing:border-box}
+    body{background:#f4f7f7;}
+  </style>
+</head>
+
+<body class="flex fa-center fj-center w-100pc h-100pc p-0 m-0">
+  <form method="post" class="w-320 p-20 flex fd-column g-15 card shadow-1">
+    <h2 class="m-0 c-brand ta-center">Acceso</h2>
+    <input name="usuario" type="text" placeholder="usuario" autocomplete="username" required class="p-10 bradius-10 br-1-solid-lightgray">
+    <input name="contrasena" type="password" placeholder="contraseña" autocomplete="current-password" required class="p-10 bradius-10 br-1-solid-lightgray">
+    <input type="submit" value="Entrar" class="p-10 btn-brand" style="border-radius:12px;border:0;cursor:pointer;">
+
+    <?php if($error){ ?>
+      <p class="m-0 c-muted ta-center"><?= htmlspecialchars($error, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8") ?></p>
+    <?php } ?>
+  </form>
+</body>
+</html>
+```
+
+
+estilo.css:
+
+Es la capa de diseño visual del proyecto. Define los colores principales, botones, tarjetas, sombras y pequeños detalles estéticos. Complementa a JVestilo y da identidad visual a la web.
+
+
+```
+:root{
+  --brand:#0f766e;        
+  --brand-soft:#d1faf5;   
+  --bg:#f6f7fb;
+  --surface:#f1f5f9;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+
+
+.b-app{ background: var(--bg); }
+.b-surface{ background: var(--surface); }
+.c-muted{ color: var(--muted); }
+.b-brand{ background: var(--brand); }
+.c-brand{ color: var(--brand); }
+.b-brand-soft{ background: var(--brand-soft); }
+
+.shadow-soft{ box-shadow: 0 10px 30px rgba(15,23,42,.08); }
+.fw-wrap{ flex-wrap:wrap; }
+
+
+.card{
+  border:1px solid #e7e9f2;
+  border-radius:16px;
+  background:#fff;
+}
+.card:hover{ transform: translateY(-1px); }
+
+
+.btn{ display:inline-block; padding:10px 12px; border-radius:12px; text-decoration:none; font-size:12px; }
+.btn-ghost{ background:#ffffff; color:var(--text); border:1px solid #e7e9f2; }
+.btn-ghost:hover{ border-color: var(--brand); color: var(--brand); }
+.btn-brand{ background:var(--brand); color:#fff; border:1px solid rgba(0,0,0,0); }
+.btn-brand:hover{ filter:brightness(0.95); }
+.btn:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+
+
+.badge{ display:inline-block; padding:6px 10px; border-radius:999px; font-size:11px; background:#fff; border:1px solid #e7e9f2; color:var(--brand); }
+
+
+.markdown p{ margin:0; }
+.markdown p + p{ margin-top:10px; }
+.markdown h1,.markdown h2,.markdown h3{ margin:0; }
+.markdown h2{ margin-top:18px; }
+.markdown h3{ margin-top:14px; }
+.markdown ul,.markdown ol{ margin:0; margin-top:8px; }
+.markdown code{ background:#e2e8f0; padding:2px 6px; border-radius:8px; font-family:monospace; font-size:12px; }
+.markdown pre{ overflow:auto; }
+.markdown a:hover{ text-decoration:underline; }
+
+.lh-24{ line-height:24px; }
+
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b1220;
+    --surface:#111a2e;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+    --brand:#14b8a6;
+    --brand-soft:#0b2f2b;
+  }
+
+  .btn-ghost{ background:#0f172a; color:var(--text); border:1px solid #23314d; }
+  .badge{ background:#0f172a; border:1px solid #23314d; }
+  .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+}
+```
+
+
+JVestudio/colores.php:
+
+Contiene un listado de colores que se usan en JVestilo para generar automáticamente clases de color y fondo.
+
+
+```
+<?php
+$colores = [
+  "AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black",
+  "BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse",
+  "Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan",
+  "DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta",
+  "DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen",
+  "DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink",
+  "DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen",
+  "Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow",
+  "HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush",
+  "LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow",
+  "LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen",
+  "LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime",
+  "LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid",
+  "MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise",
+  "MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy",
+  "OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen",
+  "PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue",
+  "Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown",
+  "SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow",
+  "SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White",
+  "WhiteSmoke","Yellow","YellowGreen"
+];
+```
+
+JVestudio/fuentesfamilias.php:
+
+Define las familias de fuentes disponibles para generar clases de tipografía en JVestilo.
+
+
+```
+<?php
+$familias = [
+  "serif",
+  "sans-serif",
+  "monospace",
+  "cursive",
+  "fantasy",
+  "system-ui"
+];
+```
+
+JVestudio/escritorio.php:
+
+Añade estilos específicos para pantallas grandes. Se utiliza para que el diseño sea responsive y cambie su estructura cuando se visualiza en escritorio.
+
+
+```
+<?php
+header("Content-Type: text/css; charset=UTF-8");
+
+echo "@media (min-width:1024px){";
+
+
+echo ".d-flex{display:flex;}";
+echo ".d-grid{display:grid;}";
+echo ".d-block{display:block;}";
+echo ".d-none{display:none;}";
+echo ".d-fd-row{flex-direction:row;}";
+echo ".d-fd-column{flex-direction:column;}";
+echo ".d-fj-center{justify-content:center;}";
+echo ".d-fa-center{align-items:center;}";
+
+
+for($i=1;$i<=20;$i++){
+  echo ".d-gc-$i{grid-template-columns:repeat($i,1fr);}";
+}
+
+
+for($i=0;$i<=1200;$i++){
+  echo ".d-w-$i{width:{$i}px;}";
+  echo ".d-h-$i{height:{$i}px;}";
+}
+for($i=0;$i<=200;$i++){
+  echo ".d-p-$i{padding:{$i}px;}";
+  echo ".d-m-$i{margin:{$i}px;}";
+  echo ".d-g-$i{gap:{$i}px;}";
+}
+
+echo "}";
+```
+
+
+JVestilo.php:
+
+Es mi propio framework de estilos. Genera clases CSS mediante PHP para controlar tamaños, márgenes, paddings, colores, flexbox y grid. Permite maquetar la web sin usar librerías externas como Bootstrap.
+
+
+```
+<?php
+header("Content-Type: text/css; charset=UTF-8");
+
+include __DIR__."/colores.php";
+
+
+foreach($colores as $color){
+  $c = strtolower($color);
+  echo ".b-$c{background:$c;}";
+  echo ".c-$c{color:$c;}";
+}
+
+
+for($i=0; $i<2000; $i++){
+  echo ".p-$i{padding:{$i}px;}";
+  echo ".m-$i{margin:{$i}px;}";
+  echo ".w-$i{width:{$i}px;}";
+  echo ".w-{$i}pc{width:{$i}%;}";
+  echo ".h-$i{height:{$i}px;}";
+  echo ".h-{$i}pc{height:{$i}%;}";
+  echo ".fs-$i{font-size:{$i}px;}";
+  echo ".g-$i{gap:{$i}px;}";
+  echo ".bradius-$i{border-radius:{$i}px;}";
+  echo ".f-$i{flex:$i;}";
+}
+
+
+echo ".flex{display:flex;}";
+echo ".fd-row{flex-direction:row;}";
+echo ".fd-column{flex-direction:column;}";
+echo ".fj-center{justify-content:center;}";
+echo ".fa-center{align-items:center;}";
+
+
+include __DIR__."/familiasfuentes.php";
+foreach($familias as $familia){
+  $ff = strtolower($familia);
+  echo ".ff-$ff{font-family:$ff;}";
+}
+
+
+echo ".grid{display:grid;}";
+for($i=1; $i<=20; $i++){
+  echo ".gc-$i{grid-template-columns:repeat($i,1fr);}";
+}
+
+
+$alineaciones = ['left','right','center','justify'];
+foreach($alineaciones as $a){
+  echo ".ta-$a{text-align:$a;}";
+}
+echo ".td-none{text-decoration:none;}";
+
+
+$tiposLineaCss = ["none","hidden","solid","dashed","dotted","double","groove","ridge","inset","outset"];
+for($i=0; $i<20; $i++){
+  foreach($tiposLineaCss as $tipo){
+    foreach($colores as $color){
+      $c = strtolower($color);
+      echo ".br-$i-$tipo-$c{border:{$i}px $tipo $c;}";
+    }
+  }
+}
+
+
+echo ".shadow-1{box-shadow:0 10px 25px rgba(0,0,0,.08);}";
+echo ".shadow-2{box-shadow:0 18px 45px rgba(0,0,0,.12);}";
+echo ".lh-24{line-height:24px;}";
+echo ".fw-wrap{flex-wrap:wrap;}";
+```
+
+En este proyecto he desarrollado una página web dinámica a partir de los contenidos vistos en clase, pero ampliándolos para que el resultado sea una aplicación más completa y funcional.
+
+La web está dividida en dos partes: una parte pública donde se muestran las páginas y el blog, y un panel de administración desde el que se puede crear, modificar y eliminar el contenido.Así, no hace falta cambiar el código cada vez que se quiere actualizar la web.
+
+Como mejora respecto a lo declase, he creado mi propio sistema de estilos en lugar de usar un framework externo. Este sistema me permite trabajar con clases para márgenes, tamaños, grid y flexbox de forma sencilla y ordenada. Además, he añadido una hoja de estilos adicional para definir el diseño visual, los colores y los botones, separando la estructura del diseño.
+
+También he mejorado la seguridad utilizando consultas preparadas para acceder a la base de datos y escapando los datos antes de mostrarlos en pantalla. El acceso al panel de administración está protegido mediante inicio de sesión.
+
+Otra mejora importante es que el contenido se guarda en la base de datos y se muestra dinámicamente en la web. Las entradas del blog se escriben en formato Markdown y se transforman a HTML de forma segura, lo que facilita la creación de contenido con formato.
+
+Por último, el diseño es responsive y se adapta a diferentes tamaños de pantalla, tanto en móvil como en escritorio. En conjunto, el proyecto mejora lo visto en clase añadiendo organización, seguridad y funcionalidades más cercanas a una aplicación web real.
+
+Por haber hecho este proyecto he podido profundizar en los contenidos vistos en clase y comprender mejor cómo funciona una aplicación web completa. He aprendido a organizar el código, a trabajar con bases de datos de forma segura y a separar la parte visual de la lógica del programa.
+El resultado final es una web dinámica con panel de administración, diseño propio y contenido gestionado desde la base de datos, que mejora claramente los ejemplos realizados en clase y me ha ayudado a afianzar los conocimientos aprendidos durante el curso.
