@@ -1,0 +1,810 @@
+En este trabajo he realizado una página web usando PHP y una base de datos MySQL. El objetivo del proyecto ha sido aprender a organizar mejor el código y no mezclar todo en un solo archivo, como suele pasar en los primeros ejercicios que hacemos en clase.
+
+Para ello he utilizado un sistema de plantillas parecido a Pug, que permite escribir la estructura de la página de una forma más sencilla y clara. De esta manera he podido centrarme mejor en cómo funciona la web y en entender qué hace cada parte del proyecto.
+
+
+
+
+mysql> CREATE DATABASE serenaweb
+    ->   CHARACTER SET utf8mb4
+    ->   COLLATE utf8mb4_unicode_ci;
+Query OK, 1 row affected (0,01 sec)
+
+mysql> 
+mysql> USE serenaweb;
+Database changed
+mysql> 
+mysql> CREATE TABLE paginas (
+    ->   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ->   titulo VARCHAR(150) NOT NULL UNIQUE,
+    ->   contenido MEDIUMTEXT NOT NULL,
+    ->   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0,04 sec)
+
+mysql> 
+mysql> CREATE TABLE entradas (
+    ->   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ->   titulo VARCHAR(200) NOT NULL,
+    ->   fecha DATE NOT NULL,
+    ->   contenido MEDIUMTEXT NOT NULL,
+    ->   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0,04 sec)
+
+mysql> INSERT INTO paginas (titulo, contenido) VALUES
+    -> ('perfil', '<h3>Sobre mí</h3><p>Perfil en construcción.</p>'),
+    -> ('contacto', '<h3>Contacto</h3><p>Escríbeme por email.</p>');
+Query OK, 2 rows affected (0,02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> INSERT INTO entradas (titulo, fecha, contenido) VALUES
+    -> ('Primera entrada', CURDATE(), '<p>Hola! Este es mi blog.</p>');
+Query OK, 1 row affected (0,01 sec)
+
+mysql> exit;
+Bye
+serena@serena-portatil:~$ 
+
+
+
+controlador.php:
+```
+<?php
+declare(strict_types=1);
+
+require __DIR__ . "/jvpug.php";
+
+
+const DB_HOST = "127.0.0.1";
+const DB_NAME = "serenaweb";
+const DB_USER = "web";
+const DB_PASS = "webpass";
+
+
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+try {
+  $c = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+  $c->set_charset("utf8mb4");
+} catch (Throwable $e) {
+  http_response_code(500);
+  header("Content-Type: text/plain; charset=utf-8");
+  echo "Error conectando a la base de datos.";
+  exit;
+}
+
+$p = $_GET["p"] ?? null;
+if ($p !== null) {
+  $p = trim((string)$p);
+  if ($p === "") $p = null;
+}
+
+
+$paginas = [];
+try {
+  $r = $c->query("SELECT * FROM paginas ORDER BY titulo ASC;");
+  while ($f = $r->fetch_assoc()) $paginas[] = $f;
+} catch (Throwable $e) {
+  $paginas = [];
+}
+
+
+$entradas = [];
+$pagina = [];
+
+try {
+  if ($p === "blog") {
+    $r = $c->query("SELECT * FROM entradas ORDER BY id DESC;");
+    while ($f = $r->fetch_assoc()) $entradas[] = $f;
+
+  } elseif ($p !== null) {
+    $stmt = $c->prepare("SELECT * FROM paginas WHERE titulo = ? LIMIT 1");
+    $stmt->bind_param("s", $p);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    while ($f = $res->fetch_assoc()) $pagina[] = $f;
+    $stmt->close();
+  }
+} catch (Throwable $e) {
+  $entradas = [];
+  $pagina = [];
+}
+
+
+echo JVpug::renderFile(__DIR__ . "/miweb.jvpug", [
+  "nombre_site" => "Serena Sania Esteve",
+  "titulo_site" => "Técnica administrativa · Estudiante de DAM",
+  "p" => $p,
+  "paginas" => $paginas,
+  "entradas" => $entradas,
+  "pagina" => $pagina,
+  "year" => date("Y"),
+]);
+```
+
+familiasfuentes.php:
+```
+<?php
+$familias = [
+  'serif',
+  'sans-serif',
+  'monospace',
+  'cursive',
+  'fantasy',
+  'system-ui'
+];
+```
+
+jvestilo.php:
+```
+<?php
+header("Content-Type: text/css; charset=utf-8");
+
+include __DIR__ . "/colores.php";
+foreach ($colores as $color) {
+  $c = strtolower($color);
+  echo ".b-{$c}{background:{$c};}";
+  echo ".c-{$c}{color:{$c};}";
+}
+
+for ($i = 0; $i < 2000; $i++) {
+  echo ".p-{$i}{padding:{$i}px;}";
+  echo ".m-{$i}{margin:{$i}px;}";
+  echo ".w-{$i}{width:{$i}px;}";
+  echo ".h-{$i}{height:{$i}px;}";
+  echo ".fs-{$i}{font-size:{$i}px;}";
+  echo ".g-{$i}{gap:{$i}px;}";
+}
+?>
+.flex{display:flex;}
+.fd-row{flex-direction:row;}
+.fd-column{flex-direction:column;}
+.fj-center{justify-content:center;}
+.fa-center{align-items:center;}
+.fw-wrap{flex-wrap:wrap;}
+<?php
+include __DIR__ . "/familiasfuentes.php";
+foreach ($familias as $familia) {
+  $f = strtolower($familia);
+  echo ".ff-{$f}{font-family:{$familia};}";
+}
+?>
+.grid{display:grid;}
+<?php
+for ($i = 1; $i <= 20; $i++) {
+  echo ".gc-{$i}{grid-template-columns:repeat({$i},1fr);}";
+}
+$alineaciones = ['left','right','center','justify'];
+foreach ($alineaciones as $a) {
+  echo ".ta-{$a}{text-align:{$a};}";
+}
+?>
+.td-none{text-decoration:none;}
+```
+
+
+jvpug.php:
+```
+<?php
+
+final class JVpug
+{
+    public static function renderFile(string $file, array $vars = []): string
+    {
+        $src = @file_get_contents($file);
+        if ($src === false) {
+            throw new RuntimeException("No se pudo leer: {$file}");
+        }
+        return self::render($src, $vars, dirname($file));
+    }
+
+    public static function render(string $src, array $vars = [], ?string $baseDir = null): string
+    {
+        $lines = preg_split("/\r\n|\r|\n/", $src);
+        $root = self::parseToTree($lines);
+        $ctx = $vars;
+        return self::renderNodes($root, $ctx, $baseDir ?? getcwd());
+    }
+
+
+    private static function parseToTree(array $lines): array
+    {
+        $root = [];
+        $stack = [ [ 'level' => -1, 'children' => &$root ] ];
+
+        foreach ($lines as $raw) {
+            if (trim($raw) === '') continue;
+
+            preg_match('/^( *)/', $raw, $m);
+            $spaces = strlen($m[1]);
+            $level  = intdiv($spaces, 2);
+            $line   = trim($raw);
+
+            while (count($stack) > 0 && $stack[count($stack)-1]['level'] >= $level) {
+                array_pop($stack);
+            }
+            $parentChildren = &$stack[count($stack)-1]['children'];
+
+            $node = self::parseLine($line);
+            if ($node === null) continue;
+
+            $node['level'] = $level;
+            $node['children'] = [];
+            $parentChildren[] = $node;
+
+            if ($node['type'] === 'tag' && !$node['selfClose'] && !$node['hasInlineText']) {
+                $idx = count($parentChildren) - 1;
+                $stack[] = [ 'level' => $level, 'children' => &$parentChildren[$idx]['children'] ];
+            }
+            if ($node['type'] === 'dir') {
+                $idx = count($parentChildren) - 1;
+                $stack[] = [ 'level' => $level, 'children' => &$parentChildren[$idx]['children'] ];
+            }
+        }
+
+        return $root;
+    }
+
+    private static function parseLine(string $line): ?array
+    {
+        if (str_starts_with($line, '//')) return null;
+
+        if (preg_match('/^doctype\b/i', $line)) {
+            return ['type' => 'doctype'];
+        }
+
+        if (preg_match('/^\|\s*(.*)$/', $line, $m)) {
+            return ['type' => 'text', 'text' => $m[1]];
+        }
+
+        if (str_starts_with($line, '@')) {
+            if (!preg_match('/^@([a-zA-Z_][a-zA-Z0-9_]*)\b(.*)$/', $line, $m)) return null;
+            return ['type' => 'dir', 'name' => strtolower($m[1]), 'args' => trim($m[2])];
+        }
+
+        if (preg_match('/^(if|elseif|else|for|foreach|include)\b(.*)$/i', $line, $dm)) {
+            return ['type' => 'dir', 'name' => strtolower($dm[1]), 'args' => trim($dm[2])];
+        }
+
+        if (!preg_match('/^([a-zA-Z][a-zA-Z0-9]*)\b(.*)$/', $line, $mm)) return null;
+
+        $tag  = $mm[1];
+        $rest = trim($mm[2]);
+
+        $selfClosingTags = ['br','img','hr','input','meta','link','source','area','base','col','embed','param','track','wbr'];
+        $selfClose = in_array(strtolower($tag), $selfClosingTags, true);
+
+        $attrs = [];
+        $text  = '';
+
+        if ($rest !== '') {
+            $tokens = self::tokenize($rest);
+
+            $i = 0;
+            for (; $i < count($tokens); $i++) {
+                $t = $tokens[$i];
+                if (preg_match('/^([a-zA-Z_:][a-zA-Z0-9_:\-]*)=(.+)$/', $t, $am)) {
+                    $attrs[$am[1]] = $am[2];
+                } elseif (preg_match('/^([a-zA-Z_:][a-zA-Z0-9_:\-]*)$/', $t)) {
+                    $attrs[$t] = 'true';
+                } else {
+                    break;
+                }
+            }
+            if ($i < count($tokens)) $text = implode(' ', array_slice($tokens, $i));
+        }
+
+        return [
+            'type' => 'tag',
+            'tag' => $tag,
+            'attrs' => $attrs,
+            'text' => $text,
+            'hasInlineText' => ($text !== ''),
+            'selfClose' => $selfClose,
+        ];
+    }
+
+    private static function tokenize(string $s): array
+    {
+        $out = [];
+        $buf = '';
+        $q = null;
+        $len = strlen($s);
+
+        for ($i=0; $i<$len; $i++) {
+            $ch = $s[$i];
+
+            if ($q !== null) {
+                $buf .= $ch;
+                if ($ch === $q) $q = null;
+                continue;
+            }
+            if ($ch === '"' || $ch === "'") {
+                $q = $ch;
+                $buf .= $ch;
+                continue;
+            }
+            if ($ch === ' ') {
+                if ($buf !== '') { $out[] = $buf; $buf = ''; }
+                continue;
+            }
+            $buf .= $ch;
+        }
+        if ($buf !== '') $out[] = $buf;
+        return $out;
+    }
+
+
+    private static function renderNodes(array $nodes, array &$ctx, string $baseDir): string
+    {
+        $html = '';
+
+        for ($i=0; $i<count($nodes); $i++) {
+            $n = $nodes[$i];
+
+            if ($n['type'] === 'doctype') {
+                $html .= "<!DOCTYPE html>\n";
+                continue;
+            }
+
+            if ($n['type'] === 'text') {
+                $html .= htmlspecialchars((string)$n['text'], ENT_QUOTES, 'UTF-8') . "\n";
+                continue;
+            }
+
+            if ($n['type'] === 'tag') {
+                $html .= self::renderTagNode($n, $ctx, $baseDir);
+                continue;
+            }
+
+            if ($n['type'] === 'dir') {
+                $name = $n['name'];
+
+                if ($name === 'include') {
+                    $html .= self::renderInclude($n['args'], $ctx, $baseDir);
+                    continue;
+                }
+
+                if ($name === 'if') {
+                    [$chunk, $jump] = self::renderIfChain($nodes, $i, $ctx, $baseDir);
+                    $html .= $chunk;
+                    $i = $jump;
+                    continue;
+                }
+
+                if ($name === 'elseif' || $name === 'else') continue;
+
+                if ($name === 'for' || $name === 'foreach') {
+                    $html .= self::renderForEach($n['args'], $n['children'], $ctx, $baseDir);
+                    continue;
+                }
+            }
+        }
+
+        return $html;
+    }
+
+    private static function renderTagNode(array $n, array &$ctx, string $baseDir): string
+    {
+        $tag = $n['tag'];
+        $attrs = self::renderAttrs($n['attrs'], $ctx);
+
+        if ($n['selfClose']) return "<{$tag}{$attrs}>\n";
+
+        $open = "<{$tag}{$attrs}>";
+
+        if ($n['hasInlineText']) {
+            $text = self::renderText($n['text'], $ctx);
+            return "{$open}{$text}</{$tag}>\n";
+        }
+
+        $inner = self::renderNodes($n['children'], $ctx, $baseDir);
+        return "{$open}\n{$inner}</{$tag}>\n";
+    }
+
+    private static function renderAttrs(array $attrs, array &$ctx): string
+    {
+        if (empty($attrs)) return '';
+
+        $out = '';
+        foreach ($attrs as $k => $rawV) {
+            $v = self::evalAttrValue($rawV, $ctx);
+
+            if ($v === true) { $out .= ' ' . htmlspecialchars($k, ENT_QUOTES, 'UTF-8'); continue; }
+            if ($v === false || $v === null) continue;
+
+            $out .= ' ' . htmlspecialchars($k, ENT_QUOTES, 'UTF-8')
+                 . '="' . htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8') . '"';
+        }
+        return $out;
+    }
+
+    private static function evalAttrValue(string $raw, array &$ctx): mixed
+    {
+        $raw = trim($raw);
+
+        if ((str_starts_with($raw, '"') && str_ends_with($raw, '"')) ||
+            (str_starts_with($raw, "'") && str_ends_with($raw, "'"))) {
+            return substr($raw, 1, -1);
+        }
+
+        if ($raw === 'true') return true;
+        if ($raw === 'false') return false;
+        if ($raw === 'null') return null;
+
+        return self::evalExpr($raw, $ctx);
+    }
+
+    // #{ expr } escapado, !{ expr } sin escape
+    private static function renderText(string $text, array &$ctx): string
+    {
+        $pattern = '/(!\{.*?\}|#\{.*?\})/s';
+        $parts = preg_split($pattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+        $out = '';
+        foreach ($parts as $p) {
+            if (preg_match('/^!\{\s*(.*?)\s*\}$/s', $p, $m)) {
+                $val = self::evalExpr(trim($m[1]), $ctx);
+                $out .= (string)$val;
+                continue;
+            }
+            if (preg_match('/^#\{\s*(.*?)\s*\}$/s', $p, $m)) {
+                $val = self::evalExpr(trim($m[1]), $ctx);
+                $out .= htmlspecialchars((string)$val, ENT_QUOTES, 'UTF-8');
+                continue;
+            }
+            $out .= htmlspecialchars($p, ENT_QUOTES, 'UTF-8');
+        }
+
+        return $out;
+    }
+
+    private static function renderInclude(string $args, array &$ctx, string $baseDir): string
+    {
+        $tokens = self::tokenize($args);
+        if (count($tokens) < 1) return '';
+
+        $fileTok = array_shift($tokens);
+        $file = self::stripQuotes($fileTok);
+
+        $params = [];
+        foreach ($tokens as $t) {
+            if (!preg_match('/^([a-zA-Z_][a-zA-Z0-9_]*)=(.+)$/', $t, $m)) continue;
+            $params[$m[1]] = self::evalAttrValue(trim($m[2]), $ctx);
+        }
+
+        $merged = $ctx;
+        foreach ($params as $k => $v) $merged[$k] = $v;
+
+        $path = $file;
+        if (!str_starts_with($path, '/') && !preg_match('~^[A-Za-z]:\\\\~', $path)) {
+            $path = rtrim($baseDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $path;
+        }
+
+        return self::renderFile($path, $merged);
+    }
+
+    private static function stripQuotes(string $s): string
+    {
+        $s = trim($s);
+        if ((str_starts_with($s, '"') && str_ends_with($s, '"')) ||
+            (str_starts_with($s, "'") && str_ends_with($s, "'"))) {
+            return substr($s, 1, -1);
+        }
+        return $s;
+    }
+
+    private static function renderIfChain(array $nodes, int $startIdx, array &$ctx, string $baseDir): array
+    {
+        $baseLevel = $nodes[$startIdx]['level'];
+        $chosenChildren = null;
+
+        $i = $startIdx;
+        $end = $startIdx;
+
+        while ($i < count($nodes)) {
+            $n = $nodes[$i];
+            if ($n['type'] !== 'dir') break;
+            if ($n['level'] !== $baseLevel) break;
+
+            $name = $n['name'];
+            if (!in_array($name, ['if','elseif','else'], true)) break;
+
+            if ($name === 'else') {
+                if ($chosenChildren === null) $chosenChildren = $n['children'];
+                $end = $i;
+                $i++;
+                break;
+            }
+
+            $cond = trim($n['args']);
+            $ok = $cond !== '' ? (bool) self::evalExpr($cond, $ctx) : false;
+
+            if ($chosenChildren === null && $ok) $chosenChildren = $n['children'];
+
+            $end = $i;
+            $i++;
+        }
+
+        $html = $chosenChildren ? self::renderNodes($chosenChildren, $ctx, $baseDir) : '';
+        return [$html, $end];
+    }
+
+    private static function renderForEach(string $args, array $children, array &$ctx, string $baseDir): string
+    {
+        $a = trim($args);
+
+        $var1 = null; $var2 = null; $expr = null;
+
+        // item in expr
+        if (preg_match('/^([a-zA-Z_][a-zA-Z0-9_]*)(\s*,\s*([a-zA-Z_][a-zA-Z0-9_]*))?\s+in\s+(.+)$/', $a, $m)) {
+            $var1 = $m[1];
+            $var2 = $m[3] ?? null;
+            $expr = trim($m[4]);
+        }
+        // expr as $v
+        else if (preg_match('/^(.+)\s+as\s+\$?([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i', $a, $m)) {
+            $expr = trim($m[1]);
+            $var1 = $m[2];
+        }
+        // expr as $k => $v
+        else if (preg_match('/^(.+)\s+as\s+\$?([a-zA-Z_][a-zA-Z0-9_]*)\s*=>\s*\$?([a-zA-Z_][a-zA-Z0-9_]*)\s*$/i', $a, $m)) {
+            $expr = trim($m[1]);
+            $var1 = $m[2];
+            $var2 = $m[3];
+        } else {
+            return '';
+        }
+
+        $iter = self::evalExpr($expr, $ctx);
+        if (!is_array($iter) && !($iter instanceof Traversable)) return '';
+
+        $html = '';
+        foreach ($iter as $k => $v) {
+            $old1 = $ctx[$var1] ?? null; $had1 = array_key_exists($var1, $ctx);
+            $old2 = $var2 !== null ? ($ctx[$var2] ?? null) : null;
+            $had2 = $var2 !== null ? array_key_exists($var2, $ctx) : false;
+
+            if ($var2 === null) {
+                $ctx[$var1] = $v;
+            } else {
+                $ctx[$var1] = $k;
+                $ctx[$var2] = $v;
+            }
+
+            $html .= self::renderNodes($children, $ctx, $baseDir);
+
+            if ($had1) $ctx[$var1] = $old1; else unset($ctx[$var1]);
+            if ($var2 !== null) {
+                if ($had2) $ctx[$var2] = $old2; else unset($ctx[$var2]);
+            }
+        }
+
+        return $html;
+    }
+
+    private static function evalExpr(string $expr, array &$ctx): mixed
+    {
+        $expr = trim($expr);
+
+        if (preg_match('/^\$([a-zA-Z_][a-zA-Z0-9_]*)$/', $expr, $m)) {
+            return $ctx[$m[1]] ?? null;
+        }
+
+        if (preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $expr) && array_key_exists($expr, $ctx)) {
+            return $ctx[$expr];
+        }
+
+        try {
+            return (function() use (&$ctx, $expr) {
+                extract($ctx, EXTR_SKIP);
+                return eval('return (' . $expr . ');');
+            })();
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+}
+```
+
+miweb.jvpug:
+```
+doctype
+html lang="es"
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    title #{ $nombre_site }
+    link rel="stylesheet" href="JVestilo/JVestilo.php"
+
+  body class="flex fd-column fj-center fa-center b-lightgrey ff-sans-serif p-20"
+    header class="w-800 b-white p-20 ta-center flex fd-column g-20"
+      h1 class="p-0 m-0 fs-36" #{ $nombre_site }
+      h2 class="p-0 m-0 fs-16" #{ $titulo_site }
+
+      nav class="flex g-1 fa-center fj-center"
+        a href="?" class="b-lightgray p-10 c-black td-none fs-10 w-70" Inicio
+        @foreach $paginas as $f
+          a href="?p=#{urlencode($f['titulo'])}" class="b-lightgray p-10 c-black td-none fs-10 w-70" #{ $f['titulo'] }
+        a href="?p=blog" class="b-lightgray p-10 c-black td-none fs-10 w-70" Blog
+        a href="perfil.php" class="b-lightgray p-10 c-black td-none fs-10 w-70" Perfil
+
+    main class="w-800 b-white p-20 flex fd-column g-20"
+      @if !$p
+        section id="heroe" class="w-800 h-400 b-lightgray p-20" style="box-sizing:border-box;"
+          h3 class="m-0" Bienvenida
+          p class="m-0"
+            | Soy Serena Sania Esteve: técnica administrativa con experiencia y actualmente estudiando DAM.
+          p class="m-0"
+            | Me interesa aplicar tecnología, automatización e IA para mejorar procesos en empresa.
+
+        section class="grid gc-2 g-20"
+          article class="ta-center h-200 flex fd-column fa-center fj-center b-lightgray"
+            h3 class="m-0" Gestión administrativa
+            p class="m-0" Organización, documentación y atención al cliente
+          article class="ta-center h-200 flex fd-column fa-center fj-center b-lightgray"
+            h3 class="m-0" Tecnología aplicada
+            p class="m-0" Herramientas digitales, CRM, SEM y automatización
+
+        section class="grid gc-3 g-20"
+          @for i in range(1, 7)
+            article class="ta-center b-lightgray p-10"
+              h3 class="m-0" Aprendizaje continuo
+              p class="m-0" Formación técnica y mejora constante
+
+      @else
+        @if $p === "blog"
+          section class="grid gc-3 g-20"
+            @foreach $entradas as $e
+              article class="b-lightgray p-10"
+                h3 class="m-0" #{ $e['titulo'] }
+                time class="fs-10" #{ $e['fecha'] }
+                div
+                  !{ $e['contenido'] }
+        @else
+          @if $pagina
+            section class="flex fd-column g-20"
+              @foreach $pagina as $pg
+                article class="b-lightgray p-10"
+                  h3 class="m-0" #{ $pg['titulo'] }
+                  div
+                    !{ $pg['contenido'] }
+          @else
+            section class="b-lightgray p-20"
+              h3 class="m-0" Página no encontrada
+              p class="m-0" No existe contenido para esa URL.
+
+    footer class="w-800 b-white p-20 ta-center"
+      | © #{ $year } Serena Sania Esteve
+```
+
+
+perfil.jvpug:
+```
+doctype
+html lang="es"
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    title #{ nombre } - Perfil
+    link rel="stylesheet" href="JVestilo/JVestilo.php"
+
+  body class="flex fd-column fj-center fa-center b-lightgrey ff-sans-serif p-20"
+    header class="w-800 b-white p-20 ta-center flex fd-column g-20"
+      h1 class="p-0 m-0 fs-36" #{ nombre }
+      h2 class="p-0 m-0 fs-16" #{ titulo }
+
+    main class="w-800 b-white p-20 flex fd-column g-20"
+      section class="b-lightgray p-20"
+        h3 class="m-0" Sobre mí
+        p class="m-0" #{ descripcion }
+
+      section class="b-lightgray p-20"
+        h3 class="m-0" Áreas de trabajo
+        ul
+          @foreach $areas as $area
+            li #{ $area }
+
+      section class="b-lightgray p-20"
+        h3 class="m-0" Enfoque
+        p class="m-0" !{ enfoque_html }
+
+      section class="b-lightgray p-20"
+        h3 class="m-0" Datos
+        ul
+          @foreach $datos as $k => $v
+            li
+              strong #{ $k }:
+              |  #{ $v }
+
+    footer class="w-800 b-white p-20 ta-center"
+      | © #{ year } #{ nombre }
+```
+
+
+perfil.php:
+```
+<?php
+require __DIR__ . '/jvpug.php';
+
+echo JVpug::renderFile(__DIR__ . '/perfil.jvpug', [
+  'nombre' => 'Serena Sania Esteve',
+  'titulo' => 'Técnica administrativa · Estudiante de Desarrollo de Aplicaciones Multiplataforma',
+  'descripcion' =>
+    'Técnica administrativa con experiencia en atención al cliente, gestión documental y organización de procesos. '
+  . 'Actualmente cursando DAM, con interés en tecnología aplicada a la empresa, IA y automatización.',
+  'areas' => [
+    'Gestión administrativa y documental',
+    'Atención al cliente y comunicación',
+    'Organización y planificación',
+    'Marketing y redes sociales',
+    'CRM y herramientas digitales',
+    'IA aplicada a la empresa',
+    'Automatización de procesos',
+    'Desarrollo de aplicaciones (DAM)',
+  ],
+  'enfoque_html' =>
+    '<strong>Aprender continuamente</strong>, trabajar con organización y comunicación clara, '
+  . 'y usar herramientas digitales para aportar soluciones prácticas y eficientes.',
+  'datos' => [
+    'Email' => 'serenaestevee@gmail.com',
+    'Ubicación' => 'Mislata, Valencia',
+    'Idiomas' => 'Español (nativo), Valenciano (alto), Inglés (A2)',
+    'Vehículo' => 'Sí',
+  ],
+  'year' => date('Y'),
+]);
+```
+
+colores.php:
+```
+<?php
+$colores = [
+    "AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black",
+    "BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse",
+    "Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan",
+    "DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen",
+    "DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray",
+    "DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey",
+    "DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold",
+    "GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory",
+    "Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan",
+    "LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen",
+    "LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen",
+    "Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen",
+    "MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream",
+    "MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid",
+    "PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum",
+    "PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown",
+    "SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen",
+    "SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"
+];
+```
+
+En este proyecto he realizado una web en PHP usando una estructura más ordenada que la que hemos visto normalmente en clase. La idea principal ha sido separar el código que controla los datos del código que muestra la página, para que sea más fácil de entender y de modificar.
+
+La web funciona a partir de un archivo principal llamado 004-controlador.php, que se encarga de conectarse a la base de datos y decidir qué contenido se tiene que mostrar según la página que se visite. En este archivo no hay HTML, solo lógica y datos.
+
+Para mostrar la página se usan archivos .jvpug, que son plantillas con una sintaxis parecida a Pug. En estos archivos se escribe la estructura de la página de forma más simple, usando indentación en lugar de muchas etiquetas HTML y evitando mezclar PHP dentro del HTML.
+
+
+Para poder usar los archivos .jvpug he creado una librería propia llamada JVpug. Esta librería lee las plantillas, interpreta la indentación y las instrucciones como bucles y condiciones, y las convierte en HTML normal que luego se muestra en el navegador.
+
+Por ejemplo, en vez de escribir bucles con PHP dentro del HTML, se puede usar una instrucción como @foreach, que es más fácil de leer y entender. También se pueden usar variables con #{} para mostrar datos que vienen del controlador.
+
+De esta forma el código queda más limpio y más parecido al diseño real de la página.
+
+La web se conecta a una base de datos MySQL donde se guardan las páginas y las entradas del blog. El controlador hace las consultas necesarias y pasa los datos a la plantilla para que se muestren.
+
+Para las consultas se utilizan sentencias preparadas, lo que hace que el código sea más seguro y evite errores.
+
+Para los estilos  he usado un sistema propio llamado JVestilo, que genera clases CSS automáticamente desde PHP. Gracias a esto se pueden aplicar estilos como colores, márgenes, tamaños, flex y grid sin tener que escribir mucho CSS manualmente.
+
+Esto hace que el diseño sea más rápido de modificar y que todas las páginas tengan el mismo estilo.
+
+Gracias a este proyecto he aprendido a separar mejor el código que se encarga de la lógica del que se encarga de mostrar la página. También he entendido mejor cómo funciona un motor de plantillas y cómo se pueden mostrar datos de una base de datos sin mezclar PHP y HTML constantemente.
+
+Aunque el sistema que he usado es sencillo, me ha ayudado a entender cómo se organizan los proyectos web de forma más realista. Este trabajo me ha servido para afianzar los conocimientos vistos en clase y para ganar más seguridad a la hora de programar en PHP.
