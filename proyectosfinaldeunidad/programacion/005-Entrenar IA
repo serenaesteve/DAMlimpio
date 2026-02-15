@@ -1,0 +1,993 @@
+En este proyecto se ha desarrollado un asistente de inteligencia artificial que funciona en local utilizando Python y Flask. El trabajo parte de un ejemplo realizado en clase, pero se ha ampliado y mejorado para entender mejor cómo funciona una IA desde el punto de vista de la programación. El objetivo principal del proyecto es crear un asistente controlado, que no invente información y que pueda ampliarse fácilmente con nuevos conocimientos.
+
+
+web/index.html:
+```
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>jocarsa | microchat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">◎</div>
+        <div class="brandText">
+          <div class="title">jocarsa | microchat</div>
+          <div class="subtitle">KB local (no inventa) + extras: guardar KB y descargar chat</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="strictBtn" class="btn ghost" title="Activar/desactivar modo estricto">Estricto: OFF</button>
+        <button id="downloadBtn" class="btn ghost" title="Descargar conversación">Descargar</button>
+        <button id="copyBtn" class="btn ghost" title="Copiar última respuesta">Copiar</button>
+        <button id="clearBtn" class="btn ghost" title="Limpiar chat">Limpiar</button>
+      </div>
+    </header>
+
+    <main id="chat" class="chat" aria-live="polite">
+      <div class="hint">
+        Escribe una pregunta y pulsa <b>Enviar</b>. Usa <b>Shift+Enter</b> para salto de línea.
+        <div class="hintRow">
+          <button id="examplesBtn" class="btn small">Ejemplos</button>
+          <span id="health" class="health">Estado: —</span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="composer">
+      <div class="composerInner">
+        <textarea id="input" rows="1" placeholder="Escribe tu mensaje…" spellcheck="false" autocomplete="off"></textarea>
+        <button id="sendBtn" class="btn primary">Enviar</button>
+      </div>
+      <div class="composerMeta">
+        <span class="metaItem">Enter: enviar</span>
+        <span class="metaDot">•</span>
+        <span class="metaItem">Shift+Enter: salto</span>
+        <span class="metaDot">•</span>
+        <span class="metaItem">Estricto: “No lo sé…” si no hay match</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+```
+
+web/app.js:
+```
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+const sendBtn = document.getElementById("sendBtn");
+const clearBtn = document.getElementById("clearBtn");
+const strictBtn = document.getElementById("strictBtn");
+const examplesBtn = document.getElementById("examplesBtn");
+const copyBtn = document.getElementById("copyBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const healthEl = document.getElementById("health");
+
+let strictMode = false;
+let history = []; 
+let lastUserQuestion = ""; 
+let lastAssistantAnswer = ""; 
+
+function el(tag, cls) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  return n;
+}
+
+function addMessage(role, text, meta) {
+  const hint = chat.querySelector(".hint");
+  if (hint) hint.remove();
+
+  const row = el("div", `msg ${role}`);
+  const avatar = el("div", "avatar");
+  avatar.textContent = role === "user" ? "USR" : "AI";
+
+  const bubble = el("div", "bubble");
+  bubble.textContent = text;
+
+
+  if (meta && meta.source) {
+    const badge = el("span", "badgeMini");
+    badge.textContent = String(meta.source).toUpperCase();
+    bubble.appendChild(document.createElement("br"));
+    bubble.appendChild(badge);
+  }
+
+  if (role === "assistant" && meta && meta.allowAddToKB) {
+    const actions = el("div", "kbActions");
+    const btnAdd = el("button", "btn tiny");
+    btnAdd.textContent = "Añadir a KB";
+    btnAdd.addEventListener("click", async () => {
+      await addToKB(lastUserQuestion, lastAssistantAnswer, btnAdd);
+    });
+
+    const note = el("span", "noteMini");
+    note.textContent = "Guarda esta Q/A en kb_extra.jsonl";
+
+    actions.appendChild(btnAdd);
+    actions.appendChild(note);
+    bubble.appendChild(actions);
+  }
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+
+  return { row, bubble };
+}
+
+function setTyping(on) {
+  if (on) {
+    const m = addMessage("assistant", "…");
+    m.bubble.classList.add("typing");
+    m.row.dataset.typing = "1";
+  } else {
+    const t = chat.querySelector('[data-typing="1"]');
+    if (t) t.remove();
+  }
+}
+
+function autosize() {
+  input.style.height = "auto";
+  input.style.height = Math.min(input.scrollHeight, 180) + "px";
+}
+
+function pushHistory(role, content) {
+  history.push({ role, content });
+  if (history.length > 8) history = history.slice(history.length - 8);
+}
+
+async function refreshHealth() {
+  try {
+    const res = await fetch("/api/health", { cache: "no-store" });
+    const data = await res.json();
+    if (data.ok) {
+      healthEl.textContent = `Estado: OK | KB: sí (${data.kb_items})`;
+    } else {
+      healthEl.textContent = "Estado: error";
+    }
+  } catch {
+    healthEl.textContent = "Estado: offline";
+  }
+}
+
+async function addToKB(question, answer, btn) {
+  if (!question || !answer) return;
+
+  btn.disabled = true;
+  const old = btn.textContent;
+  btn.textContent = "Guardando…";
+
+  try {
+    const res = await fetch("/api/kb/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, answer })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) {
+      btn.textContent = "Error";
+      setTimeout(() => {
+        btn.textContent = old;
+        btn.disabled = false;
+      }, 900);
+      return;
+    }
+    btn.textContent = "Guardado ✓";
+    await refreshHealth();
+  } catch {
+    btn.textContent = "Error";
+  }
+}
+
+async function send() {
+  const msg = (input.value || "").trim();
+  if (!msg) return;
+
+  lastUserQuestion = msg;
+
+  addMessage("user", msg);
+  pushHistory("user", msg);
+
+  input.value = "";
+  autosize();
+
+  setTyping(true);
+  sendBtn.disabled = true;
+
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg, strict: strictMode, history })
+    });
+
+    const data = await res.json().catch(() => ({}));
+    setTyping(false);
+
+    if (!res.ok || !data.ok) {
+      addMessage("assistant", `Error: ${data.error || res.statusText || "unknown"}`);
+      return;
+    }
+
+    lastAssistantAnswer = data.answer || "";
+
+    addMessage("assistant", lastAssistantAnswer, {
+      source: data.source || "?",
+      allowAddToKB: true
+    });
+
+    pushHistory("assistant", lastAssistantAnswer);
+  } catch (e) {
+    setTyping(false);
+    addMessage("assistant", `Error: ${String(e)}`);
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+function lastAssistantText() {
+  const bubbles = Array.from(chat.querySelectorAll(".msg.assistant .bubble"));
+  if (!bubbles.length) return "";
+  return bubbles[bubbles.length - 1].textContent || "";
+}
+
+function downloadChatTxt() {
+  const rows = Array.from(chat.querySelectorAll(".msg"));
+  const lines = [];
+  for (const r of rows) {
+    const role = r.classList.contains("user") ? "USR" : "AI";
+    const bubble = r.querySelector(".bubble");
+    const txt = (bubble ? bubble.textContent : "").trim();
+    lines.push(`[${role}] ${txt}`);
+    lines.push("");
+  }
+  const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "chat.txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+}
+
+
+sendBtn.addEventListener("click", send);
+
+clearBtn.addEventListener("click", () => {
+  chat.innerHTML = `
+    <div class="hint">
+      Escribe una pregunta y pulsa <b>Enviar</b>. Usa <b>Shift+Enter</b> para salto de línea.
+      <div class="hintRow">
+        <button id="examplesBtn" class="btn small">Ejemplos</button>
+        <span id="health" class="health">Estado: —</span>
+      </div>
+    </div>`;
+  history = [];
+  lastUserQuestion = "";
+  lastAssistantAnswer = "";
+  window.location.reload();
+});
+
+strictBtn.addEventListener("click", () => {
+  strictMode = !strictMode;
+  strictBtn.textContent = `Estricto: ${strictMode ? "ON" : "OFF"}`;
+});
+
+examplesBtn.addEventListener("click", () => {
+  const examples = [
+    "¿Quién es Jose Vicente Carratalá Sanchis?",
+    "¿A qué se dedica Jose Vicente Carratalá Sanchis profesionalmente?",
+    "¿Qué lenguajes de programación utiliza habitualmente?",
+    "¿Qué es Jocarsa para Jose Vicente Carratalá Sanchis?"
+  ];
+  input.value = examples[Math.floor(Math.random() * examples.length)];
+  autosize();
+  input.focus();
+});
+
+copyBtn.addEventListener("click", async () => {
+  const txt = lastAssistantText();
+  if (!txt) return;
+  try {
+    await navigator.clipboard.writeText(txt);
+    copyBtn.textContent = "Copiado ✓";
+    setTimeout(() => (copyBtn.textContent = "Copiar"), 900);
+  } catch {
+    input.value = txt;
+    autosize();
+    input.focus();
+  }
+});
+
+downloadBtn.addEventListener("click", downloadChatTxt);
+
+input.addEventListener("input", autosize);
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    send();
+  }
+});
+
+autosize();
+input.focus();
+refreshHealth();
+```
+
+style.css:
+```
+:root{
+  --bg:#ffffff;
+  --panel:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e5e7eb;
+  --border2:#eef2f7;
+  --shadow: 0 1px 2px rgba(15,23,42,.06);
+
+  --primary:#10a37f;
+  --primaryHover:#0e8e6f;
+
+  --bubbleUser:#f8fafc;
+  --bubbleAI:#ffffff;
+
+  --radius:14px;
+
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+}
+
+.app{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px 16px 18px;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+
+  padding: 12px 12px;
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width: 0;
+}
+
+.mark{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--border);
+  background:#f8fafc;
+  color:#111827;
+  font-family:var(--mono);
+}
+
+.brandText{ min-width:0; }
+.title{
+  font-weight:650;
+  letter-spacing:.2px;
+  line-height: 1.1;
+}
+.subtitle{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.chat{
+  margin-top: 14px;
+  height: calc(100dvh - 200px);
+  height: calc(100vh - 200px);
+  overflow:auto;
+
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+
+  padding: 10px 0;
+
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+.hint{
+  color: var(--muted);
+  font-size: 13px;
+  padding: 10px 14px 12px;
+  border-bottom: 1px solid var(--border2);
+}
+
+.hintRow{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.health{
+  font-size:12px;
+  color: var(--muted);
+  border:1px solid var(--border2);
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff;
+}
+
+.msg{
+  display:grid;
+  grid-template-columns: 36px 1fr;
+  gap:10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border2);
+}
+.msg:last-child{ border-bottom:none; }
+
+.avatar{
+  width:36px;
+  height:36px;
+  border-radius: 12px;
+  border:1px solid var(--border);
+  background:#f8fafc;
+  color:#111827;
+  display:grid;
+  place-items:center;
+  font-family:var(--mono);
+  font-size:12px;
+}
+
+.bubble{
+  background: var(--bubbleAI);
+  border:1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 10px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  color: var(--text);
+  max-width: 72ch;
+}
+
+.msg.user .bubble{
+  background: var(--bubbleUser);
+  border-color: var(--border2);
+}
+.msg.user .avatar{
+  background:#eef2ff;
+  border-color:#e0e7ff;
+}
+
+.msg.assistant .avatar{
+  background:#ecfdf5;
+  border-color:#d1fae5;
+}
+
+.composer{
+  margin-top: 14px;
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 10px;
+}
+
+.composerInner{
+  display:flex;
+  gap:10px;
+  align-items:flex-end;
+}
+
+textarea{
+  flex: 1 1 auto;
+  resize:none;
+  border:1px solid var(--border);
+  border-radius: 12px;
+  background:#fff;
+  color: var(--text);
+  padding: 10px 11px;
+  outline:none;
+  min-height: 42px;
+  max-height: 180px;
+  line-height: 1.35;
+  font-family: var(--sans);
+}
+
+textarea::placeholder{ color: #94a3b8; }
+
+textarea:focus{
+  border-color: rgba(16,163,127,.45);
+  box-shadow: 0 0 0 3px rgba(16,163,127,.12);
+}
+
+.btn{
+  border:1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background:#fff;
+  color: var(--text);
+  cursor:pointer;
+  user-select:none;
+}
+
+.btn:hover{ background:#f8fafc; }
+
+.btn.primary{
+  border-color: rgba(16,163,127,.35);
+  background: rgba(16,163,127,.10);
+  color: #064e3b;
+  font-weight:600;
+}
+.btn.primary:hover{
+  background: rgba(16,163,127,.16);
+  border-color: rgba(16,163,127,.50);
+}
+
+.btn.ghost{ background: transparent; }
+.btn.ghost:hover{ background:#f8fafc; }
+
+.btn.small{
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.composerMeta{
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding: 0 2px;
+}
+.metaDot{ opacity:.6; }
+
+.typing{
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+@media (max-width: 720px){
+  .actions{ flex-wrap:wrap; justify-content:flex-end; }
+  .bubble{ max-width: 100%; }
+}
+
+@media (max-width: 560px){
+  .msg{
+    grid-template-columns: 30px 1fr;
+    padding: 10px 10px;
+  }
+  .avatar{
+    width:30px; height:30px;
+    border-radius: 10px;
+    font-size:11px;
+  }
+  .app{ padding: 14px 10px 14px; }
+}
+.badgeMini{
+  display:inline-block;
+  margin-top:8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  background: #fff;
+  font-family: var(--mono);
+}
+.badgeMini{
+  display:inline-block;
+  margin-top:8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  background: #fff;
+  font-family: var(--mono);
+}
+
+.kbActions{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.btn.tiny{
+  padding: 5px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.noteMini{
+  font-size: 12px;
+  color: var(--muted);
+}
+```
+
+La carpeta web contiene la parte visual del proyecto. Dentro está el archivo index.html, que define la estructura de la página del chat, style.css, que se encarga del diseño y los colores, y app.js, que controla el funcionamiento del chat, el envío de mensajes y la visualización de las respuestas.
+
+
+infer.py:
+
+El archivo infer.py contiene la lógica para generar las respuestas. En este proyecto se usa para buscar las preguntas en la base de conocimiento y devolver la respuesta correcta, evitando que el sistema invente información.
+
+
+```
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(PROJECT_DIR, "qwen25-05b-jvc-merged")
+
+
+os.environ.setdefault("HF_HOME", "/tmp/hf-cache")
+os.makedirs(os.environ["HF_HOME"], exist_ok=True)
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["HF_DATASETS_OFFLINE"] = "1"
+
+FALLBACK_EXACT = "No lo sé basándome en mi entrenamiento."
+
+_TOKENIZER = None
+_MODEL = None
+
+SYSTEM_NORMAL = (
+    "Eres un asistente técnico y educativo en español. Responde de forma clara, precisa y profesional."
+)
+
+SYSTEM_STRICT = (
+    "Eres un asistente técnico y educativo en español.\n"
+    "Reglas estrictas:\n"
+    "- No inventes datos.\n"
+    f"- Si no tienes información suficiente, responde EXACTAMENTE: {FALLBACK_EXACT}\n"
+    "- Responde en un solo párrafo.\n"
+)
+
+def _ensure_loaded():
+    global _TOKENIZER, _MODEL
+    if _TOKENIZER is not None and _MODEL is not None:
+        return _TOKENIZER, _MODEL
+
+    _TOKENIZER = AutoTokenizer.from_pretrained(MODEL_PATH, local_files_only=True, use_fast=True)
+    if _TOKENIZER.pad_token is None:
+        _TOKENIZER.pad_token = _TOKENIZER.eos_token
+
+    use_cuda = torch.cuda.is_available()
+    _MODEL = AutoModelForCausalLM.from_pretrained(
+        MODEL_PATH,
+        local_files_only=True,
+        device_map="auto" if use_cuda else None,
+        torch_dtype=torch.float16 if use_cuda else torch.float32
+    )
+    if not use_cuda:
+        _MODEL.to("cpu")
+    _MODEL.eval()
+
+    return _TOKENIZER, _MODEL
+
+def _clean(text: str, strict: bool) -> str:
+    t = (text or "").strip()
+    if not t:
+        return FALLBACK_EXACT if strict else ""
+
+    if strict and FALLBACK_EXACT in t:
+        return FALLBACK_EXACT
+
+    
+    for line in t.splitlines():
+        line = line.strip()
+        if line:
+            return FALLBACK_EXACT if (strict and line == "") else line
+
+    return FALLBACK_EXACT if strict else t
+
+def infer(message: str, history=None, strict: bool = False, max_new_tokens: int = 256) -> str:
+    tokenizer, model = _ensure_loaded()
+
+    sys_prompt = SYSTEM_STRICT if strict else SYSTEM_NORMAL
+
+    conv = [{"role": "system", "content": sys_prompt}]
+
+   
+    if history:
+        for m in history[-8:]:
+            role = m.get("role")
+            content = (m.get("content") or "").strip()
+            if role in ("user", "assistant") and content:
+                conv.append({"role": role, "content": content})
+
+    conv.append({"role": "user", "content": message})
+
+    chat_text = tokenizer.apply_chat_template(conv, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer(chat_text, return_tensors="pt")
+    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    input_len = inputs["input_ids"].shape[-1]
+
+    gen_kwargs = dict(
+        max_new_tokens=96 if strict else max_new_tokens,
+        eos_token_id=tokenizer.eos_token_id,
+        pad_token_id=tokenizer.eos_token_id,
+        repetition_penalty=1.05,
+    )
+
+    if strict:
+        gen_kwargs.update(do_sample=False, num_beams=1)
+    else:
+        gen_kwargs.update(do_sample=True, temperature=0.6, top_p=0.9, top_k=50)
+
+    with torch.no_grad():
+        out = model.generate(**inputs, **gen_kwargs)
+
+    gen_ids = out[0, input_len:]
+    raw = tokenizer.decode(gen_ids, skip_special_tokens=True)
+    return _clean(raw, strict=strict)
+
+def load_model():
+    _ensure_loaded()
+```
+
+
+kb.jsonl:
+
+El archivo kb.jsonl es la base de conocimiento del asistente. En él se guardan las preguntas y respuestas que la IA conoce. Cada línea tiene una pregunta y su respuesta en formato JSON.
+
+
+```
+{"question":"¿Quién es Jose Vicente Carratalá Sanchis?","answer":"Jose Vicente Carratalá Sanchis es un desarrollador de software, formador y creador de contenidos técnicos especializado en programación, sistemas e inteligencia artificial."}
+{"question":"¿A qué se dedica Jose Vicente Carratalá Sanchis profesionalmente?","answer":"Jose Vicente Carratalá Sanchis se dedica al desarrollo de software, a la formación técnica en programación y a la creación de proyectos tecnológicos educativos."}
+{"question":"¿Qué tipo de software desarrolla Jose Vicente Carratalá Sanchis?","answer":"Jose Vicente Carratalá Sanchis desarrolla aplicaciones web, plataformas educativas, herramientas de gestión empresarial y sistemas basados en inteligencia artificial."}
+{"question":"¿Qué lenguajes de programación utiliza Jose Vicente Carratalá Sanchis habitualmente?","answer":"Jose Vicente Carratalá Sanchis utiliza habitualmente Python, PHP, JavaScript, C, C++, Java, SQL y Bash."}
+{"question":"¿Qué experiencia tiene Jose Vicente Carratalá Sanchis en desarrollo web?","answer":"Jose Vicente Carratalá Sanchis tiene amplia experiencia en desarrollo web utilizando HTML, CSS, JavaScript, PHP, bases de datos y servidores Linux con Apache."}
+{"question":"¿Qué relación tiene Jose Vicente Carratalá Sanchis con la educación y la formación?","answer":"Jose Vicente Carratalá Sanchis es formador y autor de material educativo, incluyendo libros técnicos, cursos online y contenidos didácticos de programación."}
+{"question":"¿Ha escrito libros técnicos Jose Vicente Carratalá Sanchis?","answer":"Sí, Jose Vicente Carratalá Sanchis ha escrito y publicado libros técnicos sobre programación, incluyendo un libro de introducción a Python."}
+{"question":"¿Qué enfoque educativo utiliza Jose Vicente Carratalá Sanchis?","answer":"Jose Vicente Carratalá Sanchis utiliza un enfoque educativo práctico, progresivo y estructurado, basado en ejercicios continuos y ejemplos reales."}
+{"question":"¿Qué es Jocarsa para Jose Vicente Carratalá Sanchis?","answer":"Jocarsa es el ecosistema de proyectos tecnológicos desarrollado por Jose Vicente Carratalá Sanchis, orientado a software de gestión, formación e inteligencia artificial."}
+{"question":"¿Qué tipo de productos ofrece Jose Vicente Carratalá Sanchis a través de Jocarsa?","answer":"Jose Vicente Carratalá Sanchis ofrece soluciones SaaS de gestión empresarial, plataformas educativas y herramientas de productividad."}
+{"question":"¿Qué papel tiene la inteligencia artificial en el trabajo de Jose Vicente Carratalá Sanchis?","answer":"La inteligencia artificial es un componente central en el trabajo de Jose Vicente Carratalá Sanchis, especialmente en asistentes educativos y automatización de procesos."}
+{"question":"¿Tiene experiencia Jose Vicente Carratalá Sanchis entrenando modelos de lenguaje?","answer":"Sí, Jose Vicente Carratalá Sanchis entrena modelos de lenguaje locales utilizando técnicas como LoRA y QLoRA con datasets personalizados."}
+{"question":"¿Qué tipo de modelos de IA utiliza Jose Vicente Carratalá Sanchis?","answer":"Jose Vicente Carratalá Sanchis utiliza modelos de lenguaje abiertos y ejecutables en local, como LLaMA, Mistral, Qwen y TinyLlama."}
+{"question":"¿Qué sistemas operativos utiliza Jose Vicente Carratalá Sanchis habitualmente?","answer":"Jose Vicente Carratalá Sanchis trabaja principalmente con sistemas Linux, especialmente Ubuntu."}
+{"question":"¿Tiene experiencia Jose Vicente Carratalá Sanchis en administración de sistemas?","answer":"Sí, Jose Vicente Carratalá Sanchis tiene experiencia en administración de servidores Linux, configuración de servicios web y gestión de bases de datos."}
+{"question":"¿Qué relación tiene Jose Vicente Carratalá Sanchis con Moodle?","answer":"Jose Vicente Carratalá Sanchis gestiona, personaliza y automatiza plataformas Moodle mediante scripts y herramientas de línea de comandos."}
+{"question":"¿Qué tipo de proyectos gráficos desarrolla Jose Vicente Carratalá Sanchis?","answer":"Jose Vicente Carratalá Sanchis desarrolla simulaciones visuales como campos estelares, terrenos fractales y sistemas gráficos avanzados en C++ y CUDA."}
+{"question":"¿Qué nivel de detalle prefiere Jose Vicente Carratalá Sanchis en las explicaciones técnicas?","answer":"Jose Vicente Carratalá Sanchis prefiere explicaciones técnicas detalladas, estructuradas y precisas, evitando el lenguaje coloquial."}
+{"question":"¿Cómo prefiere Jose Vicente Carratalá Sanchis que una IA responda a sus consultas?","answer":"Jose Vicente Carratalá Sanchis prefiere respuestas con tono neutro, profesional y con código completo cuando es necesario."}
+{"question":"¿Cuál es el objetivo de Jose Vicente Carratalá Sanchis al entrenar una IA con información propia?","answer":"El objetivo de Jose Vicente Carratalá Sanchis es crear un asistente educativo y técnico que refleje su estilo, conocimientos y criterios pedagógicos."}
+```
+
+
+server.py:
+
+El archivo server.py es el servidor del proyecto. Se encarga de recibir las preguntas del usuario desde la página web y devolver las respuestas. También gestiona las rutas de la API y carga la base de conocimiento para que el asistente pueda responder.
+
+
+```
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import json
+import difflib
+from datetime import datetime
+from flask import Flask, request, jsonify, send_from_directory
+
+app = Flask(__name__, static_folder="web", static_url_path="")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+KB_PATH = os.path.join(BASE_DIR, "kb.jsonl")
+KB_EXTRA_PATH = os.path.join(BASE_DIR, "kb_extra.jsonl")
+
+KB = []
+KB_INDEX = {}
+
+FALLBACK = "No lo sé basándome en mi entrenamiento."
+
+def load_kb():
+    """Carga kb.jsonl + kb_extra.jsonl (si existe)."""
+    global KB, KB_INDEX
+    KB, KB_INDEX = [], {}
+
+    def load_file(path):
+        if not os.path.isfile(path):
+            return
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    obj = json.loads(line)
+                    q = (obj.get("question") or "").strip()
+                    a = (obj.get("answer") or "").strip()
+                    if q and a:
+                        KB.append({"q": q, "a": a})
+                        KB_INDEX[q.lower()] = a
+                except Exception:
+                    pass
+
+    load_file(KB_PATH)
+    load_file(KB_EXTRA_PATH)
+
+    return True
+
+def kb_answer(question: str):
+    q = (question or "").strip()
+    if not q:
+        return None
+
+    # exact
+    a = KB_INDEX.get(q.lower())
+    if a:
+        return a
+
+    # fuzzy
+    questions = [it["q"] for it in KB]
+    if not questions:
+        return None
+
+    best = difflib.get_close_matches(q, questions, n=1, cutoff=0.78)
+    if best:
+        best_q = best[0]
+        for it in KB:
+            if it["q"] == best_q:
+                return it["a"]
+    return None
+
+def append_kb_extra(question: str, answer: str):
+    obj = {"question": question.strip(), "answer": answer.strip()}
+    if not obj["question"] or not obj["answer"]:
+        raise ValueError("question/answer vacíos")
+
+
+    with open(KB_EXTRA_PATH, "a", encoding="utf-8") as f:
+        f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+
+_warmed = False
+
+@app.before_request
+def warmup_once():
+    global _warmed
+    if _warmed:
+        return
+    load_kb()
+    _warmed = True
+
+@app.get("/")
+def index():
+    return send_from_directory("web", "index.html")
+
+@app.get("/api/health")
+def health():
+    return jsonify({
+        "ok": True,
+        "kb_loaded": bool(KB),
+        "kb_items": len(KB),
+        "kb_extra_exists": os.path.isfile(KB_EXTRA_PATH),
+    })
+
+@app.post("/api/chat")
+def api_chat():
+    data = request.get_json(force=True, silent=True) or {}
+    message = (data.get("message") or "").strip()
+    strict = bool(data.get("strict", False))
+
+    if not message:
+        return jsonify({"ok": False, "error": "Empty message"}), 400
+
+    a = kb_answer(message)
+    if a:
+        return jsonify({"ok": True, "answer": a, "source": "kb"})
+
+
+    if strict:
+        return jsonify({"ok": True, "answer": FALLBACK, "source": "fallback"})
+
+    return jsonify({"ok": True, "answer": FALLBACK, "source": "fallback"})
+
+@app.post("/api/kb/add")
+def api_kb_add():
+    data = request.get_json(force=True, silent=True) or {}
+    q = (data.get("question") or "").strip()
+    a = (data.get("answer") or "").strip()
+
+    if not q or not a:
+        return jsonify({"ok": False, "error": "question/answer requeridos"}), 400
+
+    try:
+        append_kb_extra(q, a)
+
+        load_kb()
+        return jsonify({
+            "ok": True,
+            "saved_to": "kb_extra.jsonl",
+            "kb_items": len(KB),
+            "ts": datetime.now().isoformat(timespec="seconds")
+        })
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+if __name__ == "__main__":
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", "8080"))
+    app.run(host=host, port=port, debug=False, threaded=True)
+```
+
+
+
+Desde el chat genero estos 2 archivos:
+
+kb_extra.jsonl:
+```
+{"question": "¿Quién es Jose Vicente Carratalá Sanchis?", "answer": "Jose Vicente Carratalá Sanchis es un desarrollador de software, formador y creador de contenidos técnicos especializado en programación, sistemas e inteligencia artificial."}
+```
+
+chat.txt:
+```
+[USR] ¿Quién es Jose Vicente Carratalá Sanchis?
+
+[AI] Jose Vicente Carratalá Sanchis es un desarrollador de software, formador y creador de contenidos técnicos especializado en programación, sistemas e inteligencia artificial.KBGuardado ✓Guarda esta Q/A en kb_extra.jsonl
+```
+
+
+En este proyecto he hecho un asistente de inteligencia artificial que funciona en local usando Python y Flask. El trabajo parte de un ejemplo que hicimos en clase, pero lo he mejorado para que funcione mejor y sea más claro. El objetivo ha sido aprender cómo funciona una IA sin usar servicios externos y evitando que invente respuestas.
+
+En clase el asistente respondía a preguntas, pero podía dar información incorrecta. Para mejorar esto, he creado una base de datos de preguntas y respuestas en un archivo JSONL. El asistente primero busca la respuesta en ese archivo y solo responde si la encuentra. Si no sabe la respuesta, dice claramente que no lo sabe basándose en su entrenamiento.
+
+También he añadido un modo estricto para que el asistente no invente información. He mejorado la interfaz del chat para que sea más parecida a una aplicación real y más fácil de usar. Además, el sistema se puede ampliar fácilmente añadiendo nuevas preguntas y respuestas sin volver a entrenar el modelo.
+
+Todo el proyecto funciona en local, sin conexión a internet.
+
+Con este trabajo he aprendido que una IA no es solo el modelo, sino también los datos y las reglas que se le ponen para controlar su comportamiento.
+Tambien he aprendido cómo funciona un asistente de inteligencia artificial a nivel básico, combinando backend, frontend y datos. También he entendido la importancia de controlar las respuestas de una IA y de trabajar con información fiable. Este proyecto me ha ayudado a comprender mejor cómo se pueden crear aplicaciones de IA sencillas pero útiles, y cómo mejorarlas poco a poco a partir de un ejemplo inicial.
