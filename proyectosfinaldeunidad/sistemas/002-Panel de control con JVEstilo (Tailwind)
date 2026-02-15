@@ -1,0 +1,483 @@
+En este proyecto he creado un panel de administración sencillo usando PHP y HTML. He partido del código visto en clase y lo he mejorado para que esté mejor organizado y sea más visual. El objetivo ha sido aprender a estructurar una página web y reutilizar código de forma básica.
+
+
+admin.php:
+
+Es la página principal del panel de control. Desde aquí se accede a las distintas secciones como clientes, productos, pedidos y almacén.
+
+
+```
+<?php include("includes/header.php"); ?>
+<?php include("includes/menu.php"); ?>
+
+<main class="f-5 p-20">
+  <h1>Bienvenido al panel de control</h1>
+  <p>Selecciona una opción del menú.</p>
+</main>
+
+<?php include("includes/footer.php"); ?>
+```
+
+almacen.php:
+```
+<?php include("includes/header.php"); ?>
+<?php include("includes/menu.php"); ?>
+
+<main class="f-5 p-20">
+<h2>Almacén</h2>
+<p>Stock y almacén</p>
+</main>
+
+<?php include("includes/footer.php"); ?>
+```
+
+clientes.php:
+
+Son las distintas secciones del panel de administración. Cada archivo muestra el contenido correspondiente y reutiliza la estructura común mediante includes.
+
+
+```
+<?php $active = "clientes"; ?>
+<?php include("includes/header.php"); ?>
+<?php include("includes/menu.php"); ?>
+
+<main class="f-5 p-20 flex fd-column g-20">
+
+
+  <div class="card p-20 flex fj-between fa-center">
+    <div>
+      <h2 class="m-0">Clientes</h2>
+      <div class="fs-12 c-gray">Listado de clientes registrados</div>
+    </div>
+
+    <a href="#" class="btn b-teal c-white">+ Nuevo cliente</a>
+  </div>
+
+
+  <div class="card p-10" style="overflow:auto;">
+    <table class="w-100pc">
+      <thead class="b-teal c-white">
+        <tr>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Serena</td>
+          <td>Sania</td>
+          <td>serena@email.com</td>
+          <td>612345678</td>
+          <td class="flex g-10">
+            <a class="btn b-lightgray c-black fs-12">Editar</a>
+            <a class="btn b-lightgray c-black fs-12">Borrar</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Hector</td>
+          <td>Lopez</td>
+          <td>hector@email.com</td>
+          <td>623456789</td>
+          <td class="flex g-10">
+            <a class="btn b-lightgray c-black fs-12">Editar</a>
+            <a class="btn b-lightgray c-black fs-12">Borrar</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Thais</td>
+          <td>Esteve Sania</td>
+          <td>thais@email.com</td>
+          <td>634567890</td>
+          <td class="flex g-10">
+            <a class="btn b-lightgray c-black fs-12">Editar</a>
+            <a class="btn b-lightgray c-black fs-12">Borrar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<?php include("includes/footer.php"); ?>
+```
+
+
+index.php:
+
+Es el punto de entrada del proyecto. Se encarga de redirigir al usuario a la página de login cuando accede a la aplicación.
+
+
+```
+<?php
+header("Location: login.php");
+exit;
+```
+
+login.php:
+
+Muestra el formulario de acceso al panel. En esta fase del proyecto el login es una simulación y solo sirve para maquetar la pantalla y acceder al panel de administración.
+
+
+```
+<!doctype html>
+<html lang="es" class="w-100pc h-100pc">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style><?php include("JVestilo/JVestilo.php"); ?></style>
+</head>
+
+<body class="flex fa-center fj-center b-lightgray w-100pc h-100pc">
+
+<form class="b-white p-20 bradius-10 flex fd-column g-15 w-250">
+  <h2 class="ta-center">Login</h2>
+  <input class="p-10 bradius-5 br-1-solid-lightgray" type="text" placeholder="Usuario">
+  <input class="p-10 bradius-5 br-1-solid-lightgray" type="password" placeholder="Contraseña">
+  <a href="admin.php" class="ta-center b-teal c-white p-10 bradius-5 td-none">Entrar</a>
+</form>
+
+</body>
+</html>
+```
+
+pedidos.php:
+
+Son las distintas secciones del panel de administración. Cada archivo muestra el contenido correspondiente y reutiliza la estructura común mediante includes.
+
+
+```
+<?php include("includes/header.php"); ?>
+<?php include("includes/menu.php"); ?>
+
+<main class="f-5 p-20">
+<h2>Pedidos</h2>
+<p>Listado de pedidos</p>
+</main>
+
+<?php include("includes/footer.php"); ?>
+```
+
+
+productos.php:
+
+Son las distintas secciones del panel de administración. Cada archivo muestra el contenido correspondiente y reutiliza la estructura común mediante includes.
+
+
+```
+<?php include("includes/header.php"); ?>
+<?php include("includes/menu.php"); ?>
+
+<main class="f-5 p-20">
+<h2>Productos</h2>
+<p>Listado de productos</p>
+</main>
+
+<?php include("includes/footer.php"); ?>
+```
+
+tabla.php:
+```
+<!doctype html>
+<html lang="es" class="w-100pc h-100pc p-0 m-0">
+<head>
+  <meta charset="UTF-8">
+  <title>Clientes</title>
+
+  <style>
+    <?php include("JVestilo/JVestilo.php"); ?>
+
+  
+    td, th { padding: 10px; }
+
+    .card { box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+
+    tbody tr:hover { background: #f0fdfa; }
+
+    .navlink { border-radius: 8px; }
+    .navlink:hover { opacity: .9; }
+    .active { background: rgba(255,255,255,.85); font-weight: bold; }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover { opacity: .9; }
+
+    .input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body class="w-100pc h-100pc p-0 m-0 flex b-lightgray">
+
+  <!-- Menú lateral -->
+  <nav class="f-1 b-teal p-20 flex fd-column g-20">
+    <div class="c-white fs-20 fw-bold">Admin</div>
+
+    <a href="clientes" class="navlink active b-white p-10 c-teal td-none">Clientes</a>
+    <a href="productos" class="navlink b-white p-10 c-teal td-none">Productos</a>
+    <a href="pedidos" class="navlink b-white p-10 c-teal td-none">Pedidos</a>
+    <a href="almacen" class="navlink b-white p-10 c-teal td-none">Almacén</a>
+  </nav>
+
+
+  <main class="f-5 p-20">
+
+
+    <div class="flex fj-between fa-center m-0 p-10 b-white bradius-10 card">
+      <div>
+        <div class="fs-20 fw-bold">Clientes</div>
+        <div class="c-gray fs-12">Listado de clientes</div>
+      </div>
+
+      <div class="flex g-10 fa-center">
+        <input class="input" type="text" placeholder="Buscar...">
+        <a class="btn b-teal c-white" href="#">+ Nuevo</a>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="m-20 p-0 b-white bradius-10 card" style="overflow:auto;">
+      <table class="w-100pc">
+        <thead class="b-teal c-white">
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr><td>Serena</td><td>Sania Esteve</td><td>serena@example.com</td><td>612345678</td>
+            <td>
+              <a class="btn b-lightgray c-black" href="#">Editar</a>
+              <a class="btn b-lightgray c-black" href="#">Borrar</a>
+            </td>
+          </tr>
+
+          <tr><td>Hecor</td><td>Lopez</td><td>hector@example.com</td><td>623456789</td>
+            <td>
+              <a class="btn b-lightgray c-black" href="#">Editar</a>
+              <a class="btn b-lightgray c-black" href="#">Borrar</a>
+            </td>
+          </tr>
+
+          <tr><td>Thais</td><td>Esteve Sania</td><td>thais@example.com</td><td>634567890</td>
+            <td>
+              <a class="btn b-lightgray c-black" href="#">Editar</a>
+              <a class="btn b-lightgray c-black" href="#">Borrar</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</body>
+</html>
+```
+
+footer.php:
+
+Cierra la estructura HTML de la página. Facilita mantener el código ordenado y reutilizable.
+
+
+```
+</body>
+</html>
+```
+
+header.php:
+
+Contiene la estructura inicial de la página (doctype, head, carga de estilos) para no repetir código en cada archivo.
+
+
+```
+<!doctype html>
+<html lang="es" class="w-100pc h-100pc">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel Admin</title>
+
+  <style><?php include("JVestilo/JVestilo.php"); ?></style>
+
+  <style>
+
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; }
+
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+
+
+    .sidebar { min-width: 220px; }
+    .navlink {
+      border-radius: 10px;
+      transition: .15s;
+      display: block;
+    }
+    .navlink:hover { opacity: .92; transform: translateX(2px); }
+    .navlink.active { background: rgba(255,255,255,.85); font-weight: 700; }
+
+
+    .topbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+    }
+
+
+    .input {
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+    }
+    .input:focus { border-color: teal; }
+
+    .btn {
+      padding: 10px 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-block;
+      border: 1px solid rgba(0,0,0,.08);
+      transition: .15s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* Tabla */
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 12px; border-bottom: 1px solid #eef2f7; }
+    thead th { text-align: left; }
+    tbody tr:hover { background: #f0fdfa; }
+  </style>
+</head>
+
+<body class="flex w-100pc h-100pc b-lightgray">
+```
+
+menu.php:
+
+Define el menú lateral del panel. Es común a todas las páginas y permite navegar entre las distintas secciones.
+
+
+```
+<?php
+
+$active = $active ?? "";
+?>
+
+<nav class="sidebar f-1 b-teal p-20 flex fd-column g-15">
+
+  <div class="c-white fs-22 fw-bold">Admin</div>
+  <div class="c-white fs-12" style="opacity:.85;">Panel de control</div>
+
+  <a class="navlink b-white p-10 c-teal td-none <?php echo ($active==='clientes')?'active':''; ?>" href="clientes.php">Clientes</a>
+  <a class="navlink b-white p-10 c-teal td-none <?php echo ($active==='productos')?'active':''; ?>" href="productos.php">Productos</a>
+  <a class="navlink b-white p-10 c-teal td-none <?php echo ($active==='pedidos')?'active':''; ?>" href="pedidos.php">Pedidos</a>
+  <a class="navlink b-white p-10 c-teal td-none <?php echo ($active==='almacen')?'active':''; ?>" href="almacen.php">Almacén</a>
+
+  <div class="f-1"></div>
+
+  <a class="navlink b-white p-10 c-red td-none" href="logout.php">Salir</a>
+</nav>
+```
+
+colores.php:
+
+Contiene el listado de colores que utiliza JVestilo para generar las clases de estilo.
+
+
+```
+<?php
+$colores = [
+  "White",
+  "Black",
+  "LightGray",
+  "Gray",
+  "Teal",
+  "Red"
+];
+```
+
+familiasfuentes.php:
+
+Define las familias de fuentes disponibles para el sistema de estilos.
+
+
+```
+<?php
+$familias = ['system-ui','sans-serif','monospace'];
+```
+
+jvestilo.php:
+
+Genera dinámicamente las clases CSS utilizadas en el proyecto (colores, tamaños, márgenes, flex, etc.), funcionando como un pequeño sistema de estilos propio.
+
+
+```
+<?php
+include "colores.php";
+foreach($colores as $c){
+  echo ".b-".strtolower($c)."{background:$c;}";
+  echo ".c-".strtolower($c)."{color:$c;}";
+}
+
+for($i=0;$i<=300;$i++){
+  echo ".p-$i{padding:${i}px;}";
+  echo ".m-$i{margin:${i}px;}";
+  echo ".w-$i{width:${i}px;}";
+  echo ".h-$i{height:${i}px;}";
+  echo ".fs-$i{font-size:${i}px;}";
+  echo ".bradius-$i{border-radius:${i}px;}";
+  echo ".f-$i{flex:$i;}";
+}
+
+echo ".flex{display:flex;}";
+echo ".fd-column{flex-direction:column;}";
+echo ".fj-center{justify-content:center;}";
+echo ".fa-center{align-items:center;}";
+
+include "familiasfuentes.php";
+foreach($familias as $f){
+  echo ".ff-$f{font-family:$f;}";
+}
+
+echo ".td-none{text-decoration:none;}";
+```
+
+
+En este proyecto he partido del código base que hicimos en clase y lo he ido mejorando poco a poco tanto a nivel visual como de organización del código.
+
+La primera mejora ha sido la estructura del proyecto, ya que he separado el contenido en distintos archivos usando include. De esta forma el encabezado, el menú y el pie de página están en archivos independientes, lo que evita repetir código y hace que el proyecto sea más ordenado y fácil de mantener.
+
+También he mejorado el diseño visual del panel. En lugar de enseñar solo tablas simples, he añadido contenedores tipo tarjeta (cards), mejor espaciado, colores más suaves y botones para acciones como editar o borrar. Esto hace que el panel sea más claro, más cómodo de usar y con un aspecto más profesional.
+
+Otra mejora importante ha sido el menú lateral, que ahora es común para todas las páginas y enseña de forma visual qué sección está activa. Esto facilita la navegación dentro del panel de administración.
+
+Además, he creado un sistema de estilos propio (JVestilo) con clases reutilizables para colores, tamaños, márgenes y flexbox, lo que me permite maquetar las páginas de forma más rápida y ordenada sin depender de frameworks externos.
+
+En resumen, respecto al código de clase, he mejorado la organización, la reutilización del código y la presentación visual.
+
+
+Con este trabajo he aprendido a organizar mejor un proyecto en PHP usando include y a mejorar el aspecto visual de una aplicación web. El resultado es un panel más ordenado, más claro y más fácil de mantener que el ejemplo inicial de clase.
