@@ -44,3 +44,39 @@ function producto_por_id(int $id) {
     return $st->fetch();
 }
 
+function producto_crear(array $d): int {
+  $st = db()->prepare("INSERT INTO producto (categoria_id,titulo,descripcion,precio,stock,imagen,destacado)
+                       VALUES (?,?,?,?,?,?,?)");
+  $st->execute([
+    (int)$d['categoria_id'],
+    $d['titulo'],
+    $d['descripcion'],
+    (float)$d['precio'],
+    (int)$d['stock'],
+    $d['imagen'] ?: null,
+    (int)$d['destacado']
+  ]);
+  return (int)db()->lastInsertId();
+}
+
+function producto_actualizar(int $id, array $d): void {
+  $st = db()->prepare("UPDATE producto
+      SET categoria_id=?, titulo=?, descripcion=?, precio=?, stock=?, imagen=?, destacado=?
+      WHERE id=?");
+  $st->execute([
+    (int)$d['categoria_id'],
+    $d['titulo'],
+    $d['descripcion'],
+    (float)$d['precio'],
+    (int)$d['stock'],
+    $d['imagen'] ?: null,
+    (int)$d['destacado'],
+    $id
+  ]);
+}
+
+function producto_borrar(int $id): void {
+  $st = db()->prepare("DELETE FROM producto WHERE id=?");
+  $st->execute([$id]);
+}
+
