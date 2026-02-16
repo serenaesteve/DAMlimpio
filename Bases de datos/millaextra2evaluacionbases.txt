@@ -1,0 +1,45 @@
+Enunciado de la actividad
+
+Módulo: Bases de Datos
+Curso: 1º Desarrollo de Aplicaciones Multiplataforma (DAM)
+Evaluación: Segunda evaluación
+
+Contexto
+
+Una fotógrafa profesional necesita una base de datos para gestionar la información relacionada con su trabajo. La aplicación deberá permitir almacenar datos sobre clientes, sesiones fotográficas y fotografías realizadas, de forma organizada y sin duplicidades.
+
+Para ello, se pide diseñar e implementar una base de datos relacional que permita cubrir estas necesidades, aplicando correctamente los conceptos vistos en clase durante la segunda evaluación.
+
+Requisitos:
+
+1.Diseñar el modelo entidad–relación (E-R) de la base de datos, indicando:
+-Entidades necesarias.
+-Atributos de cada entidad.
+-Claves primarias.
+-Relaciones entre entidades y su cardinalidad.
+
+2.Transformar el modelo E-R en el modelo relacional, definiendo las tablas correspondientes.
+
+3.Crear la base de datos en MySQL (o el SGBD utilizado en clase), incluyendo:
+-Creación de la base de datos.
+-Creación de tablas.
+-Definición de claves primarias y foráneas.
+-Uso de tipos de datos adecuados.
+
+4.Insertar datos de ejemplo en todas las tablas (al menos 5 registros por tabla).
+
+5.Realizar las siguientes consultas SQL:
+-Mostrar todas las sesiones realizadas por un cliente concreto.
+-Listar las sesiones realizadas en una fecha determinada.
+-Obtener el número total de sesiones realizadas.
+-Mostrar las fotografías asociadas a una sesión concreta.
+
+6. Entrega
+
+El alumnado deberá entregar:
+-El diagrama E-R (en papel o formato digital).
+-El script SQL con la creación de la base de datos y las tablas.
+-El script SQL con la inserción de datos.
+-El script SQL con las consultas solicitadas.
+
+
