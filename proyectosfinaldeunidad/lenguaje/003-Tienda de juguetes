@@ -1,0 +1,786 @@
+En este proyecto he desarrollado una página web dedicada a juguetes recortables, pensada para que el usuario pueda descubrir, descargar y utilizar distintos recortables de forma sencilla. El objetivo principal ha sido crear una web visualmente atractiva y fácil de usar, combinando diseño y funcionalidad.
+
+Para realizarla he utilizado HTML y CSS para la estructura y el diseño, y PHP junto con una base de datos SQLite para gestionar los contenidos de forma dinámica. De esta manera, los recortables se cargan automáticamente desde la base de datos y cada uno cuenta con su propia página de información.
+
+Este proyecto me ha permitido aplicar y consolidar conocimientos de desarrollo web, integrando tanto la parte visual como la lógica del servidor, y creando una aplicación web completa y funcional.
+
+
+Base de datos:
+```
+serena@serena-portatil:~$ sqlite3 recortables.db
+SQLite version 3.45.1 2024-01-30 16:01:20
+Enter ".help" for usage hints.
+sqlite> .tables
+sqlite> PRAGMA table_info(productos);
+sqlite> SELECT * FROM productos;
+Parse error: no such table: productos
+sqlite> .databases
+main: /home/serena/recortables.db r/w
+sqlite> CREATE TABLE productos (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre TEXT NOT NULL,
+  descripcion TEXT,
+  imagen TEXT,
+  calificacion REAL
+);
+sqlite> .tables
+productos
+sqlite> INSERT INTO productos (nombre, descripcion, imagen, calificacion) VALUES 
+('Animales', 'Recortables de animales para imprimir y montar', 'animales.jpg', 4.5),
+('Vehículos', 'Recortables de vehículos variados', 'vehiculos.jpg', 4.6),
+('Robots', 'Recortables de robots', 'robots.jpg', 4.7),
+('Edificios', 'Recortables de edificios', 'edificios.jpg', 4.4),
+('Fantasía', 'Recortables del mundo de fantasía', 'fantasia.jpg', 4.6),
+
+('Coche Deportivo', 'Recortable de coche para montar', 'destacado1.jpg', 4.8),
+('Castillo Medieval', 'Castillo recortable con torres y murallas', 'destacado2.jpg', 4.6),
+('Robot Explorador', 'Robot explorador articulado', 'destacado3.jpg', 4.9),
+
+('Avión', 'Recortable de avión', 'avion.jpg', 4.5),
+('Barco', 'Recortable de barco', 'barco.jpg', 4.4),
+('Castillo', 'Recortable de castillo clásico', 'castillo.jpg', 4.6),
+('Coche', 'Recortable de coche sencillo', 'coche.jpg', 4.3),
+('Dinosaurio', 'Recortable de dinosaurio', 'dino.jpg', 4.7),
+('Robot', 'Recortable de robot clásico', 'robot.jpg', 4.8);
+sqlite> SELECT id, nombre, imagen FROM productos;
+1|Animales|animales.jpg
+2|Vehículos|vehiculos.jpg
+3|Robots|robots.jpg
+4|Edificios|edificios.jpg
+5|Fantasía|fantasia.jpg
+6|Coche Deportivo|destacado1.jpg
+7|Castillo Medieval|destacado2.jpg
+8|Robot Explorador|destacado3.jpg
+9|Avión|avion.jpg
+10|Barco|barco.jpg
+11|Castillo|castillo.jpg
+12|Coche|coche.jpg
+13|Dinosaurio|dino.jpg
+14|Robot|robot.jpg
+sqlite> 
+
+serena@serena-portatil:/var/www/html/DAMlimpio/proyectosfinaldeunidad/lenguaje/tiendajuguetes$ sqlite3 recortables.db
+SQLite version 3.45.1 2024-01-30 16:01:20
+Enter ".help" for usage hints.
+sqlite> ALTER TABLE productos ADD COLUMN categoria TEXT;
+sqlite> UPDATE productos SET categoria='Animales'  WHERE imagen='animales.jpg' OR imagen='dino.jpg';
+UPDATE productos SET categoria='Vehículos' WHERE imagen IN ('vehiculos.jpg','coche.jpg','avion.jpg','barco.jpg','destacado1.jpg');
+UPDATE productos SET categoria='Edificios' WHERE imagen IN ('edificios.jpg','castillo.jpg','destacado2.jpg');
+UPDATE productos SET categoria='Robots'    WHERE imagen IN ('robots.jpg','robot.jpg','destacado3.jpg');
+UPDATE productos SET categoria='Fantasía'  WHERE imagen='fantasia.jpg';
+sqlite> SELECT id,nombre,categoria,imagen FROM productos ORDER BY categoria;
+.exit
+   ...> 
+
+   ...> sqlite3 recortables.db
+   ...> ALTER TABLE productos ADD COLUMN fecha TEXT;
+
+-- Poner fecha a los que ya existen (hoy, por ejemplo)
+UPDATE productos SET fecha = date('now') WHERE fecha IS NULL;
+
+-- Comprueba
+SELECT id, nombre, fecha FROM productos ORDER BY id;
+.exit
+   ...> 
+```
+
+buscar.php:
+
+permite buscar recortables por nombre o descripción.
+
+
+```
+<?php
+$db = new SQLite3(__DIR__ . '/recortables.db');
+
+// Detectar si existe la columna 'fecha'
+$cols = $db->query("PRAGMA table_info(productos)");
+$tieneFecha = false;
+while ($c = $cols->fetchArray(SQLITE3_ASSOC)) {
+  if ($c['name'] === 'fecha') { $tieneFecha = true; break; }
+}
+
+$q = isset($_GET['q']) ? trim($_GET['q']) : '';
+$qLike = '%' . $q . '%';
+
+$sql = $tieneFecha
+  ? "SELECT id, nombre, imagen, calificacion, fecha
+     FROM productos
+     WHERE nombre LIKE :q OR descripcion LIKE :q
+     ORDER BY calificacion DESC, id ASC"
+  : "SELECT id, nombre, imagen, calificacion
+     FROM productos
+     WHERE nombre LIKE :q OR descripcion LIKE :q
+     ORDER BY calificacion DESC, id ASC";
+
+$stmt = $db->prepare($sql);
+if (!$stmt) {
+  http_response_code(500);
+  echo "Error SQL: " . htmlspecialchars($db->lastErrorMsg());
+  exit;
+}
+$stmt->bindValue(':q', $qLike, SQLITE3_TEXT);
+$res = $stmt->execute();
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar - Juguetes Recortables</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Juguetes Recortables</h1>
+  <p>Crea, recorta y diviértete</p>
+</header>
+
+<main>
+  <section>
+    <h3>Buscar recortables</h3>
+
+    <form class="buscador" action="/buscar.php" method="get">
+      <input type="text" name="q" placeholder="Buscar por nombre o descripción..." value="<?= htmlspecialchars($q) ?>">
+      <button class="btn" type="submit">🔎 Buscar</button>
+      <a class="btn secundario" href="/index.php">⬅ Volver</a>
+    </form>
+
+    <div class="contenedor">
+      <?php
+      $hay = false;
+      while ($p = $res->fetchArray(SQLITE3_ASSOC)) {
+        $hay = true;
+
+        $esNuevo = false;
+        if ($tieneFecha && !empty($p['fecha'])) {
+          $esNuevo = (strtotime($p['fecha']) >= strtotime('-7 days'));
+        }
+      ?>
+        <a class="cardlink" href="/producto.php?id=<?= (int)$p['id'] ?>">
+          <article class="destacado">
+            <img src="/<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
+            <h4>
+              <?= htmlspecialchars($p['nombre']) ?>
+              <?php if ($esNuevo) { ?><span class="badge">Nuevo</span><?php } ?>
+            </h4>
+            <p class="calificacion">⭐ <?= htmlspecialchars((string)$p['calificacion']) ?></p>
+            <?php if ($tieneFecha && !empty($p['fecha'])) { ?>
+              <p class="fecha">📅 <?= htmlspecialchars($p['fecha']) ?></p>
+            <?php } ?>
+          </article>
+        </a>
+      <?php } ?>
+
+      <?php if (!$hay) { ?>
+        <p>No se encontraron resultados.</p>
+      <?php } ?>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Serena Sania Esteve</p>
+  <p>Proyecto realizado con HTML, CSS y PHP</p>
+</footer>
+
+</body>
+</html>
+```
+
+index.php:
+
+página principal. Muestra las categorías y los recortables destacados obtenidos de la base de datos.
+
+
+```
+<?php
+// Conexión a la base de datos
+$db = new SQLite3(__DIR__ . '/recortables.db');
+
+// Destacados (los 3 mejor valorados)
+$destacados = $db->query("
+  SELECT id, nombre, imagen, calificacion
+  FROM productos
+  ORDER BY calificacion DESC, id ASC
+  LIMIT 3
+");
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juguetes Recortables</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header>
+  <h1>Juguetes Recortables</h1>
+  <p>Crea, recorta y diviértete</p>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="heroe">
+  <section>
+	  <h3>Buscar</h3>
+	  <form class="buscador" action="buscar.php" method="get">
+	    <input type="text" name="q" placeholder="Buscar recortables...">
+	    <button class="btn" type="submit">🔎 Buscar</button>
+	  </form>
+	</section>
+
+    <h2>Recorta, arma y juega</h2>
+    <p>
+      Descubre recortables de vehículos, edificios, robots y mucho más.
+      Imprime, recorta y construye tus propios juguetes.
+    </p>
+    <a href="#categoriasprincipales">Ver categorías</a>
+    <a href="#recortablesdestacados">Ver destacados</a>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section id="categoriasprincipales">
+    <h3>Categorías principales</h3>
+
+    <div class="contenedor">
+
+      <a class="cardlink" href="categoria.php?c=Vehículos">
+        <article>
+          <img src="vehiculos.jpg" alt="Vehículos">
+          <p>Vehículos</p>
+        </article>
+      </a>
+
+      <a class="cardlink" href="categoria.php?c=Edificios">
+        <article>
+          <img src="edificios.jpg" alt="Edificios">
+          <p>Edificios</p>
+        </article>
+      </a>
+
+      <a class="cardlink" href="categoria.php?c=Robots">
+        <article>
+          <img src="robots.jpg" alt="Robots">
+          <p>Robots</p>
+        </article>
+      </a>
+
+      <a class="cardlink" href="categoria.php?c=Animales">
+        <article>
+          <img src="animales.jpg" alt="Animales">
+          <p>Animales</p>
+        </article>
+      </a>
+
+      <a class="cardlink" href="categoria.php?c=Fantasía">
+        <article>
+          <img src="fantasia.jpg" alt="Fantasía">
+          <p>Fantasía</p>
+        </article>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- DESTACADOS -->
+  <section id="recortablesdestacados">
+    <h3>Recortables destacados</h3>
+
+    <div class="contenedor">
+      <?php while ($p = $destacados->fetchArray(SQLITE3_ASSOC)) { ?>
+        <article class="destacado">
+          <a class="cardlink" href="producto.php?id=<?= (int)$p['id'] ?>">
+            <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
+            <h4><?= htmlspecialchars($p['nombre']) ?></h4>
+            <p class="calificacion">⭐ <?= htmlspecialchars((string)$p['calificacion']) ?></p>
+          </a>
+        </article>
+      <?php } ?>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Serena Sania Esteve</p>
+  <p>Proyecto realizado con HTML, CSS y PHP</p>
+</footer>
+
+</body>
+</html>
+```
+
+producto.php:
+
+página individual de cada recortable, con su información y opción de descarga.
+
+
+```
+<?php
+$db = new SQLite3(__DIR__ . '/recortables.db');
+
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+$stmt = $db->prepare("SELECT id, nombre, descripcion, imagen, calificacion FROM productos WHERE id = :id");
+$stmt->bindValue(':id', $id, SQLITE3_INTEGER);
+$res = $stmt->execute();
+
+$producto = $res ? $res->fetchArray(SQLITE3_ASSOC) : null;
+
+if (!$producto) {
+  http_response_code(404);
+  echo "Producto no encontrado";
+  exit;
+}
+
+// “Similares”: 4 productos distintos, por calificación alta
+$sim = $db->prepare("
+  SELECT id, nombre, imagen, calificacion
+  FROM productos
+  WHERE id != :id
+  ORDER BY calificacion DESC, id ASC
+  LIMIT 4
+");
+$sim->bindValue(':id', $id, SQLITE3_INTEGER);
+$simRes = $sim->execute();
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($producto['nombre']) ?> - Juguetes Recortables</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<div id="modalImg" class="modal" onclick="this.style.display='none'">
+  <img src="<?= htmlspecialchars($producto['imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>">
+</div>
+
+<body>
+
+<header>
+  <h1>Juguetes Recortables</h1>
+  <p>Crea, recorta y diviértete</p>
+</header>
+
+<main>
+
+  <section class="producto">
+    <div class="producto-card">
+      <img class="producto-img zoomable"
+     src="<?= htmlspecialchars($producto['imagen']) ?>"
+     alt="<?= htmlspecialchars($producto['nombre']) ?>"
+     onclick="document.getElementById('modalImg').style.display='flex'">
+
+      <div class="producto-info">
+        <h2><?= htmlspecialchars($producto['nombre']) ?></h2>
+        <p class="calificacion">⭐ <?= htmlspecialchars((string)$producto['calificacion']) ?></p>
+        <p><?= nl2br(htmlspecialchars($producto['descripcion'] ?? '')) ?></p>
+
+        <a class="btn" href="index.php">⬅ Volver</a>
+        <a class="btn" href="<?= htmlspecialchars($producto['imagen']) ?>" download>
+	  ⬇ Descargar imagen
+	</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Te puede gustar</h3>
+    <div class="contenedor">
+      <?php while ($s = $simRes->fetchArray(SQLITE3_ASSOC)) { ?>
+        <article class="destacado">
+          <a class="cardlink" href="producto.php?id=<?= (int)$s['id'] ?>">
+            <img src="<?= htmlspecialchars($s['imagen']) ?>" alt="<?= htmlspecialchars($s['nombre']) ?>">
+            <h4><?= htmlspecialchars($s['nombre']) ?></h4>
+            <p class="calificacion">⭐ <?= htmlspecialchars((string)$s['calificacion']) ?></p>
+          </a>
+        </article>
+      <?php } ?>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Serena Sania Esteve</p>
+  <p>Proyecto realizado con HTML, CSS y PHP</p>
+</footer>
+
+</body>
+</html>
+```
+
+styles.css:
+
+contiene los estilos y el diseño de toda la web.
+
+
+```
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+:root {
+  --principal: #ff6f61;
+  --secundario: #4dabf7;
+  --fondo: #f8f9fa;
+  --oscuro: #333;
+  --claro: #ffffff;
+}
+
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--fondo);
+  color: var(--oscuro);
+  line-height: 1.6;
+}
+
+img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+header {
+  background-color: var(--principal);
+  color: var(--claro);
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  margin-bottom: 5px;
+}
+
+
+#heroe {
+  background: linear-gradient(135deg, var(--secundario), var(--principal));
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#heroe h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+#heroe p {
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+#heroe a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: white;
+  color: var(--oscuro);
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+#heroe a:hover {
+  background-color: #eee;
+}
+
+
+section {
+  padding: 30px 20px;
+}
+
+section h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+article {
+  background-color: var(--claro);
+  width: 150px;
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+article p {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+
+.destacado {
+  width: 220px;
+}
+
+.calificacion {
+  margin-top: 8px;
+  font-size: 1.1rem;
+  color: #f4b400;
+}
+
+
+footer {
+  background-color: var(--oscuro);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+}
+
+
+@media (max-width: 600px) {
+  article {
+    width: 120px;
+  }
+
+  .destacado {
+    width: 180px;
+  }
+}
+/* Links que envuelven tarjetas (sin subrayado y con color correcto) */
+.cardlink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardlink:hover {
+  text-decoration: none;
+}
+
+/* Página de producto */
+.producto {
+  padding: 30px 20px;
+}
+
+.producto-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--claro);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  align-items: center;
+}
+
+.producto-img {
+  width: 320px;
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.producto-info h2 {
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 18px;
+  background: var(--principal);
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 700px) {
+  .producto-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .producto-img {
+    width: 100%;
+  }
+}
+.zoomable {
+  cursor: zoom-in;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  margin: 5% auto;
+  display: block;
+  border-radius: 10px;
+}
+.zoomable { cursor: zoom-in; }
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal img {
+  max-width: 95vw;
+  max-height: 95vh;
+  border-radius: 10px;
+}
+.buscador {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.buscador input {
+  padding: 10px 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  min-width: 260px;
+  outline: none;
+}
+
+.fecha {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background: gold;
+  color: #333;
+  vertical-align: middle;
+}
+.cardlink { display: block; color: inherit; text-decoration: none; }
+.cardlink:hover { text-decoration: none; }
+```
+
+
+categoria.php:
+
+muestra los recortables filtrados según la categoría seleccionada.
+
+
+```
+<?php
+$db = new SQLite3(__DIR__ . '/recortables.db');
+
+$cat = isset($_GET['c']) ? trim($_GET['c']) : '';
+if ($cat === '') {
+  echo "Categoría no válida";
+  exit;
+}
+
+$stmt = $db->prepare("SELECT id, nombre, imagen, calificacion FROM productos WHERE categoria = :c ORDER BY calificacion DESC, id ASC");
+$stmt->bindValue(':c', $cat, SQLITE3_TEXT);
+$res = $stmt->execute();
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($cat) ?> - Juguetes Recortables</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Juguetes Recortables</h1>
+  <p>Crea, recorta y diviértete</p>
+</header>
+
+<main>
+  <section>
+    <h3>Categoría: <?= htmlspecialchars($cat) ?></h3>
+
+    <div class="contenedor">
+      <?php
+      $hay = false;
+      while ($p = $res->fetchArray(SQLITE3_ASSOC)) {
+        $hay = true;
+      ?>
+        <article class="destacado">
+          <a class="cardlink" href="producto.php?id=<?= (int)$p['id'] ?>">
+            <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>">
+            <h4><?= htmlspecialchars($p['nombre']) ?></h4>
+            <p class="calificacion">⭐ <?= htmlspecialchars((string)$p['calificacion']) ?></p>
+          </a>
+        </article>
+      <?php } ?>
+
+      <?php if (!$hay) { ?>
+        <p>No hay productos en esta categoría todavía.</p>
+      <?php } ?>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+      <a class="btn" href="index.php">⬅ Volver al inicio</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Serena Sania Esteve</p>
+  <p>Proyecto realizado con HTML, CSS y PHP</p>
+</footer>
+
+</body>
+</html>
+```
+
+En este proyecto he creado una página web de juguetes recortables utilizando HTML, CSS y PHP, con una base de datos SQLite para gestionar la información de los productos.
+La web muestra una página principal con categorías y recortables destacados, y cada recortable tiene su propia página donde se puede ver la información detallada y descargar la imagen.
+
+He convertido la web en dinámica conectándola a la base de datos, de forma que los recortables se cargan automáticamente. También he añadido un sistema de búsqueda, que permite encontrar recortables por nombre o descripción, y he incorporado una fecha de publicación para poder identificar los recortables más nuevos.
+
+Además, he mejorado la navegación haciendo que las categorías sean clicables, filtrando los productos por categoría, y he cuidado el diseño para que sea claro, sencillo y fácil de usar.
+Este proyecto me ha servido para aprender a integrar front-end y back-end en una misma aplicación web y a trabajar con bases de datos en PHP.
