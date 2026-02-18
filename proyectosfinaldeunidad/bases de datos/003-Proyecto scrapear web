@@ -1,0 +1,375 @@
+En este proyecto he desarrollado un programa de web scraping utilizando Python, cuyo objetivo es obtener información pública de la página web zooasis.org, concretamente de la sección de perros en adopción. El propósito del proyecto es aplicar los conocimientos adquiridos sobre extracción de datos, tratamiento de información y uso de librerías externas, respetando siempre las buenas prácticas y las limitaciones del sitio web.
+
+src/config.py:
+
+centraliza la configuración del proyecto (URLs, tiempos de espera, límites de páginas).
+
+
+```
+BASE_URL = "https://zooasis.org"
+START_URL = f"{BASE_URL}/category/perro/"
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (proyecto academico; contacto: alumno@universidad.com)",
+    "Accept-Language": "es-ES,es;q=0.9",
+}
+
+REQUEST_TIMEOUT = 20
+SLEEP_SECONDS = 1.5
+MAX_PAGES = 10
+OUTPUT_DIR = "out"
+```
+
+src/exceptions.py:
+```
+class AntiBotDetected(Exception):
+    """Lanzada cuando la web devuelve una página de verificación anti-bot."""
+    pass
+```
+
+
+src/fetcher.py:
+
+se encarga de realizar las peticiones HTTP a la web, incluyendo pausas entre peticiones para no sobrecargar el servidor.
+
+```
+import time
+import requests
+
+from src.config import HEADERS, REQUEST_TIMEOUT, SLEEP_SECONDS
+from src.exceptions import AntiBotDetected
+
+
+def fetch(session: requests.Session, url: str) -> str:
+    response = session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+    response.raise_for_status()
+
+    html = response.text.lower()
+    if "request is being verified" in html:
+        raise AntiBotDetected("Protección anti-bot detectada")
+
+    time.sleep(SLEEP_SECONDS)
+    return response.text
+```
+
+
+src/__init__.py
+
+
+src/main.py:
+
+coordina todo el proceso de scraping.
+
+
+```
+import requests
+from tqdm import tqdm
+
+from src.config import START_URL, MAX_PAGES
+from src.fetcher import fetch
+from src.parser import parse_list_page, parse_detail_page
+from src.storage import save
+from src.exceptions import AntiBotDetected
+
+
+def main():
+    session = requests.Session()
+    url = START_URL
+    animals = []
+
+    print("Scrapeando listado...")
+    for _ in range(MAX_PAGES):
+        if not url:
+            break
+        html = fetch(session, url)
+        rows, url = parse_list_page(html)
+        animals.extend(rows)
+
+    print(f"{len(animals)} animales encontrados. Scrapeando fichas...")
+
+    for animal in tqdm(animals):
+        try:
+            html = fetch(session, animal.url_ficha)
+            animal.descripcion, animal.imagenes = parse_detail_page(html)
+        except AntiBotDetected:
+            print("Anti-bot detectado durante las fichas. Parando.")
+            break
+
+    save(animals)
+    print("Datos guardados correctamente.")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except AntiBotDetected:
+        print("Anti-bot detectado. El scraping fue detenido limpiamente.")
+```
+
+
+src/models.py:
+
+define la estructura de los datos mediante una clase Animal.
+
+
+```
+from dataclasses import dataclass
+from typing import Optional, List
+
+
+@dataclass
+class Animal:
+    nombre: Optional[str]
+    sexo: Optional[str]
+    edad: Optional[str]
+    tamano: Optional[str]
+    fecha_publicacion: Optional[str]
+    url_ficha: Optional[str]
+    descripcion: Optional[str] = None
+    imagenes: Optional[List[str]] = None
+```
+
+
+src/parser.py:
+
+analiza el código HTML y extrae los datos necesarios tanto del listado de animales como de las fichas individuales.
+
+
+```
+import re
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
+from src.models import Animal
+from src.config import BASE_URL
+
+
+def parse_meta(text: str):
+    match = re.search(r"(Hembra|Macho)\s*\|\s*[^|]+\|\s*[^|]+", text)
+    if match:
+        parts = [p.strip() for p in match.group(0).split("|")]
+        return parts[0], parts[1], parts[2]
+    return None, None, None
+
+
+def parse_list_page(html: str):
+    soup = BeautifulSoup(html, "lxml")
+    animals = []
+
+    for article in soup.select("article"):
+        title = article.select_one("h1 a, h2 a, h3 a, .entry-title a")
+        if not title:
+            continue
+
+        nombre = title.get_text(strip=True)
+        url = urljoin(BASE_URL, title["href"])
+
+        date_el = article.select_one("time")
+        fecha = date_el.get_text(strip=True) if date_el else None
+
+        text = article.get_text(" ", strip=True)
+        sexo, edad, tamano = parse_meta(text)
+
+        animals.append(
+            Animal(
+                nombre=nombre,
+                sexo=sexo,
+                edad=edad,
+                tamano=tamano,
+                fecha_publicacion=fecha,
+                url_ficha=url
+            )
+        )
+
+    next_link = soup.select_one("a.next, a.next.page-numbers")
+    next_url = urljoin(BASE_URL, next_link["href"]) if next_link else None
+
+    return animals, next_url
+
+
+def parse_detail_page(html: str):
+    soup = BeautifulSoup(html, "lxml")
+
+    content = soup.select_one(".entry-content")
+    descripcion = content.get_text("\n", strip=True) if content else None
+
+    imagenes = []
+    if content:
+        for img in content.select("img"):
+            if img.get("src"):
+                imagenes.append(img["src"])
+
+    return descripcion, imagenes or None
+```
+
+
+src/storage.py:
+
+guarda la información obtenida en archivos CSV y JSON.
+
+
+```
+import json
+import pandas as pd
+from dataclasses import asdict
+from pathlib import Path
+
+from src.config import OUTPUT_DIR
+
+
+def save(animals):
+    Path(OUTPUT_DIR).mkdir(exist_ok=True)
+
+    data = [asdict(a) for a in animals]
+    df = pd.DataFrame(data)
+
+    df.to_csv(f"{OUTPUT_DIR}/zooasis_perros.csv", index=False, encoding="utf-8")
+
+    with open(f"{OUTPUT_DIR}/zooasis_perros.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+```
+
+
+
+Terminal:
+```
+(.venv) serena@serena-portatil:/var/www/html/DAMlimpio/proyectosfinaldeunidad/bases de datos/scraping-zooasis$ python -m src.main
+Scrapeando listado...
+10 animales encontrados. Scrapeando fichas...
+100%|███████████████████████████████████████████| 10/10 [00:18<00:00,  1.88s/it]
+Datos guardados correctamente.
+(.venv) serena@serena-portatil:/var/www/html/DAMlimpio/proyectosfinaldeunidad/bases de datos/scraping-zooasis$ 
+```
+
+
+Despues de ejecutar la terminal se han creado estos archivos:
+
+zooasis_perros.csv:
+```
+nombre,sexo,edad,tamano,fecha_publicacion,url_ficha,descripcion,imagenes
+Perilla,Hembra,3 años,Mediano Leer más »,,https://zooasis.org/perilla/,,
+Poco,Macho,1 año,Mediano Leer más »,,https://zooasis.org/poco/,,
+Chula,Hembra,4 Años,Mediana Leer más »,,https://zooasis.org/chula/,,
+Mulan,Hembra,1 año,Grande+ Leer más »,,https://zooasis.org/mulan-2/,,
+Pepita,Hembra,3 años,Mediana Leer más »,,https://zooasis.org/pepita/,,
+Pepe,Macho,3 años,Mediano Leer más »,,https://zooasis.org/pepe/,,
+Cocote,Macho,3 años,Mediano + Leer más »,,https://zooasis.org/cocote/,,
+Dobita,Hembra,1 año,Mediano + Leer más »,,https://zooasis.org/dobita/,,
+Pipi,Macho,1 año,Grande Leer más »,,https://zooasis.org/pipi/,,
+Mami,Hembra,2 año,Mediano Leer más »,,https://zooasis.org/mami/,,
+```
+
+
+zooasis_perros.json:
+```
+[
+  {
+    "nombre": "Perilla",
+    "sexo": "Hembra",
+    "edad": "3 años",
+    "tamano": "Mediano Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/perilla/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Poco",
+    "sexo": "Macho",
+    "edad": "1 año",
+    "tamano": "Mediano Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/poco/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Chula",
+    "sexo": "Hembra",
+    "edad": "4 Años",
+    "tamano": "Mediana Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/chula/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Mulan",
+    "sexo": "Hembra",
+    "edad": "1 año",
+    "tamano": "Grande+ Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/mulan-2/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Pepita",
+    "sexo": "Hembra",
+    "edad": "3 años",
+    "tamano": "Mediana Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/pepita/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Pepe",
+    "sexo": "Macho",
+    "edad": "3 años",
+    "tamano": "Mediano Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/pepe/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Cocote",
+    "sexo": "Macho",
+    "edad": "3 años",
+    "tamano": "Mediano + Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/cocote/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Dobita",
+    "sexo": "Hembra",
+    "edad": "1 año",
+    "tamano": "Mediano + Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/dobita/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Pipi",
+    "sexo": "Macho",
+    "edad": "1 año",
+    "tamano": "Grande Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/pipi/",
+    "descripcion": null,
+    "imagenes": null
+  },
+  {
+    "nombre": "Mami",
+    "sexo": "Hembra",
+    "edad": "2 año",
+    "tamano": "Mediano Leer más »",
+    "fecha_publicacion": null,
+    "url_ficha": "https://zooasis.org/mami/",
+    "descripcion": null,
+    "imagenes": null
+  }
+]
+```
+
+Para desarrollar el proyecto he utilizado Python 3 junto con varias librerías como Requests, BeautifulSoup y Pandas. Requests se ha usado para acceder a la web, BeautifulSoup para analizar el contenido HTML y Pandas para guardar los datos obtenidos. Además, he creado un entorno virtual para poder instalar las librerías necesarias sin afectar al sistema operativo.
+
+El programa está organizado en varios archivos dentro de la carpeta src, lo que permite que el código esté ordenado y sea fácil de entender. El scraper accede primero al listado de perros en adopción y obtiene información básica como el nombre, el sexo, la edad y el tamaño de cada animal. Después, entra en la ficha individual de cada perro para extraer información más detallada, como la descripción.
+
+Durante el desarrollo surgieron algunos problemas técnicos, como errores con los imports, la instalación de librerías y las restricciones del sistema operativo. Todos estos problemas se fueron resolviendo hasta conseguir que el programa funcionara correctamente. La web también tiene protección contra bots, por lo que el programa está preparado para detenerse si se detecta este tipo de bloqueo.
+
+Finalmente, los datos obtenidos se guardan en dos archivos, uno en formato CSV y otro en formato JSON. Este proyecto me ha ayudado a entender mejor cómo funciona el scraping web, cómo organizar un proyecto en Python y la importancia de respetar las normas de las páginas web.
