@@ -43,3 +43,209 @@ El alumnado deberá entregar:
 -El script SQL con las consultas solicitadas.
 
 
+
+
+
+Respuesta:
+
+En esta actividad se ha realizado una base de datos para organizar la información del trabajo de una fotógrafa.
+
+Entidades y atributos
+
+CLIENTE
+-id_cliente (PK)
+-nombre
+-apellidos
+-email
+-telefono
+
+SESION
+-id_sesion (PK)
+
+fecha
+-tipo (familia, boda, pareja, naturaleza…)
+-lugar
+-precio
+id_cliente (FK)
+
+FOTOGRAFIA
+-id_foto (PK)
+-titulo
+-archivo (ruta/nombre de fichero)
+-fecha_toma
+-id_sesion (FK)
+
+
+Relaciones y cardinalidad
+
+CLIENTE 1 —— N SESION
+Un cliente puede tener muchas sesiones; cada sesión pertenece a un único cliente.
+
+SESION 1 —— N FOTOGRAFIA
+Una sesión puede tener muchas fotos; cada foto pertenece a una única sesión.
+
+
+Modelo relacional
+-CLIENTE(id_cliente PK, nombre, apellidos, email, telefono)
+-SESION(id_sesion PK, fecha, tipo, lugar, precio, id_cliente FK → CLIENTE.id_cliente)
+-FOTOGRAFIA(id_foto PK, titulo, archivo, fecha_toma, id_sesion FK → SESION.id_sesion)
+
+
+
+Terminal:
+``
+serena@serena-portatil:~$ sudo mysql
+[sudo] contraseña para serena: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.45-0ubuntu0.24.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> DROP DATABASE IF EXISTS fotografia_thais;
+Query OK, 0 rows affected, 1 warning (0,01 sec)
+
+mysql> CREATE DATABASE fotografia_thais
+    ->   CHARACTER SET utf8mb4
+    ->   COLLATE utf8mb4_spanish_ci;
+Query OK, 1 row affected (0,00 sec)
+
+mysql> 
+mysql> USE fotografia_thais;
+Database changed
+mysql> -- ===== TABLA CLIENTE =====
+mysql> CREATE TABLE cliente (
+    ->   id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    ->   nombre     VARCHAR(60)  NOT NULL,
+    ->   apellidos  VARCHAR(80)  NOT NULL,
+    ->   email      VARCHAR(120) NOT NULL UNIQUE,
+    ->   telefono   VARCHAR(20)  NOT NULL
+    -> );
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> 
+mysql> -- ===== TABLA SESION =====
+mysql> CREATE TABLE sesion (
+    ->   id_sesion   INT AUTO_INCREMENT PRIMARY KEY,
+    ->   fecha       DATE         NOT NULL,
+    ->   tipo        VARCHAR(40)  NOT NULL,
+    ->   lugar       VARCHAR(120) NOT NULL,
+    ->   precio      DECIMAL(8,2) NOT NULL CHECK (precio >= 0),
+    ->   id_cliente  INT          NOT NULL,
+    ->   CONSTRAINT fk_sesion_cliente
+    ->     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+    ->     ON UPDATE CASCADE
+    ->     ON DELETE RESTRICT
+    -> );
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> 
+mysql> -- ===== TABLA FOTOGRAFIA =====
+mysql> CREATE TABLE fotografia (
+    ->   id_foto     INT AUTO_INCREMENT PRIMARY KEY,
+    ->   titulo      VARCHAR(100) NOT NULL,
+    ->   archivo     VARCHAR(255) NOT NULL,
+    ->   fecha_toma  DATE         NOT NULL,
+    ->   id_sesion   INT          NOT NULL,
+    ->   CONSTRAINT fk_foto_sesion
+    ->     FOREIGN KEY (id_sesion) REFERENCES sesion(id_sesion)
+    ->     ON UPDATE CASCADE
+    ->     ON DELETE CASCADE
+    -> );
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> -- ===== CLIENTES (5) =====
+mysql> INSERT INTO cliente (nombre, apellidos, email, telefono) VALUES
+    -> ('Cristina', 'Martínez López', 'cristina.martinez@email.com', '+34 600 111 222'),
+    -> ('Aitor',    'Serrano Gil',     'aitor.serrano@email.com',    '+34 611 222 333'),
+    -> ('Elena',    'Ruiz Navarro',    'elena.ruiz@email.com',       '+34 622 333 444'),
+    -> ('Héctor',   'Torres Vidal',    'hector.torres@email.com',    '+34 633 444 555'),
+    -> ('María',    'Gómez Pérez',     'maria.gomez@email.com',      '+34 644 555 666');
+Query OK, 5 rows affected (0,01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> -- ===== SESIONES (5) =====
+mysql> INSERT INTO sesion (fecha, tipo, lugar, precio, id_cliente) VALUES
+    -> ('2026-01-10', 'Familia',   'Playa de la Malvarrosa', 180.00, 1),
+    -> ('2026-01-15', 'Retrato',   'Parque de Viveros',      120.00, 2),
+    -> ('2026-02-01', 'Boda',      'Ayuntamiento de Valencia',650.00,3),
+    -> ('2026-02-10', 'Pareja',    'Ciudad de las Artes',   150.00, 4),
+    -> ('2026-02-14', 'Naturaleza','Sierra Calderona',      90.00,  5);
+    
+Query OK, 5 rows affected (0,01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> -- ===== FOTOGRAFIAS (5+) =====
+mysql> INSERT INTO fotografia (titulo, archivo, fecha_toma, id_sesion) VALUES
+    -> ('Juego en la orilla',      'img/familia/aitor.jpg',     '2026-01-10', 1),
+    -> ('Abrazo familiar',         'img/familia/cristina.jpg',  '2026-01-10', 1),
+    -> ('Retrato luz suave',       'img/familia/amor.jpg',      '2026-01-15', 2),
+    -> ('Salida de la ceremonia',  'img/familia/boda.jpg',      '2026-02-01', 3),
+    -> ('Atardecer en la sierra',  'img/naturaleza/paisaje.jpg','2026-02-14', 5),
+    -> ('Luna sobre el cielo',     'img/naturaleza/luna.jpg',   '2026-02-14', 5);
+Query OK, 6 rows affected (0,00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT s.id_sesion, c.nombre, c.apellidos, s.fecha, s.tipo, s.lugar, s.precio
+    -> FROM sesion s
+    -> JOIN cliente c ON c.id_cliente = s.id_cliente
+    -> WHERE c.id_cliente = 1
+    -> ORDER BY s.fecha;
++-----------+----------+------------------+------------+---------+------------------------+--------+
+| id_sesion | nombre   | apellidos        | fecha      | tipo    | lugar                  | precio |
++-----------+----------+------------------+------------+---------+------------------------+--------+
+|         1 | Cristina | Martínez López   | 2026-01-10 | Familia | Playa de la Malvarrosa | 180.00 |
++-----------+----------+------------------+------------+---------+------------------------+--------+
+1 row in set (0,00 sec)
+
+mysql> SELECT id_sesion, fecha, tipo, lugar, precio, id_cliente
+    -> FROM sesion
+    -> WHERE fecha = '2026-02-14';
++-----------+------------+------------+------------------+--------+------------+
+| id_sesion | fecha      | tipo       | lugar            | precio | id_cliente |
++-----------+------------+------------+------------------+--------+------------+
+|         5 | 2026-02-14 | Naturaleza | Sierra Calderona |  90.00 |          5 |
++-----------+------------+------------+------------------+--------+------------+
+1 row in set (0,00 sec)
+
+mysql> SELECT COUNT(*) AS total_sesiones
+    -> FROM sesion;
++----------------+
+| total_sesiones |
++----------------+
+|              5 |
++----------------+
+1 row in set (0,00 sec)
+
+mysql> SELECT f.id_foto, f.titulo, f.archivo, f.fecha_toma
+    -> FROM fotografia f
+    -> WHERE f.id_sesion = 1
+    -> ORDER BY f.id_foto;
++---------+--------------------+--------------------------+------------+
+| id_foto | titulo             | archivo                  | fecha_toma |
++---------+--------------------+--------------------------+------------+
+|       1 | Juego en la orilla | img/familia/aitor.jpg    | 2026-01-10 |
+|       2 | Abrazo familiar    | img/familia/cristina.jpg | 2026-01-10 |
++---------+--------------------+--------------------------+------------+
+2 rows in set (0,00 sec)
+
+mysql> exit;
+Bye
+serena@serena-portatil:~$ 
+
+
+En esta actividad he creado una base de datos para organizar el trabajo de una fotógrafa. He diseñado las tablas necesarias para guardar la información de los clientes, las sesiones y las fotografías, evitando repetir datos.
+
+Primero he pensado qué datos eran necesarios y he hecho el diseño de la base de datos. Después he creado las tablas en MySQL y he añadido datos de ejemplo para comprobar que todo funcionaba correctamente.
+
+Por último, he realizado varias consultas para mostrar las sesiones de un cliente, las sesiones de una fecha concreta, el número total de sesiones y las fotografías de una sesión. Con esto he comprobado que la base de datos funciona correctamente y cumple con lo que se pedía en la actividad.
+
+Con la realización de esta actividad he podido aplicar los conceptos básicos de bases de datos, como la creación de tablas, relaciones y consultas SQL. La base de datos creada funciona correctamente y cumple con los requisitos indicados en el enunciado.

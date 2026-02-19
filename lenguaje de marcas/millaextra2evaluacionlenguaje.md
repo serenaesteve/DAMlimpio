@@ -275,14 +275,14 @@ index.html:
       .form-row{grid-template-columns:1fr}
     }
 
-    /* ===== CONTACTO SIMPLIFICADO (NUEVO) ===== */
+    /* ===== CONTACTO SIMPLIFICADO===== */
     #contacto .contact-grid{
-      grid-template-columns:1fr;      /* una columna */
-      max-width:640px;               /* más estrecho y elegante */
+      grid-template-columns:1fr;      
+      max-width:640px;               
       margin:0 auto;
     }
     #contacto .info-box{
-      display:none;                  /* ocultamos la caja extra */
+      display:none;                 
     }
     #contacto form{
       padding:22px;
@@ -302,7 +302,7 @@ index.html:
       font-weight:800;
     }
 
-    /* ===== REDES SOCIALES (AÑADIDO) ===== */
+    /* ===== REDES SOCIALES===== */
     .redes-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -467,7 +467,7 @@ index.html:
     </div>
   </section>
 
-  <!-- ===== REDES SOCIALES (AÑADIDO) ===== -->
+  <!-- ===== REDES SOCIALES===== -->
   <section id="redes" class="soft">
     <div class="container">
       <h2 style="text-align:center;margin-bottom:10px;">Redes sociales</h2>
@@ -499,7 +499,7 @@ index.html:
     </div>
   </section>
 
-  <!-- CONTACTO (SIMPLIFICADO) -->
+  <!-- CONTACTO-->
   <section id="contacto">
     <div class="container contact-grid">
 
