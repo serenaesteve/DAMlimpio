@@ -1,0 +1,16 @@
+{
+  "source_file": "optimizacion.md",
+  "category": "optimizacion, Optimización en aprendizaje automático, El proceso de entrenamiento",
+  "title": "Qué es la función de pérdida",
+  "generated_at": "2026-02-20 13:35:19",
+  "model": "llama3:latest",
+  "ok": false,
+  "reason": "Muy corto (~382 palabras) | Repair falló: No empieza con H1 (# ...)",
+  "hierarchy": {
+    "h1": "Optimización en aprendizaje automático",
+    "h2": "El proceso de entrenamiento",
+    "h3_raw": "Qué es la función de pérdida"
+  },
+  "ollama_url": "http://127.0.0.1:11434/api/chat",
+  "content": "# Qué es la función de pérdida\n**Meta:** Entender el papel crítico que juega la función de pérdida en el proceso de entrenamiento de modelos de aprendizaje automático.\n\nLa optimización en aprendizaje automático es un tema fundamental en la actualidad, y una parte integral del proceso de entrenamiento es la función de pérdida. En esta sección, vamos a explorar qué es la función de pérdida y por qué es tan importante para el éxito de nuestro modelo.\n\nLa función de pérdida mide lo lejos que está la predicción del valor real. En otras palabras, calcula la diferencia entre lo que esperamos obtener (la salida predicha) y lo que realmente obtenemos (la salida real). El objetivo del entrenamiento es minimizar esta función, lo que significa ajustar los parámetros del modelo para que las predicciones sean cada vez más precisas.\n\nPor ejemplo, supongamos que estamos tratando de predecir el precio de una acción en función de ciertos indicadores financieros. La función de pérdida podría ser la diferencia entre la predicción y el precio real. Si nuestra predicción es $50 y el precio real es $55, la función de pérdida será $5. Nuestro objetivo es reducir esta pérdida para que nuestras predicciones sean más precisas.\n\n**Errores típicos / trampas:**\n\n1. **No elegir una función de pérdida adecuada**: La elección incorrecta de la función de pérdida puede llevar a resultados inaceptables.\n2. **No normalizar los datos**: Si no se normalizan los datos, la función de pérdida puede ser afectada por la escala de los valores.\n3. **No ajustar el hiperparámetro**: Ajustar el hiperparámetro incorrecto puede llevar a una pérdida excesiva.\n\n**Checklist accionable:**\n\n1. Elige una función de pérdida adecuada para tu problema.\n2. Normaliza los datos para evitar sesgos en la función de pérdida.\n3. Ajusta el hiperparámetro para minimizar la pérdida.\n4. Utiliza un algoritmo de optimización adecuado (por ejemplo, gradient descent).\n5. Monitorea y ajusta la función de pérdida durante el entrenamiento.\n\n**Siguientes pasos:**\n\n* Pruebe diferentes funciones de pérdida para ver cuál funciona mejor con tu datos.\n* Ajuste los hiperparámetros de la función de pérdida para encontrar el equilibrio entre la precisión y la complejidad del modelo.\n* Utiliza técnicas de regularización (como L1 o L2) para evitar sobreajuste del modelo.\n* Evalúa el rendimiento del modelo en diferentes conjuntos de datos para asegurarte de que generalice bien."
+}

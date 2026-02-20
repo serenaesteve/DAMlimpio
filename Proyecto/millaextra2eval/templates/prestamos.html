@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Préstamos</h2>
+
+<div class="box">
+  <h3>Registrar préstamo</h3>
+  <form method="post">
+    <label>Libro:</label><br>
+    <select name="libro_id" required>
+      <option value="">-- Selecciona un libro --</option>
+      {% for l in libros %}
+        <option value="{{ l.id }}">{{ l.titulo }} ({{ l.autor }})</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>Prestatario:</label><br>
+    <input name="prestatario" required><br><br>
+
+    <label>Fecha préstamo:</label><br>
+    <input name="fecha_prestamo" value="{{ hoy }}" required><br><br>
+
+    <label>Fecha devolución (opcional):</label><br>
+    <input name="fecha_devolucion" placeholder="YYYY-MM-DD"><br><br>
+
+    <button type="submit">Registrar</button>
+  </form>
+</div>
+
+<div class="box">
+  <h3>Consultar préstamos</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Libro</th><th>Prestatario</th>
+        <th>Fecha préstamo</th><th>Fecha devolución</th><th>Estado</th><th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for p in prestamos %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.titulo }} - {{ p.autor }}</td>
+        <td>{{ p.prestatario }}</td>
+        <td>{{ p.fecha_prestamo }}</td>
+        <td>{{ p.fecha_devolucion or "-" }}</td>
+        <td>{{ "Devuelto" if p.devuelto == 1 else "Prestado" }}</td>
+        <td>
+          {% if p.devuelto == 0 %}
+          <form method="post" action="{{ url_for('devolver_prestamo', prestamo_id=p.id) }}">
+            <button type="submit">Marcar devuelto</button>
+          </form>
+          {% else %}
+            -
+          {% endif %}
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="muted">No hay préstamos todavía.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

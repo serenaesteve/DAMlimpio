@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Libros</h2>
+
+<div class="box">
+  <h3>Añadir libro</h3>
+  <form method="post">
+    <label>Título:</label><br>
+    <input name="titulo" required><br><br>
+
+    <label>Autor:</label><br>
+    <input name="autor" required><br><br>
+
+    <label>Año:</label><br>
+    <input name="anio" required><br><br>
+
+    <button type="submit">Guardar</button>
+  </form>
+</div>
+
+<div class="box">
+  <h3>Listado de libros</h3>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Título</th><th>Autor</th><th>Año</th></tr>
+    </thead>
+    <tbody>
+    {% for l in libros %}
+      <tr>
+        <td>{{ l.id }}</td>
+        <td>{{ l.titulo }}</td>
+        <td>{{ l.autor }}</td>
+        <td>{{ l.anio }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4" class="muted">No hay libros todavía.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
