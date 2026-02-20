@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Gestor de sesiones fotográficas</h1>
+<p class="muted">Datos: id (único), cliente, fecha (YYYY-MM-DD), tipo, precio.</p>
+
+<div class="row">
+  <div class="card">
+    <h2>Añadir sesión</h2>
+    <form method="POST" action="{{ url_for('add') }}">
+      <div class="row">
+        <input name="id" placeholder="ID (único)" required>
+        <input name="cliente" placeholder="Cliente" required>
+        <input name="fecha" placeholder="Fecha (YYYY-MM-DD)" required>
+        <input name="tipo" placeholder="Tipo (familia, pareja...)" required>
+        <input name="precio" placeholder="Precio" required>
+      </div>
+      <div style="margin-top:12px" class="actions">
+        <button type="submit">Añadir</button>
+        <form method="POST" action="{{ url_for('save') }}"></form>
+      </div>
+    </form>
+
+    <div style="margin-top:12px" class="actions">
+      <form method="POST" action="{{ url_for('save') }}">
+        <button type="submit">Guardar en JSON</button>
+      </form>
+      <form method="POST" action="{{ url_for('load') }}">
+        <button type="submit">Cargar desde JSON</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Buscar por ID</h2>
+    <form method="GET" action="{{ url_for('index') }}" class="actions">
+      <input class="small" name="q" placeholder="ID a buscar" value="{{ q }}">
+      <button type="submit">Buscar</button>
+      <a href="{{ url_for('index') }}">Ver todas</a>
+    </form>
+
+    <h2 style="margin-top:18px">Ingresos totales</h2>
+    <p><strong>{{ "%.2f"|format(total) }} €</strong></p>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px; max-width: 980px;">
+  <h2>Listado de sesiones ({{ sesiones|length }})</h2>
+
+  {% if sesiones %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in sesiones %}
+          <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.cliente }}</td>
+            <td>{{ s.fecha }}</td>
+            <td>{{ s.tipo }}</td>
+            <td>{{ "%.2f"|format(s.precio) }} €</td>
+            <td>
+              <form method="POST" action="{{ url_for('delete', id_sesion=s.id) }}" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Eliminar la sesión {{ s.id }}?')">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">No hay sesiones para mostrar.</p>
+  {% endif %}
+</div>
+
+{% endblock %}
+

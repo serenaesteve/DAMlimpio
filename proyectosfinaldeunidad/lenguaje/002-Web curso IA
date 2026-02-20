@@ -1,0 +1,1199 @@
+En este proyecto he trabajado sobre una página web básica hecha en clase y la he ido mejorando para que tenga una estructura más ordenada y funcionalidades más modernas. El objetivo ha sido aprender a organizar mejor el código, separar el contenido del diseño y aplicar mejoras que se usan en páginas web reales. A lo largo del proyecto he añadido cambios tanto a nivel visual como de funcionamiento, mejorando la experiencia del usuario.
+
+
+005-plantillaSEO.html:
+
+Es la plantilla de la web. Contiene la estructura de la página (header, secciones, footer…) y los huecos donde se insertan los textos y datos. No tiene contenido fijo, solo la estructura.
+
+
+```
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <meta name="description" content="{{meta_description}}">
+  <meta name="robots" content="{{meta_robots}}">
+  <meta name="theme-color" content="{{theme_color}}">
+  <meta name="color-scheme" content="light dark">
+
+  <link rel="canonical" href="{{canonical}}">
+  <link rel="alternate" hreflang="es" href="{{canonical}}">
+  <link rel="icon" href="{{favicon}}" type="image/png">
+  <link rel="apple-touch-icon" href="{{apple_touch_icon}}">
+
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="{{og_site_name}}">
+  <meta property="og:title" content="{{og_title}}">
+  <meta property="og:description" content="{{og_description}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:image" content="{{og_image}}">
+  <meta property="og:image:alt" content="{{og_image_alt}}">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{twitter_title}}">
+  <meta name="twitter:description" content="{{twitter_description}}">
+  <meta name="twitter:image" content="{{twitter_image}}">
+
+  <title>{{title_full}}</title>
+
+
+  <link rel="preload" as="style" href="estilochatgpt.css">
+  <link rel="stylesheet" href="estilochatgpt.css">
+
+
+  <script type="application/ld+json">
+  {{raw:jsonld}}
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <div id="corporativo" aria-label="Marca">
+          <a href="/" aria-label="{{brand_name}}">
+            <img src="img/logo.png" alt="{{brand_logo_alt}}" width="42" height="42" loading="eager" decoding="async">
+          </a>
+          <div class="texto">
+            <span class="t1">{{titulo1}}</span>
+            <span class="t2">{{titulo2}}</span>
+          </div>
+        </div>
+
+        <nav aria-label="Navegación principal">
+          <a href="#heroe">{{enlace 1}}</a>
+          <a href="#destacado2">{{enlace 2}}</a>
+          <a href="#destacado4">{{enlace 3}}</a>
+          <a href="#destacado7">{{enlace 4}}</a>
+          <a href="#contacto" class="nav-cta">{{enlace 5}}</a>
+
+         
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">
+            <span class="theme-ico" aria-hidden="true">🌙</span>
+            <span class="theme-txt">Oscuro</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+   
+    <section id="heroe" aria-label="Héroe">
+      <div class="container hero-inner">
+        <h1>{{heroetitulo}}</h1>
+        <p>{{heroetexto}}</p>
+        <a class="btn btn-primary" href="#contacto" aria-label="{{heroeaccion}}">{{heroeaccion}}</a>
+        <p class="hero-micro">{{hero_micro}}</p>
+      </div>
+    </section>
+
+ 
+    <section id="destacado1" class="soft" aria-label="Destacado 1">
+      <div class="container">
+        <div class="pill-card">
+          <div class="left">
+            <img src="img/destacado1.png" alt="{{destacado1_img_alt}}" width="420" height="420" loading="lazy" decoding="async">
+          </div>
+          <div class="right">
+            <h2>{{destacado1titulo}}</h2>
+            <p>{{destacado1texto}}</p_attach>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="destacado2" aria-label="Destacado 2">
+      <div class="container section-grid">
+        <div class="content">
+          <span class="kicker">Technology × Performance</span>
+          <h2>{{destacado2titulo}}</h2>
+          <p>{{destacado2texto}}</p>
+          <a class="btn btn-primary" href="#destacado4">{{destacado2accion}}</a>
+        </div>
+        <div class="media">
+          <img src="img/destacado2.png" alt="{{destacado2_img_alt}}" width="1200" height="680" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="destacado3" class="soft" aria-label="Destacado 3">
+      <div class="container">
+        <div class="iconline">
+          <div class="iconbox">
+            <img src="img/destacado3_icono.png" alt="{{destacado3_icon_alt}}" width="74" height="74" loading="lazy" decoding="async">
+          </div>
+          <h2>{{destacado3titulo}}</h2>
+        </div>
+        <p>{{destacado3texto}}</p>
+      </div>
+    </section>
+
+    
+    <section id="destacado4" aria-label="Destacado 4">
+      <div class="container section-grid reverse">
+        <div class="media">
+          <img src="img/destacado4.png" alt="{{destacado4_img_alt}}" width="1200" height="680" loading="lazy" decoding="async">
+        </div>
+        <div class="content">
+          <h2>{{destacado4titulo}}</h2>
+          <p>{{destacado4texto}}</p>
+          <a class="btn btn-primary" href="#destacado6">{{destacado4accion}}</a>
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="destacado5" class="soft" aria-label="Destacado 5">
+      <div class="container section-grid">
+        <div class="content">
+          <h2>{{destacado5titulo1}}</h2>
+          <p>{{destacado5texto1}}</p>
+        </div>
+        <div class="content">
+          <h3 class="mini-h3">{{destacado5titulo2}}</h3>
+          <p>{{destacado5texto2}}</p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="destacado6" class="cta-photo" aria-label="Destacado 6">
+      <div class="container">
+        <div class="cta-inner">
+          <h2>{{destacado6titulo1}}</h2>
+          <p>{{destacado6texto1}}</p>
+          <a class="btn btn-primary" href="#contacto">{{destacado6accion}}</a>
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="destacado7" class="soft" aria-label="Destacado 7">
+      <div class="container why">
+        <div class="why-card">
+          <h2 class="why-title">{{destacado7titulo1}}</h2>
+          <p>{{destacado7texto1}}</p>
+          <p>{{destacado7texto2}}</p>
+        </div>
+        <div class="callout">
+          <p><strong>{{destacado7texto3}}</strong></p>
+        </div>
+      </div>
+    </section>
+
+ 
+    <section id="destacado8" aria-label="Destacado 8">
+      <div class="container">
+        <div class="band">
+          <div class="band-left">
+            <h2>{{destacado8titulo}}</h2>
+            <p>{{destacado8texto}}</p>
+            <a class="btn btn-primary" href="#contacto">{{destacado8accion}}</a>
+          </div>
+          <div class="band-right">
+            <img src="img/destacado8.png" alt="{{destacado8_img_alt}}" width="1200" height="680" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="destacado9" class="soft" aria-label="Destacado 9">
+      <div class="container section-grid reverse">
+        <div class="media">
+          <img src="img/destacado9.png" alt="{{destacado9_img_alt}}" width="1200" height="680" loading="lazy" decoding="async">
+        </div>
+        <div class="content">
+          <h2>{{destacado9titulo}}</h2>
+          <p>{{destacado9texto}}</p>
+          <a class="btn btn-primary" href="#contacto">{{destacado9accion}}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" aria-label="Contacto">
+      <div class="container contact-grid">
+        <div class="footer-mini" id="infocorporacion">
+          <h2 class="contact-h2">{{contact_title}}</h2>
+          <p>{{contact_intro}}</p>
+
+          <div class="contact-data">
+            <p><strong>Dirección:</strong> {{direccion}}</p>
+            <p><strong>Teléfono:</strong> <a href="tel:{{telefono_raw}}">{{telefono}}</a></p>
+            <p><strong>Email:</strong> <a href="mailto:{{email}}">{{email}}</a></p>
+          </div>
+
+          <div class="social">
+            <a href="{{social_linkedin}}" aria-label="LinkedIn" rel="noopener">in</a>
+            <a href="{{social_x}}" aria-label="X" rel="noopener">x</a>
+            <a href="{{social_youtube}}" aria-label="YouTube" rel="noopener">▶</a>
+          </div>
+        </div>
+
+        <form action="" method="post">
+          <h2 class="form-h2">{{form_title}}</h2>
+          <p>{{form_intro}}</p>
+
+          <div class="form-row">
+            <div>
+              <label for="nombre">Nombre</label>
+              <input id="nombre" type="text" name="nombre" placeholder="Tu nombre" required autocomplete="name">
+            </div>
+            <div>
+              <label for="email_form">Email</label>
+              <input id="email_form" type="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" placeholder="¿En qué puedo ayudarte?" required></textarea>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{{form_cta}}</button>
+          </div>
+
+          <p class="form-legal">{{form_legal}}</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <div>(c) {{anio}} {{titulo1}} {{titulo2}} — Todos los derechos reservados</div>
+      <div class="footer-links">
+        <a href="{{privacy_url}}">Privacy Policy</a>
+        <a href="{{terms_url}}">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+  (function(){
+    const root = document.documentElement;
+    const btn  = document.getElementById('themeToggle');
+    if(!btn) return;
+
+    const ico  = btn.querySelector('.theme-ico');
+    const txt  = btn.querySelector('.theme-txt');
+
+    function systemPrefersDark(){
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function setButtonUI(theme){
+      if(theme === 'dark'){
+        ico.textContent = '🌞';
+        txt.textContent = 'Claro';
+        btn.setAttribute('aria-label','Cambiar a modo claro');
+      }else{
+        ico.textContent = '🌙';
+        txt.textContent = 'Oscuro';
+        btn.setAttribute('aria-label','Cambiar a modo oscuro');
+      }
+    }
+
+    function apply(theme){
+      root.setAttribute('data-theme', theme);
+      setButtonUI(theme);
+    }
+
+    const saved = localStorage.getItem('theme');
+    const initial = saved ? saved : (systemPrefersDark() ? 'dark' : 'light');
+    apply(initial);
+
+    btn.addEventListener('click', function(){
+      const current = root.getAttribute('data-theme') || 'light';
+      const next = (current === 'dark') ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      apply(next);
+    });
+
+    if(!saved && window.matchMedia){
+      const mql = window.matchMedia('(prefers-color-scheme: dark)');
+      mql.addEventListener?.('change', (e) => apply(e.matches ? 'dark' : 'light'));
+    }
+  })();
+  </script>
+
+</body>
+</html>
+```
+
+index.php:
+
+Es el archivo principal del proyecto. Se encarga de cargar la plantilla HTML y los datos del archivo JSON, unirlos y mostrar la página web. También gestiona cosas básicas como el SEO, la caché y el sitemap.
+
+
+```
+<?php
+declare(strict_types=1);
+
+
+$uri   = $_SERVER['REQUEST_URI'] ?? '/';
+$asset = $_GET['asset'] ?? '';
+
+if ($asset === '') {
+  if (preg_match('#/robots\.txt$#', $uri))  $asset = 'robots';
+  if (preg_match('#/sitemap\.xml$#', $uri)) $asset = 'sitemap';
+}
+
+if ($asset === 'robots') {
+  header('Content-Type: text/plain; charset=utf-8');
+  $base = canonical_base();
+  echo "User-agent: *\n";
+  echo "Allow: /\n";
+  echo "Sitemap: {$base}sitemap.xml\n";
+  exit;
+}
+
+if ($asset === 'sitemap') {
+  header('Content-Type: application/xml; charset=utf-8');
+  $base  = canonical_base();
+  $today = gmdate('Y-m-d');
+
+  echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+  echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+  echo "  <url>\n";
+  echo "    <loc>" . xml($base) . "</loc>\n";
+  echo "    <lastmod>{$today}</lastmod>\n";
+  echo "    <changefreq>weekly</changefreq>\n";
+  echo "    <priority>1.0</priority>\n";
+  echo "  </url>\n";
+  echo "</urlset>\n";
+  exit;
+}
+
+header('Content-Type: text/html; charset=utf-8');
+
+$templateFile = __DIR__ . '/005-plantillaSEO.html';
+$jsonFile     = __DIR__ . '/datos.json';
+
+if (!is_file($templateFile)) {
+  http_response_code(500);
+  echo "ERROR: Missing template file: 005-plantillaSEO.html";
+  exit;
+}
+if (!is_file($jsonFile)) {
+  http_response_code(500);
+  echo "ERROR: Missing json file: datos.json";
+  exit;
+}
+
+$template = file_get_contents($templateFile);
+if ($template === false) {
+  http_response_code(500);
+  echo "ERROR: Cannot read 005-plantillaSEO.html";
+  exit;
+}
+
+$raw = file_get_contents($jsonFile);
+if ($raw === false) {
+  http_response_code(500);
+  echo "ERROR: Cannot read datos.json";
+  exit;
+}
+
+$data = json_decode($raw, true);
+if (!is_array($data)) {
+  http_response_code(500);
+  echo "ERROR: Invalid JSON in datos.json";
+  exit;
+}
+
+if (empty($data['canonical'])) {
+  $data['canonical'] = canonical_base();
+}
+
+$out = apply_placeholders($template, $data);
+
+$out = preg_replace('/\{\{[^}]+\}\}/', '', $out) ?? $out;
+
+$etag = '"' . sha1($out) . '"';
+header('ETag: ' . $etag);
+( !headers_sent() ) && header('Cache-Control: public, max-age=300');
+
+$ifNoneMatch = $_SERVER['HTTP_IF_NONE_MATCH'] ?? '';
+if (etag_matches($ifNoneMatch, $etag)) {
+  http_response_code(304);
+  exit;
+}
+
+echo $out;
+
+
+function e(string $s): string {
+  return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function xml(string $s): string {
+  return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function canonical_base(): string {
+  $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+  $host = preg_replace('/\s+/', '', $host) ?: 'localhost';
+  $host = preg_replace('/[^a-zA-Z0-9\.\-\:\[\]]/', '', $host);
+  return 'https://' . $host . '/';
+}
+
+function starts_with(string $haystack, string $needle): bool {
+  return $needle === '' || strpos($haystack, $needle) === 0;
+}
+
+function apply_placeholders(string $template, array $data): string {
+  foreach ($data as $key => $value) {
+    if (is_array($value) || is_object($value)) continue;
+
+    $k = (string)$key;
+    $v = (string)$value;
+
+    if (starts_with($k, 'raw:')) {
+      $realKey = substr($k, 4);
+      $template = str_replace('{{' . $realKey . '}}', $v, $template);
+    } else {
+      $template = str_replace('{{' . $k . '}}', e($v), $template);
+    }
+  }
+  return $template;
+}
+
+function etag_matches(string $ifNoneMatch, string $etag): bool {
+  if ($ifNoneMatch === '') return false;
+  $parts = array_map('trim', explode(',', $ifNoneMatch));
+  foreach ($parts as $p) {
+    $p = preg_replace('#^W/#', '', $p);
+    if ($p === $etag) return true;
+  }
+  return false;
+}
+```
+
+
+estilochatgpt.css:
+
+Contiene todos los estilos de la página. Define los colores, fuentes, diseño, modo claro y modo oscuro, y cómo se ve la web en móvil y ordenador.
+
+
+```
+:root{
+  --bg: #ffffff;
+  --bg-soft: #f6f7f8;
+  --glass: rgba(255,255,255,.78);
+
+  --text: #121826;
+  --muted: #5b6670;
+
+  --card: #ffffff;
+
+  --orange: #f39a1a;
+  --orange-dark: #d98206;
+  --green: #6f8f12;
+
+  --line: rgba(0,0,0,.08);
+  --shadow: 0 20px 50px rgba(0,0,0,.10);
+  --shadow-soft: 0 12px 30px rgba(0,0,0,.08);
+
+  --radius: 16px;
+  --radius-lg: 26px;
+
+  --container: 1120px;
+}
+
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0b0f17;
+    --bg-soft: rgba(255,255,255,.04);
+    --glass: rgba(12,16,24,.66);
+
+    --text: rgba(255,255,255,.92);
+    --muted: rgba(255,255,255,.70);
+
+    --card: rgba(255,255,255,.06);
+
+    --line: rgba(255,255,255,.12);
+    --shadow: 0 24px 60px rgba(0,0,0,.45);
+    --shadow-soft: 0 14px 36px rgba(0,0,0,.35);
+  }
+}
+
+
+html[data-theme="light"]{ color-scheme: light; }
+html[data-theme="dark"]{
+  color-scheme: dark;
+  --bg: #0b0f17;
+  --bg-soft: rgba(255,255,255,.04);
+  --glass: rgba(12,16,24,.66);
+
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+
+  --card: rgba(255,255,255,.06);
+
+  --line: rgba(255,255,255,.12);
+  --shadow: 0 24px 60px rgba(0,0,0,.45);
+  --shadow-soft: 0 14px 36px rgba(0,0,0,.35);
+}
+
+/* ========= BASE ========= */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(900px 520px at 18% -10%, rgba(243,154,26,.14), transparent 60%),
+    radial-gradient(900px 520px at 82% 0%, rgba(111,143,18,.12), transparent 60%),
+    var(--bg);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+img{ max-width:100%; display:block; height:auto; }
+a{ color: inherit; text-decoration:none; }
+p{ margin:0 0 14px; color: var(--muted); }
+h1,h2,h3,h4,h5{ margin:0 0 12px; line-height:1.15; color: var(--text); }
+.container{ width: min(var(--container), calc(100% - 48px)); margin: 0 auto; }
+
+/* Skip link */
+.skip-link{
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+}
+.skip-link:focus{
+  left:12px; top:12px; width:auto; height:auto;
+  padding:10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  z-index:9999;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Focus visible */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline: 3px solid rgba(243,154,26,.55);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; scroll-behavior:auto !important; }
+}
+
+/* ========= HEADER / NAV ========= */
+header{
+  position: sticky; top:0; z-index: 50;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar{
+  display:flex; align-items:center; justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+}
+#corporativo{
+  display:flex; align-items:center; gap: 12px;
+  min-width: 260px;
+}
+#corporativo img{
+  width: 44px; height: 44px; object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.22));
+}
+#corporativo .texto{
+  display:flex; flex-direction: column;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -.2px;
+}
+#corporativo .texto .t1{ font-size: 14px; }
+#corporativo .texto .t2{ font-size: 12px; font-weight: 600; color: var(--muted); margin-top:2px; }
+
+nav{
+  display:flex; align-items:center; gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+nav a{
+  font-size: 13px;
+  padding: 9px 10px;
+  border-radius: 999px;
+  opacity: .88;
+  border: 1px solid transparent;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+  min-height: 36px;
+  display:inline-flex; align-items:center;
+}
+nav a:hover{
+  background: rgba(127,127,127,.10);
+  border-color: rgba(127,127,127,.18);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.nav-cta{
+  margin-left: 6px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  color:#111;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  box-shadow: 0 18px 40px rgba(243,154,26,.22);
+  border: 1px solid rgba(255,255,255,.18);
+}
+.nav-cta:hover{ transform: translateY(-1px); }
+
+/* ========= BUTTONS ========= */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .35px;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  user-select:none;
+  white-space: nowrap;
+  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+.btn-primary{
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  color:#111;
+  box-shadow: 0 18px 40px rgba(243,154,26,.20);
+}
+.btn-primary:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+  box-shadow: 0 24px 55px rgba(243,154,26,.26);
+}
+
+/* ========= HERO ========= */
+#heroe{
+  position: relative;
+  min-height: 520px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+
+  /* Base tech (works without image) */
+  background:
+    radial-gradient(900px 520px at 20% 20%, rgba(243,154,26,.22), transparent 60%),
+    radial-gradient(900px 520px at 80% 25%, rgba(111,143,18,.18), transparent 60%),
+    linear-gradient(180deg, rgba(10,14,22,.92), rgba(10,14,22,.92));
+
+  /* If you add hero.jpg, it blends */
+  background-image:
+    radial-gradient(900px 520px at 20% 20%, rgba(243,154,26,.22), transparent 60%),
+    radial-gradient(900px 520px at 80% 25%, rgba(111,143,18,.18), transparent 60%),
+    linear-gradient(180deg, rgba(10,14,22,.78), rgba(10,14,22,.92)),
+    url("hero.jpg");
+  background-size: auto, auto, auto, cover;
+  background-position: center, center, center, center;
+  background-repeat: no-repeat;
+}
+
+/* Decorative grid */
+#heroe::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: .12;
+  mask-image: radial-gradient(circle at 50% 35%, black 0%, transparent 68%);
+  pointer-events:none;
+}
+
+#heroe::after{
+  content:"";
+  position:absolute;
+  left:-10%;
+  right:-10%;
+  bottom:-140px;
+  height: 240px;
+  background: var(--bg);
+  border-top-left-radius: 50% 120%;
+  border-top-right-radius: 50% 120%;
+}
+
+.hero-inner{
+  position:relative;
+  z-index:2;
+  padding: 86px 0 160px;
+  text-align:center;
+  color:#fff;
+}
+.hero-inner h1{
+  color:#fff;
+  font-size: clamp(34px, 4.6vw, 54px);
+  font-weight: 950;
+  letter-spacing: -.6px;
+  margin-bottom: 12px;
+  text-shadow: 0 18px 50px rgba(0,0,0,.55);
+}
+.hero-inner p{
+  max-width: 860px;
+  margin: 0 auto 24px;
+  color: rgba(255,255,255,.86);
+  font-size: 16px;
+}
+.hero-micro{
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+}
+
+/* ========= SECTIONS ========= */
+main{ background: transparent; }
+section{ padding: 72px 0; position:relative; }
+.soft{ background: var(--bg-soft); }
+
+.section-grid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 48px;
+  align-items:center;
+}
+.section-grid.reverse{ grid-template-columns: .95fr 1.05fr; }
+
+.content .kicker{
+  display:inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(127,127,127,.12);
+  border: 1px solid rgba(127,127,127,.18);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.content h2{
+  font-size: 34px;
+  font-weight: 950;
+  margin-bottom: 12px;
+}
+.mini-h3{
+  font-size: 20px;
+  font-weight: 900;
+  margin-top: 4px;
+}
+
+.media{
+  border-radius: var(--radius-lg);
+  overflow:hidden;
+  background: rgba(127,127,127,.10);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+.media img{
+  width:100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+/* Pill Card */
+.pill-card{
+  background: var(--card);
+  border-radius: 34px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  align-items: stretch;
+  min-height: 240px;
+}
+.pill-card .left{
+  padding: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(200px 200px at 50% 40%, rgba(243,154,26,.26), transparent 60%),
+    radial-gradient(200px 200px at 50% 75%, rgba(111,143,18,.18), transparent 60%),
+    rgba(127,127,127,.06);
+}
+.pill-card .left img{
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(127,127,127,.22);
+  box-shadow: 0 22px 45px rgba(0,0,0,.25);
+}
+.pill-card .right{ padding: 28px 30px; }
+
+/* Iconline */
+.iconline{ display:flex; align-items:center; gap: 16px; margin-bottom: 10px; }
+.iconbox{
+  width: 86px; height: 86px;
+  border-radius: 24px;
+  background: rgba(243,154,26,.10);
+  border: 1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: var(--shadow-soft);
+}
+.iconbox img{ width: 58px; height: 58px; object-fit: contain; }
+
+/* CTA Photo */
+.cta-photo{
+  position:relative;
+  padding: 92px 0;
+  color:#fff;
+  overflow:hidden;
+  background:
+    radial-gradient(900px 520px at 50% 10%, rgba(243,154,26,.20), transparent 65%),
+    linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.72)),
+    url("cta.jpg") center/cover no-repeat;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.cta-inner{ text-align:center; max-width: 920px; margin: 0 auto; }
+.cta-photo h2{
+  color:#fff;
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 950;
+  margin-bottom: 12px;
+  text-shadow: 0 16px 44px rgba(0,0,0,.55);
+}
+.cta-photo p{
+  color: rgba(255,255,255,.84);
+  margin: 0 auto 22px;
+  max-width: 780px;
+  font-size: 16px;
+}
+
+/* Why */
+.why{
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 22px;
+  align-items: start;
+}
+.why-card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 28px;
+}
+.why-title{
+  font-size: 26px;
+  font-weight: 950;
+}
+.callout{
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  color:#111;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 24px 60px rgba(243,154,26,.22);
+  border: 1px solid rgba(255,255,255,.18);
+  align-self: center;
+}
+.callout p{ margin:0; color:#111; font-weight: 900; }
+
+/* Band */
+.band{
+  border-radius: var(--radius-lg);
+  overflow:hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  min-height: 280px;
+  background: rgba(127,127,127,.06);
+}
+.band-left{
+  background:
+    radial-gradient(700px 420px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+    linear-gradient(135deg, rgba(111,143,18,1), rgba(89,129,10,1));
+  padding: 30px;
+  color:#0b0f17;
+  display:flex; flex-direction: column; justify-content:center; gap: 10px;
+}
+.band-left h2{ color: rgba(0,0,0,.92); font-size: 34px; font-weight: 950; }
+.band-left p{ color: rgba(0,0,0,.78); }
+.band-right img{ width:100%; height:100%; object-fit: cover; }
+
+/* Contact */
+#contacto{
+  background:
+    radial-gradient(900px 520px at 18% 0%, rgba(243,154,26,.10), transparent 60%),
+    radial-gradient(900px 520px at 82% 0%, rgba(111,143,18,.08), transparent 60%),
+    var(--bg-soft);
+  padding: 74px 0;
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 26px;
+  align-items: start;
+}
+.footer-mini, form{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 22px;
+}
+.contact-h2, .form-h2{ font-size: 20px; font-weight: 950; margin-bottom: 6px; }
+.contact-data a{ text-decoration: underline; text-underline-offset: 4px; }
+
+label{
+  display:block;
+  font-size: 12px;
+  font-weight: 900;
+  margin: 12px 0 6px;
+  color: var(--text);
+}
+input, textarea{
+  width:100%;
+  border: 1px solid rgba(127,127,127,.22);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font: inherit;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+textarea{ min-height: 130px; resize: vertical; }
+input:focus, textarea:focus{
+  border-color: rgba(243,154,26,.65);
+  box-shadow: 0 0 0 5px rgba(243,154,26,.18);
+  background: rgba(127,127,127,.06);
+}
+.form-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-actions{ margin-top: 14px; }
+.form-legal{ margin-top: 10px; font-size: 12px; color: var(--muted); }
+
+/* Footer */
+footer{
+  background: transparent;
+  border-top: 1px solid var(--line);
+  padding: 18px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.footer-wrap{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.footer-links{ display:flex; gap: 12px; flex-wrap: wrap; }
+.footer-links a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+
+/* Social */
+.social{
+  display:flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.social a{
+  width: 38px;
+  height: 38px;
+  seen: none;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(127,127,127,.10);
+  border: 1px solid var(--line);
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.social a:hover{
+  transform: translateY(-2px);
+  background: rgba(127,127,127,.16);
+  border-color: rgba(127,127,127,.22);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .section-grid, .section-grid.reverse, .band, .pill-card, .why, .contact-grid{
+    grid-template-columns: 1fr;
+  }
+  .media img{ height: 290px; }
+  .pill-card{ grid-template-columns: 1fr; }
+  nav{ justify-content: flex-start; }
+  #corporativo{ min-width: auto; }
+}
+@media (max-width: 560px){
+  .form-row{ grid-template-columns: 1fr; }
+  #heroe{ min-height: 460px; }
+  .hero-inner{ padding: 70px 0 150px; }
+  section{ padding: 62px 0; }
+  .content h2{ font-size: 30px; }
+}
+
+.theme-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(127,127,127,.10);
+  cursor:pointer;
+  font-weight: 800;
+  font-size: 13px;
+  min-height: 36px;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.theme-toggle:hover{
+  transform: translateY(-1px);
+  background: rgba(127,127,127,.16);
+  border-color: rgba(127,127,127,.22);
+}
+.theme-ico{ width: 18px; text-align:center; }
+.theme-txt{ opacity:.9; }
+```
+
+
+datos.json:
+
+En este archivo está todo el contenido de la web: textos, títulos, enlaces, datos de contacto y metadatos. Cambiando este archivo se actualiza la web sin tocar el HTML.
+
+
+```
+
+{
+  "titulo1": "Curso IA en Directo",
+  "titulo2": "Programación · Streaming · Práctico",
+
+  "title_full": "Curso IA en Directo para Programadores (Streaming en vivo) | Proyectos reales",
+  "meta_description": "Curso online de IA para programadores en streaming (clases en vivo). Aprende prompts, RAG, agentes, evaluación y despliegue con proyectos end-to-end y soporte.",
+  "meta_robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "theme_color": "#f39a1a",
+
+  "canonical": "https://tucursoia.com/",
+  "favicon": "/favicon.png",
+  "apple_touch_icon": "/apple-touch-icon.png",
+
+  "og_site_name": "Curso IA en Directo",
+  "og_title": "Curso IA en Directo para Programadores (Streaming en vivo)",
+  "og_description": "Aprende IA aplicada a desarrollo con clases en vivo: prompts, RAG, agentes, evaluación, despliegue y automatización. Enfoque práctico con proyectos.",
+  "og_image": "https://tucursoia.com/og.jpg",
+  "og_image_alt": "Curso IA en Directo para Programadores",
+
+  "twitter_title": "Curso IA en Directo (Streaming en vivo)",
+  "twitter_description": "IA aplicada a desarrollo: proyectos reales, RAG, agentes, evaluación y despliegue.",
+  "twitter_image": "https://tucursoia.com/og.jpg",
+
+  "brand_name": "Curso IA en Directo",
+  "brand_logo_alt": "Logo del Curso IA en Directo",
+
+  "enlace 1": "Inicio",
+  "enlace 2": "Metodología",
+  "enlace 3": "Temario",
+  "enlace 4": "Sobre el curso",
+  "enlace 5": "Inscripción",
+
+  "heroetitulo": "IA para Programadores, en Directo: aprende creando proyectos reales.",
+  "heroetexto": "Curso online en streaming (clases en vivo) para dominar IA aplicada a desarrollo: prompts, RAG, agentes, evaluación, despliegue y automatización. Enfoque 100% práctico, con soporte y material descargable.",
+  "heroeaccion": "Quiero reservar plaza",
+  "hero_micro": "Clases en vivo + grabaciones + materiales · Nivel: intermedio · Cupos limitados.",
+
+  "destacado1titulo": "No es un curso grabado. Es un taller en vivo.",
+  "destacado1texto": "Sesiones en directo con ejercicios guiados, revisión de código y resolución de dudas en tiempo real. Sales con un sistema funcionando: desde un chatbot útil hasta una app de IA integrada en tu stack.",
+  "destacado1_img_alt": "Taller en vivo de programación con IA",
+
+  "destacado2titulo": "En la intersección entre IA, producto y software profesional.",
+  "destacado2texto": "Aprenderás a construir soluciones de IA que aportan valor: asistentes para tu negocio, generación de contenido controlada, búsqueda semántica con tus documentos, y automatizaciones con agentes. Sin humo: métricas, pruebas y buenas prácticas.",
+  "destacado2accion": "Ver cómo trabajamos",
+  "destacado2_img_alt": "Desarrollo de soluciones de IA con enfoque profesional",
+
+  "destacado3titulo": "Acompañamiento + Tecnología + Proyectos",
+  "destacado3texto": "Combina clases en vivo, ejercicios paso a paso y plantillas listas para usar. Te llevas repositorios, checklists y una guía clara para pasar de ‘probar’ IA a ‘usar’ IA en producción.",
+  "destacado3_icon_alt": "Icono de acompañamiento y proyectos",
+
+  "destacado4titulo": "Aprende a programar IA de forma moderna (y segura).",
+  "destacado4texto": "Diseñarás prompts robustos, implementarás RAG, crearás agentes con herramientas y memoria, y montarás pipelines con control de calidad. Además: privacidad, costes, y patrones para evitar resultados erráticos.",
+  "destacado4accion": "Quiero el temario",
+  "destacado4_img_alt": "Arquitectura moderna para aplicaciones con IA",
+
+  "destacado5titulo1": "Tutoriales sueltos y ejemplos sin contexto no escalan",
+  "destacado5texto1": "Mucho contenido de IA se queda en demos. Aquí construimos un sistema completo, con arquitectura, pruebas, evaluación y despliegue para que puedas reutilizarlo en tus proyectos reales.",
+  "destacado5titulo2": "Estrategias inmersivas y orientadas a resultados",
+  "destacado5texto2": "Cada módulo termina con un entregable: una herramienta funcional (chatbot, buscador semántico, agente, evaluador, automatización) y una lista de verificación para adaptarlo a tu caso.",
+
+  "destacado6titulo1": "No más diapositivas. Código en directo y práctica guiada.",
+  "destacado6texto1": "Clases en vivo centradas en programar: diseño, implementación, depuración y mejora. Acceso a grabaciones, materiales y sesiones de preguntas para consolidar lo aprendido.",
+  "destacado6accion": "Ver fechas y formato",
+
+  "destacado7titulo1": "Por qué este curso — cuando quieres resultados reales",
+  "destacado7texto1": "La mayoría aprende IA como curiosidad. Tú vas a aprender IA como herramienta profesional, con una ruta clara y ejercicios aplicables desde el primer día.",
+  "destacado7texto2": "Te enseñamos a integrar IA en tus apps: APIs, bases de conocimiento, herramientas, evaluación de respuestas, control de costes y despliegue.",
+  "destacado7texto3": "Programar IA no es solo ‘usar ChatGPT’: es diseñar sistemas fiables, medibles y mantenibles.",
+
+  "destacado8titulo": "De la idea al proyecto: construye tu asistente de IA end-to-end",
+  "destacado8texto": "Termina el curso con un proyecto final completo: una aplicación con interfaz, backend, base de conocimiento (RAG), logs, métricas y mejoras iterativas para que puedas enseñarlo, venderlo o usarlo en tu empresa.",
+  "destacado8accion": "Quiero apuntarme",
+  "destacado8_img_alt": "Proyecto final end-to-end con RAG y métricas",
+
+  "destacado9titulo": "Para programadores, equipos y emprendedores",
+  "destacado9texto": "Diseñado para quienes ya programan y quieren aplicar IA de forma práctica: automatización, asistentes internos, soporte al cliente, generación de documentación, y herramientas para productividad y negocio.",
+  "destacado9accion": "Solicitar información",
+  "destacado9_img_alt": "IA aplicada para equipos y emprendedores",
+
+  "contact_title": "Contacta e inscríbete",
+  "contact_intro": "El viaje hacia mejores resultados y cultura empieza con una conversación.",
+
+  "form_title": "Contacto",
+  "form_intro": "Cuéntame tu caso y te digo si este curso encaja contigo.",
+  "form_cta": "Enviar mensaje",
+  "form_legal": "Al enviar este formulario aceptas nuestra política de privacidad y el tratamiento de tus datos para responder a tu solicitud.",
+
+  "privacy_url": "/privacy.html",
+  "terms_url": "/terms.html",
+
+  "direccion": "Online · Clases en directo por streaming",
+  "telefono": "+34 600 000 000",
+  "telefono_raw": "+34600000000",
+  "email": "info@tucursoia.com",
+
+  "social_linkedin": "https://www.linkedin.com/",
+  "social_x": "https://x.com/",
+  "social_youtube": "https://www.youtube.com/",
+
+  "hero_image": "hero.jpg",
+
+  "anio": "2026",
+
+  "raw:jsonld": "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Organization\",\n      \"name\": \"Curso IA en Directo\",\n      \"url\": \"https://tucursoia.com/\",\n      \"logo\": \"https://tucursoia.com/logo.png\",\n      \"email\": \"info@tucursoia.com\",\n      \"telephone\": \"+34600000000\",\n      \"sameAs\": [\n        \"https://www.linkedin.com/\",\n        \"https://x.com/\",\n        \"https://www.youtube.com/\"\n      ]\n    },\n    {\n      \"@type\": \"WebSite\",\n      \"name\": \"Curso IA en Directo\",\n      \"url\": \"https://tucursoia.com/\",\n      \"inLanguage\": \"es\",\n      \"potentialAction\": {\n        \"@type\": \"SearchAction\",\n        \"target\": \"https://tucursoia.com/?q={search_term_string}\",\n        \"query-input\": \"required name=search_term_string\"\n      }\n    },\n    {\n      \"@type\": \"WebPage\",\n      \"name\": \"Curso IA en Directo para Programadores (Streaming en vivo)\",\n      \"url\": \"https://tucursoia.com/\",\n      \"description\": \"Curso online de IA para programadores en streaming (clases en vivo).\"\n    },\n    {\n      \"@type\": \"Course\",\n      \"name\": \"Curso IA en Directo para Programadores\",\n      \"description\": \"Curso online en streaming (clases en vivo) de IA aplicada a desarrollo: prompts, RAG, agentes, evaluación, despliegue y automatización.\",\n      \"provider\": {\n        \"@type\": \"Organization\",\n        \"name\": \"Curso IA en Directo\",\n        \"sameAs\": \"https://tucursoia.com/\"\n      },\n      \"inLanguage\": \"es\",\n      \"courseMode\": [\"online\", \"live\"],\n      \"audience\": {\n        \"@type\": \"Audience\",\n        \"audienceType\": \"Programadores\"\n      }\n    }\n  ]\n}\n"
+}
+```
+
+En este proyecto he mejorado una página web que hicimos en clase. Al principio era una web muy básica, solo con HTML y sin muchas opciones. Poco a poco he ido cambiando el código para que esté mejor organizado y sea más completa.
+
+He separado el contenido del diseño. Los textos y datos están en un archivo aparte y la página los carga automáticamente, así es más fácil cambiar la información sin tocar todo el código. También he ordenado mejor la estructura usando etiquetas correctas como header, main y footer.
+
+He añadido mejoras para que la web se vea mejor y sea más fácil de usar, como una navegación más clara, un formulario mejor organizado y la carga correcta de imágenes. También he tenido en cuenta que la página funcione bien en distintos tamaños de pantalla.
+
+Una mejora importante es que he añadido un botón para cambiar entre modo claro y modo oscuro. El botón funciona y recuerda la opción que elige el usuario, lo que hace que la web sea más moderna.
+
+En general, he pasado de una web sencilla hecha en clase a una página más completa, mejor organizada y con funciones nuevas que no estaban en el código original.
+
+Con este proyecto he aprendido a mejorar una web sencilla y convertirla en una página más completa y funcional. He visto la importancia de organizar bien los archivos, separar el contenido y añadir mejoras como el modo claro y oscuro. El resultado final es una web más profesional que la inicial y que me ha servido para aprender cómo se trabaja en proyectos web más reales.

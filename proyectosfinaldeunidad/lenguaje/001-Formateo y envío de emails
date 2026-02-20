@@ -1,0 +1,167 @@
+En este proyecto he trabajado en la creación y envío de un correo electrónico personalizado utilizando HTML y Python. La idea principal era diseñar un email con la estética de un estudio de fotografía y aprender cómo enviarlo automáticamente desde código, sin hacerlo manualmente desde Gmail. Con este ejercicio he podido entender mejor cómo funcionan los correos electrónicos por dentro y cómo se pueden generar y enviar desde un programa.
+
+emailthais.html:
+```
+<!doctype html>
+<html lang="es">
+  <body style="margin:0;padding:0;background:#fbfaf7;">
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fbfaf7;">
+      <tr>
+        <td align="center" style="padding:28px 14px;">
+
+          <table role="presentation" width="640" cellspacing="0" cellpadding="0" border="0"
+                 style="width:640px;max-width:640px;background:#fbfaf7;font-family:Arial,Helvetica,sans-serif;">
+
+            <!-- CABECERA -->
+            <tr>
+              <td style="padding:18px 18px 6px 18px;">
+                <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#1f2320;">
+                  <strong>Thais Esteve</strong>
+                </div>
+                <div style="font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:#5b615b;margin-top:4px;">
+                  Fotografía · familia y naturaleza
+                </div>
+                <div style="height:14px;border-bottom:1px solid rgba(0,0,0,.10);"></div>
+              </td>
+            </tr>
+
+            <!-- TEXTO -->
+            <tr>
+              <td style="padding:18px;">
+                <div style="font-family:Georgia,'Times New Roman',serif;font-size:34px;line-height:1.15;color:#1f2320;">
+                  Luz natural.<br>Momentos reales.
+                </div>
+
+                <div style="height:10px;"></div>
+
+                <div style="font-size:14px;line-height:1.75;color:#5b615b;max-width:560px;">
+                  Sesiones sin prisas y sin poses forzadas. Busco fotografías calmadas,
+                  honestas y atemporales.
+                </div>
+
+                <!-- BOTONES -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:22px;">
+                  <tr>
+
+                    <!-- BOTÓN PRINCIPAL -->
+                    <td style="background:#2f5d50;border-radius:999px;">
+                      <a href="mailto:buho41112@gmail.com"
+                         style="display:inline-block;padding:12px 22px;
+                                font-size:14px;font-weight:700;
+                                color:#ffffff;text-decoration:none;">
+                        Pedir presupuesto
+                      </a>
+                    </td>
+
+                    <!-- ESPACIO -->
+                    <td style="width:14px;"></td>
+
+                    <!-- BOTÓN SECUNDARIO -->
+                    <td style="border:2px solid #2f5d50;border-radius:999px;">
+                      <a href="https://serenaesteve.github.io/thais/thais/"
+                         style="display:inline-block;padding:10px 22px;
+                                font-size:14px;font-weight:700;
+                                color:#2f5d50;text-decoration:none;">
+                        Ver portfolio
+                      </a>
+                    </td>
+
+                  </tr>
+                </table>
+
+              </td>
+            </tr>
+
+            <!-- FOTO GRANDE -->
+            <tr>
+              <td style="padding:0 18px 10px 18px;">
+	<img src="https://serenaesteve.github.io/thais/thais/img/familia/perfil.jpg"
+                     alt="Fotografía"
+                     style="display:block;width:100%;height:auto;border-radius:16px;">
+              </td>
+            </tr>
+
+            <!-- FOOTER -->
+            <tr>
+              <td style="padding:14px 18px 22px 18px;">
+                <div style="height:14px;border-top:1px solid rgba(0,0,0,.10);"></div>
+
+                <div style="margin-top:12px;font-size:10px;line-height:1.6;color:#8b918b;">
+                  Recibes este correo porque formas parte de mi lista de contactos.
+                  Si no quieres recibir más, responde con <strong>BAJA</strong>.
+                </div>
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>
+```
+
+
+correo.py:
+```
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from pathlib import Path
+
+from_email = "serenaestevee@gmail.com"
+to_email = "buho41112@gmail.com"
+password = "mbgz lpoo gdvd gegs"
+
+
+msg = MIMEMultipart("related")
+msg["Subject"] = "Nueva sesión de fotografía "
+msg["From"] = from_email
+msg["To"] = to_email
+
+alt = MIMEMultipart("alternative")
+msg.attach(alt)
+
+
+text_fallback = (
+    "Thais Esteve · Fotografía\n"
+    "Luz natural. Momentos reales.\n\n"
+    "Pedir presupuesto: mailto:buho41112@gmail.com\n"
+    "Ver portfolio: https://serenaesteve.github.io/thais/thais/\n"
+)
+alt.attach(MIMEText(text_fallback, "plain", "utf-8"))
+
+
+html_path = Path("emailthais.html")
+html_content = html_path.read_text(encoding="utf-8")
+alt.attach(MIMEText(html_content, "html", "utf-8"))
+
+
+img_path = Path("perfil.jpg")
+with img_path.open("rb") as f:
+    img_data = f.read()
+
+img = MIMEImage(img_data, _subtype="jpg")  
+img.add_header("Content-ID", "<foto1>")
+img.add_header("Content-Disposition", "inline", filename=img_path.name)
+msg.attach(img)
+
+# Envío
+with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+    server.login(from_email, password)
+    server.sendmail(from_email, [to_email], msg.as_string())
+```
+
+En este ejercicio he creado un correo electrónico en HTML con el estilo del estudio de fotografía “Thais Esteve” y lo he enviado usando Python.
+
+Primero diseñé el correo en HTML. No es como una página web normal, sino adaptado para que funcione bien en Gmail y otros clientes de correo. Usé tablas y estilos en línea para que no se rompa el diseño. El correo incluye un título, un texto principal, dos botones (uno para pedir presupuesto y otro para ver el portfolio) y una foto grande.
+
+Después hice un archivo en Python para enviarlo automáticamente. Utilicé las librerías smtplib y email.mime para conectarme al servidor de Gmail y construir el mensaje correctamente. También añadí la imagen dentro del correo usando un sistema llamado CID para que se vea directamente y no dependa de una URL externa.
+
+Tuve algunos errores al principio, como problemas con la contraseña, rutas de la imagen y que el correo no mostraba bien el contenido. Pero fui corrigiéndolos hasta que finalmente el correo se envía correctamente y se ve completo (texto, botones e imagen).
+
+Con este ejercicio he aprendido cómo funciona el envío de correos desde backend, cómo se estructura un email en HTML y la diferencia entre una página web y un correo electrónico.
