@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        background: black;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas></canvas>
+
+    <script>
+      function distancia(x1, y1, x2, y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      }
+
+      const lienzo = document.querySelector("canvas");
+      const contexto = lienzo.getContext("2d");
+
+      function resize() {
+        lienzo.width = window.innerWidth;
+        lienzo.height = window.innerHeight;
+      }
+
+      window.addEventListener("resize", resize);
+      resize();
+
+
+      let velX = 0;
+      let velY = 0;
+
+      class Estrella {
+        constructor() {
+          this.x = Math.random() * lienzo.width;
+          this.y = Math.random() * lienzo.height;
+          this.z = 0.5 + Math.random() * 2; // profundidad 0.5..2.5
+        }
+
+        mover() {
+          this.x += velX * this.z;
+          this.y += velY * this.z;
+
+
+          if (this.x < 0) this.x = lienzo.width;
+          if (this.x > lienzo.width) this.x = 0;
+          if (this.y < 0) this.y = lienzo.height;
+          if (this.y > lienzo.height) this.y = 0;
+        }
+
+        dibujar() {
+          contexto.fillStyle = "white";
+          contexto.beginPath();
+          contexto.arc(this.x, this.y, this.z, 0, Math.PI * 2);
+          contexto.fill();
+        }
+      }
+
+
+      const numeroEstrellas = 800;
+      const estrellas = [];
+
+      for (let i = 0; i < numeroEstrellas; i++) {
+        estrellas.push(new Estrella());
+      }
+
+      function bucle() {
+        contexto.fillStyle = "black";
+        contexto.fillRect(0, 0, lienzo.width, lienzo.height);
+
+        estrellas.forEach((estrella) => {
+          estrella.mover();
+          estrella.dibujar();
+        });
+      }
+
+
+      setInterval(bucle, 50);
+
+
+      document.addEventListener("mousemove", (evento) => {
+        const centroX = lienzo.width / 2;
+        const centroY = lienzo.height / 2;
+
+        const ratonX = evento.clientX;
+        const ratonY = evento.clientY;
+
+        const dx = ratonX - centroX;
+        const dy = ratonY - centroY;
+
+        const d = distancia(centroX, centroY, ratonX, ratonY);
+
+
+        let dirX = 0;
+        let dirY = 0;
+        if (d > 0) {
+          dirX = dx / d;
+          dirY = dy / d;
+        }
+
+        const maxD = distancia(0, 0, centroX, centroY);
+        const t = d / maxD;
+
+        const maxVel = 6; 
+        velX = dirX * maxVel * t;
+        velY = dirY * maxVel * t;
+      });
+    </script>
+  </body>
+</html>

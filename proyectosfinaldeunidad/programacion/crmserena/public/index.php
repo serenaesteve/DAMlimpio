@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
       <div class="full actions">
         <button class="btn" type="submit"><?= h(t("send")) ?></button>
-        <a class="btn secondary" href="../admin.php?lang=<?= h(lang()) ?>"><?= h(t("admin_access")) ?></a>
+        <a class="btn secondary" href="admin.php?lang=<?= h(lang()) ?>">AAAAAAA<?= h(t("admin_access")) ?></a>
       </div>
     </form>
 
