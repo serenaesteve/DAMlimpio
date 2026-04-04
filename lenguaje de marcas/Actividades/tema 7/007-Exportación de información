@@ -1,0 +1,131 @@
+Para practicar el concepto de almacenamiento y recuperación de datos en una base de datos SQLite, el alumno debe seguir estos pasos:
+
+Primero, debes crear un archivo llamado log.sqlite en la carpeta raíz del proyecto. Este archivo contendrá nuestra base de datos.
+
+A continuación, debemos crear una tabla llamada logs dentro de nuestra base de datos. Para ello, podemos utilizar el siguiente código PHP:
+
+$db = new PDO('sqlite:log.sqlite');
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+Esto nos permite establecer la conexión con nuestra base de datos y configurar los errores para que se muestren en pantalla.
+
+Luego, debemos crear una tabla llamada logs dentro de nuestra base de datos. La estructura de esta tabla debe ser similar a la siguiente:
+
+CREATE TABLE logs (
+    id INTEGER PRIMARY KEY,
+    timestamp INTEGER,
+    user_agent TEXT,
+    referer TEXT,
+    accept_language TEXT,
+    cookie TEXT,
+    ip_address TEXT,
+    request_uri TEXT,
+    fecha DATE
+);
+Esto nos permite almacenar los datos de cada registro en la tabla logs.
+
+Finalmente, debemos insertar un nuevo registro en nuestra base de datos. Para ello, podemos utilizar el siguiente código PHP:
+
+$epoch = $_SERVER['REQUEST_TIME'];
+$dt = new DateTime("@$epoch");
+$fecha =  $dt->format("Y-m-d H:i:s");
+
+$sql = "
+    INSERT INTO logs
+    VALUES (
+        NULL,
+        '".$_SERVER['REQUEST_TIME']."',
+        '".$_SERVER['HTTP_USER_AGENT']."',
+        '".$_SERVER['HTTP_REFERER']."',
+        '".$_SERVER['HTTP_ACCEPT_LANGUAGE']."',
+        '".$_SERVER['HTTP_COOKIE']."',
+        '".$_SERVER['REMOTE_ADDR']."',
+        '".$_SERVER['REQUEST_URI']."',
+        '".$fecha."'
+    )
+";
+
+$db->exec($sql);
+Esto nos permite insertar un nuevo registro en nuestra base de datos con los datos actuales.
+
+Para practicar el concepto de almacenamiento y recuperación de datos en una base de datos SQLite, el alumno debe realizar los siguientes pasos:
+
+Crear un archivo llamado log.sqlite en la carpeta raíz del proyecto.
+Crear una tabla llamada logs dentro de nuestra base de datos utilizando el código PHP anterior.
+Insertar un nuevo registro en nuestra base de datos utilizando el código PHP anterior.
+Al completar estos pasos, el alumno habrá practicado el concepto de almacenamiento y recuperación de datos en una base de datos SQLite.
+
+
+
+
+Respuesta:
+
+
+En esta práctica he trabajado con bases de datos SQLite utilizando PHP. El objetivo ha sido aprender cómo guardar información en una base de datos cuando un usuario accede a una página web.
+
+Para ello he creado un pequeño sistema que registra algunos datos de la visita, como la dirección IP, el navegador o la página solicitada. De esta forma he podido entender cómo se conecta PHP a una base de datos SQLite, cómo se crea una tabla y cómo se insertan datos en ella.
+
+Esta práctica sirve para comprender los conceptos básicos de almacenamiento y registro de información en una base de datos.
+
+logger.php:
+```
+<?php
+
+
+$db = new PDO('sqlite:log.sqlite');
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+$db->exec("
+CREATE TABLE IF NOT EXISTS logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp INTEGER,
+    user_agent TEXT,
+    referer TEXT,
+    accept_language TEXT,
+    cookie TEXT,
+    ip_address TEXT,
+    request_uri TEXT,
+    fecha TEXT
+);
+");
+
+
+$epoch = $_SERVER['REQUEST_TIME'];
+$dt = new DateTime("@$epoch");
+$fecha = $dt->format("Y-m-d H:i:s");
+
+// Insertar registro
+$sql = "
+INSERT INTO logs
+(timestamp,user_agent,referer,accept_language,cookie,ip_address,request_uri,fecha)
+VALUES
+(
+'".$_SERVER['REQUEST_TIME']."',
+'".$_SERVER['HTTP_USER_AGENT']."',
+'".$_SERVER['HTTP_REFERER']."',
+'".$_SERVER['HTTP_ACCEPT_LANGUAGE']."',
+'".$_SERVER['HTTP_COOKIE']."',
+'".$_SERVER['REMOTE_ADDR']."',
+'".$_SERVER['REQUEST_URI']."',
+'".$fecha."'
+)
+";
+
+$db->exec($sql);
+
+echo "Registro guardado correctamente";
+
+?>
+```
+
+Primero he creado una carpeta para el proyecto y dentro he creado un archivo llamado logger.php. En ese archivo he escrito el código para conectarme a una base de datos SQLite usando PDO.
+
+La base de datos se llama log.sqlite y no la he tenido que crear manualmente, porque SQLite la crea automáticamente cuando se ejecuta el programa.
+
+Después he creado una tabla llamada logs donde se guardan los datos de cada visita a la página.
+
+Luego he utilizado las variables $_SERVER de PHP para obtener información como la IP del usuario, el navegador, la página que se visita y la fecha.
+
+Por último he hecho una consulta SQL para insertar esos datos en la tabla cada vez que se carga la página. Al abrir el archivo en el navegador, se guarda un registro nuevo en la base de datos.
+
+Con esta práctica he aprendido cómo crear una base de datos SQLite, crear una tabla y guardar datos desde PHP.
